@@ -1,0 +1,22 @@
+<module>
+	<rawname>certman</rawname>
+	<name>Certificate Manager</name>
+	<repo>standard</repo>
+	<version>12.0.0alpha1</version>
+	<publisher>FreePBX</publisher>
+	<license>AGPLv3+</license>
+	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
+	<description>
+		Certificate Manager for Asterisk
+	</description>
+	<changelog>
+		*12.0.0alpha1* Inital Release
+	</changelog>
+	<category>Admin</category>
+	<supported>
+		<version>12.0</version>
+	</supported>
+	<depends>
+		<version>12.0.1beta19</version>
+	</depends>
+</module>
