@@ -1,19 +1,17 @@
 <?php
-show_view(__DIR__.'/views/rnav.php',array());
 $certman = FreePBX::Certman();
-$pkcs = FreePBX::PKCS();
+show_view(__DIR__.'/views/rnav.php',array());
 switch($_REQUEST['action']) {
 	case 'ca':
 		switch($_POST['type']) {
 			case 'generate':
-				$pkcs->createConfig($_POST['hostname'],$_POST['orgname']);
-				$pkcs->createCA($_POST['passphrase']);
+				$sph = (!empty($_POST['savepassphrase']) && $_POST['savepassphrase'] == 'yes') ? true : false;
+				$certman->generateCA($_POST['hostname'],$_POST['orgname'],$_POST['passphrase'],$sph);
 			break;
 			case 'upload':
 			break;
 			case 'delete':
-				$files = $pkcs->getAllAuthorityFiles();
-				dbug($files);
+				$certman->removeCA();
 			break;
 			default:
 			break;
@@ -22,7 +20,21 @@ switch($_REQUEST['action']) {
 		show_view(__DIR__.'/views/ca.php',array('caExists' => $caExists));
 	break;
 	case 'new':
-		show_view(__DIR__.'/views/new.php',array());
+		$cas = $certman->getAllManagedCAs();
+		if(!empty($cas)) {
+			switch($_POST['type']) {
+				case 'generate':
+					$certman->generateCertificate($_POST['ca'],$_POST['name'],$_POST['certificate']);
+				break;
+				case 'upload':
+				break;
+				case 'delete':
+				break;
+				default:
+				break;
+			}
+			show_view(__DIR__.'/views/new.php',array('cas' => $cas));
+		}
 	break;
 	default:
 		show_view(__DIR__.'/views/overview.php',array());

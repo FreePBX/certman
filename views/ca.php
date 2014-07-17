@@ -1,10 +1,17 @@
 <div id="capage">
-	<form autocomplete="off" name="editM" action="<?php $_SERVER['PHP_SELF'] ?>" method="post">
+	<form autocomplete="off" method="post">
 		<input id="catype" type="hidden" name="type" value="">
 		<table>
 			<tr>
 				<td colspan="2"><h4><?php echo _("Certificate Authority Settings")?></h4><hr></td>
 			</tr>
+			<?php if(!empty($message)) { ?>
+				<tr>
+					<td colspan="2">
+						<div class="alert alert-<?php echo $message['type']?>"><?php echo $message['message']?></div>
+					</td>
+				</tr>
+			<?php } ?>
 			<tr class="selection">
 				<td colspan="2">
 					<?php if($caExists) { ?>
