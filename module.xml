@@ -6,8 +6,11 @@
 	<publisher>FreePBX</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
+	<menuitems>
+		<certman>Certificate Management</certman>
+	</menuitems>
 	<description>
-		Certificate Manager for Asterisk
+		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
 		*12.0.0alpha1* Inital Release
