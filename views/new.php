@@ -14,16 +14,16 @@
 			<?php } ?>
 			<tr class="selection">
 				<td colspan="2">
-					<button class="visual" data-type="generate" <?php echo ($caExists) ? 'disabled' : '' ?>><?php echo _('Generate A New Certificate')?></button>
-					<button class="visual" data-type="upload" <?php echo ($caExists) ? 'disabled' : '' ?>><?php echo _('Upload A New Certificate')?></button>
+					<button class="visual" data-type="generate"><?php echo _('Generate A New Certificate')?></button>
+					<button class="visual" data-type="upload"><?php echo _('Upload A New Certificate')?></button>
 				</td>
 			</tr>
 			<tr class="general hiden">
 				<td><a href="#" class="info"><?php echo _("Certificate Authority")?>:<span><?php echo _("Certificate Authority to Reference")?></span></a></td>
 				<td>
-					<select name="ca">
+					<select name="ca" id="ca">
 						<?php foreach($cas as $ca) {?>
-							<option value="<?php echo $ca['uid']?>"><?php echo $ca['on']?></option>
+							<option data-requirespassphrase="<?php echo !empty($ca['passphrase']) && !empty($ca['salt']) ? 'no' : 'yes'?>" value="<?php echo $ca['uid']?>"><?php echo $ca['on']?></option>
 						<?php } ?>
 					</select>
 				</td>
@@ -35,6 +35,10 @@
 			<tr class="general hiden">
 				<td><a href="#" class="info"><?php echo _("Description")?>:<span><?php echo _("The Description of this certificate. Used in the module only")?></span></a></td>
 				<td><input type="text" autocomplete="off" name="description" maxlength="100" size="40"></td>
+			</tr>
+			<tr class="passphrase hiden">
+				<td><a href="#" class="info"><?php echo _("Passphrase")?>:<span><?php echo _("The Passphrase of the Certificate Authority")?></span></a></td>
+				<td><input type="password" autocomplete="off" name="passphrase" maxlength="100" size="40"></td>
 			</tr>
 			<tr class="generate hiden">
 				<td colspan="2"><button class="submit" data-type="generate"><?php echo _('Generate Certificate')?></button></td>
