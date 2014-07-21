@@ -8,6 +8,7 @@
  */
 
 class Certman implements BMO {
+	/* Asterisk Defaults */
 	private $defaults = array(
 		"sip" => array(
 			"dtlsenable" => "no",
@@ -35,6 +36,10 @@ class Certman implements BMO {
 		$this->db = $freepbx->Database;
 		$this->PKCS = $this->FreePBX->PKCS;
 	}
+
+	/**
+	 * Used to setup the database
+	 */
 	public function install() {
 		$sql = "CREATE TABLE `certman_cas` (
 					`uid` INT NOT NULL AUTO_INCREMENT,
@@ -45,6 +50,8 @@ class Certman implements BMO {
 					`salt` VARCHAR(255) NULL,
 					PRIMARY KEY (`uid`)),
 					UNIQUE KEY `basename_UNIQUE` (`basename`)";
+		$sth = $this->db->prepare($sql);
+		$sth->execute();
 		$sql = "CREATE TABLE `certman_certs` (
 					`cid` INT NOT NULL AUTO_INCREMENT,
 					`caid` INT NOT NULL,
@@ -52,6 +59,8 @@ class Certman implements BMO {
 					`description` VARCHAR(255) NULL,
 					PRIMARY KEY (`cid`)),
 					UNIQUE KEY `basename_UNIQUE` (`basename`)";
+		$sth = $this->db->prepare($sql);
+		$sth->execute();
 		$sql = "CREATE TABLE `certman_mapping` (
 					`id` int(11) NOT NULL,
 					`cid` int(11) DEFAULT NULL,
@@ -59,16 +68,22 @@ class Certman implements BMO {
 					`setup` varchar(45) DEFAULT NULL,
 					`rekey` int(11) DEFAULT NULL,
 					PRIMARY KEY (`id`)";
+		$sth = $this->db->prepare($sql);
+		$sth->execute();
 	}
 	public function uninstall() {
-
+		$sql = "DROP TABLE certman_mapping";
+		$sth = $this->db->prepare($sql);
+		$sth->execute();
+		$sql = "DROP TABLE certman_certs";
+		$sth = $this->db->prepare($sql);
+		$sth->execute();
+		$sql = "DROP TABLE certman_cas";
+		$sth = $this->db->prepare($sql);
+		$sth->execute();
 	}
-	public function backup(){
-
-	}
-	public function restore($backup){
-
-	}
+	public function backup(){}
+	public function restore($backup){}
 	public function doConfigPageInit($page){
 		return true;
 	}
@@ -84,6 +99,9 @@ class Certman implements BMO {
 			$o = $this->FreePBX->Core->getDevice($device['id']);
 			$cert = $this->getCertificateDetails($device['cid']);
 			$ca = $this->getCADetails($cert['caid']);
+			if(empty($cert) || empty($ca)) {
+				continue;
+			}
 			switch($o['tech']) {
 				case 'sip':
 					$core_conf->addSipAdditional($device['id'],'dtlsenable','yes');
@@ -103,15 +121,20 @@ class Certman implements BMO {
 		}
 	}
 
-	public function hook() {
-		global $core_conf;
-	}
+	/**
+	 * Get all DTLS Settings for each extension
+	 */
 	public function getAllDTLSOptions() {
 		$sql = "SELECT * FROM certman_mapping";
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
 		return $sth->fetchAll(PDO::FETCH_ASSOC);
 	}
+
+	/**
+	 * Get DTLS Settings for a particular extension
+	 * @param {int} $device The device/extension number
+	 */
 	public function getDTLSOptions($device) {
 		$sql = "SELECT * FROM certman_mapping WHERE id = ?";
 		$sth = $this->db->prepare($sql);
@@ -130,26 +153,54 @@ class Certman implements BMO {
 		}
 		return $data;
 	}
+
+	/**
+	 * Add DTLS Options for a device/extension
+	 * @param {int} $device The Device/Extension Number
+	 * @param {array} $data   An array of defined options
+	 */
 	public function addDTLSOptions($device,$data) {
 		$sql = "REPLACE INTO certman_mapping (id, cid, verify, setup, rekey) VALUES (?, ?, ?, ?, ?)";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($device,$data['certificate'],$data['verify'],$data['setup'],$data['rekey']));
 	}
+
+	/**
+	 * Remove the DTLS Options for this device
+	 * @param {int} $device The Device/Extension Number
+	 */
 	public function removeDTLSOptions($device) {
 		$sql = "DELETE FROM certman_mapping WHERE id = ?";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($device));
 	}
+
+	/**
+	 * Check to see if *any* certificate authority exists
+	 */
 	public function checkCAexists() {
 		$o = $this->PKCS->getAllAuthorityFiles();
 		return !empty($o);
 	}
+
+	/**
+	 * Get all Certificate Manager Managed Certificate Authorities
+	 */
 	public function getAllManagedCAs() {
 		$sql = "SELECT * FROM certman_cas";
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
 		return $sth->fetchAll(PDO::FETCH_ASSOC);
 	}
+
+	/**
+	 * Generate a New Certificate Authority
+	 * @param {string} $basename   The basename of the file to generate
+	 * @param {string} $commonname The common name, usually FQDN or IP
+	 * @param {string} $orgname    The organization name
+	 * @param {string} $passphrase The password, if null then the certificate will be passwordless (insecure)
+	 * @param {bool} $saveph     Whether to save the password above in the database
+	 */
 	public function generateCA($basename, $commonname, $orgname, $passphrase, $saveph) {
 		try {
 			$this->generateConfig($basename,$commonname,$orgname);
@@ -163,14 +214,34 @@ class Certman implements BMO {
 		}
 		$this->saveCA($basename,$commonname,$orgname,$passphrase);
 	}
+
+	/**
+	 * Generate OpenSSL Template Configs
+	 * @param {string} $basename   The CA Basename
+	 * @param {string} $commonname The common name, usually FQDN or IP
+	 * @param {string} $orgname    The organization name
+	 */
 	public function generateConfig($basename,$commonname,$orgname) {
 		$this->PKCS->createConfig($basename,$commonname,$orgname);
 	}
+
+	/**
+	 * Save the Certificate Authority Information into the Database
+	 * @param {string} $basename   The CA Basename
+	 * @param {string} $commonname The common name, usually FQDN or IP
+	 * @param {string} $orgname    The organization name
+	 * @param {string} $passphrase The passphrase (to be encrypted)
+	 */
 	public function saveCA($basename,$commonname,$orgname,$passphrase) {
 		$sql = "INSERT INTO certman_cas (`basename`, `cn`, `on`, `passphrase`, `salt`) VALUES (?, ?, ?, ?, ?)";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($basename, $commonname,$orgname,$passphrase,'1'));
 	}
+
+	/**
+	 * Get Certificate Authority Details
+	 * @param {int} $caid The Certificate Authority ID
+	 */
 	public function getCADetails($caid) {
 		$sql = "SELECT * from certman_cas WHERE uid = ?";
 		$sth = $this->db->prepare($sql);
@@ -181,6 +252,16 @@ class Certman implements BMO {
 		}
 		return $data;
 	}
+
+	/**
+	 * Generate A Certificate Based on a Certificate Authority
+	 * @param {int} $caid            The Managed Certificate Authority ID
+	 * @param {string} $base            The base name to generate
+	 * @param {string} $description     Description of this certificate
+	 * @param {string} $passphrase=null The provided passphrase,
+	 *                                  used if the CA requires a passphrase but
+	 *                                  it was not stored internally
+	 */
 	public function generateCertificate($caid,$base,$description,$passphrase=null) {
 		if($this->checkCertificateName($base)) {
 			return false;
@@ -190,6 +271,13 @@ class Certman implements BMO {
 		$this->PKCS->createCert($base,$ca['basename'],$ca['passphrase']);
 		$this->saveCertificate($caid,$base,$description);
 	}
+
+	/**
+	 * Save Certificate Information into the Database
+	 * @param {int} $caid        The Certificate Authority ID
+	 * @param {string} $base        The base name of the certificate
+	 * @param {string} $description The description of the certificate
+	 */
 	public function saveCertificate($caid,$base,$description) {
 		if($this->checkCertificateName($base)) {
 			return false;
@@ -198,12 +286,21 @@ class Certman implements BMO {
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($caid,$base,$description));
 	}
+
+	/**
+	 * Get all Managed Certificates (Excluding any Authorities)
+	 */
 	public function getAllManagedCertificates() {
 		$sql = "SELECT * FROM certman_certs";
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
 		return $sth->fetchAll(PDO::FETCH_ASSOC);
 	}
+
+	/**
+	 * Get details about a specific Authority
+	 * @param {int} $cid The Certificate ID
+	 */
 	public function getCertificateDetails($cid) {
 		$sql = "SELECT * from certman_certs WHERE cid = ?";
 		$sth = $this->db->prepare($sql);
@@ -214,6 +311,12 @@ class Certman implements BMO {
 		}
 		return $data;
 	}
+
+	/**
+	 * Check Certificate Name to see if it exists
+	 * @param {string} $name Certificate Base Name
+	 * @return boolean True if it exists, false if it doesnt
+	 */
 	public function checkCertificateName($name) {
 		$sql = "SELECT * FROM certman_certs WHERE basename = ?";
 		$sth = $this->db->prepare($sql);
@@ -221,6 +324,11 @@ class Certman implements BMO {
 		$data = $sth->fetch(PDO::FETCH_ASSOC);
 		return !empty($data);
 	}
+
+	/**
+	 * Remove a Certificate
+	 * @param {int} $cid The Certificate ID to remove
+	 */
 	public function removeCertificate($cid) {
 		$cert = $this->getCertificateDetails($cid);
 		$this->PKCS->removeCert($cert['basename']);
@@ -229,6 +337,10 @@ class Certman implements BMO {
 		$sth->execute(array($cid));
 		return true;
 	}
+
+	/**
+	 * Remove a Certificate Authority and all of it's child certificates
+	 */
 	public function removeCA() {
 		try {
 			$this->PKCS->removeCA();
@@ -239,5 +351,8 @@ class Certman implements BMO {
 		$sql = "TRUNCATE certman_cas";
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
+		foreach($this->getAllManagedCertificates() as $cert) {
+			$this->removeCertificate($cert['cid']);
+		}
 	}
 }
