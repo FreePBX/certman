@@ -18,18 +18,14 @@ function certman_configpageinit($pagename) {
 	}
 
 	if ($tech_hardware != null || $extdisplay != '' || $action == 'add') {
-		$currentcomponent->addguifunc("certman_{$pagename}_configpageload");
+		$currentcomponent->addguifunc("certman_devices_configpageload");
 		if (!empty($action)) {
-			$currentcomponent->addprocessfunc("certman_{$pagename}_configprocess");
+			$currentcomponent->addprocessfunc("certman_devices_configprocess");
 		}
 	}
 }
 
 function certman_devices_configpageload() {
-	certman_configpageload('devices');
-}
-
-function certman_extensions_configpageload() {
 	certman_configpageload('extension');
 }
 
@@ -40,7 +36,6 @@ function certman_configpageload($mode) {
 	$currentcomponent->setoptlistopts('dtls_enable', 'sort', false);
 
 	$settings = FreePBX::Certman()->getDTLSOptions($extdisplay);
-	dbug($settings);
 	$currentcomponent->addguielem('DTLS', new gui_selectbox(
 		'dtls_enable',
 		array(
@@ -116,7 +111,7 @@ function certman_configpageload($mode) {
 	));
 }
 
-function certman_extensions_configprocess() {
+function certman_devices_configprocess() {
 	$action = isset($_REQUEST['action'])?$_REQUEST['action']:null;
 	$extension = isset($_REQUEST['extdisplay'])?$_REQUEST['extdisplay']:null;
 	$tech = isset($_POST['tech'])?$_POST['tech']:null;
@@ -140,8 +135,4 @@ function certman_extensions_configprocess() {
 			FreePBX::Certman()->removeDTLSOptions($extension);
 		break;
 	}
-}
-
-function certman_users_configprocess() {
-
 }

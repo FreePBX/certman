@@ -1,5 +1,5 @@
 <div id="certpage">
-	<form autocomplete="off" method="post">
+	<form autocomplete="off" method="post" enctype="multipart/form-data">
 		<input id="certtype" type="hidden" name="type" value="">
 		<table>
 			<tr>
@@ -44,11 +44,11 @@
 				<td colspan="2"><button class="submit" data-type="generate"><?php echo _('Generate Certificate')?></button></td>
 			</tr>
 			<tr class="upload hiden">
-				<td><a href="#" class="info"><?php echo _("Private Key")?>:<span><?php echo _("Private Key File")?></span></a></td>
+				<td><a href="#" class="info"><?php echo _("Private Key")?>:<span><?php echo _("Private Key File")?> (key)</span></a></td>
 				<td><input type="file" name="privatekey"></td>
 			</tr>
 			<tr class="upload hiden">
-				<td><a href="#" class="info"><?php echo _("Certificate")?>:<span><?php echo _("Certificate File")?></span></a></td>
+				<td><a href="#" class="info"><?php echo _("Certificate")?>:<span><?php echo _("Certificate File")?> (crt)</span></a></td>
 				<td><input type="file" name="certificate"></td>
 			</tr>
 			<tr class="upload hiden">

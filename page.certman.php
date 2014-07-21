@@ -8,9 +8,36 @@ switch($_REQUEST['action']) {
 		switch($type) {
 			case 'generate':
 				$sph = (!empty($_POST['savepassphrase']) && $_POST['savepassphrase'] == 'yes') ? true : false;
-				$certman->generateCA($_POST['hostname'],$_POST['orgname'],$_POST['passphrase'],$sph);
+				$certman->generateCA('ca',$_POST['hostname'],$_POST['orgname'],$_POST['passphrase'],$sph);
 			break;
 			case 'upload':
+				if ($_FILES["privatekey"]["error"] > 0) {
+					$message = array('type' => 'danger', 'message' => _('Error Uploading ' . $_FILES["privatekey"]["error"]));
+					break;
+				} else {
+					$pi = pathinfo($_FILES["privatekey"]['name']);
+					if($pi['extension'] != 'key') {
+						$message = array('type' => 'danger', 'message' => _('Private Key Doesnt Appear to be a key file'));
+						break;
+					} else {
+						move_uploaded_file($_FILES["privatekey"]["tmp_name"],'/etc/asterisk/keys/ca.key');
+					}
+				}
+
+				if ($_FILES["certificate"]["error"] > 0) {
+					$message = array('type' => 'danger', 'message' => _('Error Uploading ' . $_FILES["certificate"]["error"]));
+					break;
+				} else {
+					$pi = pathinfo($_FILES["certificate"]['name']);
+					if($pi['extension'] != 'crt') {
+						$message = array('type' => 'danger', 'message' => _('Certificate Doesnt Appear to be a crt file'));
+						break;
+					} else {
+						move_uploaded_file($_FILES["certificate"]["tmp_name"],'/etc/asterisk/keys/ca.crt');
+					}
+				}
+				$certman->generateConfig('ca',$_POST['hostname'],$_POST['orgname']);
+				$certman->saveCA('ca',$_POST['hostname'],$_POST['orgname'],$_POST['passphrase']);
 			break;
 			case 'delete':
 				$certman->removeCA();
@@ -24,18 +51,46 @@ switch($_REQUEST['action']) {
 	case 'new':
 		$cas = $certman->getAllManagedCAs();
 		if(!empty($cas)) {
-			$type = !empty($_POST['type']) ? $_POST['type'] : "";
-			switch($type) {
-				case 'generate':
-					$ca = $certman->getCADetails($_POST['ca']);
-					$certman->generateCertificate($_POST['ca'],$_POST['name'],$_POST['description'],$ca['passphrase']);
-				break;
-				case 'upload':
-				break;
-				case 'delete':
-				break;
-				default:
-				break;
+			if($certman->checkCertificateName($_POST['name'])) {
+				$message = array('type' => 'danger', 'message' => _('Certificate Already Exists'));
+			} else {
+				$type = !empty($_POST['type']) ? $_POST['type'] : "";
+				switch($type) {
+					case 'generate':
+						$ca = $certman->getCADetails($_POST['ca']);
+						$certman->generateCertificate($_POST['ca'],$_POST['name'],$_POST['description'],$ca['passphrase']);
+					break;
+					case 'upload':
+						if ($_FILES["privatekey"]["error"] > 0) {
+							$message = array('type' => 'danger', 'message' => _('Error Uploading ' . $_FILES["privatekey"]["error"]));
+							break;
+						} else {
+							$pi = pathinfo($_FILES["privatekey"]['name']);
+							if($pi['extension'] != 'key') {
+								$message = array('type' => 'danger', 'message' => _('Private Key Doesnt Appear to be a key file'));
+								break;
+							} else {
+								move_uploaded_file($_FILES["privatekey"]["tmp_name"],'/etc/asterisk/keys/'.$_POST['name'].'.key');
+							}
+						}
+
+						if ($_FILES["certificate"]["error"] > 0) {
+							$message = array('type' => 'danger', 'message' => _('Error Uploading ' . $_FILES["certificate"]["error"]));
+							break;
+						} else {
+							$pi = pathinfo($_FILES["certificate"]['name']);
+							if($pi['extension'] != 'crt') {
+								$message = array('type' => 'danger', 'message' => _('Certificate Doesnt Appear to be a crt file'));
+								break;
+							} else {
+								move_uploaded_file($_FILES["certificate"]["tmp_name"],'/etc/asterisk/keys/'.$_POST['name'].'.crt');
+							}
+						}
+						$certman->saveCertificate($_POST['ca'],$_POST['name'],$_POST['description']);
+					break;
+					default:
+					break;
+				}
 			}
 			$html = load_view(__DIR__.'/views/new.php',array('cas' => $cas, 'message' => $message));
 		}

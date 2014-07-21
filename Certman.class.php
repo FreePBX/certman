@@ -150,10 +150,10 @@ class Certman implements BMO {
 		$sth->execute();
 		return $sth->fetchAll(PDO::FETCH_ASSOC);
 	}
-	public function generateCA($commonname, $orgname, $passphrase, $saveph) {
+	public function generateCA($basename, $commonname, $orgname, $passphrase, $saveph) {
 		try {
-			$this->PKCS->createConfig('ca',$commonname,$orgname);
-			$this->PKCS->createCA('ca',$passphrase);
+			$this->generateConfig($basename,$commonname,$orgname);
+			$this->PKCS->createCA($basename,$passphrase);
 		} catch(Exception $e) {
 
 		}
@@ -161,9 +161,15 @@ class Certman implements BMO {
 			$passphrase = '';
 			$key = '';
 		}
+		$this->saveCA($basename,$commonname,$orgname,$passphrase);
+	}
+	public function generateConfig($basename,$commonname,$orgname) {
+		$this->PKCS->createConfig($basename,$commonname,$orgname);
+	}
+	public function saveCA($basename,$commonname,$orgname,$passphrase) {
 		$sql = "INSERT INTO certman_cas (`basename`, `cn`, `on`, `passphrase`, `salt`) VALUES (?, ?, ?, ?, ?)";
 		$sth = $this->db->prepare($sql);
-		$sth->execute(array('ca', $commonname,$orgname,$passphrase,'1'));
+		$sth->execute(array($basename, $commonname,$orgname,$passphrase,'1'));
 	}
 	public function getCADetails($caid) {
 		$sql = "SELECT * from certman_cas WHERE uid = ?";
@@ -176,8 +182,18 @@ class Certman implements BMO {
 		return $data;
 	}
 	public function generateCertificate($caid,$base,$description,$passphrase=null) {
+		if($this->checkCertificateName($base)) {
+			return false;
+		}
 		$ca = $this->getCADetails($caid);
+		$passphrase = !empty($passphrase) ? $passphrase : $ca['passphrase'];
 		$this->PKCS->createCert($base,$ca['basename'],$ca['passphrase']);
+		$this->saveCertificate($caid,$base,$description);
+	}
+	public function saveCertificate($caid,$base,$description) {
+		if($this->checkCertificateName($base)) {
+			return false;
+		}
 		$sql = "INSERT INTO certman_certs (`caid`, `basename`, `description`) VALUES (?, ?, ?)";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($caid,$base,$description));
@@ -197,6 +213,13 @@ class Certman implements BMO {
 			$data['files']['pem'] = $this->PKCS->getKeysLocation().'/'.$data['basename'].'.pem';
 		}
 		return $data;
+	}
+	public function checkCertificateName($name) {
+		$sql = "SELECT * FROM certman_certs WHERE basename = ?";
+		$sth = $this->db->prepare($sql);
+		$sth->execute(array($name));
+		$data = $sth->fetch(PDO::FETCH_ASSOC);
+		return !empty($data);
 	}
 	public function removeCertificate($cid) {
 		$cert = $this->getCertificateDetails($cid);
