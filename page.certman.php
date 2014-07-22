@@ -5,10 +5,16 @@ $html = '';
 switch($_REQUEST['action']) {
 	case 'ca':
 		$type = !empty($_POST['type']) ? $_POST['type'] : "";
+		$new = false;
 		switch($type) {
 			case 'generate':
 				$sph = (!empty($_POST['savepassphrase']) && $_POST['savepassphrase'] == 'yes') ? true : false;
-				$certman->generateCA('ca',$_POST['hostname'],$_POST['orgname'],$_POST['passphrase'],$sph);
+				$out = $certman->generateCA('ca',$_POST['hostname'],$_POST['orgname'],$_POST['passphrase'],$sph);
+				if($out !== true) {
+					$message = array('type' => 'danger', 'message' => nl2br($out));
+				} else {
+					$new = true;
+				}
 			break;
 			case 'upload':
 				if ($_FILES["privatekey"]["error"] > 0) {
@@ -38,6 +44,7 @@ switch($_REQUEST['action']) {
 				}
 				$certman->generateConfig('ca',$_POST['hostname'],$_POST['orgname']);
 				$certman->saveCA('ca',$_POST['hostname'],$_POST['orgname'],$_POST['passphrase']);
+				$new = true;
 			break;
 			case 'delete':
 				$certman->removeCA();
@@ -46,7 +53,7 @@ switch($_REQUEST['action']) {
 			break;
 		}
 		$caExists = $certman->checkCAexists();
-		$html = load_view(__DIR__.'/views/ca.php',array('caExists' => $caExists, 'message' => $message));
+		$html = load_view(__DIR__.'/views/ca.php',array('caExists' => $caExists, 'message' => $message, 'new' => $new));
 	break;
 	case 'new':
 		$cas = $certman->getAllManagedCAs();
@@ -58,7 +65,13 @@ switch($_REQUEST['action']) {
 				switch($type) {
 					case 'generate':
 						$ca = $certman->getCADetails($_POST['ca']);
-						$certman->generateCertificate($_POST['ca'],$_POST['name'],$_POST['description'],$ca['passphrase']);
+						$passphrase = !empty($_POST['passphrase']) ? $_POST['passphrase'] : $ca['passphrase'];
+						$out = $certman->generateCertificate($_POST['ca'],$_POST['name'],$_POST['description'],$passphrase);
+						if($out !== true) {
+							$message = array('type' => 'danger', 'message' => nl2br($out));
+						} else {
+							$message = array('type' => 'success', 'message' => _('Successfully Generated Certificate'));
+						}
 					break;
 					case 'upload':
 						if ($_FILES["privatekey"]["error"] > 0) {
@@ -93,13 +106,20 @@ switch($_REQUEST['action']) {
 				}
 			}
 			$html = load_view(__DIR__.'/views/new.php',array('cas' => $cas, 'message' => $message));
+		} else {
+			$html = '<div class="alert alert-danger" style="width:50%">'._('You must have at least one Certificate Authority').'</div>';
 		}
 	break;
 	case 'view':
 		$type = !empty($_POST['type']) ? $_POST['type'] : "";
 		switch($type) {
 			case 'update':
-				$message = array('type' => 'success', 'message' => _('Updated Certificate'));
+				$out = $certman->updateCert($_POST['cid'],$_POST['name'],$_POST['description']);
+				if($out !== true) {
+					$message = array('type' => 'danger', 'message' => $out);
+				} else {
+					$message = array('type' => 'success', 'message' => _('Updated Certificate'));
+				}
 			break;
 			default:
 			break;

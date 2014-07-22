@@ -3,6 +3,7 @@
 </a>
 <form autocomplete="off" method="post">
 	<input id="certtype" type="hidden" name="type" value="update">
+	<input id="cid" type="hidden" name="cid" value="<?php echo $cert['cid']?>">
 	<table>
 		<tr>
 			<td colspan="2"><h4><?php echo _("Certificate Settings")?></h4><hr></td>

@@ -41,36 +41,38 @@ class Certman implements BMO {
 	 * Used to setup the database
 	 */
 	public function install() {
-		$sql = "CREATE TABLE `certman_cas` (
+		$sql = "CREATE TABLE IF NOT EXISTS `certman_cas` (
 					`uid` INT NOT NULL AUTO_INCREMENT,
 					`basename` VARCHAR(255) NOT NULL,
 					`cn` VARCHAR(255) NOT NULL,
 					`on` VARCHAR(255) NOT NULL,
 					`passphrase` VARCHAR(255) NULL,
 					`salt` VARCHAR(255) NULL,
-					PRIMARY KEY (`uid`)),
-					UNIQUE KEY `basename_UNIQUE` (`basename`)";
+					PRIMARY KEY (`uid`),
+					UNIQUE KEY `basename_UNIQUE` (`basename`))";
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
-		$sql = "CREATE TABLE `certman_certs` (
+		$sql = "CREATE TABLE IF NOT EXISTS `certman_certs` (
 					`cid` INT NOT NULL AUTO_INCREMENT,
 					`caid` INT NOT NULL,
 					`basename` VARCHAR(45) NOT NULL,
 					`description` VARCHAR(255) NULL,
-					PRIMARY KEY (`cid`)),
-					UNIQUE KEY `basename_UNIQUE` (`basename`)";
+					PRIMARY KEY (`cid`),
+					UNIQUE KEY `basename_UNIQUE` (`basename`))";
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
-		$sql = "CREATE TABLE `certman_mapping` (
+		$sql = "CREATE TABLE IF NOT EXISTS `certman_mapping` (
 					`id` int(11) NOT NULL,
 					`cid` int(11) DEFAULT NULL,
 					`verify` varchar(45) DEFAULT NULL,
 					`setup` varchar(45) DEFAULT NULL,
 					`rekey` int(11) DEFAULT NULL,
-					PRIMARY KEY (`id`)";
+					PRIMARY KEY (`id`))";
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
+		return true;
 	}
+
 	public function uninstall() {
 		$sql = "DROP TABLE certman_mapping";
 		$sth = $this->db->prepare($sql);
@@ -81,7 +83,9 @@ class Certman implements BMO {
 		$sql = "DROP TABLE certman_cas";
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
+		return true;
 	}
+
 	public function backup(){}
 	public function restore($backup){}
 	public function doConfigPageInit($page){
@@ -206,13 +210,14 @@ class Certman implements BMO {
 			$this->generateConfig($basename,$commonname,$orgname);
 			$this->PKCS->createCA($basename,$passphrase);
 		} catch(Exception $e) {
-
+			return $e->getMessage();
 		}
 		if(!$saveph) {
 			$passphrase = '';
 			$key = '';
 		}
 		$this->saveCA($basename,$commonname,$orgname,$passphrase);
+		return true;
 	}
 
 	/**
@@ -264,12 +269,17 @@ class Certman implements BMO {
 	 */
 	public function generateCertificate($caid,$base,$description,$passphrase=null) {
 		if($this->checkCertificateName($base)) {
-			return false;
+			return _('Certificate Already Exists');
 		}
 		$ca = $this->getCADetails($caid);
 		$passphrase = !empty($passphrase) ? $passphrase : $ca['passphrase'];
-		$this->PKCS->createCert($base,$ca['basename'],$ca['passphrase']);
+		try {
+			$this->PKCS->createCert($base,$ca['basename'],$passphrase);
+		} catch(\Exception $e) {
+			return $e->getMessage();
+		}
 		$this->saveCertificate($caid,$base,$description);
+		return true;
 	}
 
 	/**
@@ -353,6 +363,29 @@ class Certman implements BMO {
 		$sth->execute();
 		foreach($this->getAllManagedCertificates() as $cert) {
 			$this->removeCertificate($cert['cid']);
+		}
+	}
+
+	public function updateCert($cid,$name,$description) {
+		$o = $this->getCertificateDetails($cid);
+		if(!empty($o)) {
+			$loc = $this->PKCS->getKeysLocation();
+			foreach(glob($loc . "/".$o['basename'].".*") as $file) {
+				$info = pathinfo($file);
+				if(file_exists($loc . "/" . $name . "." . $info['extension'])) {
+					return sprintf(_("%s Already Exists at that location!"), $info['basename']);
+				}
+			}
+			foreach(glob($loc . "/".$o['basename'].".*") as $file) {
+				$info = pathinfo($file);
+				rename($file,$loc . "/" . $name . "." . $info['extension']);
+			}
+			$sql = "UPDATE certman_certs SET basename = ?, description = ? WHERE cid = ?";
+			$sth = $this->db->prepare($sql);
+			$sth->execute(array($name,$description,$cid));
+			return true;
+		} else {
+			return _('Certificate ID is unknown!');
 		}
 	}
 }

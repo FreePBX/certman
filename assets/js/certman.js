@@ -16,6 +16,9 @@ $(function() {
 		}
 	});
 	$("#capage button.submit").click(function() {
+		if ($(this).data("submitting")) {
+			return false;
+		}
 		var type = $(this).data("type"), r = true;
 		$("#catype").val(type);
 		if (type == "generate") {
@@ -37,6 +40,12 @@ $(function() {
 			r = confirm("Are you sure you want to delete the Certificate Authority?");
 		} else {
 			r = false;
+		}
+		if (r === true) {
+			if ($(this).data("type") == "generate") {
+				$(this).text("Generating.. Please wait");
+			}
+			$(this).data("submitting", true);
 		}
 		return r;
 	});
@@ -67,9 +76,8 @@ $(function() {
 				}
 			}
 		});
-		if ($("#certpage .passphrase").is(":visible") && $("#certpage .passphrase").val() === "") {
-			alert("You must provide the certificate authority passphrase");
-			r = false;
+		if ($("#certpage .passphrase").is(":visible") && $("#certpage .passphrase input[type=\"password\"]").val() === "") {
+			r = confirm("Are you sure there is no passphrase for the Certificate Authority?");
 		}
 		return r;
 	});

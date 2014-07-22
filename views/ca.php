@@ -1,5 +1,5 @@
 <div id="capage">
-	<form autocomplete="off" method="post">
+	<form autocomplete="off" method="post" enctype="multipart/form-data">
 		<input id="catype" type="hidden" name="type" value="">
 		<table>
 			<tr>
@@ -15,7 +15,11 @@
 			<tr class="selection">
 				<td colspan="2">
 					<?php if($caExists) { ?>
-						<div class="alert alert-danger"><?php echo _('A Certificate Authority is already present on this system. Deleting/Generating/Uploading will invalidate all of your current certificates!')?></div>
+						<?php if($new) { ?>
+							<div class="alert alert-success"><?php echo _('The Certificate Authority was successfully added. Deleting/Generating/Uploading a new one will invalidate all of your current certificates!')?></div>
+						<?php } else { ?>
+							<div class="alert alert-danger"><?php echo _('A Certificate Authority is already present on this system. Deleting/Generating/Uploading will invalidate all of your current certificates!')?></div>
+						<?php } ?>
 						<input id="caexistscheck" type="checkbox"> <label for="caexistscheck"><?php echo _('I know what I am doing and I understand the risks')?></label><br/><br/>
 						<button class="submit" data-type="delete" disabled><?php echo _('Delete The Certificate Authority')?></button>
 					<?php } ?>
@@ -38,8 +42,8 @@
 				<td><input type="password" autocomplete="off" name="passphrase" size="40" value=""></td>
 			</tr>
 			<tr class="general hiden">
-				<td><a href="#" class="info"><?php echo _("Save Passphrase")?>:<span><?php echo _("Whether to store the password in the database (encrypted) so that new certificates can be generated without entering the passphrase in.
-				Note that encrypted does not mean cant be hacked or stolen or reverse engineered. This is useful for letting other module generate certificates")?></span></a></td>
+				<td><a href="#" class="info"><?php echo _("Save Passphrase")?>:<span><?php echo _("Whether to store the password in the database so that new certificates can be generated automatically.
+				WARNING!! The Passphrase is stored in PLAINTEXT! You have been warned. Use Something you dont care about or use!")?></span></a></td>
 				<td>
 					<span class="radioset">
 						<input type="radio" name="savepassphrase" value="yes" id="phsaveyes" checked><label for="phsaveyes">Yes</label>
