@@ -5,22 +5,24 @@ function certman_configpageinit($pagename) {
 	global $currentcomponent;
 	global $amp_conf;
 
+	$display = isset($_REQUEST['display'])?$_REQUEST['display']:null;
 	$action = isset($_REQUEST['action'])?$_REQUEST['action']:null;
 	$extdisplay = isset($_REQUEST['extdisplay'])?$_REQUEST['extdisplay']:null;
 	$extension = isset($_REQUEST['extension'])?$_REQUEST['extension']:null;
 	$tech_hardware = isset($_REQUEST['tech_hardware'])?$_REQUEST['tech_hardware']:null;
 	$supported_hardware = array('sip','pjsip');
 
-    // We only want to hook the 'extensions' pages.
-	$th = !empty($_REQUEST['tech_hardware']) ? $_REQUEST['tech_hardware'] : '';
-	if ($pagename != 'extensions' && in_array(str_replace('_generic','',$th),$supported_hardware))  {
+	// We only want to hook the 'extensions' pages.
+	if ($pagename != 'extensions')  {
 		return true;
 	}
-
-	if ($tech_hardware != null || $extdisplay != '' || $action == 'add') {
-		$currentcomponent->addguifunc("certman_devices_configpageload");
-		if (!empty($action)) {
-			$currentcomponent->addprocessfunc("certman_devices_configprocess");
+	$certs = FreePBX::Certman()->getAllManagedCertificates();
+	if(!empty($certs)) {
+		if ($tech_hardware != null || $extdisplay != '' || $action == 'add') {
+			$currentcomponent->addguifunc("certman_devices_configpageload");
+			if (!empty($action)) {
+				$currentcomponent->addprocessfunc("certman_devices_configprocess");
+			}
 		}
 	}
 }
@@ -57,7 +59,7 @@ function certman_configpageload($mode) {
 	$currentcomponent->addguielem('DTLS', new gui_selectbox(
 		'dtls_certificate',
 		$certs,
-		'actpass',
+		'',
 		_('Use Certificate'),
 		_("The Certificate to use from Certificate Manager"),
 		false)

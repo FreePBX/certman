@@ -140,6 +140,9 @@ class Certman implements BMO {
 	 * @param {int} $device The device/extension number
 	 */
 	public function getDTLSOptions($device) {
+		if(!isset($device)) {
+			return false;
+		}
 		$sql = "SELECT * FROM certman_mapping WHERE id = ?";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($device));
@@ -156,6 +159,26 @@ class Certman implements BMO {
 			);
 		}
 		return $data;
+	}
+
+	/**
+	 * Check to make sure said device has a valid certificate
+	 * @param {int} $device The Extension/Device Number
+	 */
+	public function validDTLSDevice($device) {
+		$sql = "SELECT * FROM certman_mapping WHERE id = ?";
+		$sth = $this->db->prepare($sql);
+		$sth->execute(array($device));
+		$data = $sth->fetch(PDO::FETCH_ASSOC);
+		if(!empty($data)) {
+			if(!empty($data['cid'])) {
+				$cert = $this->getCertificateDetails($data['cid']);
+				if(!empty($cert) && $this->checkCAexists()) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	/**
