@@ -13,7 +13,7 @@ function certman_configpageinit($pagename) {
 	$supported_hardware = array('sip','pjsip');
 
 	// We only want to hook the 'extensions' pages.
-	if ($pagename != 'extensions')  {
+	if ($pagename != 'extensions' && $pagename != 'devices')  {
 		return true;
 	}
 	$certs = FreePBX::Certman()->getAllManagedCertificates();
@@ -47,7 +47,7 @@ function certman_configpageload($mode) {
 		$settings['enable'],
 		_('Enable DTLS'),
 		_('Enable or disable DTLS-SRTP support'),
-		false)
+		false),6
 	);
 	$certs = array();
 	foreach(FreePBX::Certman()->getAllManagedCertificates() as $cert) {
@@ -62,7 +62,7 @@ function certman_configpageload($mode) {
 		'',
 		_('Use Certificate'),
 		_("The Certificate to use from Certificate Manager"),
-		false)
+		false),6
 	);
 	$currentcomponent->addguielem('DTLS', new gui_selectbox(
 		'dtls_verify',
@@ -81,7 +81,7 @@ function certman_configpageload($mode) {
 			<li>A value of 'fingerprint' will perform ONLY fingerprint verification</li>
 			<li>A value of 'certificate' will perform ONLY certficiate verification</li>
 			</ul>"),
-		false)
+		false),6
 	);
 	$currentcomponent->addguielem('DTLS', new gui_selectbox(
 		'dtls_setup',
@@ -99,7 +99,7 @@ function certman_configpageload($mode) {
 			<li>passive (we want to accept connections only)</li>
 			<li>actpass (we will do both)</li>
 			</ul>"),
-		false)
+		false),6
 	);
 	//
 	$currentcomponent->addguielem('DTLS', new gui_textbox(
@@ -109,8 +109,8 @@ function certman_configpageload($mode) {
 		_('Interval at which to renegotiate the TLS session and rekey the SRTP session. If this is not set or the value provided is 0 rekeying will be disabled'),
 		'',
 		'',
-		false
-	));
+		false),6
+	);
 }
 
 function certman_devices_configprocess() {
