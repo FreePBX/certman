@@ -55,11 +55,11 @@
 				<td colspan="2"><button class="submit" data-type="generate"><?php echo _('Generate Certificate')?></button></td>
 			</tr>
 			<tr class="upload hiden">
-				<td><a href="#" class="info"><?php echo _("Private Key")?>:<span><?php echo _("DNS name or our IP address")?></span></a></td>
+				<td><a href="#" class="info"><?php echo _("Private Key")?>:<span><?php echo _("Private Key File to use for this CA")?></span></a></td>
 				<td><input type="file" name="privatekey"></td>
 			</tr>
 			<tr class="upload hiden">
-				<td><a href="#" class="info"><?php echo _("Certificate")?>:<span><?php echo _("DNS name or our IP address")?></span></a></td>
+				<td><a href="#" class="info"><?php echo _("Certificate")?>:<span><?php echo _("Certificate to use for this CA (must reference the Private Key)")?></span></a></td>
 				<td><input type="file" name="certificate"></td>
 			</tr>
 			<tr class="upload hiden">
