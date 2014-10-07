@@ -70,10 +70,21 @@ class Certman implements BMO {
 					PRIMARY KEY (`id`))";
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
+
+		if(!$this->checkCAexists()) {
+			out(_("No Certificates exist"));
+			outn(_("Generating default CA..."));
+			$caid = $this->generateCA('ca',gethostname(),gethostname(),openssl_random_pseudo_bytes(32),true);
+			out(_("Done!"));
+			outn(_("Generating default certificate..."));
+			$this->generateCertificate($caid,_("default"),_("default certificate generated at install time"));
+			out(_("Done!"));
+		}
 		return true;
 	}
 
 	public function uninstall() {
+		$this->removeCA();
 		$sql = "DROP TABLE certman_mapping";
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
@@ -239,8 +250,8 @@ class Certman implements BMO {
 			$passphrase = '';
 			$key = '';
 		}
-		$this->saveCA($basename,$commonname,$orgname,$passphrase);
-		return true;
+		$id = $this->saveCA($basename,$commonname,$orgname,$passphrase);
+		return $id;
 	}
 
 	/**
@@ -264,6 +275,7 @@ class Certman implements BMO {
 		$sql = "INSERT INTO certman_cas (`basename`, `cn`, `on`, `passphrase`, `salt`) VALUES (?, ?, ?, ?, ?)";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($basename, $commonname,$orgname,$passphrase,'1'));
+		return $this->db->lastInsertId();
 	}
 
 	/**
