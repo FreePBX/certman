@@ -37,8 +37,11 @@ function certman_configpageload($mode) {
 	$extdisplay = isset($_REQUEST['extdisplay'])?$_REQUEST['extdisplay']:null;
 	$currentcomponent->setoptlistopts('dtls_enable', 'sort', false);
 
+	$section = "DTLS";
+	$category = "advanced";
+
 	$settings = FreePBX::Certman()->getDTLSOptions($extdisplay);
-	$currentcomponent->addguielem('DTLS', new gui_selectbox(
+	$currentcomponent->addguielem($section, new gui_selectbox(
 		'dtls_enable',
 		array(
 			array("text" => "No", "value" => "no"),
@@ -47,7 +50,7 @@ function certman_configpageload($mode) {
 		$settings['enable'],
 		_('Enable DTLS'),
 		_('Enable or disable DTLS-SRTP support'),
-		false),6
+		false),6,null,$category
 	);
 	$certs = array();
 	foreach(FreePBX::Certman()->getAllManagedCertificates() as $cert) {
@@ -56,15 +59,15 @@ function certman_configpageload($mode) {
 			"value" => $cert['cid']
 		);
 	}
-	$currentcomponent->addguielem('DTLS', new gui_selectbox(
+	$currentcomponent->addguielem($section, new gui_selectbox(
 		'dtls_certificate',
 		$certs,
 		'',
 		_('Use Certificate'),
 		_("The Certificate to use from Certificate Manager"),
-		false),6
+		false),6,null,$category
 	);
-	$currentcomponent->addguielem('DTLS', new gui_selectbox(
+	$currentcomponent->addguielem($section, new gui_selectbox(
 		'dtls_verify',
 		array(
 			array("text" => "Yes","value" => "yes"),
@@ -81,9 +84,9 @@ function certman_configpageload($mode) {
 			<li>A value of 'fingerprint' will perform ONLY fingerprint verification</li>
 			<li>A value of 'certificate' will perform ONLY certficiate verification</li>
 			</ul>"),
-		false),6
+		false),6,null,$category
 	);
-	$currentcomponent->addguielem('DTLS', new gui_selectbox(
+	$currentcomponent->addguielem($section, new gui_selectbox(
 		'dtls_setup',
 		array(
 			array("text" => "Act/Pass","value" => "actpass"),
@@ -99,17 +102,17 @@ function certman_configpageload($mode) {
 			<li>passive (we want to accept connections only)</li>
 			<li>actpass (we will do both)</li>
 			</ul>"),
-		false),6
+		false),6,null,$category
 	);
 	//
-	$currentcomponent->addguielem('DTLS', new gui_textbox(
+	$currentcomponent->addguielem($section, new gui_textbox(
 		'dtls_rekey',
 		$settings['rekey'],
 		_('DTLS Rekey Interval'),
 		_('Interval at which to renegotiate the TLS session and rekey the SRTP session. If this is not set or the value provided is 0 rekeying will be disabled'),
 		'',
 		'',
-		false),6
+		false),6,null,$category
 	);
 }
 
