@@ -13,6 +13,7 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
+		*12.0.4* FREEPBX-8391 deal with race conditions. Also increase timeout
 		*12.0.3* Update copyrights and licensing
 		*12.0.2* FREEPBX-8090 Generate default cert at install time.
 		*12.0.1* FREEPBX-7922 Help Text wrong for Upload Boxes

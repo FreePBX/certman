@@ -3,8 +3,8 @@
 //	License for all code of this FreePBX module can be found in the license file inside the module directory
 //	Copyright 2014 Schmooze Com Inc.
 //
-
-class Certman implements BMO {
+namespace FreePBX\modules;
+class Certman implements \BMO {
 	/* Asterisk Defaults */
 	private $defaults = array(
 		"sip" => array(
@@ -27,11 +27,13 @@ class Certman implements BMO {
 
 	public function __construct($freepbx = null) {
 		if ($freepbx == null)
-			throw new Exception("Not given a FreePBX Object");
+			throw new \Exception("Not given a FreePBX Object");
 
 		$this->FreePBX = $freepbx;
 		$this->db = $freepbx->Database;
 		$this->PKCS = $this->FreePBX->PKCS;
+		$this->PKCS->timeout = 240; //because of piiiiiis
+		set_time_limit(240); //more pis. <3 all the pis for taking so long
 	}
 
 	/**
@@ -71,11 +73,15 @@ class Certman implements BMO {
 		if(!$this->checkCAexists()) {
 			out(_("No Certificates exist"));
 			outn(_("Generating default CA..."));
-			$caid = $this->generateCA('ca',gethostname(),gethostname(),openssl_random_pseudo_bytes(32),true);
-			out(_("Done!"));
-			outn(_("Generating default certificate..."));
-			$this->generateCertificate($caid,_("default"),_("default certificate generated at install time"));
-			out(_("Done!"));
+			try {
+				$caid = $this->generateCA('ca',gethostname(),gethostname(),openssl_random_pseudo_bytes(32),true);
+				out(_("Done!"));
+				outn(_("Generating default certificate..."));
+				$this->generateCertificate($caid,_("default"),_("default certificate generated at install time"));
+				out(_("Done!"));
+			} catch(\Exception $e) {
+				out(_("Failed! Reason:".$e->getMessage()));
+			}
 		}
 		return true;
 	}
@@ -140,7 +146,7 @@ class Certman implements BMO {
 		$sql = "SELECT * FROM certman_mapping";
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
-		return $sth->fetchAll(PDO::FETCH_ASSOC);
+		return $sth->fetchAll(\PDO::FETCH_ASSOC);
 	}
 
 	/**
@@ -154,7 +160,7 @@ class Certman implements BMO {
 		$sql = "SELECT * FROM certman_mapping WHERE id = ?";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($device));
-		$data = $sth->fetch(PDO::FETCH_ASSOC);
+		$data = $sth->fetch(\PDO::FETCH_ASSOC);
 		if(!empty($data)) {
 			$data['enable'] = 'yes';
 		} else {
@@ -177,7 +183,7 @@ class Certman implements BMO {
 		$sql = "SELECT * FROM certman_mapping WHERE id = ?";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($device));
-		$data = $sth->fetch(PDO::FETCH_ASSOC);
+		$data = $sth->fetch(\PDO::FETCH_ASSOC);
 		if(!empty($data)) {
 			if(!empty($data['cid'])) {
 				$cert = $this->getCertificateDetails($data['cid']);
@@ -215,7 +221,13 @@ class Certman implements BMO {
 	 */
 	public function checkCAexists() {
 		$o = $this->PKCS->getAllAuthorityFiles();
-		return !empty($o);
+		$z = $this->getAllManagedCAs();
+		if(empty($o) && !empty($z)) {
+			//files are missing from hard drive. run delete
+			$this->removeCA();
+			return false;
+		}
+		return (empty($o) && empty($z)) ? false : true;
 	}
 
 	/**
@@ -225,7 +237,7 @@ class Certman implements BMO {
 		$sql = "SELECT * FROM certman_cas";
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
-		return $sth->fetchAll(PDO::FETCH_ASSOC);
+		return $sth->fetchAll(\PDO::FETCH_ASSOC);
 	}
 
 	/**
@@ -237,12 +249,8 @@ class Certman implements BMO {
 	 * @param {bool} $saveph     Whether to save the password above in the database
 	 */
 	public function generateCA($basename, $commonname, $orgname, $passphrase, $saveph) {
-		try {
-			$this->generateConfig($basename,$commonname,$orgname);
-			$this->PKCS->createCA($basename,$passphrase);
-		} catch(Exception $e) {
-			return $e->getMessage();
-		}
+		$this->generateConfig($basename,$commonname,$orgname);
+		$this->PKCS->createCA($basename,$passphrase);
 		if(!$saveph) {
 			$passphrase = '';
 			$key = '';
@@ -283,7 +291,7 @@ class Certman implements BMO {
 		$sql = "SELECT * from certman_cas WHERE uid = ?";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($caid));
-		$data = $sth->fetch(PDO::FETCH_ASSOC);
+		$data = $sth->fetch(\PDO::FETCH_ASSOC);
 		if(!empty($data)) {
 			$data['files']['crt'] = $this->PKCS->getKeysLocation().'/'.$data['basename'].'.crt';
 		}
@@ -336,7 +344,7 @@ class Certman implements BMO {
 		$sql = "SELECT * FROM certman_certs";
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
-		return $sth->fetchAll(PDO::FETCH_ASSOC);
+		return $sth->fetchAll(\PDO::FETCH_ASSOC);
 	}
 
 	/**
@@ -347,7 +355,7 @@ class Certman implements BMO {
 		$sql = "SELECT * from certman_certs WHERE cid = ?";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($cid));
-		$data = $sth->fetch(PDO::FETCH_ASSOC);
+		$data = $sth->fetch(\PDO::FETCH_ASSOC);
 		if(!empty($data)) {
 			$data['files']['pem'] = $this->PKCS->getKeysLocation().'/'.$data['basename'].'.pem';
 		}
@@ -363,7 +371,7 @@ class Certman implements BMO {
 		$sql = "SELECT * FROM certman_certs WHERE basename = ?";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($name));
-		$data = $sth->fetch(PDO::FETCH_ASSOC);
+		$data = $sth->fetch(\PDO::FETCH_ASSOC);
 		return !empty($data);
 	}
 
@@ -387,7 +395,7 @@ class Certman implements BMO {
 		try {
 			$this->PKCS->removeCA();
 			$this->PKCS->removeConfig();
-		} catch(Exception $e) {
+		} catch(\Exception $e) {
 
 		}
 		$sql = "TRUNCATE certman_cas";

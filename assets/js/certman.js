@@ -24,7 +24,8 @@ $(function() {
 		if (type == "generate") {
 			$("#capage input[type=\"text\"]").each( function(i, v) {
 				if ($(this).val() === "") {
-					alert("No Fields Can Be Left Blank");
+					alert("Host Name or Organization Name can not be left blank");
+					$(this).focus();
 					r = false;
 					return false;
 				}
@@ -44,6 +45,8 @@ $(function() {
 		if (r === true) {
 			if ($(this).data("type") == "generate") {
 				$(this).text("Generating.. Please wait");
+				$(this).prop("disabled", true);
+				$("form").submit();
 			}
 			$(this).data("submitting", true);
 		}

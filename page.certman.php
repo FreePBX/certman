@@ -12,11 +12,11 @@ switch($_REQUEST['action']) {
 		switch($type) {
 			case 'generate':
 				$sph = (!empty($_POST['savepassphrase']) && $_POST['savepassphrase'] == 'yes') ? true : false;
-				$out = $certman->generateCA('ca',$_POST['hostname'],$_POST['orgname'],$_POST['passphrase'],$sph);
-				if($out !== true) {
-					$message = array('type' => 'danger', 'message' => nl2br($out));
-				} else {
+				try {
+					$out = $certman->generateCA('ca',$_POST['hostname'],$_POST['orgname'],$_POST['passphrase'],$sph);
 					$new = true;
+				} catch(\Exception $e) {
+					$message = array('type' => 'danger', 'message' => nl2br($e->getMessage()));
 				}
 			break;
 			case 'upload':
