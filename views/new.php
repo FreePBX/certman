@@ -1,16 +1,16 @@
-<?php 
+<?php
 if(!empty($message)) {
 	$messagehtml = '<div class="alert alert-' . $message['type'] .'">'. $message['message'] . '</div>';
 }
 //ca input
 if(count($cas) == 1){
-	$rpf = !empty($cas[0]['passphrase']) && !empty($cas[0]['salt']) ? 'no' : 'yes';
+	$rpf = !empty($cas[0]['passphrase']) && $cas[0]['passphrase'] == 'yes' && !empty($cas[0]['salt']) ? 'no' : 'yes';
 	$cainput = '<b>' . $cas[0]['on'] . '</b>';
 	$cainput .= '<input type="hidden" name="ca" id="ca" value="' . $cas[0]['uid'] . '" data-requirespassphrase="'. $rpf . '" >';
 }else{
 	$cainput = '<select name="ca" id="ca" class="form-control">';
 	foreach($cas as $ca) {
-		$rpf = !empty($ca['passphrase']) && !empty($ca['salt']) ? 'no' : 'yes';
+		$rpf = !empty($ca['passphrase']) && $ca['passphrase'] == 'yes' && !empty($ca['salt']) ? 'no' : 'yes';
 		$cainput .= '<option data-requirespassphrase="'. $rpf . '" value="'. $ca['uid'].'">' . $ca['on'] .'</option>';
 	}
 	$cainput .= '</select>';
@@ -102,28 +102,30 @@ if(count($cas) == 1){
 							</div>
 							<!--END Description-->
 							<!--Passphrase-->
-							<div class="element-container">
-								<div class="row">
-									<div class="col-md-12">
-										<div class="row">
-											<div class="form-group">
-												<div class="col-md-3">
-													<label class="control-label" for="passphrase"><?php echo _("Passphrase")?></label>
-													<i class="fa fa-question-circle fpbx-help-icon" data-for="passphrase"></i>
-												</div>
-												<div class="col-md-9">
-													<input type="text" class="form-control" autocomplete="off" name="passphrase" id="passphrase">
+							<?php if($rpf == 'yes') {?>
+								<div class="element-container">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-3">
+														<label class="control-label" for="passphrase"><?php echo _("Passphrase")?></label>
+														<i class="fa fa-question-circle fpbx-help-icon" data-for="passphrase"></i>
+													</div>
+													<div class="col-md-9">
+														<input type="text" class="form-control" autocomplete="off" name="passphrase" id="passphrase">
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-12">
-										<span id="passphrase-help" class="help-block fpbx-help-block"><?php echo _("The Passphrase of the Certificate Authority")?></span>
+									<div class="row">
+										<div class="col-md-12">
+											<span id="passphrase-help" class="help-block fpbx-help-block"><?php echo _("The Passphrase of the Certificate Authority")?></span>
+										</div>
 									</div>
 								</div>
-							</div>
+							<?php } ?>
 							<!--END Passphrase-->
 							<!--Enable Upload-->
 							<div class="element-container">

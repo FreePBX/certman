@@ -178,6 +178,7 @@ class Certman implements \BMO {
 									$this->message = array('type' => 'danger', 'message' => nl2br($out));
 								} else {
 									$this->message = array('type' => 'success', 'message' => _('Successfully Generated Certificate'));
+									$this->goto = 'overview';
 								}
 							break;
 							case 'upload':
@@ -214,9 +215,6 @@ class Certman implements \BMO {
 							break;
 						}
 					}
-					$html = load_view(__DIR__.'/views/new.php',array('cas' => $cas, 'message' => $this->message));
-				} else {
-					$html = '<div class="alert alert-danger" style="width:50%">'._('You must have at least one Certificate Authority').'</div>';
 				}
 			break;
 			case 'view':
@@ -243,6 +241,7 @@ class Certman implements \BMO {
 		return true;
 	}
 	public function myShowPage($view=''){
+		$view = !empty($this->goto) ? $this->goto : $view;
 		$request = $_REQUEST;
 		switch($view){
 			case 'view':
@@ -253,10 +252,9 @@ class Certman implements \BMO {
 				$cas = $this->getAllManagedCAs();
 				if($cas){
 					echo load_view(__DIR__.'/views/new.php',array('cas' => $cas, 'message' => $this->message));
-				}else{
-					echo "OHNOS!!";
 				}
 			break;
+			case 'overview':
 			default:
 				$certs = $this->getAllManagedCertificates();
 				$caExists = $this->checkCAexists();
