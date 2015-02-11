@@ -29,16 +29,19 @@ $(function() {
 		$("#Reset").prop('disabled', false);
 		$("#replace").val("replace");
 	});
-	$(document).on('show.bs.tab', 'a[data-toggle="tab"]', function (e) {
+	$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
 	    var clicked = $(this).attr('href');
 	    switch(clicked){
 			case '#casettings':
-				$('#Delete').addClass('hidden');			
+				$('#Delete').addClass('hidden');
 				$('#Submit').removeClass('hidden');
 				$('#Reset').removeClass('hidden');
-				if($("#caexists").length > 0){
+				if($("#caexists").length > 0 && !$("#hostname").is(":visible")){
 					$("#Submit").prop('disabled', true);
 					$("#Reset").prop('disabled', true);
+				} else if($("#hostname").is(":visible")) {
+					$("#Submit").prop('disabled', false);
+					$("#Reset").prop('disabled', false);
 				}
 			break;
 			default:
@@ -55,7 +58,7 @@ $(function() {
 			$("#capage .selection button").prop("disabled", true);
 		}
 	});
-	
+
 	$("#capage button.submit").click(function() {
 		if ($(this).data("submitting")) {
 			return false;
@@ -93,7 +96,7 @@ $(function() {
 		}
 		return r;
 	});
-	 
+
 	$("#certpage .selection button.visual").click(function() {
 		var type = $(this).data("type");
 		$("#certpage .general").fadeIn("slow");
@@ -104,7 +107,7 @@ $(function() {
 		}
 		return false;
 	});
-	
+
 	$("#certpage button.submit").click(function() {
 		var type = $(this).data("type"), r = true;
 		$("#certtype").val(type);
