@@ -9,196 +9,199 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-11 18:47-0500\n"
+"POT-Creation-Date: 2015-02-20 19:07-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: /usr/src/freepbx/certman/Certman.class.php:416
+#: Certman.class.php:416
 #, php-format
 msgid "%s Already Exists at that location!"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/ca.php:21
+#: views/ca.php:21
 msgid ""
 "A Certificate Authority is already present on this system. Deleting/"
 "Generating/Uploading will invalidate all of your current certificates!"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/ca.php:62
-#: /usr/src/freepbx/certman/views/new.php:51
+#: certman.i18n.php:4 certman.i18n.php:10
+msgid "Admin"
+msgstr ""
+
+#: views/ca.php:62 views/new.php:51
 msgid "Certificate"
 msgstr ""
 
-#: /usr/src/freepbx/certman/Certman.class.php:312
-#: /usr/src/freepbx/certman/page.certman.php:65
+#: Certman.class.php:312 page.certman.php:65
 msgid "Certificate Already Exists"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/new.php:22
+#: views/new.php:22
 msgid "Certificate Authority"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/ca.php:6
+#: views/ca.php:6
 msgid "Certificate Authority Settings"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/rnav.php:4
+#: views/rnav.php:4
 msgid "Certificate Authority Settings (CA)"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/new.php:22
+#: views/new.php:22
 msgid "Certificate Authority to Reference"
 msgstr ""
 
-#: /usr/src/freepbx/certman/page.certman.php:42
-#: /usr/src/freepbx/certman/page.certman.php:99
+#: page.certman.php:42 page.certman.php:99
 msgid "Certificate Doesnt Appear to be a crt file"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/new.php:51
+#: views/new.php:51
 msgid "Certificate File"
 msgstr ""
 
-#: /usr/src/freepbx/certman/Certman.class.php:428
+#: Certman.class.php:428
 msgid "Certificate ID is unknown!"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/overview.php:1
+#: certman.i18n.php:6 certman.i18n.php:14 views/overview.php:1
 msgid "Certificate Management"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/new.php:6
-#: /usr/src/freepbx/certman/views/view.php:9
+#: certman.i18n.php:3 certman.i18n.php:8
+msgid "Certificate Manager"
+msgstr ""
+
+#: certman.i18n.php:5 certman.i18n.php:12
+msgid ""
+"Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
+"WebRTC and secure traffic)"
+msgstr ""
+
+#: views/new.php:6 views/view.php:9
 msgid "Certificate Settings"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/ca.php:62
+#: views/ca.php:62
 msgid "Certificate to use for this CA (must reference the Private Key)"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/ca.php:31
+#: views/ca.php:31
 msgid "DNS name or our IP address"
 msgstr ""
 
-#: /usr/src/freepbx/certman/functions.inc/hook_core.php:110
+#: functions.inc/hook_core.php:110
 msgid "DTLS Rekey Interval"
 msgstr ""
 
-#: /usr/src/freepbx/certman/functions.inc/hook_core.php:96
+#: functions.inc/hook_core.php:96
 msgid "DTLS Setup"
 msgstr ""
 
-#: /usr/src/freepbx/certman/functions.inc/hook_core.php:78
+#: functions.inc/hook_core.php:78
 msgid "DTLS Verify"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/view.php:2
+#: views/view.php:2
 msgid "Delete Certificate"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/ca.php:24
+#: views/ca.php:24
 msgid "Delete The Certificate Authority"
 msgstr ""
 
-#: /usr/src/freepbx/certman/page.certman.php:137
+#: page.certman.php:137
 msgid "Deleted Certificate"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/new.php:36
-#: /usr/src/freepbx/certman/views/view.php:23
+#: views/new.php:36 views/view.php:23
 msgid "Description"
 msgstr ""
 
-#: /usr/src/freepbx/certman/Certman.class.php:78
-#: /usr/src/freepbx/certman/Certman.class.php:81
+#: Certman.class.php:78 Certman.class.php:81
 msgid "Done!"
 msgstr ""
 
-#: /usr/src/freepbx/certman/functions.inc/hook_core.php:50
+#: functions.inc/hook_core.php:50
 msgid "Enable DTLS"
 msgstr ""
 
-#: /usr/src/freepbx/certman/functions.inc/hook_core.php:51
+#: functions.inc/hook_core.php:51
 msgid "Enable or disable DTLS-SRTP support"
 msgstr ""
 
-#: /usr/src/freepbx/certman/page.certman.php:24
-#: /usr/src/freepbx/certman/page.certman.php:37
-#: /usr/src/freepbx/certman/page.certman.php:81
-#: /usr/src/freepbx/certman/page.certman.php:94
+#: page.certman.php:24 page.certman.php:37 page.certman.php:81
+#: page.certman.php:94
 msgid "Error Uploading "
 msgstr ""
 
-#: /usr/src/freepbx/certman/Certman.class.php:83
+#: Certman.class.php:83
 msgid "Failed! Reason:"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/new.php:17
+#: views/new.php:17
 msgid "Generate A New Certificate"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/ca.php:26
+#: views/ca.php:26
 msgid "Generate A New Certificate Authority"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/ca.php:55
-#: /usr/src/freepbx/certman/views/new.php:44
+#: views/ca.php:55 views/new.php:44
 msgid "Generate Certificate"
 msgstr ""
 
-#: /usr/src/freepbx/certman/Certman.class.php:75
+#: Certman.class.php:75
 msgid "Generating default CA..."
 msgstr ""
 
-#: /usr/src/freepbx/certman/Certman.class.php:79
+#: Certman.class.php:79
 msgid "Generating default certificate..."
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/ca.php:31
+#: views/ca.php:31
 msgid "Host Name"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/ca.php:23
+#: views/ca.php:23
 msgid "I know what I am doing and I understand the risks"
 msgstr ""
 
-#: /usr/src/freepbx/certman/functions.inc/hook_core.php:111
+#: functions.inc/hook_core.php:111
 msgid ""
 "Interval at which to renegotiate the TLS session and rekey the SRTP session. "
 "If this is not set or the value provided is 0 rekeying will be disabled"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/new.php:32
-#: /usr/src/freepbx/certman/views/view.php:19
+#: views/new.php:32 views/view.php:19
 msgid "Name"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/rnav.php:5
+#: views/rnav.php:5
 msgid "New Certificate"
 msgstr ""
 
-#: /usr/src/freepbx/certman/Certman.class.php:74
+#: Certman.class.php:74
 msgid "No Certificates exist"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/ca.php:35
+#: views/ca.php:35
 msgid "Organization Name"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/rnav.php:3
+#: views/rnav.php:3
 msgid "Overview"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/ca.php:39
-#: /usr/src/freepbx/certman/views/new.php:40
+#: views/ca.php:39 views/new.php:40
 msgid "Passphrase"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/ca.php:39
+#: views/ca.php:39
 msgid ""
 "Passphrase used to access this certificate and generate new client "
 "certificates.\n"
@@ -209,93 +212,88 @@ msgid ""
 "will have to provide the passphrase everytime a new certificate is needed"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/ca.php:58
-#: /usr/src/freepbx/certman/views/new.php:47
+#: views/ca.php:58 views/new.php:47
 msgid "Private Key"
 msgstr ""
 
-#: /usr/src/freepbx/certman/page.certman.php:29
-#: /usr/src/freepbx/certman/page.certman.php:86
+#: page.certman.php:29 page.certman.php:86
 msgid "Private Key Doesnt Appear to be a key file"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/new.php:47
+#: views/new.php:47
 msgid "Private Key File"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/ca.php:58
+#: views/ca.php:58
 msgid "Private Key File to use for this CA"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/ca.php:45
+#: views/ca.php:45
 msgid "Save Passphrase"
 msgstr ""
 
-#: /usr/src/freepbx/certman/page.certman.php:76
+#: page.certman.php:76
 msgid "Successfully Generated Certificate"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/ca.php:19
+#: views/ca.php:19
 msgid ""
 "The Certificate Authority was successfully added. Deleting/Generating/"
 "Uploading a new one will invalidate all of your current certificates!"
 msgstr ""
 
-#: /usr/src/freepbx/certman/functions.inc/hook_core.php:66
+#: functions.inc/hook_core.php:66
 msgid "The Certificate to use from Certificate Manager"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/new.php:36
-#: /usr/src/freepbx/certman/views/view.php:23
+#: views/new.php:36 views/view.php:23
 msgid "The Description of this certificate. Used in the module only"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/ca.php:35
+#: views/ca.php:35
 msgid "The Organization Name"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/new.php:40
+#: views/new.php:40
 msgid "The Passphrase of the Certificate Authority"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/new.php:32
-#: /usr/src/freepbx/certman/views/view.php:19
+#: views/new.php:32 views/view.php:19
 msgid ""
 "The base name of the certificate, Can only contain alphanumeric characters"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/overview.php:3
+#: views/overview.php:3
 msgid ""
 "This module is intended to manage and generate certificates used for "
 "extensions in asterisk"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/view.php:27
+#: views/view.php:27
 msgid "Update Certificate"
 msgstr ""
 
-#: /usr/src/freepbx/certman/page.certman.php:124
+#: page.certman.php:124
 msgid "Updated Certificate"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/new.php:18
+#: views/new.php:18
 msgid "Upload A New Certificate"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/ca.php:27
+#: views/ca.php:27
 msgid "Upload A New Certificate Authority"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/ca.php:66
-#: /usr/src/freepbx/certman/views/new.php:55
+#: views/ca.php:66 views/new.php:55
 msgid "Upload Certificates"
 msgstr ""
 
-#: /usr/src/freepbx/certman/functions.inc/hook_core.php:65
+#: functions.inc/hook_core.php:65
 msgid "Use Certificate"
 msgstr ""
 
-#: /usr/src/freepbx/certman/functions.inc/hook_core.php:79
+#: functions.inc/hook_core.php:79
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
 "\t\t<ul>\n"
@@ -310,7 +308,7 @@ msgid ""
 "\t\t\t</ul>"
 msgstr ""
 
-#: /usr/src/freepbx/certman/views/ca.php:45
+#: views/ca.php:45
 msgid ""
 "Whether to store the password in the database so that new certificates can "
 "be generated automatically.\n"
@@ -318,7 +316,7 @@ msgid ""
 "warned. Use Something you dont care about or use!"
 msgstr ""
 
-#: /usr/src/freepbx/certman/functions.inc/hook_core.php:97
+#: functions.inc/hook_core.php:97
 msgid ""
 "Whether we are willing to accept connections, connect to the other party, or "
 "both.\n"
@@ -331,14 +329,14 @@ msgid ""
 "\t\t\t</ul>"
 msgstr ""
 
-#: /usr/src/freepbx/certman/page.certman.php:113
+#: page.certman.php:113
 msgid "You must have at least one Certificate Authority"
 msgstr ""
 
-#: /usr/src/freepbx/certman/Certman.class.php:80
+#: Certman.class.php:80
 msgid "default"
 msgstr ""
 
-#: /usr/src/freepbx/certman/Certman.class.php:80
+#: Certman.class.php:80
 msgid "default certificate generated at install time"
 msgstr ""
