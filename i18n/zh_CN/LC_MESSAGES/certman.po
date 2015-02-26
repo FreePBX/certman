@@ -121,7 +121,7 @@ msgstr ""
 
 #: views/new.php:36 views/view.php:23
 msgid "Description"
-msgstr ""
+msgstr "描述"
 
 #: Certman.class.php:78 Certman.class.php:81
 msgid "Done!"
