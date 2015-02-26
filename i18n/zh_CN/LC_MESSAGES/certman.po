@@ -196,7 +196,7 @@ msgstr ""
 
 #: views/rnav.php:3
 msgid "Overview"
-msgstr ""
+msgstr "总览"
 
 #: views/ca.php:39 views/new.php:40
 msgid "Passphrase"
