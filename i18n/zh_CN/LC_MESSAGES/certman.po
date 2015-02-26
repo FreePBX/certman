@@ -31,7 +31,7 @@ msgstr ""
 
 #: certman.i18n.php:4 certman.i18n.php:10
 msgid "Admin"
-msgstr ""
+msgstr "管理员"
 
 #: views/ca.php:62 views/new.php:51
 msgid "Certificate"
