@@ -180,7 +180,7 @@ msgstr ""
 
 #: views/new.php:32 views/view.php:19
 msgid "Name"
-msgstr ""
+msgstr "名称"
 
 #: views/rnav.php:5
 msgid "New Certificate"
