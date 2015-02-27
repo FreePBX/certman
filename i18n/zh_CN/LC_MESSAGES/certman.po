@@ -74,7 +74,7 @@ msgstr ""
 
 #: certman.i18n.php:6 certman.i18n.php:14 views/overview.php:1
 msgid "Certificate Management"
-msgstr ""
+msgstr "证书管理"
 
 #: certman.i18n.php:3 certman.i18n.php:8
 msgid "Certificate Manager"
