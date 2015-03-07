@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-20 19:07-0500\n"
-"PO-Revision-Date: 2015-02-26 16:29+0200\n"
+"PO-Revision-Date: 2015-03-07 17:12+0200\n"
 "Last-Translator: james <zhulizhong@gmail.com>\n"
 "Language-Team: Simplified Chinese "
 "<http://weblate.freepbx.org/projects/freepbx/certman/zh_CN/>\n"
@@ -295,7 +295,7 @@ msgstr ""
 
 #: functions.inc/hook_core.php:65
 msgid "Use Certificate"
-msgstr ""
+msgstr "使用证书"
 
 #: functions.inc/hook_core.php:79
 msgid ""
