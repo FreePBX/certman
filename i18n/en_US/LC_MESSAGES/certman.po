@@ -1,0 +1,342 @@
+# This file is part of FreePBX.
+#
+# For licensing information, please see the file named LICENSE located in the module directory
+#
+# FreePBX language template for certman
+# Copyright (C) 2008-2015 Sangoma, Inc.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-20 19:07-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Certman.class.php:416
+#, php-format
+msgid "%s Already Exists at that location!"
+msgstr ""
+
+#: views/ca.php:21
+msgid ""
+"A Certificate Authority is already present on this system. Deleting/"
+"Generating/Uploading will invalidate all of your current certificates!"
+msgstr ""
+
+#: certman.i18n.php:4 certman.i18n.php:10
+msgid "Admin"
+msgstr ""
+
+#: views/ca.php:62 views/new.php:51
+msgid "Certificate"
+msgstr ""
+
+#: Certman.class.php:312 page.certman.php:65
+msgid "Certificate Already Exists"
+msgstr ""
+
+#: views/new.php:22
+msgid "Certificate Authority"
+msgstr ""
+
+#: views/ca.php:6
+msgid "Certificate Authority Settings"
+msgstr ""
+
+#: views/rnav.php:4
+msgid "Certificate Authority Settings (CA)"
+msgstr ""
+
+#: views/new.php:22
+msgid "Certificate Authority to Reference"
+msgstr ""
+
+#: page.certman.php:42 page.certman.php:99
+msgid "Certificate Doesnt Appear to be a crt file"
+msgstr ""
+
+#: views/new.php:51
+msgid "Certificate File"
+msgstr ""
+
+#: Certman.class.php:428
+msgid "Certificate ID is unknown!"
+msgstr ""
+
+#: certman.i18n.php:6 certman.i18n.php:14 views/overview.php:1
+msgid "Certificate Management"
+msgstr ""
+
+#: certman.i18n.php:3 certman.i18n.php:8
+msgid "Certificate Manager"
+msgstr ""
+
+#: certman.i18n.php:5 certman.i18n.php:12
+msgid ""
+"Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
+"WebRTC and secure traffic)"
+msgstr ""
+
+#: views/new.php:6 views/view.php:9
+msgid "Certificate Settings"
+msgstr ""
+
+#: views/ca.php:62
+msgid "Certificate to use for this CA (must reference the Private Key)"
+msgstr ""
+
+#: views/ca.php:31
+msgid "DNS name or our IP address"
+msgstr ""
+
+#: functions.inc/hook_core.php:110
+msgid "DTLS Rekey Interval"
+msgstr ""
+
+#: functions.inc/hook_core.php:96
+msgid "DTLS Setup"
+msgstr ""
+
+#: functions.inc/hook_core.php:78
+msgid "DTLS Verify"
+msgstr ""
+
+#: views/view.php:2
+msgid "Delete Certificate"
+msgstr ""
+
+#: views/ca.php:24
+msgid "Delete The Certificate Authority"
+msgstr ""
+
+#: page.certman.php:137
+msgid "Deleted Certificate"
+msgstr ""
+
+#: views/new.php:36 views/view.php:23
+msgid "Description"
+msgstr ""
+
+#: Certman.class.php:78 Certman.class.php:81
+msgid "Done!"
+msgstr ""
+
+#: functions.inc/hook_core.php:50
+msgid "Enable DTLS"
+msgstr ""
+
+#: functions.inc/hook_core.php:51
+msgid "Enable or disable DTLS-SRTP support"
+msgstr ""
+
+#: page.certman.php:24 page.certman.php:37 page.certman.php:81
+#: page.certman.php:94
+msgid "Error Uploading "
+msgstr ""
+
+#: Certman.class.php:83
+msgid "Failed! Reason:"
+msgstr ""
+
+#: views/new.php:17
+msgid "Generate A New Certificate"
+msgstr ""
+
+#: views/ca.php:26
+msgid "Generate A New Certificate Authority"
+msgstr ""
+
+#: views/ca.php:55 views/new.php:44
+msgid "Generate Certificate"
+msgstr ""
+
+#: Certman.class.php:75
+msgid "Generating default CA..."
+msgstr ""
+
+#: Certman.class.php:79
+msgid "Generating default certificate..."
+msgstr ""
+
+#: views/ca.php:31
+msgid "Host Name"
+msgstr ""
+
+#: views/ca.php:23
+msgid "I know what I am doing and I understand the risks"
+msgstr ""
+
+#: functions.inc/hook_core.php:111
+msgid ""
+"Interval at which to renegotiate the TLS session and rekey the SRTP session. "
+"If this is not set or the value provided is 0 rekeying will be disabled"
+msgstr ""
+
+#: views/new.php:32 views/view.php:19
+msgid "Name"
+msgstr ""
+
+#: views/rnav.php:5
+msgid "New Certificate"
+msgstr ""
+
+#: Certman.class.php:74
+msgid "No Certificates exist"
+msgstr ""
+
+#: views/ca.php:35
+msgid "Organization Name"
+msgstr ""
+
+#: views/rnav.php:3
+msgid "Overview"
+msgstr ""
+
+#: views/ca.php:39 views/new.php:40
+msgid "Passphrase"
+msgstr ""
+
+#: views/ca.php:39
+msgid ""
+"Passphrase used to access this certificate and generate new client "
+"certificates.\n"
+"\t\t\t\tIf you don't use a passphrase when generating a new certifcate, then "
+"the private key is not encrypted with any symmetric cipher - it is output "
+"completely unprotected.\n"
+"\t\t\t\tIf you don't provide a passphrase when uploading a certificate you "
+"will have to provide the passphrase everytime a new certificate is needed"
+msgstr ""
+
+#: views/ca.php:58 views/new.php:47
+msgid "Private Key"
+msgstr ""
+
+#: page.certman.php:29 page.certman.php:86
+msgid "Private Key Doesnt Appear to be a key file"
+msgstr ""
+
+#: views/new.php:47
+msgid "Private Key File"
+msgstr ""
+
+#: views/ca.php:58
+msgid "Private Key File to use for this CA"
+msgstr ""
+
+#: views/ca.php:45
+msgid "Save Passphrase"
+msgstr ""
+
+#: page.certman.php:76
+msgid "Successfully Generated Certificate"
+msgstr ""
+
+#: views/ca.php:19
+msgid ""
+"The Certificate Authority was successfully added. Deleting/Generating/"
+"Uploading a new one will invalidate all of your current certificates!"
+msgstr ""
+
+#: functions.inc/hook_core.php:66
+msgid "The Certificate to use from Certificate Manager"
+msgstr ""
+
+#: views/new.php:36 views/view.php:23
+msgid "The Description of this certificate. Used in the module only"
+msgstr ""
+
+#: views/ca.php:35
+msgid "The Organization Name"
+msgstr ""
+
+#: views/new.php:40
+msgid "The Passphrase of the Certificate Authority"
+msgstr ""
+
+#: views/new.php:32 views/view.php:19
+msgid ""
+"The base name of the certificate, Can only contain alphanumeric characters"
+msgstr ""
+
+#: views/overview.php:3
+msgid ""
+"This module is intended to manage and generate certificates used for "
+"extensions in asterisk"
+msgstr ""
+
+#: views/view.php:27
+msgid "Update Certificate"
+msgstr ""
+
+#: page.certman.php:124
+msgid "Updated Certificate"
+msgstr ""
+
+#: views/new.php:18
+msgid "Upload A New Certificate"
+msgstr ""
+
+#: views/ca.php:27
+msgid "Upload A New Certificate Authority"
+msgstr ""
+
+#: views/ca.php:66 views/new.php:55
+msgid "Upload Certificates"
+msgstr ""
+
+#: functions.inc/hook_core.php:65
+msgid "Use Certificate"
+msgstr ""
+
+#: functions.inc/hook_core.php:79
+msgid ""
+"Verify that provided peer certificate and fingerprint are valid\n"
+"\t\t<ul>\n"
+"\t\t\t<li>A value of 'yes' will perform both certificate and fingerprint "
+"verification</li>\n"
+"\t\t\t<li>A value of 'no' will perform no certificate or fingerprint "
+"verification</li>\n"
+"\t\t\t<li>A value of 'fingerprint' will perform ONLY fingerprint "
+"verification</li>\n"
+"\t\t\t<li>A value of 'certificate' will perform ONLY certficiate "
+"verification</li>\n"
+"\t\t\t</ul>"
+msgstr ""
+
+#: views/ca.php:45
+msgid ""
+"Whether to store the password in the database so that new certificates can "
+"be generated automatically.\n"
+"\t\t\t\tWARNING!! The Passphrase is stored in PLAINTEXT! You have been "
+"warned. Use Something you dont care about or use!"
+msgstr ""
+
+#: functions.inc/hook_core.php:97
+msgid ""
+"Whether we are willing to accept connections, connect to the other party, or "
+"both.\n"
+"\t\tThis value will be used in the outgoing SDP when offering and for "
+"incoming SDP offers when the remote party sends actpass\n"
+"\t\t<ul>\n"
+"\t\t\t<li>active (we want to connect to the other party)</li>\n"
+"\t\t\t<li>passive (we want to accept connections only)</li>\n"
+"\t\t\t<li>actpass (we will do both)</li>\n"
+"\t\t\t</ul>"
+msgstr ""
+
+#: page.certman.php:113
+msgid "You must have at least one Certificate Authority"
+msgstr ""
+
+#: Certman.class.php:80
+msgid "default"
+msgstr ""
+
+#: Certman.class.php:80
+msgid "default certificate generated at install time"
+msgstr ""
