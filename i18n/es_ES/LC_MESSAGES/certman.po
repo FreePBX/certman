@@ -339,7 +339,7 @@ msgstr ""
 
 #: Certman.class.php:80
 msgid "default"
-msgstr ""
+msgstr "por defecto"
 
 #: Certman.class.php:80
 msgid "default certificate generated at install time"
