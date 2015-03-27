@@ -10,13 +10,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-20 19:07-0500\n"
-"PO-Revision-Date: 2015-02-20 19:07-0500\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2015-03-26 01:02+0200\n"
+"Last-Translator: Ernesto <ecasas@sangoma.com>\n"
+"Language-Team: Spanish "
+"<http://weblate.freepbx.org/projects/freepbx/certman/es_ES/>\n"
+"Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.2-dev\n"
 
 #: Certman.class.php:416
 #, php-format
@@ -31,7 +34,7 @@ msgstr ""
 
 #: certman.i18n.php:4 certman.i18n.php:10
 msgid "Admin"
-msgstr ""
+msgstr "Administrador"
 
 #: views/ca.php:62 views/new.php:51
 msgid "Certificate"
@@ -121,7 +124,7 @@ msgstr ""
 
 #: views/new.php:36 views/view.php:23
 msgid "Description"
-msgstr ""
+msgstr "Descripción"
 
 #: Certman.class.php:78 Certman.class.php:81
 msgid "Done!"
@@ -196,7 +199,7 @@ msgstr ""
 
 #: views/rnav.php:3
 msgid "Overview"
-msgstr ""
+msgstr "Visión de Conjunto"
 
 #: views/ca.php:39 views/new.php:40
 msgid "Passphrase"
@@ -245,7 +248,7 @@ msgstr ""
 
 #: functions.inc/hook_core.php:66
 msgid "The Certificate to use from Certificate Manager"
-msgstr ""
+msgstr "Certificado a usar desde el Gestor de Certificados"
 
 #: views/new.php:36 views/view.php:23
 msgid "The Description of this certificate. Used in the module only"
@@ -292,7 +295,7 @@ msgstr ""
 
 #: functions.inc/hook_core.php:65
 msgid "Use Certificate"
-msgstr ""
+msgstr "Use Certificado"
 
 #: functions.inc/hook_core.php:79
 msgid ""
