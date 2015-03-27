@@ -183,7 +183,7 @@ msgstr ""
 
 #: views/new.php:32 views/view.php:19
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: views/rnav.php:5
 msgid "New Certificate"
