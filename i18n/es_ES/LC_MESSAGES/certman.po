@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-20 19:07-0500\n"
-"PO-Revision-Date: 2015-04-03 10:11+0200\n"
+"PO-Revision-Date: 2015-04-17 03:30+0200\n"
 "Last-Translator: Daver <daverjorge46@gmail.com>\n"
 "Language-Team: Spanish "
 "<http://weblate.freepbx.org/projects/freepbx/certman/es_ES/>\n"
@@ -384,7 +384,7 @@ msgstr "Usted debe tener al menos una Autoridad Certificadora"
 
 #: Certman.class.php:80
 msgid "default"
-msgstr "por defecto"
+msgstr "Por defecto"
 
 #: Certman.class.php:80
 msgid "default certificate generated at install time"
