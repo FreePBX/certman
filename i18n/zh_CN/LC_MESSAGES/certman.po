@@ -12,8 +12,7 @@ msgstr ""
 "POT-Creation-Date: 2015-03-06 21:36-0500\n"
 "PO-Revision-Date: 2015-02-26 16:29+0200\n"
 "Last-Translator: james <zhulizhong@gmail.com>\n"
-"Language-Team: Simplified Chinese <http://weblate.freepbx.org/projects/"
-"freepbx/certman/zh_CN/>\n"
+"Language-Team: Simplified Chinese <http://weblate.freepbx.org/projects/freepbx/certman/zh_CN/>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -27,9 +26,7 @@ msgid "%s Already Exists at that location!"
 msgstr ""
 
 #: views/ca.php:6
-msgid ""
-"A Certificate Authority is already present on this system. Deleting/"
-"Generating/Uploading will invalidate all of your current certificates!"
+msgid "A Certificate Authority is already present on this system. Deleting/Generating/Uploading will invalidate all of your current certificates!"
 msgstr ""
 
 #: views/certgrid.php:29
@@ -89,9 +86,7 @@ msgid "Certificate Manager"
 msgstr ""
 
 #: certman.i18n.php:8
-msgid ""
-"Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
-"WebRTC and secure traffic)"
+msgid "Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)"
 msgstr ""
 
 #: views/view.php:10
@@ -180,9 +175,7 @@ msgid "I Know what I am doing"
 msgstr ""
 
 #: functions.inc/hook_core.php:114
-msgid ""
-"Interval at which to renegotiate the TLS session and rekey the SRTP session. "
-"If this is not set or the value provided is 0 rekeying will be disabled"
+msgid "Interval at which to renegotiate the TLS session and rekey the SRTP session. If this is not set or the value provided is 0 rekeying will be disabled"
 msgstr ""
 
 #: views/new.php:63 views/view.php:23
@@ -211,13 +204,9 @@ msgstr ""
 
 #: views/ca.php:88
 msgid ""
-"Passphrase used to access this certificate and generate new client "
-"certificates.\n"
-"\t\t\t\t\tIf you don't use a passphrase when generating a new certifcate, "
-"then the private key is not encrypted with any symmetric cipher - it is "
-"output completely unprotected.\n"
-"\t\t\t\t\tIf you don't provide a passphrase when uploading a certificate you "
-"will have to provide the passphrase everytime a new certificate is needed"
+"Passphrase used to access this certificate and generate new client certificates.\n"
+"\t\t\t\t\tIf you don't use a passphrase when generating a new certifcate, then the private key is not encrypted with any symmetric cipher - it is output completely unprotected.\n"
+"\t\t\t\t\tIf you don't provide a passphrase when uploading a certificate you will have to provide the passphrase everytime a new certificate is needed"
 msgstr ""
 
 #: views/ca.php:151 views/new.php:160
@@ -277,8 +266,7 @@ msgid "The Passphrase of the Certificate Authority"
 msgstr ""
 
 #: views/new.php:75 views/view.php:35
-msgid ""
-"The base name of the certificate, Can only contain alphanumeric characters"
+msgid "The base name of the certificate, Can only contain alphanumeric characters"
 msgstr ""
 
 #: views/new.php:67
@@ -286,9 +274,7 @@ msgid "This field cannot be blank and must be alphanumeric"
 msgstr ""
 
 #: views/overview.php:9
-msgid ""
-"This module is intended to manage and generate certificates used for "
-"extensions in asterisk"
+msgid "This module is intended to manage and generate certificates used for extensions in asterisk"
 msgstr ""
 
 #: Certman.class.php:288
@@ -315,31 +301,23 @@ msgstr "使用证书"
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
 "\t\t<ul>\n"
-"\t\t\t<li>A value of 'yes' will perform both certificate and fingerprint "
-"verification</li>\n"
-"\t\t\t<li>A value of 'no' will perform no certificate or fingerprint "
-"verification</li>\n"
-"\t\t\t<li>A value of 'fingerprint' will perform ONLY fingerprint "
-"verification</li>\n"
-"\t\t\t<li>A value of 'certificate' will perform ONLY certficiate "
-"verification</li>\n"
+"\t\t\t<li>A value of 'yes' will perform both certificate and fingerprint verification</li>\n"
+"\t\t\t<li>A value of 'no' will perform no certificate or fingerprint verification</li>\n"
+"\t\t\t<li>A value of 'fingerprint' will perform ONLY fingerprint verification</li>\n"
+"\t\t\t<li>A value of 'certificate' will perform ONLY certficiate verification</li>\n"
 "\t\t\t</ul>"
 msgstr ""
 
 #: views/ca.php:115
 msgid ""
-"Whether to store the password in the database so that new certificates can "
-"be generated automatically.<br/>\n"
-"\t\t\t\t\t<b>WARNING!!</b> The Passphrase is stored in PLAINTEXT! You have "
-"been warned. Use Something you dont care about or use!"
+"Whether to store the password in the database so that new certificates can be generated automatically.<br/>\n"
+"\t\t\t\t\t<b>WARNING!!</b> The Passphrase is stored in PLAINTEXT! You have been warned. Use Something you dont care about or use!"
 msgstr ""
 
 #: functions.inc/hook_core.php:100
 msgid ""
-"Whether we are willing to accept connections, connect to the other party, or "
-"both.\n"
-"\t\tThis value will be used in the outgoing SDP when offering and for "
-"incoming SDP offers when the remote party sends actpass\n"
+"Whether we are willing to accept connections, connect to the other party, or both.\n"
+"\t\tThis value will be used in the outgoing SDP when offering and for incoming SDP offers when the remote party sends actpass\n"
 "\t\t<ul>\n"
 "\t\t\t<li>active (we want to connect to the other party)</li>\n"
 "\t\t\t<li>passive (we want to accept connections only)</li>\n"
@@ -357,6 +335,55 @@ msgstr "默认"
 
 #: Certman.class.php:80
 msgid "default certificate generated at install time"
+msgstr ""
+
+#: views/ca.php:24
+msgid "Delete The Certificate Authority"
+msgstr ""
+
+#: views/new.php:17
+msgid "Generate A New Certificate"
+msgstr ""
+
+#: views/ca.php:26
+msgid "Generate A New Certificate Authority"
+msgstr ""
+
+#: views/ca.php:23
+msgid "I know what I am doing and I understand the risks"
+msgstr ""
+
+#: views/ca.php:39
+msgid ""
+"Passphrase used to access this certificate and generate new client certificates.\n"
+"\t\t\t\tIf you don't use a passphrase when generating a new certifcate, then the private key is not encrypted with any symmetric cipher - it is output completely unprotected.\n"
+"\t\t\t\tIf you don't provide a passphrase when uploading a certificate you will have to provide the passphrase everytime a new certificate is needed"
+msgstr ""
+
+#: views/ca.php:19
+msgid "The Certificate Authority was successfully added. Deleting/Generating/Uploading a new one will invalidate all of your current certificates!"
+msgstr ""
+
+#: views/new.php:18
+msgid "Upload A New Certificate"
+msgstr ""
+
+#: views/ca.php:27
+msgid "Upload A New Certificate Authority"
+msgstr ""
+
+#: views/ca.php:66 views/new.php:55
+msgid "Upload Certificates"
+msgstr ""
+
+#: views/ca.php:45
+msgid ""
+"Whether to store the password in the database so that new certificates can be generated automatically.\n"
+"\t\t\t\tWARNING!! The Passphrase is stored in PLAINTEXT! You have been warned. Use Something you dont care about or use!"
+msgstr ""
+
+#: page.certman.php:113
+msgid "You must have at least one Certificate Authority"
 msgstr ""
 
 #~ msgid "Overview"
