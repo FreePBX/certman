@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-20 19:07-0500\n"
+"POT-Creation-Date: 2015-05-12 12:22-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,10 +26,6 @@ msgstr ""
 msgid ""
 "A Certificate Authority is already present on this system. Deleting/"
 "Generating/Uploading will invalidate all of your current certificates!"
-msgstr ""
-
-#: certman.i18n.php:4 certman.i18n.php:10
-msgid "Admin"
 msgstr ""
 
 #: views/ca.php:62 views/new.php:51
@@ -68,18 +64,8 @@ msgstr ""
 msgid "Certificate ID is unknown!"
 msgstr ""
 
-#: certman.i18n.php:6 certman.i18n.php:14 views/overview.php:1
+#: views/overview.php:1
 msgid "Certificate Management"
-msgstr ""
-
-#: certman.i18n.php:3 certman.i18n.php:8
-msgid "Certificate Manager"
-msgstr ""
-
-#: certman.i18n.php:5 certman.i18n.php:12
-msgid ""
-"Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
-"WebRTC and secure traffic)"
 msgstr ""
 
 #: views/new.php:6 views/view.php:9
