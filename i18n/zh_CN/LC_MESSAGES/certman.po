@@ -332,4 +332,4 @@ msgid "default certificate generated at install time"
 msgstr ""
 
 #~ msgid "Admin"
-#~ msgstr "管理员"
+#~ msgstr "管理"
