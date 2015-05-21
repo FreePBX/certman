@@ -5,5 +5,6 @@
 $request = $_REQUEST;
 $certman = FreePBX::Certman();
 $message = array();
+$request['action'] = !empty($request['action']) ? $request['action'] : "";
 
 echo $certman->myShowPage($request['action']);

@@ -4,7 +4,7 @@ if(!empty($message)) {
 }
 //ca input
 if(count($cas) == 1){
-	$rpf = !empty($cas[0]['passphrase']) && $cas[0]['passphrase'] == 'yes' && !empty($cas[0]['salt']) ? 'no' : 'yes';
+	$rpf = !empty($cas[0]['passphrase']) ? 'no' : 'yes';
 	$cainput = '<b>' . $cas[0]['on'] . '</b>';
 	$cainput .= '<input type="hidden" name="ca" id="ca" value="' . $cas[0]['uid'] . '" data-requirespassphrase="'. $rpf . '" >';
 }else{
@@ -20,7 +20,7 @@ if(count($cas) == 1){
 
 <div class="container-fluid">
 	<h1><?php echo _('New Certificate')?></h1>
-	<?php echo $messagehtml ?>
+	<?php echo !empty($messagehtml) ? $messagehtml : "" ?>
 	<div class = "display full-border">
 		<div class="row">
 			<div class="col-sm-9">

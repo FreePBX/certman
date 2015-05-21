@@ -27,21 +27,30 @@ $(function() {
 		$("#caform").removeClass('hidden');
 		$("#Submit").prop('disabled', false);
 		$("#Reset").prop('disabled', false);
+		$('#Delete').prop('disabled', false);
 		$("#replace").val("replace");
 	});
+	if($("#hostname").is(":visible")) {
+		$('#Submit').removeClass('hidden');
+		$('#Reset').removeClass('hidden');
+	}
 	$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
 	    var clicked = $(this).attr('href');
 	    switch(clicked){
 			case '#casettings':
-				$('#Delete').addClass('hidden');
+				if($("#caexists").length) {
+					$('#Delete').removeClass('hidden');
+				}
 				$('#Submit').removeClass('hidden');
 				$('#Reset').removeClass('hidden');
 				if($("#caexists").length > 0 && !$("#hostname").is(":visible")){
 					$("#Submit").prop('disabled', true);
 					$("#Reset").prop('disabled', true);
+					$('#Delete').prop('disabled', true);
 				} else if($("#hostname").is(":visible")) {
 					$("#Submit").prop('disabled', false);
 					$("#Reset").prop('disabled', false);
+					$('#Delete').prop('disabled', false);
 				}
 			break;
 			default:
@@ -50,7 +59,7 @@ $(function() {
 				$('#Delete').addClass('hidden');
 			break;
 		}
-	})
+	});
 	$("#capage #caexistscheck").change(function() {
 		if ($(this).is(":checked")) {
 			$("#capage .selection button").prop("disabled", false);
@@ -59,75 +68,42 @@ $(function() {
 		}
 	});
 
-	$("#capage button.submit").click(function() {
-		if ($(this).data("submitting")) {
-			return false;
-		}
-		var type = $(this).data("type"), r = true;
-		$("#catype").val(type);
-		if (type == "generate") {
-			$("#capage input[type=\"text\"]").each( function(i, v) {
+	$("#Submit").click(function(e) {
+		var stop = false;
+		if($("#certpage").length) {
+
+		} else if($("#hostname").is(":visible")) {
+			$("#caform input[type=\"text\"]").each( function(i, v) {
 				if ($(this).val() === "") {
-					alert("Host Name or Organization Name can not be left blank");
-					$(this).focus();
-					r = false;
+					warnInvalid($(this),_("Can not be left blank!"));
+					stop = true;
 					return false;
 				}
 			});
-			if ($("#capage input[type=\"password\"]").val() === "") {
-				if (!confirm("Are you sure you dont want a passphrase?")) {
-					$("#capage input[type=\"password\"]").focus();
-					return false;
-				}
-			}
-		} else if (type == "upload") {
-		} else if (type == "delete") {
-			r = confirm("Are you sure you want to delete the Certificate Authority?");
-		} else {
-			r = false;
-		}
-		if (r === true) {
-			if ($(this).data("type") == "generate") {
-				$(this).text("Generating.. Please wait");
-				$(this).prop("disabled", true);
-				$("form").submit();
-			}
-			$(this).data("submitting", true);
-		}
-		return r;
-	});
-
-	$("#certpage .selection button.visual").click(function() {
-		var type = $(this).data("type");
-		$("#certpage .general").fadeIn("slow");
-		$("#certpage ." + type).fadeIn("slow");
-		$("#certpage .selection").fadeOut("slow");
-		if ($("#ca :selected").data("requirespassphrase") == "yes") {
-			$("#certpage .passphrase").fadeIn("slow");
-		}
-		return false;
-	});
-
-	$("#certpage button.submit").click(function() {
-		var type = $(this).data("type"), r = true;
-		$("#certtype").val(type);
-		$("#certpage input[type=\"text\"]").each( function(i, v) {
-			if ($(this).val() === "") {
-				alert("No Fields Can Be Left Blank");
-				r = false;
+			if(stop) {
 				return false;
 			}
-			if ($(this).prop("name") == "name") {
-				if (!isAlphanumeric($(this).val())) {
-					alert("Name Must Be Alphanumeric!");
-					r = false;
+			if ($("#caform input[type=\"password\"]").val() === "") {
+				if (!confirm(_("Are you sure you dont want a passphrase?"))) {
+					$("#caform input[type=\"password\"]").focus();
 					return false;
 				}
 			}
-		});
-		if ($("#certpage .passphrase").is(":visible") && $("#certpage .passphrase input[type=\"password\"]").val() === "") {
-			r = confirm("Are you sure there is no passphrase for the Certificate Authority?");
 		}
-		return r;
+		if(stop) {
+			e.stopPropagation();
+			e.preventDefault();
+		} else {
+			$(this).val(_("Generating.. Please wait"));
+			$(this).prop("disabled", true);
+			$(".fpbx-submit").submit();
+		}
+	});
+
+	$("#deletecert").click(function() {
+		if(!confirm(_("Are you sure you want to delete this certificate?"))) {
+			e.stopPropagation();
+			e.preventDefault();
+		}
 	});
 });

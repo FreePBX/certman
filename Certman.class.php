@@ -24,6 +24,7 @@ class Certman implements \BMO {
 			"dtls_rekey" => "0"
 		)
 	);
+	private $message = "";
 
 	public function __construct($freepbx = null) {
 		if ($freepbx == null)
@@ -104,10 +105,12 @@ class Certman implements \BMO {
 	public function restore($backup){}
 	public function doConfigPageInit($page){
 		$request = $_REQUEST;
+		$request['action'] = !empty($request['action']) ? $request['action'] : "";
+		$request['replace'] = !empty($request['replace']) ? $request['replace'] : "";
 		switch($request['action']) {
 			case 'ca':
 				$type = !empty($request['type']) ? $request['type'] : "";
-				($_FILES["privatekey"]['name'] != '')?$type = 'upload':$type = $type;
+				$type = (!empty($_FILES["privatekey"]['name']) && $_FILES["privatekey"]['name'] != '') ? 'upload' : $type;
 				$new = false;
 				if($request['replace'] === 'replace'){
 					$this->removeCA();
@@ -129,7 +132,7 @@ class Certman implements \BMO {
 						} else {
 							$pi = pathinfo($_FILES["privatekey"]['name']);
 							if($pi['extension'] != 'key') {
-								$this->message = array('type' => 'danger', 'message' => _('Private Key Doesnt Appear to be a key file'));
+								$this->message = array('type' => 'danger', 'message' => _('Private key doesnt appear to be a key file'));
 								break;
 							} else {
 								move_uploaded_file($_FILES["privatekey"]["tmp_name"],'/etc/asterisk/keys/ca.key');
@@ -142,7 +145,7 @@ class Certman implements \BMO {
 						} else {
 							$pi = pathinfo($_FILES["certificate"]['name']);
 							if($pi['extension'] != 'crt') {
-								$this->message = array('type' => 'danger', 'message' => _('Certificate Doesnt Appear to be a crt file'));
+								$this->message = array('type' => 'danger', 'message' => _('Certificate doesnt appear to be a crt file'));
 								break;
 							} else {
 								move_uploaded_file($_FILES["certificate"]["tmp_name"],'/etc/asterisk/keys/ca.crt');
@@ -150,10 +153,14 @@ class Certman implements \BMO {
 						}
 						$this->generateConfig('ca',$request['hostname'],$request['orgname']);
 						$this->saveCA('ca',$request['hostname'],$request['orgname'],$request['passphrase']);
+						$this->message = array('type' => 'success', 'message' => _('Successfully generated a Certificate Authority'));
 						$new = true;
 					break;
 					case 'delete':
-						$this->removeCA();
+						$status = $this->removeCA();
+						if($status) {
+							$this->message = array('type' => 'success', 'message' => _('Successfully deleted the Certificate Authority'));
+						}
 					break;
 					default:
 					break;
@@ -164,11 +171,11 @@ class Certman implements \BMO {
 			case 'new':
 				$cas = $this->getAllManagedCAs();
 				if(!empty($cas)) {
-					if($this->checkCertificateName($request['name'])) {
-						$this->message = array('type' => 'danger', 'message' => _('Certificate Already Exists'));
+					if(!empty($request['name']) && $this->checkCertificateName($request['name'])) {
+						$this->message = array('type' => 'danger', 'message' => _('Certificate already exists'));
 					} else {
 						$type = !empty($request['type']) ? $request['type'] : "";
-						($_FILES["privatekey"]['name'] != '')?$type = 'upload':$type = $type;
+						$type = (!empty($_FILES["privatekey"]['name']) && $_FILES["privatekey"]['name'] != '') ? 'upload' : $type;
 						switch($type) {
 							case 'generate':
 								$ca = $this->getCADetails($request['ca']);
@@ -177,18 +184,18 @@ class Certman implements \BMO {
 								if($out !== true) {
 									$this->message = array('type' => 'danger', 'message' => nl2br($out));
 								} else {
-									$this->message = array('type' => 'success', 'message' => _('Successfully Generated Certificate'));
+									$this->message = array('type' => 'success', 'message' => _('Successfully generated a Certificate'));
 									$this->goto = 'overview';
 								}
 							break;
 							case 'upload':
 								if ($_FILES["privatekey"]["error"] > 0) {
-									$this->message = array('type' => 'danger', 'message' => _('Error Uploading ' . $_FILES["privatekey"]["error"]));
+									$this->message = array('type' => 'danger', 'message' => _('Error uploading ' . $_FILES["privatekey"]["error"]));
 									break;
 								} else {
 									$pi = pathinfo($_FILES["privatekey"]['name']);
 									if($pi['extension'] != 'key') {
-										$this->message = array('type' => 'danger', 'message' => _('Private Key Doesnt Appear to be a key file'));
+										$this->message = array('type' => 'danger', 'message' => _('Private key doesnt appear to be a key file'));
 										break;
 									} else {
 										move_uploaded_file($_FILES["privatekey"]["tmp_name"],'/etc/asterisk/keys/'.$request['name'].'.key');
@@ -196,19 +203,19 @@ class Certman implements \BMO {
 								}
 
 								if ($_FILES["certificate"]["error"] > 0) {
-									$this->message = array('type' => 'danger', 'message' => _('Error Uploading ' . $_FILES["certificate"]["error"]));
+									$this->message = array('type' => 'danger', 'message' => _('Error uploading ' . $_FILES["certificate"]["error"]));
 									break;
 								} else {
 									$pi = pathinfo($_FILES["certificate"]['name']);
 									if($pi['extension'] != 'crt') {
-										$this->message = array('type' => 'danger', 'message' => _('Certificate Doesnt Appear to be a crt file'));
+										$this->message = array('type' => 'danger', 'message' => _('Certificate does not appear to be a .crt file'));
 										break;
 									} else {
 										move_uploaded_file($_FILES["certificate"]["tmp_name"],'/etc/asterisk/keys/'.$request['name'].'.crt');
 									}
 								}
 								$this->saveCertificate($request['ca'],$request['name'],$request['description']);
-								$this->message = array('type' => 'success', 'message' => _('Successfully Uploaded Certificate'));
+								$this->message = array('type' => 'success', 'message' => _('Successfully uploaded a certificate'));
 
 							break;
 							default:
@@ -263,45 +270,47 @@ class Certman implements \BMO {
 		}
 	}
 	public function getActionBar($request) {
-        $buttons = array();
-        switch($request['display']) {
-            case 'certman':
-                $buttons = array(
-                    'delete' => array(
-                        'name' => 'delete',
-                        'id' => 'Delete',
-                        'value' => _('Delete')
-                    ),
-                    'reset' => array(
-                        'name' => 'reset',
-                        'id' => 'Reset',
-                        'value' => _('Reset')
-                    ),
-                    'submit' => array(
-                        'name' => 'submit',
-                        'id' => 'Submit',
-                        'value' => _('Submit')
-                    )
-                );
-				switch($request['action']){
-					case 'view':
-						$buttons['submit']['value'] = _('Update Certificate');
-						$buttons['delete']['value'] = _('Delete Certificate');
-					break;
-					case 'new':
-						unset($buttons['delete']);
-						$buttons['submit']['value'] = _('Generate Certificate');
-					break;
-					default:
-						$buttons['submit']['class'] = 'hidden';
-						$buttons['reset']['class'] = 'hidden';
-						$buttons['delete']['class'] = 'hidden';
-					break;
-				}
-            break;
-        }
-        return $buttons;
-    }
+		$buttons = array();
+		$request['action'] = !empty($request['action']) ? $request['action'] : "";
+		switch($request['display']) {
+			case 'certman':
+				$buttons = array(
+					'delete' => array(
+						'name' => 'delete',
+						'id' => 'Delete',
+						'value' => _('Delete')
+						),
+						'reset' => array(
+							'name' => 'reset',
+							'id' => 'Reset',
+							'value' => _('Reset')
+						),
+						'submit' => array(
+							'name' => 'submit',
+							'id' => 'Submit',
+							'value' => _('Submit')
+						)
+					);
+					switch($request['action']){
+						case 'view':
+							$buttons['submit']['value'] = _('Update Certificate');
+							$buttons['delete']['value'] = _('Delete Certificate');
+						break;
+						case 'new':
+							unset($buttons['delete']);
+							$buttons['submit']['value'] = _('Generate Certificate');
+						break;
+						default:
+							$buttons['submit']['class'] = 'hidden';
+							$buttons['reset']['class'] = 'hidden';
+							$buttons['delete']['class'] = 'hidden';
+						break;
+					}
+				break;
+			}
+		return $buttons;
+	}
+
 	public function myDialplanHooks() {
 		return true;
 	}
@@ -593,7 +602,7 @@ class Certman implements \BMO {
 			$this->PKCS->removeCA();
 			$this->PKCS->removeConfig();
 		} catch(\Exception $e) {
-
+			return false;
 		}
 		$sql = "TRUNCATE certman_cas";
 		$sth = $this->db->prepare($sql);
@@ -601,6 +610,7 @@ class Certman implements \BMO {
 		foreach($this->getAllManagedCertificates() as $cert) {
 			$this->removeCertificate($cert['cid']);
 		}
+		return true;
 	}
 
 	public function updateCert($cid,$name,$description) {

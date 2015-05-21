@@ -1,5 +1,4 @@
 <?php
-debug('****HERE**** '.$caExists);
 if($caExists){
 	$cafclass = 'hidden';
 	$caehtml = '<div class ="well" id="caexists">';
@@ -11,10 +10,10 @@ if($caExists){
 
 ?>
 <div class="fpbx-container">
-	<h2><?php echo _("Certificate Authority Settings")?></h2>
-	<?php echo $caehtml ?>
-	<div id = "caform" class="<?php echo $cafclass?>">
-		<form autocomplete="off" class="fpbx-submit" name="editCAS" method="post" action="config.php?display=certman" enctype="multipart/form-data">
+	<h2><?php echo $caExists ? _("Edit Certificate Authority Settings") : _("New Certificate Authority Settings")?></h2>
+	<?php echo !empty($caehtml) ? $caehtml : "" ?>
+	<div id = "caform" class="<?php echo !empty($cafclass) ? $cafclass : ""?>">
+		<form autocomplete="off" class="fpbx-submit" name="editCAS" method="post" action="config.php?display=certman" data-fpbx-delete="config.php?display=certman&amp;action=ca&amp;type=delete" enctype="multipart/form-data">
 		<input id="catype" type="hidden" name="type" value="generate">
 		<input id="action" type="hidden" name="action" value="ca">
 		<input id="replace" type="hidden" name="replace" value="no">
@@ -29,7 +28,7 @@ if($caExists){
 								<i class="fa fa-question-circle fpbx-help-icon" data-for="hostname"></i>
 							</div>
 							<div class="col-md-9">
-								<input type="text" class="form-control" id="hostname" name="hostname" placeholder="<?php echo $_SERVER['SERVER_NAME'] ?>" value="<?php echo $_SERVER['SERVER_NAME'] ?>" tabindex="<?php echo ++$tabindex;?>" required">
+								<input type="text" class="form-control" id="hostname" name="hostname" placeholder="<?php echo $_SERVER['SERVER_NAME'] ?>" value="<?php echo $_SERVER['SERVER_NAME'] ?>" required">
 							</div>
 						</div>
 					</div>
@@ -40,7 +39,7 @@ if($caExists){
 					<span id="hostname-help" class="help-block fpbx-help-block"><?php echo _("DNS name or our IP address")?></span>
 				</div>
 			</div>
-		</div>					
+		</div>
 		<!--END Hostname-->
 		<!--Orgname-->
 		<div class="element-container">
@@ -53,7 +52,7 @@ if($caExists){
 								<i class="fa fa-question-circle fpbx-help-icon" data-for="orgname"></i>
 							</div>
 							<div class="col-md-9">
-								<input type="text" class="form-control" id="orgname" name="orgname" placeholder="My Super Organization" value="" tabindex="<?php echo ++$tabindex;?>" required">
+								<input type="text" class="form-control" id="orgname" name="orgname" placeholder="My Super Organization" value="" required">
 							</div>
 						</div>
 					</div>
@@ -64,7 +63,7 @@ if($caExists){
 					<span id="orgname-help" class="help-block fpbx-help-block"><?php echo  _("The Organization Name")?></span>
 				</div>
 			</div>
-		</div>					
+		</div>
 		<!--END Orgname-->
 		<!--Passphrase-->
 		<div class="element-container">
@@ -77,7 +76,7 @@ if($caExists){
 								<i class="fa fa-question-circle fpbx-help-icon" data-for="passphrase"></i>
 							</div>
 							<div class="col-md-9">
-								<input type="password" class="form-control" id="passphrase" name="passphrase" value="" tabindex="<?php echo ++$tabindex;?>" required">
+								<input type="password" class="form-control" id="passphrase" name="passphrase" value=""  required">
 							</div>
 						</div>
 					</div>
@@ -90,7 +89,7 @@ if($caExists){
 					If you don't provide a passphrase when uploading a certificate you will have to provide the passphrase everytime a new certificate is needed")?></span>
 				</div>
 			</div>
-		</div>					
+		</div>
 		<!--END Passphrase-->
 		<!--Save Passphrase-->
 		<div class="element-container">
@@ -116,7 +115,7 @@ if($caExists){
 					<b>WARNING!!</b> The Passphrase is stored in PLAINTEXT! You have been warned. Use Something you dont care about or use!") ?></span>
 				</div>
 			</div>
-		</div>					
+		</div>
 		<!--END Save Passphrase-->
 		<!--Enable Upload-->
 		<div class="element-container">
@@ -195,7 +194,7 @@ if($caExists){
 			</div>
 		</div>
 		<!--END Certificate-->
-	
+
 		</form>
 	</div>
 </div>
