@@ -64,7 +64,7 @@ function certman_configpageload($mode) {
 	$currentcomponent->addguielem($section, new gui_selectbox(
 		'dtls_certificate',
 		$certs,
-		$settings['cid'],
+		isset($settings['cid']) ? $settings['cid'] : '',
 		_('Use Certificate'),
 		_("The Certificate to use from Certificate Manager"),
 		false),6,null,$category
