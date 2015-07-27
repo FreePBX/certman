@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-12 12:22-0400\n"
-"PO-Revision-Date: 2015-07-27 08:26+0200\n"
+"PO-Revision-Date: 2015-07-27 10:26+0200\n"
 "Last-Translator: Kevin <kevin@qloog.com>\n"
 "Language-Team: Japanese "
 "<http://weblate.freepbx.org/projects/freepbx/certman/ja_JP/>\n"
@@ -110,7 +110,7 @@ msgstr ""
 
 #: views/new.php:36 views/view.php:23
 msgid "Description"
-msgstr "詳細"
+msgstr "説明"
 
 #: Certman.class.php:78 Certman.class.php:81
 msgid "Done!"
