@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-21 15:03-0400\n"
+"POT-Creation-Date: 2015-08-06 16:33-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: Certman.class.php:623
+#: Certman.class.php:624
 #, php-format
 msgid "%s Already Exists at that location!"
 msgstr ""
@@ -50,7 +50,7 @@ msgstr ""
 msgid "Certificate"
 msgstr ""
 
-#: Certman.class.php:518
+#: Certman.class.php:519
 msgid "Certificate Already Exists"
 msgstr ""
 
@@ -70,7 +70,7 @@ msgstr ""
 msgid "Certificate File"
 msgstr ""
 
-#: Certman.class.php:635
+#: Certman.class.php:636
 msgid "Certificate ID is unknown!"
 msgstr ""
 
@@ -86,15 +86,15 @@ msgstr ""
 msgid "Certificate Settings"
 msgstr ""
 
-#: Certman.class.php:175
+#: Certman.class.php:176
 msgid "Certificate already exists"
 msgstr ""
 
-#: Certman.class.php:211
+#: Certman.class.php:212
 msgid "Certificate does not appear to be a .crt file"
 msgstr ""
 
-#: Certman.class.php:148
+#: Certman.class.php:149
 msgid "Certificate doesnt appear to be a crt file"
 msgstr ""
 
@@ -122,15 +122,15 @@ msgstr ""
 msgid "DTLS Verify"
 msgstr ""
 
-#: Certman.class.php:281
+#: Certman.class.php:282
 msgid "Delete"
 msgstr ""
 
-#: Certman.class.php:297
+#: Certman.class.php:298
 msgid "Delete Certificate"
 msgstr ""
 
-#: Certman.class.php:244
+#: Certman.class.php:245
 msgid "Deleted Certificate"
 msgstr ""
 
@@ -140,8 +140,8 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: Certman.class.php:79
-#: Certman.class.php:82
+#: Certman.class.php:80
+#: Certman.class.php:83
 msgid "Done!"
 msgstr ""
 
@@ -157,30 +157,30 @@ msgstr ""
 msgid "Enable or disable DTLS-SRTP support"
 msgstr ""
 
-#: Certman.class.php:130
-#: Certman.class.php:143
+#: Certman.class.php:131
+#: Certman.class.php:144
 msgid "Error Uploading "
 msgstr ""
 
-#: Certman.class.php:193
-#: Certman.class.php:206
+#: Certman.class.php:194
+#: Certman.class.php:207
 msgid "Error uploading "
 msgstr ""
 
-#: Certman.class.php:84
+#: Certman.class.php:85
 msgid "Failed! Reason:"
 msgstr ""
 
-#: Certman.class.php:301
+#: Certman.class.php:302
 #: assets/js/certman.js:21
 msgid "Generate Certificate"
 msgstr ""
 
-#: Certman.class.php:76
+#: Certman.class.php:77
 msgid "Generating default CA..."
 msgstr ""
 
-#: Certman.class.php:80
+#: Certman.class.php:81
 msgid "Generating default certificate..."
 msgstr ""
 
@@ -220,7 +220,7 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: Certman.class.php:75
+#: Certman.class.php:76
 msgid "No Certificates exist"
 msgstr ""
 
@@ -257,12 +257,12 @@ msgstr ""
 msgid "Private Key File to use for this CA"
 msgstr ""
 
-#: Certman.class.php:135
-#: Certman.class.php:198
+#: Certman.class.php:136
+#: Certman.class.php:199
 msgid "Private key doesnt appear to be a key file"
 msgstr ""
 
-#: Certman.class.php:286
+#: Certman.class.php:287
 msgid "Reset"
 msgstr ""
 
@@ -275,23 +275,23 @@ msgstr ""
 msgid "Select this for additional fields used to upload your own certificate."
 msgstr ""
 
-#: Certman.class.php:291
+#: Certman.class.php:292
 msgid "Submit"
 msgstr ""
 
-#: Certman.class.php:162
+#: Certman.class.php:163
 msgid "Successfully deleted the Certificate Authority"
 msgstr ""
 
-#: Certman.class.php:187
+#: Certman.class.php:188
 msgid "Successfully generated a Certificate"
 msgstr ""
 
-#: Certman.class.php:156
+#: Certman.class.php:157
 msgid "Successfully generated a Certificate Authority"
 msgstr ""
 
-#: Certman.class.php:218
+#: Certman.class.php:219
 msgid "Successfully uploaded a certificate"
 msgstr ""
 
@@ -328,11 +328,11 @@ msgid ""
 "extensions in asterisk"
 msgstr ""
 
-#: Certman.class.php:296
+#: Certman.class.php:297
 msgid "Update Certificate"
 msgstr ""
 
-#: Certman.class.php:235
+#: Certman.class.php:236
 msgid "Updated Certificate"
 msgstr ""
 
@@ -389,10 +389,10 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: Certman.class.php:81
+#: Certman.class.php:82
 msgid "default"
 msgstr ""
 
-#: Certman.class.php:81
+#: Certman.class.php:82
 msgid "default certificate generated at install time"
 msgstr ""
