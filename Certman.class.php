@@ -35,7 +35,6 @@ class Certman implements \BMO {
 		$this->FreePBX->PJSip = $this->FreePBX->Core->getDriver('pjsip');
 		$this->PKCS = $this->FreePBX->PKCS;
 		$this->PKCS->timeout = 240; //because of piiiiiis
-		set_time_limit(240); //more pis. <3 all the pis for taking so long
 	}
 
 	/**
