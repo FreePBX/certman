@@ -73,15 +73,19 @@ class Certman implements \BMO {
 		if(!$this->checkCAexists()) {
 			out(_("No Certificates exist"));
 			outn(_("Generating default CA..."));
-			try {
-				$caid = $this->generateCA('ca',gethostname(),gethostname(),openssl_random_pseudo_bytes(32),true);
-				out(_("Done!"));
-				outn(_("Generating default certificate..."));
-				$this->generateCertificate($caid,_("default"),_("default certificate generated at install time"));
-				out(_("Done!"));
-			} catch(\Exception $e) {
-				out(_("Failed! Reason:".$e->getMessage()));
+
+			// See if we can random
+			if (function_exists('openssl_random_pseudo_bytes')) {
+				$passwd = base64_encode(openssl_random_pseudo_bytes(32));
+			} else {
+				$passwd = "";
 			}
+
+			$caid = $this->generateCA('ca', gethostname(), gethostname(), $passwd, true);
+			out(_("Done!"));
+			outn(_("Generating default certificate..."));
+			$this->generateCertificate($caid,_("default"),_("default certificate generated at install time"));
+			out(_("Done!"));
 		}
 		return true;
 	}
@@ -246,17 +250,16 @@ class Certman implements \BMO {
 	 * @param {string} $commonname The common name, usually FQDN or IP
 	 * @param {string} $orgname    The organization name
 	 * @param {string} $passphrase The password, if null then the certificate will be passwordless (insecure)
-	 * @param {bool} $saveph     Whether to save the password above in the database
+	 * @param {bool} $savepass     Whether to save the password above in the database
 	 */
-	public function generateCA($basename, $commonname, $orgname, $passphrase, $saveph) {
+	public function generateCA($basename, $commonname, $orgname, $passphrase, $savepass) {
 		$this->generateConfig($basename,$commonname,$orgname);
 		$this->PKCS->createCA($basename,$passphrase);
-		if(!$saveph) {
-			$passphrase = '';
-			$key = '';
+		if ($savepass) {
+			return $this->saveCA($basename, $commonname, $orgname, $passphrase);
+		} else {
+			return $this->saveCA($basename, $commonname, $orgname, '');
 		}
-		$id = $this->saveCA($basename,$commonname,$orgname,$passphrase);
-		return $id;
 	}
 
 	/**
