@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>12.0.6</version>
+	<version>13.0.6</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -13,9 +13,15 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
-		*12.0.6* FREEPBX-9916 - Fix random cert generation issue.
-		*12.0.5* Show the correct selected cert on the extensions page
-		*12.0.4* FREEPBX-8391 deal with race conditions. Also increase timeout
+		*13.0.6* FREEPBX-9916 - Fix random cert generation issue.
+		*13.0.5* FREEPBX-9916 fix timeouts for slower machines
+		*13.0.4* FREEPBX-9918 Fix call for PJSIP
+		*13.0.3* Undefined index error
+		*13.0.2* Version bump Beta
+		*13.0.1alpha4* Cleanup and functionality changes/fixes
+		*13.0.1alpha3* Display the correctly selected cert in extensions
+		*13.0.1alpha2* Tweaks and fixes
+		*13.0.1alpha1* Visual skinning changes
 		*12.0.3* Update copyrights and licensing
 		*12.0.2* FREEPBX-8090 Generate default cert at install time.
 		*12.0.1* FREEPBX-7922 Help Text wrong for Upload Boxes
@@ -23,11 +29,11 @@
 	</changelog>
 	<category>Admin</category>
 	<supported>
-		<version>12.0</version>
+		<version>13.0</version>
 	</supported>
 	<depends>
 		<phpversion>5.3.3</phpversion>
 		<module>core ge 12.0.1beta6</module>
-		<version>12.0.1beta22</version>
+		<version>13.0.1beta3.46</version>
 	</depends>
 </module>
