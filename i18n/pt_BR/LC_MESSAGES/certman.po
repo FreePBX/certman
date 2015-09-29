@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-14 17:50-0700\n"
+"POT-Creation-Date: 2015-09-29 11:06-0700\n"
 "PO-Revision-Date: 2015-04-29 08:33+0200\n"
 "Last-Translator: Renato <fiuza@tecnologia.inf.br>\n"
 "Language-Team: Portuguese (Brazil) <http://weblate.freepbx.org/projects/"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2.2-dev\n"
 
-#: Certman.class.php:626
+#: Certman.class.php:636
 #, php-format
 msgid "%s Already Exists at that location!"
 msgstr ""
@@ -52,7 +52,7 @@ msgstr ""
 msgid "Certificate"
 msgstr ""
 
-#: Certman.class.php:521
+#: Certman.class.php:531
 msgid "Certificate Already Exists"
 msgstr ""
 
@@ -72,7 +72,7 @@ msgstr ""
 msgid "Certificate File"
 msgstr ""
 
-#: Certman.class.php:638
+#: Certman.class.php:648
 msgid "Certificate ID is unknown!"
 msgstr ""
 
@@ -88,15 +88,15 @@ msgstr ""
 msgid "Certificate Settings"
 msgstr ""
 
-#: Certman.class.php:179
+#: Certman.class.php:189
 msgid "Certificate already exists"
 msgstr ""
 
-#: Certman.class.php:215
+#: Certman.class.php:225
 msgid "Certificate does not appear to be a .crt file"
 msgstr ""
 
-#: Certman.class.php:152
+#: Certman.class.php:162
 msgid "Certificate doesnt appear to be a crt file"
 msgstr ""
 
@@ -124,15 +124,15 @@ msgstr ""
 msgid "DTLS Verify"
 msgstr ""
 
-#: Certman.class.php:285
+#: Certman.class.php:295
 msgid "Delete"
 msgstr ""
 
-#: Certman.class.php:301
+#: Certman.class.php:311
 msgid "Delete Certificate"
 msgstr ""
 
-#: Certman.class.php:248
+#: Certman.class.php:258
 msgid "Deleted Certificate"
 msgstr ""
 
@@ -156,15 +156,15 @@ msgstr ""
 msgid "Enable or disable DTLS-SRTP support"
 msgstr ""
 
-#: Certman.class.php:134 Certman.class.php:147
+#: Certman.class.php:144 Certman.class.php:157
 msgid "Error Uploading "
 msgstr ""
 
-#: Certman.class.php:197 Certman.class.php:210
+#: Certman.class.php:207 Certman.class.php:220
 msgid "Error uploading "
 msgstr ""
 
-#: Certman.class.php:305 assets/js/certman.js:21
+#: Certman.class.php:315 assets/js/certman.js:21
 msgid "Generate Certificate"
 msgstr ""
 
@@ -245,11 +245,11 @@ msgstr ""
 msgid "Private Key File to use for this CA"
 msgstr ""
 
-#: Certman.class.php:139 Certman.class.php:202
+#: Certman.class.php:149 Certman.class.php:212
 msgid "Private key doesnt appear to be a key file"
 msgstr ""
 
-#: Certman.class.php:290
+#: Certman.class.php:300
 msgid "Reset"
 msgstr ""
 
@@ -261,23 +261,23 @@ msgstr ""
 msgid "Select this for additional fields used to upload your own certificate."
 msgstr ""
 
-#: Certman.class.php:295
+#: Certman.class.php:305
 msgid "Submit"
 msgstr ""
 
-#: Certman.class.php:166
+#: Certman.class.php:176
 msgid "Successfully deleted the Certificate Authority"
 msgstr ""
 
-#: Certman.class.php:191
+#: Certman.class.php:201
 msgid "Successfully generated a Certificate"
 msgstr ""
 
-#: Certman.class.php:160
+#: Certman.class.php:170
 msgid "Successfully generated a Certificate Authority"
 msgstr ""
 
-#: Certman.class.php:222
+#: Certman.class.php:232
 msgid "Successfully uploaded a certificate"
 msgstr ""
 
@@ -312,11 +312,11 @@ msgid ""
 "extensions in asterisk"
 msgstr ""
 
-#: Certman.class.php:300
+#: Certman.class.php:310
 msgid "Update Certificate"
 msgstr ""
 
-#: Certman.class.php:239
+#: Certman.class.php:249
 msgid "Updated Certificate"
 msgstr ""
 
