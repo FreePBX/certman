@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-29 11:06-0700\n"
+"POT-Creation-Date: 2015-09-29 11:13-0700\n"
 "PO-Revision-Date: 2015-04-03 10:11+0200\n"
 "Last-Translator: Daver <daverjorge46@gmail.com>\n"
 "Language-Team: Spanish <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2.2-dev\n"
 
-#: Certman.class.php:636
+#: Certman.class.php:638
 #, php-format
 msgid "%s Already Exists at that location!"
 msgstr "%s Ya existe en esa localidad!"
@@ -54,7 +54,7 @@ msgstr ""
 msgid "Certificate"
 msgstr "Certificado"
 
-#: Certman.class.php:531
+#: Certman.class.php:533
 msgid "Certificate Already Exists"
 msgstr "Certificado ya existe"
 
@@ -74,7 +74,7 @@ msgstr "Autoridad Certificadora a Referenciar"
 msgid "Certificate File"
 msgstr "Archivo Certificado"
 
-#: Certman.class.php:648
+#: Certman.class.php:650
 msgid "Certificate ID is unknown!"
 msgstr "ID de Certificado es desconocido!"
 
