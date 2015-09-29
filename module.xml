@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>13.0.7</version>
+	<version>13.0.8</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -13,6 +13,7 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
+		*13.0.8* FREEPBX-9574 Add missing DTLS params
 		*13.0.7* FREEPBX-9719 turn int into bigint for longer extensions
 		*13.0.6* FREEPBX-9916 - Fix random cert generation issue.
 		*13.0.5* FREEPBX-9916 fix timeouts for slower machines

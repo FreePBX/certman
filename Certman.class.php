@@ -354,6 +354,8 @@ class Certman implements \BMO {
 					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_verify', $device['verify']);
 					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_cert_file', $cert['files']['pem']);
 					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_ca_file', $ca['files']['crt']);
+					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_setup', $device['setup']);
+					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_rekey', $device['rekey']);
 				break;
 			}
 		}
