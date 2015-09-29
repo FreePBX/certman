@@ -62,7 +62,7 @@ class Certman implements \BMO {
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
 		$sql = "CREATE TABLE IF NOT EXISTS `certman_mapping` (
-					`id` int(11) NOT NULL,
+					`id` bigint(20) NOT NULL,
 					`cid` int(11) DEFAULT NULL,
 					`verify` varchar(45) DEFAULT NULL,
 					`setup` varchar(45) DEFAULT NULL,
@@ -87,6 +87,16 @@ class Certman implements \BMO {
 			outn(_("Generating default certificate..."));
 			$this->generateCertificate($caid,_("default"),_("default certificate generated at install time"));
 			out(_("Done!"));
+		}
+
+		global $db;
+		$info = $db->getRow('SHOW COLUMNS FROM certman_mapping WHERE FIELD = "id"', DB_FETCHMODE_ASSOC);
+		if($info['Type'] != "bigint(20)") {
+			$sql = "ALTER TABLE `certman_mapping` CHANGE COLUMN `id` `id` BIGINT NOT NULL";
+			$result = $db->query($sql);
+			if (\DB::IsError($result)) {
+				die_freepbx($result->getDebugInfo());
+			}
 		}
 		return true;
 	}
