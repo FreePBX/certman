@@ -18,6 +18,10 @@ function certman_configpageinit($pagename) {
 	if ($pagename != 'extensions' && $pagename != 'devices')  {
 		return true;
 	}
+	//We don't want to hook outside of a form
+	if(empty($tech_hardware)&& empty($extdisplay)){
+		return true;
+	}
 	$certs = FreePBX::Certman()->getAllManagedCertificates();
 	if(!empty($certs)) {
 		if ($tech_hardware != null || $extdisplay != '' || $action == 'add') {
