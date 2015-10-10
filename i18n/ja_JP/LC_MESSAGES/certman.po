@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-29 11:13-0700\n"
+"POT-Creation-Date: 2015-10-10 11:50-0700\n"
 "PO-Revision-Date: 2015-02-21 14:27+0200\n"
 "Last-Translator: Kevin <kevin@qloog.com>\n"
 "Language-Team: Japanese <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -112,15 +112,15 @@ msgstr ""
 msgid "DNS name or our IP address"
 msgstr ""
 
-#: functions.inc/hook_core.php:113
+#: functions.inc/hook_core.php:117
 msgid "DTLS Rekey Interval"
 msgstr ""
 
-#: functions.inc/hook_core.php:99
+#: functions.inc/hook_core.php:103
 msgid "DTLS Setup"
 msgstr ""
 
-#: functions.inc/hook_core.php:81
+#: functions.inc/hook_core.php:85
 msgid "DTLS Verify"
 msgstr ""
 
@@ -148,11 +148,11 @@ msgstr ""
 msgid "Edit Certificate Authority Settings"
 msgstr ""
 
-#: functions.inc/hook_core.php:53
+#: functions.inc/hook_core.php:57
 msgid "Enable DTLS"
 msgstr ""
 
-#: functions.inc/hook_core.php:54
+#: functions.inc/hook_core.php:58
 msgid "Enable or disable DTLS-SRTP support"
 msgstr ""
 
@@ -188,7 +188,7 @@ msgstr ""
 msgid "I Know what I am doing"
 msgstr ""
 
-#: functions.inc/hook_core.php:114
+#: functions.inc/hook_core.php:118
 msgid ""
 "Interval at which to renegotiate the TLS session and rekey the SRTP session. "
 "If this is not set or the value provided is 0 rekeying will be disabled"
@@ -281,7 +281,7 @@ msgstr ""
 msgid "Successfully uploaded a certificate"
 msgstr ""
 
-#: functions.inc/hook_core.php:69
+#: functions.inc/hook_core.php:73
 msgid "The Certificate to use from Certificate Manager"
 msgstr ""
 
@@ -328,11 +328,11 @@ msgstr ""
 msgid "Upload Certificate"
 msgstr ""
 
-#: functions.inc/hook_core.php:68
+#: functions.inc/hook_core.php:72
 msgid "Use Certificate"
 msgstr ""
 
-#: functions.inc/hook_core.php:82
+#: functions.inc/hook_core.php:86
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
 "\t\t<ul>\n"
@@ -355,7 +355,7 @@ msgid ""
 "been warned. Use Something you dont care about or use!"
 msgstr ""
 
-#: functions.inc/hook_core.php:100
+#: functions.inc/hook_core.php:104
 msgid ""
 "Whether we are willing to accept connections, connect to the other party, or "
 "both.\n"
