@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-10 11:50-0700\n"
+"POT-Creation-Date: 2015-10-23 11:36-0700\n"
 "PO-Revision-Date: 2015-04-03 10:11+0200\n"
 "Last-Translator: Daver <daverjorge46@gmail.com>\n"
 "Language-Team: Spanish <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -114,15 +114,15 @@ msgstr ""
 msgid "DNS name or our IP address"
 msgstr "Nombre DNS o nuestra dirección IP"
 
-#: functions.inc/hook_core.php:117
+#: functions.inc/hook_core.php:120
 msgid "DTLS Rekey Interval"
 msgstr "Intervalo Rekey DTLS"
 
-#: functions.inc/hook_core.php:103
+#: functions.inc/hook_core.php:106
 msgid "DTLS Setup"
 msgstr "Configuración DTLS"
 
-#: functions.inc/hook_core.php:85
+#: functions.inc/hook_core.php:88
 msgid "DTLS Verify"
 msgstr "Verificar DTLS"
 
@@ -150,11 +150,11 @@ msgstr "Hecho!"
 msgid "Edit Certificate Authority Settings"
 msgstr ""
 
-#: functions.inc/hook_core.php:57
+#: functions.inc/hook_core.php:60
 msgid "Enable DTLS"
 msgstr "Habilitar DTLS"
 
-#: functions.inc/hook_core.php:58
+#: functions.inc/hook_core.php:61
 msgid "Enable or disable DTLS-SRTP support"
 msgstr "Habilitar o deshabilitar soporte a DTLS-SRTP"
 
@@ -190,7 +190,7 @@ msgstr "Nombre del Host"
 msgid "I Know what I am doing"
 msgstr ""
 
-#: functions.inc/hook_core.php:118
+#: functions.inc/hook_core.php:121
 msgid ""
 "Interval at which to renegotiate the TLS session and rekey the SRTP session. "
 "If this is not set or the value provided is 0 rekeying will be disabled"
@@ -286,7 +286,7 @@ msgstr ""
 msgid "Successfully uploaded a certificate"
 msgstr ""
 
-#: functions.inc/hook_core.php:73
+#: functions.inc/hook_core.php:76
 msgid "The Certificate to use from Certificate Manager"
 msgstr "Certificado a usar desde el Gestor de Certificados"
 
@@ -336,11 +336,11 @@ msgstr ""
 msgid "Upload Certificate"
 msgstr ""
 
-#: functions.inc/hook_core.php:72
+#: functions.inc/hook_core.php:75
 msgid "Use Certificate"
 msgstr "Use Certificado"
 
-#: functions.inc/hook_core.php:86
+#: functions.inc/hook_core.php:89
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
 "\t\t<ul>\n"
@@ -375,7 +375,7 @@ msgid ""
 "been warned. Use Something you dont care about or use!"
 msgstr ""
 
-#: functions.inc/hook_core.php:104
+#: functions.inc/hook_core.php:107
 msgid ""
 "Whether we are willing to accept connections, connect to the other party, or "
 "both.\n"
