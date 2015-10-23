@@ -18,17 +18,20 @@ function certman_configpageinit($pagename) {
 	if ($pagename != 'extensions' && $pagename != 'devices')  {
 		return true;
 	}
-	//We don't want to hook outside of a form
-	if(empty($tech_hardware)&& empty($extdisplay)){
-		return true;
-	}
+
 	$certs = FreePBX::Certman()->getAllManagedCertificates();
 	if(!empty($certs)) {
-		if ($tech_hardware != null || $extdisplay != '' || $action == 'add') {
+		// On a 'new' user, 'tech_hardware' is set, and there's no extension. Hook into the page.
+		if ($tech_hardware != null || $pagename == 'users') {
 			$currentcomponent->addguifunc("certman_devices_configpageload");
-			if (!empty($action)) {
-				$currentcomponent->addprocessfunc("certman_devices_configprocess");
-			}
+			$currentcomponent->addprocessfunc("certman_devices_configprocess");
+		} elseif ($action=="add") {
+			// We don't need to display anything on an 'add', but we do need to handle returned data.
+			$currentcomponent->addprocessfunc("certman_devices_configprocess");
+		} elseif ($extdisplay != '') {
+			// We're now viewing an extension, so we need to display _and_ process.
+			$currentcomponent->addguifunc("certman_devices_configpageload");
+			$currentcomponent->addprocessfunc("certman_devices_configprocess");
 		}
 	}
 }
