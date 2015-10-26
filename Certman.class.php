@@ -420,7 +420,7 @@ class Certman implements \BMO {
 	/**
 	 * Add DTLS Options for a device/extension
 	 * @param {int} $device The Device/Extension Number
-	 * @param {array} $data   An array of defined options
+	 * @param {array} $data	 An array of defined options
 	 */
 	public function addDTLSOptions($device,$data) {
 		$sql = "REPLACE INTO certman_mapping (id, cid, verify, setup, rekey) VALUES (?, ?, ?, ?, ?)";
@@ -464,11 +464,11 @@ class Certman implements \BMO {
 
 	/**
 	 * Generate a New Certificate Authority
-	 * @param {string} $basename   The basename of the file to generate
+	 * @param {string} $basename	 The basename of the file to generate
 	 * @param {string} $commonname The common name, usually FQDN or IP
-	 * @param {string} $orgname    The organization name
+	 * @param {string} $orgname		The organization name
 	 * @param {string} $passphrase The password, if null then the certificate will be passwordless (insecure)
-	 * @param {bool} $savepass     Whether to save the password above in the database
+	 * @param {bool} $savepass		 Whether to save the password above in the database
 	 */
 	public function generateCA($basename, $commonname, $orgname, $passphrase, $savepass) {
 		$this->generateConfig($basename,$commonname,$orgname);
@@ -482,9 +482,9 @@ class Certman implements \BMO {
 
 	/**
 	 * Generate OpenSSL Template Configs
-	 * @param {string} $basename   The CA Basename
+	 * @param {string} $basename	 The CA Basename
 	 * @param {string} $commonname The common name, usually FQDN or IP
-	 * @param {string} $orgname    The organization name
+	 * @param {string} $orgname		The organization name
 	 */
 	public function generateConfig($basename,$commonname,$orgname) {
 		$this->PKCS->createConfig($basename,$commonname,$orgname);
@@ -492,9 +492,9 @@ class Certman implements \BMO {
 
 	/**
 	 * Save the Certificate Authority Information into the Database
-	 * @param {string} $basename   The CA Basename
+	 * @param {string} $basename	 The CA Basename
 	 * @param {string} $commonname The common name, usually FQDN or IP
-	 * @param {string} $orgname    The organization name
+	 * @param {string} $orgname		The organization name
 	 * @param {string} $passphrase The passphrase (to be encrypted)
 	 */
 	public function saveCA($basename,$commonname,$orgname,$passphrase) {
@@ -521,12 +521,12 @@ class Certman implements \BMO {
 
 	/**
 	 * Generate A Certificate Based on a Certificate Authority
-	 * @param {int} $caid            The Managed Certificate Authority ID
-	 * @param {string} $base            The base name to generate
-	 * @param {string} $description     Description of this certificate
+	 * @param {int} $caid						The Managed Certificate Authority ID
+	 * @param {string} $base						The base name to generate
+	 * @param {string} $description		 Description of this certificate
 	 * @param {string} $passphrase=null The provided passphrase,
-	 *                                  used if the CA requires a passphrase but
-	 *                                  it was not stored internally
+	 *																	used if the CA requires a passphrase but
+	 *																	it was not stored internally
 	 */
 	public function generateCertificate($caid,$base,$description,$passphrase=null) {
 		if($this->checkCertificateName($base)) {
@@ -545,8 +545,8 @@ class Certman implements \BMO {
 
 	/**
 	 * Save Certificate Information into the Database
-	 * @param {int} $caid        The Certificate Authority ID
-	 * @param {string} $base        The base name of the certificate
+	 * @param {int} $caid				The Certificate Authority ID
+	 * @param {string} $base				The base name of the certificate
 	 * @param {string} $description The description of the certificate
 	 */
 	public function saveCertificate($caid,$base,$description) {
@@ -648,6 +648,38 @@ class Certman implements \BMO {
 			return true;
 		} else {
 			return _('Certificate ID is unknown!');
+		}
+	}
+	public function getRightNav($request) {
+		return load_view(__DIR__."/views/rnav.php",array('caExists' => $this->checkCAexists()));
+	}
+	public function ajaxRequest($req, &$setting) {
+			 switch ($req) {
+					 case 'getJSON':
+							 return true;
+					 break;
+					 default:
+							 return false;
+					 break;
+			 }
+	 }
+	public function ajaxHandler(){
+		switch ($_REQUEST['command']) {
+			case 'getJSON':
+				switch ($_REQUEST['jdata']) {
+					case 'grid':
+						return $this->getAllManagedCertificates();
+					break;
+
+					default:
+						return false;
+					break;
+				}
+			break;
+
+			default:
+				return false;
+			break;
 		}
 	}
 }
