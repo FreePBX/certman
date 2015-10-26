@@ -23,7 +23,7 @@ if(count($cas) == 1){
 	<?php echo !empty($messagehtml) ? $messagehtml : "" ?>
 	<div class = "display full-border">
 		<div class="row">
-			<div class="col-sm-9">
+			<div class="col-sm-12">
 				<div class="fpbx-container">
 					<div class="display full-border" id='certpage'>
 						<form class="fpbx-submit" name="frm_certman" action="config.php?display=certman" method="post" enctype="multipart/form-data">
@@ -208,7 +208,6 @@ if(count($cas) == 1){
 						</div>
 					</div>
 				</div>
-				<?php echo load_view(__DIR__.'/rnav.php',array()); ?>
 			</div>
 		</div>
 	</div>

@@ -331,7 +331,6 @@ class Certman implements \BMO {
 
 	public function doDialplanHook(&$ext, $engine, $priority) {
 		global $core_conf;
-		$this->FreePBX->Core;
 
 		foreach($this->getAllDTLSOptions() as $device) {
 			$o = $this->FreePBX->Core->getDevice($device['id']);
@@ -651,7 +650,9 @@ class Certman implements \BMO {
 		}
 	}
 	public function getRightNav($request) {
-		return load_view(__DIR__."/views/rnav.php",array('caExists' => $this->checkCAexists()));
+		if(isset($request['action']) && !empty($request['action'])){
+			return load_view(__DIR__."/views/rnav.php",array('caExists' => $this->checkCAexists()));
+		}
 	}
 	public function ajaxRequest($req, &$setting) {
 			 switch ($req) {

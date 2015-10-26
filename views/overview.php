@@ -11,7 +11,7 @@ if(!empty($message)) {
 	<?php echo !empty($messagehtml) ? $messagehtml : "" ?>
 	<div class = "display full-border">
 	    <div class="row">
-	        <div class="col-sm-9">
+	        <div class="col-sm-12">
 	            <div class="fpbx-container">
 					<ul class="nav nav-tabs" role="tablist">
 						<li role="presentation" data-name="certificates" class="change-tab <?php echo ($caExists) ? "active" : ""?>"><a href="#certificates" aria-controls="certificates" role="tab" data-toggle="tab"><?php echo _("Certificates")?></a></li>
@@ -27,7 +27,6 @@ if(!empty($message)) {
 					</div>
 				</div>
 			</div>
-			<?php echo load_view(__DIR__.'/rnav.php',array()); ?>
 		</div>
 	</div>
 </div>
