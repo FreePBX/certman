@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-23 11:36-0700\n"
-"PO-Revision-Date: 2015-10-27 08:43+0200\n"
+"PO-Revision-Date: 2015-10-27 11:13+0200\n"
 "Last-Translator: Kevin <kevin@qloog.com>\n"
 "Language-Team: Japanese "
 "<http://weblate.freepbx.org/projects/freepbx/certman/ja_JP/>\n"
@@ -208,7 +208,7 @@ msgstr ""
 
 #: views/ca.php:106
 msgid "No"
-msgstr ""
+msgstr "いいえ"
 
 #: Certman.class.php:75
 msgid "No Certificates exist"
@@ -370,7 +370,7 @@ msgstr ""
 
 #: views/ca.php:105
 msgid "Yes"
-msgstr ""
+msgstr "はい"
 
 #: Certman.class.php:88
 msgid "default"
