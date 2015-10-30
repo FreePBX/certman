@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-23 11:36-0700\n"
+"POT-Creation-Date: 2015-10-29 17:45-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: Certman.class.php:638
+#: Certman.class.php:637
 #, php-format
 msgid "%s Already Exists at that location!"
 msgstr ""
@@ -44,11 +44,11 @@ msgstr ""
 msgid "Can not be left blank!"
 msgstr ""
 
-#: views/ca.php:177 views/certgrid.php:9 views/new.php:187
+#: views/ca.php:177 views/certgrid.php:9 views/new.php:187 views/rnav.php:8
 msgid "Certificate"
 msgstr ""
 
-#: Certman.class.php:533
+#: Certman.class.php:532
 msgid "Certificate Already Exists"
 msgstr ""
 
@@ -68,11 +68,11 @@ msgstr ""
 msgid "Certificate File"
 msgstr ""
 
-#: Certman.class.php:650
+#: Certman.class.php:649
 msgid "Certificate ID is unknown!"
 msgstr ""
 
-#: views/rnav.php:4
+#: views/rnav.php:2
 msgid "Certificate List"
 msgstr ""
 
@@ -194,7 +194,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: views/certgrid.php:4 views/new.php:22
+#: views/certgrid.php:4 views/new.php:22 views/rnav.php:3
 msgid "New Certificate"
 msgstr ""
 
