@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-23 11:36-0700\n"
-"PO-Revision-Date: 2015-10-27 11:13+0200\n"
+"PO-Revision-Date: 2015-10-30 06:37+0200\n"
 "Last-Translator: Kevin <kevin@qloog.com>\n"
 "Language-Team: Japanese "
 "<http://weblate.freepbx.org/projects/freepbx/certman/ja_JP/>\n"
@@ -34,7 +34,7 @@ msgstr ""
 
 #: views/certgrid.php:11
 msgid "Action"
-msgstr ""
+msgstr "アクション"
 
 #: assets/js/certman.js:87
 msgid "Are you sure you dont want a passphrase?"
