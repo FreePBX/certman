@@ -5,7 +5,7 @@ if(!empty($message)) {
 ?>
 <div class="container-fluid">
 	 <div class="row">
-		  <div class="col-sm-9">
+		  <div class="col-sm-12">
 				<div class="fpbx-container">
 				<h1><?php echo _("Certificate Settings") . ': ' . $cert['basename']?></h1>
 				<?php echo !empty($messagehtml) ? $messagehtml : "" ?>
@@ -65,6 +65,5 @@ if(!empty($message)) {
 					 </form>
 				</div>
 		</div>
-		<?php echo load_view(__DIR__.'/rnav.php',array()); ?>
 	</div>
 </div>
