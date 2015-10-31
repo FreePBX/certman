@@ -62,7 +62,7 @@ class Certman implements \BMO {
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
 		$sql = "CREATE TABLE IF NOT EXISTS `certman_mapping` (
-					`id` bigint(20) NOT NULL,
+					`id` varchar(20) NOT NULL,
 					`cid` int(11) DEFAULT NULL,
 					`verify` varchar(45) DEFAULT NULL,
 					`setup` varchar(45) DEFAULT NULL,
@@ -91,8 +91,8 @@ class Certman implements \BMO {
 
 		global $db;
 		$info = $db->getRow('SHOW COLUMNS FROM certman_mapping WHERE FIELD = "id"', DB_FETCHMODE_ASSOC);
-		if($info['Type'] != "bigint(20)") {
-			$sql = "ALTER TABLE `certman_mapping` CHANGE COLUMN `id` `id` BIGINT NOT NULL";
+		if($info['Type'] != "varchar(20)") {
+			$sql = "ALTER TABLE `certman_mapping` CHANGE COLUMN `id` `id` VARCHAR(20) NOT NULL";
 			$result = $db->query($sql);
 			if (\DB::IsError($result)) {
 				die_freepbx($result->getDebugInfo());
