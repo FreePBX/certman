@@ -213,7 +213,7 @@ msgstr ""
 
 #: views/ca.php:106
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: Certman.class.php:75
 msgid "No Certificates exist"
@@ -399,7 +399,7 @@ msgstr ""
 
 #: views/ca.php:105
 msgid "Yes"
-msgstr ""
+msgstr "Sí"
 
 #: Certman.class.php:88
 msgid "default"
