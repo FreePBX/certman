@@ -256,7 +256,7 @@ msgstr ""
 
 #: Certman.class.php:300
 msgid "Reset"
-msgstr ""
+msgstr "Restaura"
 
 #: views/ca.php:101
 msgid "Save Passphrase"
