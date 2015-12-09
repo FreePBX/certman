@@ -36,7 +36,7 @@ msgstr ""
 
 #: views/certgrid.php:11
 msgid "Action"
-msgstr ""
+msgstr "Acción"
 
 #: assets/js/certman.js:87
 msgid "Are you sure you dont want a passphrase?"
@@ -425,7 +425,7 @@ msgstr "certificado por defecto generado al momento de instalar"
 #~ msgstr "Se genero certificado Satisfactoriamente"
 
 #~ msgid "Admin"
-#~ msgstr "Administ"
+#~ msgstr "Administrador"
 
 #~ msgid "Certificate Manager"
 #~ msgstr "Gestor de Certificado"
