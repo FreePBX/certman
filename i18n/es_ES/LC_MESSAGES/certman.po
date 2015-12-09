@@ -425,7 +425,7 @@ msgstr "certificado por defecto generado al momento de instalar"
 #~ msgstr "Se genero certificado Satisfactoriamente"
 
 #~ msgid "Admin"
-#~ msgstr "Administrador"
+#~ msgstr "Administ"
 
 #~ msgid "Certificate Manager"
 #~ msgstr "Gestor de Certificado"
