@@ -10,14 +10,14 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-29 17:45-0700\n"
-"PO-Revision-Date: 2015-04-03 10:11+0200\n"
-"Last-Translator: Daver <daverjorge46@gmail.com>\n"
-"Language-Team: Spanish <http://weblate.freepbx.org/projects/freepbx/certman/"
-"es_ES/>\n"
+"PO-Revision-Date: 2016-01-03 11:10+0200\n"
+"Last-Translator: Ernesto <ecasas@sangoma.com>\n"
+"Language-Team: Spanish "
+"<http://weblate.freepbx.org/projects/freepbx/certman/es_ES/>\n"
+"Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es_ES\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2.2-dev\n"
 
@@ -256,7 +256,7 @@ msgstr ""
 
 #: Certman.class.php:300
 msgid "Reset"
-msgstr "Restaura"
+msgstr "Reiniciar"
 
 #: views/ca.php:101
 msgid "Save Passphrase"
@@ -399,7 +399,7 @@ msgstr ""
 
 #: views/ca.php:105
 msgid "Yes"
-msgstr "Sí"
+msgstr "Si"
 
 #: Certman.class.php:88
 msgid "default"
