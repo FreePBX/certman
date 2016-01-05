@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-29 17:45-0700\n"
-"PO-Revision-Date: 2016-01-03 11:10+0200\n"
+"PO-Revision-Date: 2016-01-05 00:11+0200\n"
 "Last-Translator: Ernesto <ecasas@sangoma.com>\n"
 "Language-Team: Spanish "
 "<http://weblate.freepbx.org/projects/freepbx/certman/es_ES/>\n"
@@ -40,15 +40,15 @@ msgstr "Acción"
 
 #: assets/js/certman.js:87
 msgid "Are you sure you dont want a passphrase?"
-msgstr ""
+msgstr "¿Seguro que no quieres una frase de paso?"
 
 #: assets/js/certman.js:104
 msgid "Are you sure you want to delete this certificate?"
-msgstr ""
+msgstr "¿Seguro que quieres borrar este certificado?"
 
 #: assets/js/certman.js:78
 msgid "Can not be left blank!"
-msgstr ""
+msgstr "No se puede dejar en blanco!"
 
 #: views/ca.php:177 views/certgrid.php:9 views/new.php:187 views/rnav.php:8
 msgid "Certificate"
@@ -80,7 +80,7 @@ msgstr "ID de Certificado es desconocido!"
 
 #: views/rnav.php:2
 msgid "Certificate List"
-msgstr ""
+msgstr "Lista de certificados"
 
 #: views/overview.php:7
 msgid "Certificate Management"
@@ -92,15 +92,15 @@ msgstr "Configuración Certificado"
 
 #: Certman.class.php:189
 msgid "Certificate already exists"
-msgstr ""
+msgstr "Ya existe Certificado"
 
 #: Certman.class.php:225
 msgid "Certificate does not appear to be a .crt file"
-msgstr ""
+msgstr "Certificado no parece ser un archivo .crt"
 
 #: Certman.class.php:162
 msgid "Certificate doesnt appear to be a crt file"
-msgstr ""
+msgstr "Certificado no parece ser un archivo crt"
 
 #: views/ca.php:192
 msgid "Certificate to use for this CA (must reference the Private Key)"
@@ -108,7 +108,7 @@ msgstr "Certificado a usar para esta CA (debe referenciar a la Clave Privada)"
 
 #: views/overview.php:17
 msgid "Certificates"
-msgstr ""
+msgstr "Certificados"
 
 #: views/ca.php:39
 msgid "DNS name or our IP address"
@@ -148,7 +148,7 @@ msgstr "Hecho!"
 
 #: views/ca.php:13
 msgid "Edit Certificate Authority Settings"
-msgstr ""
+msgstr "Editar la configuración de la autoridad del certificado"
 
 #: functions.inc/hook_core.php:60
 msgid "Enable DTLS"
@@ -164,7 +164,7 @@ msgstr "Error subiendo "
 
 #: Certman.class.php:207 Certman.class.php:220
 msgid "Error uploading "
-msgstr ""
+msgstr "Error al subir "
 
 #: Certman.class.php:315 assets/js/certman.js:21
 msgid "Generate Certificate"
@@ -180,7 +180,7 @@ msgstr "Generando Certificados por defecto..."
 
 #: assets/js/certman.js:97
 msgid "Generating.. Please wait"
-msgstr ""
+msgstr "Generación .. Por favor espere"
 
 #: views/ca.php:27
 msgid "Host Name"
@@ -188,7 +188,7 @@ msgstr "Nombre del Host"
 
 #: views/ca.php:7
 msgid "I Know what I am doing"
-msgstr ""
+msgstr "Sé lo que estoy haciendo"
 
 #: functions.inc/hook_core.php:121
 msgid ""
@@ -209,7 +209,7 @@ msgstr "Nuevo Certificado"
 
 #: views/ca.php:13
 msgid "New Certificate Authority Settings"
-msgstr ""
+msgstr "Ajustes Autoridad nuevo certificado"
 
 #: views/ca.php:106
 msgid "No"
@@ -237,6 +237,14 @@ msgid ""
 "\t\t\t\t\tIf you don't provide a passphrase when uploading a certificate you "
 "will have to provide the passphrase everytime a new certificate is needed"
 msgstr ""
+"Frase de contraseña utilizada para acceder a este certificado y generar "
+"nuevos certificates de cliente.↵\n"
+"→→→→→ Si usted no usa una frase de acceso al generar un nuevo certifcado, "
+"entonces la clave privada no será cifrada con cualquier sistema de cifrado "
+"simétrico - que se emite por completo desprotegido.↵\n"
+"→→→→→ Si usted no proporciona una contraseña al cargar un certificado que "
+"tendrá que proporcionar la contraseña cada vez que se necesita un nuevo "
+"certificado"
 
 #: views/ca.php:150 views/new.php:160
 msgid "Private Key"
