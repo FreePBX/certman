@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-29 17:45-0700\n"
-"PO-Revision-Date: 2016-01-05 00:11+0200\n"
+"PO-Revision-Date: 2016-01-07 02:10+0200\n"
 "Last-Translator: Ernesto <ecasas@sangoma.com>\n"
 "Language-Team: Spanish "
 "<http://weblate.freepbx.org/projects/freepbx/certman/es_ES/>\n"
@@ -260,7 +260,7 @@ msgstr "Archivo de Clave Privada a ser usado para esta CA"
 
 #: Certman.class.php:149 Certman.class.php:212
 msgid "Private key doesnt appear to be a key file"
-msgstr ""
+msgstr "Llave Privada no parece ser un archivo de llave"
 
 #: Certman.class.php:300
 msgid "Reset"
@@ -273,6 +273,8 @@ msgstr "Salvar la palabra clave"
 #: views/ca.php:138 views/new.php:148
 msgid "Select this for additional fields used to upload your own certificate."
 msgstr ""
+"Selecciones este para campos adicionales usados para bajar su propio "
+"certificado."
 
 #: Certman.class.php:305
 msgid "Submit"
@@ -280,19 +282,19 @@ msgstr "Enviar"
 
 #: Certman.class.php:176
 msgid "Successfully deleted the Certificate Authority"
-msgstr ""
+msgstr "Autoridad de Certificacion satisfactoriamente borrada"
 
 #: Certman.class.php:201
 msgid "Successfully generated a Certificate"
-msgstr ""
+msgstr "Se ha generado satisfactoriamente un Certificado"
 
 #: Certman.class.php:170
 msgid "Successfully generated a Certificate Authority"
-msgstr ""
+msgstr "Se ha generador satisfactoriamente una Autoridad de Certificacion"
 
 #: Certman.class.php:232
 msgid "Successfully uploaded a certificate"
-msgstr ""
+msgstr "Se ha bajado satisfactoriamente un Certificado"
 
 #: functions.inc/hook_core.php:76
 msgid "The Certificate to use from Certificate Manager"
@@ -318,7 +320,7 @@ msgstr ""
 
 #: views/new.php:67
 msgid "This field cannot be blank and must be alphanumeric"
-msgstr ""
+msgstr "El campo no puede estar en blanco y debe ser alfanumerico"
 
 #: views/overview.php:9
 msgid ""
@@ -338,11 +340,11 @@ msgstr "Certificado Actualizado"
 
 #: views/ca.php:130
 msgid "Upload CA"
-msgstr ""
+msgstr "Subir CA"
 
 #: views/new.php:140 assets/js/certman.js:17
 msgid "Upload Certificate"
-msgstr ""
+msgstr "Subir Certificado"
 
 #: functions.inc/hook_core.php:75
 msgid "Use Certificate"
@@ -382,6 +384,10 @@ msgid ""
 "\t\t\t\t\t<b>WARNING!!</b> The Passphrase is stored in PLAINTEXT! You have "
 "been warned. Use Something you dont care about or use!"
 msgstr ""
+"Ya sea para almacenar la contraseña en la base de datos para que los nuevos "
+"certificados se pueden generar de forma automática.<br/>↵\n"
+"→→→→→ <b>ADVERTENCIA !! </b> La frase de contraseña es almacenada en texto "
+"plano! Usted ha sido advertido. Utilice Algo que no le importe o use!"
 
 #: functions.inc/hook_core.php:107
 msgid ""
