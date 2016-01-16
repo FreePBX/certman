@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-29 17:45-0700\n"
-"PO-Revision-Date: 2016-01-16 05:47+0200\n"
+"PO-Revision-Date: 2016-01-16 08:18+0200\n"
 "Last-Translator: Nicolas <forums@riendeau.org>\n"
 "Language-Team: French "
 "<http://weblate.freepbx.org/projects/freepbx/certman/fr_FR/>\n"
@@ -251,7 +251,7 @@ msgstr ""
 
 #: Certman.class.php:300
 msgid "Reset"
-msgstr ""
+msgstr "Remise à 0"
 
 #: views/ca.php:101
 msgid "Save Passphrase"
@@ -263,7 +263,7 @@ msgstr ""
 
 #: Certman.class.php:305
 msgid "Submit"
-msgstr ""
+msgstr "Soumettre"
 
 #: Certman.class.php:176
 msgid "Successfully deleted the Certificate Authority"
@@ -370,7 +370,7 @@ msgstr ""
 
 #: views/ca.php:105
 msgid "Yes"
-msgstr ""
+msgstr "Oui"
 
 #: Certman.class.php:88
 msgid "default"
