@@ -10,12 +10,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-29 17:45-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2016-01-20 05:28+0200\n"
+"Last-Translator: Ernesto <ecasas@sangoma.com>\n"
+"Language-Team: English (United States) "
+"<http://weblate.freepbx.org/projects/freepbx/certman/en_US/>\n"
+"Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.2-dev\n"
 
 #: Certman.class.php:637
 #, php-format
@@ -204,7 +208,7 @@ msgstr ""
 
 #: views/ca.php:106
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: Certman.class.php:75
 msgid "No Certificates exist"
@@ -259,7 +263,7 @@ msgstr ""
 
 #: Certman.class.php:305
 msgid "Submit"
-msgstr ""
+msgstr "Enviar"
 
 #: Certman.class.php:176
 msgid "Successfully deleted the Certificate Authority"
@@ -366,7 +370,7 @@ msgstr ""
 
 #: views/ca.php:105
 msgid "Yes"
-msgstr ""
+msgstr "Si"
 
 #: Certman.class.php:88
 msgid "default"
