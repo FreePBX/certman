@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-29 17:45-0700\n"
-"PO-Revision-Date: 2016-02-07 01:41+0200\n"
-"Last-Translator: Andrew <andrew.nagy@the159.com>\n"
+"PO-Revision-Date: 2016-02-26 02:57+0200\n"
+"Last-Translator: The <james.finstrom@schmoozecom.com>\n"
 "Language-Team: English (United States) "
 "<http://weblate.freepbx.org/projects/freepbx/certman/en_US/>\n"
 "Language: en_US\n"
@@ -370,7 +370,7 @@ msgstr ""
 
 #: views/ca.php:105
 msgid "Yes"
-msgstr ""
+msgstr "Yes"
 
 #: Certman.class.php:88
 msgid "default"
