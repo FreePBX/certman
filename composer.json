@@ -1,0 +1,5 @@
+{
+    "require": {
+        "analogic/lescript": "^0.1.3"
+    }
+}
