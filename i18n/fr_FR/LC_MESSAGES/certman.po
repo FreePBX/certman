@@ -10,18 +10,21 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-29 17:45-0700\n"
-"PO-Revision-Date: 2015-02-20 19:07-0500\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2016-02-05 11:03+0200\n"
+"Last-Translator: Nicolas Riendeau <freepbx@riendeau.org>\n"
+"Language-Team: French "
+"<http://weblate.freepbx.org/projects/freepbx/certman/fr_FR/>\n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 2.2-dev\n"
 
 #: Certman.class.php:637
 #, php-format
 msgid "%s Already Exists at that location!"
-msgstr ""
+msgstr "%s existe déjà à cet endroit !"
 
 #: views/ca.php:5
 msgid ""
@@ -31,7 +34,7 @@ msgstr ""
 
 #: views/certgrid.php:11
 msgid "Action"
-msgstr ""
+msgstr "Action"
 
 #: assets/js/certman.js:87
 msgid "Are you sure you dont want a passphrase?"
@@ -39,19 +42,19 @@ msgstr ""
 
 #: assets/js/certman.js:104
 msgid "Are you sure you want to delete this certificate?"
-msgstr ""
+msgstr "Êtes-vous sur de vouloir supprimer ce certificat ?"
 
 #: assets/js/certman.js:78
 msgid "Can not be left blank!"
-msgstr ""
+msgstr "Ne peut être laissé vide !"
 
 #: views/ca.php:177 views/certgrid.php:9 views/new.php:187 views/rnav.php:8
 msgid "Certificate"
-msgstr ""
+msgstr "Certificat"
 
 #: Certman.class.php:532
 msgid "Certificate Already Exists"
-msgstr ""
+msgstr "Le certificat existe déjà"
 
 #: views/new.php:39
 msgid "Certificate Authority"
@@ -67,7 +70,7 @@ msgstr ""
 
 #: views/new.php:202
 msgid "Certificate File"
-msgstr ""
+msgstr "Fichier de certificat"
 
 #: Certman.class.php:649
 msgid "Certificate ID is unknown!"
@@ -75,7 +78,7 @@ msgstr ""
 
 #: views/rnav.php:2
 msgid "Certificate List"
-msgstr ""
+msgstr "Liste de certificats"
 
 #: views/overview.php:7
 msgid "Certificate Management"
@@ -95,7 +98,7 @@ msgstr ""
 
 #: Certman.class.php:162
 msgid "Certificate doesnt appear to be a crt file"
-msgstr ""
+msgstr "Le certification ne semble pas être un fichier crt"
 
 #: views/ca.php:192
 msgid "Certificate to use for this CA (must reference the Private Key)"
@@ -107,7 +110,7 @@ msgstr ""
 
 #: views/ca.php:39
 msgid "DNS name or our IP address"
-msgstr ""
+msgstr "Nom DNS ou notre adresse IP"
 
 #: functions.inc/hook_core.php:120
 msgid "DTLS Rekey Interval"
@@ -123,19 +126,19 @@ msgstr ""
 
 #: Certman.class.php:295
 msgid "Delete"
-msgstr ""
+msgstr "Supprimer"
 
 #: Certman.class.php:311
 msgid "Delete Certificate"
-msgstr ""
+msgstr "Détruire le certificat"
 
 #: Certman.class.php:258
 msgid "Deleted Certificate"
-msgstr ""
+msgstr "Certificat supprimé"
 
 #: views/certgrid.php:10 views/new.php:87 views/view.php:47
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #: Certman.class.php:86 Certman.class.php:89
 msgid "Done!"
@@ -179,7 +182,7 @@ msgstr ""
 
 #: views/ca.php:27
 msgid "Host Name"
-msgstr ""
+msgstr "Nom de l'hôte"
 
 #: views/ca.php:7
 msgid "I Know what I am doing"
@@ -193,7 +196,7 @@ msgstr ""
 
 #: views/new.php:63 views/view.php:23
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: views/certgrid.php:4 views/new.php:22 views/rnav.php:3
 msgid "New Certificate"
@@ -205,7 +208,7 @@ msgstr ""
 
 #: views/ca.php:106
 msgid "No"
-msgstr ""
+msgstr "Non"
 
 #: Certman.class.php:75
 msgid "No Certificates exist"
@@ -248,7 +251,7 @@ msgstr ""
 
 #: Certman.class.php:300
 msgid "Reset"
-msgstr ""
+msgstr "Réinitialiser"
 
 #: views/ca.php:101
 msgid "Save Passphrase"
@@ -260,7 +263,7 @@ msgstr ""
 
 #: Certman.class.php:305
 msgid "Submit"
-msgstr ""
+msgstr "Soumettre"
 
 #: Certman.class.php:176
 msgid "Successfully deleted the Certificate Authority"
@@ -280,7 +283,7 @@ msgstr ""
 
 #: functions.inc/hook_core.php:76
 msgid "The Certificate to use from Certificate Manager"
-msgstr ""
+msgstr "Le certificat à utiliser du gestionnaire de certificat"
 
 #: views/new.php:99 views/view.php:59
 msgid "The Description of this certificate. Used in the module only"
@@ -327,7 +330,7 @@ msgstr ""
 
 #: functions.inc/hook_core.php:75
 msgid "Use Certificate"
-msgstr ""
+msgstr "Utiliser le certificat"
 
 #: functions.inc/hook_core.php:89
 msgid ""
@@ -367,7 +370,7 @@ msgstr ""
 
 #: views/ca.php:105
 msgid "Yes"
-msgstr ""
+msgstr "Oui"
 
 #: Certman.class.php:88
 msgid "default"
