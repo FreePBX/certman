@@ -3,7 +3,10 @@
 //	License for all code of this FreePBX module can be found in the license file inside the module directory
 //	Copyright 2014 Schmooze Com Inc.
 //
+namespace FreePBX\modules\Certman;
+class Logger { function __call($name, $arguments) { dbug(date('Y-m-d H:i:s')." [$name] ${arguments[0]}"); }}
 namespace FreePBX\modules;
+include 'vendor/autoload.php';
 class Certman implements \BMO {
 	/* Asterisk Defaults */
 	private $defaults = array(
@@ -54,9 +57,18 @@ class Certman implements \BMO {
 		$sth->execute();
 		$sql = "CREATE TABLE IF NOT EXISTS `certman_certs` (
 					`cid` INT NOT NULL AUTO_INCREMENT,
-					`caid` INT NOT NULL,
+					`caid` INT NULL,
 					`basename` VARCHAR(45) NOT NULL,
 					`description` VARCHAR(255) NULL,
+					`type` VARCHAR(2) NOT NULL DEFAULT 'ss',
+					`default` TINYINT NOT NULL DEFAULT 0,
+					PRIMARY KEY (`cid`),
+					UNIQUE KEY `basename_UNIQUE` (`basename`))";
+		$sth = $this->db->prepare($sql);
+		$sth->execute();
+		$sql = "CREATE TABLE IF NOT EXISTS `certman_csrs` (
+					`cid` INT NOT NULL AUTO_INCREMENT,
+					`basename` VARCHAR(45) NOT NULL,
 					PRIMARY KEY (`cid`),
 					UNIQUE KEY `basename_UNIQUE` (`basename`))";
 		$sth = $this->db->prepare($sql);
@@ -85,7 +97,7 @@ class Certman implements \BMO {
 			$caid = $this->generateCA('ca', gethostname(), gethostname(), $passwd, true);
 			out(_("Done!"));
 			outn(_("Generating default certificate..."));
-			$this->generateCertificate($caid,_("default"),_("default certificate generated at install time"));
+			$this->generateCertificate($caid,_("default"),_("default self signed certificate generated at install time"));
 			out(_("Done!"));
 		}
 
@@ -98,10 +110,35 @@ class Certman implements \BMO {
 				die_freepbx($result->getDebugInfo());
 			}
 		}
+		$info = $db->getRow('SHOW COLUMNS FROM certman_certs WHERE FIELD = "type"', DB_FETCHMODE_ASSOC);
+		if(empty($info)) {
+			$sql = "ALTER TABLE `certman_certs` ADD COlUMN `type` varchar (2) NOT NULL DEFAULT 'ss'";
+			$result = $db->query($sql);
+			if (\DB::IsError($result)) {
+				die_freepbx($result->getDebugInfo());
+			}
+		}
+		$info = $db->getRow('SHOW COLUMNS FROM certman_certs WHERE FIELD = "default"', DB_FETCHMODE_ASSOC);
+		if(empty($info)) {
+			$sql = "ALTER TABLE `certman_certs` ADD COlUMN `default` TINYINT NOT NULL DEFAULT 0";
+			$result = $db->query($sql);
+			if (\DB::IsError($result)) {
+				die_freepbx($result->getDebugInfo());
+			}
+		}
+		$info = $db->getRow('SHOW COLUMNS FROM certman_certs WHERE FIELD = "caid"', DB_FETCHMODE_ASSOC);
+		if($info['Null'] == "NO") {
+			$sql = "ALTER TABLE `certman_certs` CHANGE COLUMN `caid` `caid` INT NULL";
+			$result = $db->query($sql);
+			if (\DB::IsError($result)) {
+				die_freepbx($result->getDebugInfo());
+			}
+		}
 		return true;
 	}
 
 	public function uninstall() {
+		$this->removeCSR();
 		$this->removeCA();
 		$sql = "DROP TABLE certman_mapping";
 		$sth = $this->db->prepare($sql);
@@ -119,167 +156,210 @@ class Certman implements \BMO {
 	public function restore($backup){}
 	public function doConfigPageInit($page){
 		$request = $_REQUEST;
-		$request['action'] = !empty($request['action']) ? $request['action'] : "";
-		$request['replace'] = !empty($request['replace']) ? $request['replace'] : "";
-		switch($request['action']) {
-			case 'ca':
-				$type = !empty($request['type']) ? $request['type'] : "";
-				$type = (!empty($_FILES["privatekey"]['name']) && $_FILES["privatekey"]['name'] != '') ? 'upload' : $type;
-				$new = false;
-				if($request['replace'] === 'replace'){
-					$this->removeCA();
-				}
-				switch($type) {
-					case 'generate':
-						$sph = (!empty($request['savepassphrase']) && $request['savepassphrase'] == 'yes') ? true : false;
-						try {
-							$out = $this->generateCA('ca',$request['hostname'],$request['orgname'],$request['passphrase'],$sph);
-							$new = true;
-						} catch(\Exception $e) {
-							$this->message = array('type' => 'danger', 'message' => nl2br($e->getMessage()));
+		$request['certaction'] = !empty($request['certaction']) ? $request['certaction'] : "";
+		switch($request['certaction']) {
+			case "edit":
+				switch($request['type']) {
+					case "up":
+						$cert = $this->getCertificateDetails($_POST['cid']);
+						if(!empty($cert)) {
+							$name = $cert['basename'];
+							if(!empty($_POST['signedcert'])) {
+								file_put_contents($location."/".$name.".crt", $_POST['signedcert']);
+							}
+
+							if(!empty($_POST['certchain'])) {
+								file_put_contents($location."/".$name."-ca-bundle.crt", $_POST['certchain']);
+							}
+
+							if(!empty($_POST['privatekey'])) {
+								file_put_contents($location."/".$name.".key", $_POST['privatekey']);
+							}
+							$this->update($cert['cid'],$_POST['description']);
 						}
 					break;
-					case 'upload':
-						if ($_FILES["privatekey"]["error"] > 0) {
-							$this->message = array('type' => 'danger', 'message' => _('Error Uploading ' . $_FILES["privatekey"]["error"]));
-							break;
-						} else {
-							$pi = pathinfo($_FILES["privatekey"]['name']);
-							if($pi['extension'] != 'key') {
-								$this->message = array('type' => 'danger', 'message' => _('Private key doesnt appear to be a key file'));
-								break;
-							} else {
-								move_uploaded_file($_FILES["privatekey"]["tmp_name"],'/etc/asterisk/keys/ca.key');
+					case "le":
+						$cert = $this->getCertificateDetails($_POST['cid']);
+						if(!empty($cert)) {
+							if($this->updateLE($cert['basename'])) {
+								$this->update($cert['cid'],$cert['description']);
 							}
+						}
+					break;
+					case "ss":
+						$cert = $this->getCertificateDetails($_POST['cid']);
+						if(!empty($cert)) {
+							$this->update($cert['cid'],$_POST['description']);
+						}
+					break;
+				}
+			break;
+			case "add":
+				switch($request['type']) {
+					case "le":
+						$host = basename($_POST['host']);
+						if($this->updateLE($host)) {
+							$this->saveCertificate(null,$host,"Let's Encrypt for ".$host,'le');
+						}
+					break;
+					case "up":
+						$location = $this->PKCS->getKeysLocation();
+						$name = basename($_POST['name']);
+						if($this->checkCertificateName($name)) {
+							$this->message = array('type' => 'danger', 'message' => _('Certificate name is already in use'));
+							break 2;
+						}
+						if(!empty($_POST['signedcert'])) {
+							file_put_contents($location."/".$name.".crt", $_POST['signedcert']);
+							$cert = $_POST['signedcert'];
 						}
 
-						if ($_FILES["certificate"]["error"] > 0) {
-							$this->message = array('type' => 'danger', 'message' => _('Error Uploading ' . $_FILES["certificate"]["error"]));
-							break;
+						if(!empty($_POST['certchain'])) {
+							file_put_contents($location."/".$name."-ca-bundle.crt", $_POST['certchain']);
+							//TODO: what to do with this?
+						}
+
+						if(!empty($_POST['privatekey'])) {
+							file_put_contents($location."/".$name.".key", $_POST['privatekey']);
+							$key = $_POST['privatekey'];
+						} elseif(!empty($_POST['csrref'])) {
+							$csr = $this->getCSRDetails($_POST['csrref']);
+							$key = file_get_contents($csr['files']['key']);
+							$this->removeCSR();
+							file_put_contents($location."/".$name.".key", $key);
+						}
+
+						file_put_contents($location . "/" . $name . ".pem", $key . $cert);
+						$this->saveCertificate(null,$name,$_POST['description'],'up');
+					break;
+					case "ss":
+						if(empty($request['caid'])) {
+							//generate new cert authority
+							$this->generateConfig('ca',$request['hostname'],$request['orgname']);
+							$sph = (!empty($request['savepassphrase']) && $request['savepassphrase'] == 'yes') ? true : false;
+							$caid = $this->generateCA('ca',$request['hostname'],$request['orgname'],$request['passphrase'],$sph);
 						} else {
-							$pi = pathinfo($_FILES["certificate"]['name']);
-							if($pi['extension'] != 'crt') {
-								$this->message = array('type' => 'danger', 'message' => _('Certificate doesnt appear to be a crt file'));
-								break;
-							} else {
-								move_uploaded_file($_FILES["certificate"]["tmp_name"],'/etc/asterisk/keys/ca.crt');
+							//get old cert authority
+							$dat = $this->getAllManagedCAs();
+							$caid = $dat[0]['uid'];
+						}
+						$request['passphrase'] = !empty($request['passphrase']) ? $request['passphrase'] : null;
+						$this->generateCertificate($caid,$request['name'],$request['description'],$request['passphrase']);
+					break;
+					case "csr":
+						$location = $this->PKCS->getKeysLocation();
+						$name = basename($_POST['name']);
+						if($this->checkCertificateName($name) || $this->checkCSRName($name)) {
+							$this->message = array('type' => 'danger', 'message' => _('Certificate name is already in use'));
+							break 2;
+						}
+						$valid = array("CN","O","OU","C","ST","L");
+						$params = array();
+						foreach($_POST as $key => $value) {
+							if(in_array($key,$valid)) {
+								$params[$key] = $value;
 							}
 						}
-						$this->generateConfig('ca',$request['hostname'],$request['orgname']);
-						$this->saveCA('ca',$request['hostname'],$request['orgname'],$request['passphrase']);
-						$this->message = array('type' => 'success', 'message' => _('Successfully generated a Certificate Authority'));
-						$new = true;
+						$this->PKCS->createCSR($name, $params);
+						$this->saveCSR($name);
 					break;
-					case 'delete':
+				}
+			break;
+			case "delete":
+				switch($request['type']) {
+					case 'ca':
 						$status = $this->removeCA();
 						if($status) {
 							$this->message = array('type' => 'success', 'message' => _('Successfully deleted the Certificate Authority'));
 						}
 					break;
-					default:
+					case 'csr':
+						$this->removeCSR();
 					break;
-				}
-				$caExists = $this->checkCAexists();
-				$html = load_view(__DIR__.'/views/ca.php',array('caExists' => $caExists, 'message' => $this->message, 'new' => $new));
-			break;
-			case 'new':
-				$cas = $this->getAllManagedCAs();
-				if(!empty($cas)) {
-					if(!empty($request['name']) && $this->checkCertificateName($request['name'])) {
-						$this->message = array('type' => 'danger', 'message' => _('Certificate already exists'));
-					} else {
-						$type = !empty($request['type']) ? $request['type'] : "";
-						$type = (!empty($_FILES["privatekey"]['name']) && $_FILES["privatekey"]['name'] != '') ? 'upload' : $type;
-						switch($type) {
-							case 'generate':
-								$ca = $this->getCADetails($request['ca']);
-								$passphrase = !empty($request['passphrase']) ? $request['passphrase'] : $ca['passphrase'];
-								$out = $this->generateCertificate($request['ca'],$request['name'],$request['description'],$passphrase);
-								if($out !== true) {
-									$this->message = array('type' => 'danger', 'message' => nl2br($out));
-								} else {
-									$this->message = array('type' => 'success', 'message' => _('Successfully generated a Certificate'));
-									$this->goto = 'overview';
-								}
-							break;
-							case 'upload':
-								if ($_FILES["privatekey"]["error"] > 0) {
-									$this->message = array('type' => 'danger', 'message' => _('Error uploading ' . $_FILES["privatekey"]["error"]));
-									break;
-								} else {
-									$pi = pathinfo($_FILES["privatekey"]['name']);
-									if($pi['extension'] != 'key') {
-										$this->message = array('type' => 'danger', 'message' => _('Private key doesnt appear to be a key file'));
-										break;
-									} else {
-										move_uploaded_file($_FILES["privatekey"]["tmp_name"],'/etc/asterisk/keys/'.$request['name'].'.key');
-									}
-								}
-
-								if ($_FILES["certificate"]["error"] > 0) {
-									$this->message = array('type' => 'danger', 'message' => _('Error uploading ' . $_FILES["certificate"]["error"]));
-									break;
-								} else {
-									$pi = pathinfo($_FILES["certificate"]['name']);
-									if($pi['extension'] != 'crt') {
-										$this->message = array('type' => 'danger', 'message' => _('Certificate does not appear to be a .crt file'));
-										break;
-									} else {
-										move_uploaded_file($_FILES["certificate"]["tmp_name"],'/etc/asterisk/keys/'.$request['name'].'.crt');
-									}
-								}
-								$this->saveCertificate($request['ca'],$request['name'],$request['description']);
-								$this->message = array('type' => 'success', 'message' => _('Successfully uploaded a certificate'));
-
-							break;
-							default:
+					case 'cert':
+						$cert = $this->getCertificateDetails($_REQUEST['id']);
+						if(empty($cert)) {
 							break;
 						}
-					}
-				}
-			break;
-			case 'view':
-				$type = !empty($request['type']) ? $request['type'] : "";
-				switch($type){
-					case 'update':
-						$out = $this->updateCert($request['cid'],$request['name'],$request['description']);
-						if($out !== true) {
-							$this->message = array('type' => 'danger', 'message' => $out);
-						} else {
-							$this->message = array('type' => 'success', 'message' => _('Updated Certificate'));
-						}
-					break;
-					default:
+						$this->removeCertificate($cert['cid']);
+						$this->message = array('type' => 'success', 'message' => _('Deleted Certificate'));
 					break;
 				}
 			break;
-			case 'delete':
-				$this->removeCertificate($_REQUEST['id']);
-				$this->message = array('type' => 'success', 'message' => _('Deleted Certificate'));
-			break;
-
 		}
 		return true;
 	}
 	public function myShowPage($view=''){
 		$view = !empty($this->goto) ? $this->goto : $view;
 		$request = $_REQUEST;
-		switch($view){
-			case 'view':
-				$cert = $this->getCertificateDetails($request['id']);
-				echo load_view(__DIR__.'/views/view.php',array('cert' => $cert, 'message' => $this->message));
+		switch($request['action']) {
+			case 'download':
+				case 'csr':
+					$csrs = $this->getAllManagedCSRs();
+					$file = $this->PKCS->getKeysLocation()."/".$csrs[0]['basename'].".csr";
+					if(!empty($csrs[0]['basename']) && file_exists($file)) {
+						$quoted = sprintf('"%s"', addcslashes(basename($file), '"\\'));
+						$size = filesize($file);
+						header('Content-Description: File Transfer');
+						header('Content-Type: application/octet-stream');
+						header('Content-Disposition: attachment; filename=' . $quoted);
+						header('Content-Transfer-Encoding: binary');
+						header('Connection: Keep-Alive');
+						header('Expires: 0');
+						header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+						header('Pragma: public');
+						header('Content-Length: ' . $size);
+						readfile($file);
+					}
+					die();
+				break;
 			break;
-			case 'new':
-				$cas = $this->getAllManagedCAs();
-				if($cas){
-					echo load_view(__DIR__.'/views/new.php',array('cas' => $cas, 'message' => $this->message));
+			case 'add':
+				switch($request['type']) {
+					case 'le':
+						echo load_view(__DIR__.'/views/le.php',array('message' => $this->message));
+					break;
+					case 'up':
+						$csrs = $this->getAllManagedCSRs();
+						echo load_view(__DIR__.'/views/up.php',array('message' => $this->message, 'csrs' => $csrs));
+					break;
+					case 'ss':
+						$pass = base64_encode(openssl_random_pseudo_bytes(32));
+						$caExists = $this->checkCAexists();
+						$cas = $this->getAllManagedCAs();
+						echo load_view(__DIR__.'/views/ss.php',array('caExists' => $caExists, 'cas' => $cas, 'message' => $this->message,'pass' => $pass));
+					break;
+					case 'csr':
+						$csrs = $this->getAllManagedCSRs();
+						echo load_view(__DIR__.'/views/csr.php',array('message' => $this->message, 'csrs' => $csrs));
+					break;
 				}
 			break;
-			case 'overview':
+			case 'view':
+				$cert = $this->getCertificateDetails($request['id']);
+				if(!empty($cert)) {
+					switch($cert['type']) {
+						case 'up':
+							echo load_view(__DIR__.'/views/up.php',array('cert' => $cert, 'message' => $this->message));
+						break;
+						case 'ss':
+							$caExists = $this->checkCAexists();
+							$cas = $this->getAllManagedCAs();
+							if($cas){
+								echo load_view(__DIR__.'/views/ss.php',array('cert' => $cert, 'caExists' => $caExists, 'cas' => $cas, 'message' => $this->message));
+							}
+						break;
+						case 'le':
+							echo load_view(__DIR__.'/views/le.php',array('cert' => $cert, 'message' => $this->message));
+						break;
+					}
+				}
+			break;
 			default:
 				$certs = $this->getAllManagedCertificates();
-				$caExists = $this->checkCAexists();
-				echo load_view(__DIR__.'/views/overview.php',array('certs' => $certs, 'caExists' => $caExists, 'message' => $this->message));
+				$csr = $this->checkCSRexists();
+				$ca = $this->checkCAexists();
+				echo load_view(__DIR__.'/views/overview.php',array('certs' => $certs, 'message' => $this->message, 'csr' => $csr, 'ca' => $ca));
 			break;
 		}
 	}
@@ -310,9 +390,10 @@ class Certman implements \BMO {
 							$buttons['submit']['value'] = _('Update Certificate');
 							$buttons['delete']['value'] = _('Delete Certificate');
 						break;
+						case 'add':
 						case 'new':
 							unset($buttons['delete']);
-							$buttons['submit']['value'] = _('Generate Certificate');
+							$buttons['submit']['value'] = isset($_REQUEST['type']) && $_REQUEST['type'] == 'csr' ? _('Generate CSR') : _('Generate Certificate');
 						break;
 						default:
 							$buttons['submit']['class'] = 'hidden';
@@ -323,6 +404,38 @@ class Certman implements \BMO {
 				break;
 			}
 		return $buttons;
+	}
+
+	/**
+	 * Update or Add Let's Encrypt
+	 * @param  string $host    The hostname (MUST BE A VALID FQDN)
+	 * @param  boolean $staging Whether to use the staging server or not
+	 * @return boolean          True if success, false if not
+	 */
+	public function updateLE($host,$staging=false) {
+		$location = $this->PKCS->getKeysLocation();
+		$logger = new Certman\Logger();
+		$host = basename($host);
+		try {
+			$le = new \Analogic\ACME\Lescript($location, $this->FreePBX->Config->get("AMPWEBROOT"), $logger);
+			if($staging) {
+				$le->ca = 'https://acme-staging.api.letsencrypt.org';
+			}
+			$le->initAccount();
+			$le->signDomains(array($host));
+		} catch (\Exception $e) {
+			$logger->error($e->getMessage());
+			$logger->error($e->getTraceAsString());
+			return false;
+		}
+		if(file_exists($location."/".$host)) {
+			copy($location."/".$host."/private.pem",$location."/".$host.".key"); //webserver.key
+			copy($location."/".$host."/fullchain.pem",$location."/".$host.".crt"); //webserver.crt
+			$key = file_get_contents($location."/".$host.".key");
+			$cert = file_get_contents($location."/".$host.".crt");
+			file_put_contents($location."/".$host.".pem",$key.$cert);
+		}
+		return true;
 	}
 
 	public function myDialplanHooks() {
@@ -452,6 +565,14 @@ class Certman implements \BMO {
 	}
 
 	/**
+	 * Check to see if *any* certificate authority exists
+	 */
+	public function checkCSRexists() {
+		$z = $this->getAllManagedCSRs();
+		return !empty($z);
+	}
+
+	/**
 	 * Get all Certificate Manager Managed Certificate Authorities
 	 */
 	public function getAllManagedCAs() {
@@ -504,6 +625,17 @@ class Certman implements \BMO {
 	}
 
 	/**
+	 * Save the Certificate Signing Request Information into the Database
+	 * @param {string} $basename	 The CSR Basename
+	 */
+	public function saveCSR($basename) {
+		$sql = "INSERT INTO certman_csrs (`basename`) VALUES (?)";
+		$sth = $this->db->prepare($sql);
+		$sth->execute(array($basename));
+		return $this->db->lastInsertId();
+	}
+
+	/**
 	 * Get Certificate Authority Details
 	 * @param {int} $caid The Certificate Authority ID
 	 */
@@ -513,7 +645,32 @@ class Certman implements \BMO {
 		$sth->execute(array($caid));
 		$data = $sth->fetch(\PDO::FETCH_ASSOC);
 		if(!empty($data)) {
-			$data['files']['crt'] = $this->PKCS->getKeysLocation().'/'.$data['basename'].'.crt';
+			$location = $this->PKCS->getKeysLocation();
+			$files = array(".key" => "key",".crt" => "crt",".cfg" => "cfg");
+			foreach($files as $f => $type) {
+				$file = $location.'/'.$data['basename'].$f;
+				if(file_exists($file)) {
+					$data['files'][$type] = $file;
+				}
+			}
+		}
+		return $data;
+	}
+
+	public function getCSRDetails($csrid) {
+		$sql = "SELECT * from certman_csrs WHERE cid = ?";
+		$sth = $this->db->prepare($sql);
+		$sth->execute(array($csrid));
+		$data = $sth->fetch(\PDO::FETCH_ASSOC);
+		if(!empty($data)) {
+			$location = $this->PKCS->getKeysLocation();
+			$files = array(".csr" => "csr",".csr-config" => "csr-config",".key" => "key");
+			foreach($files as $f => $type) {
+				$file = $location.'/'.$data['basename'].$f;
+				if(file_exists($file)) {
+					$data['files'][$type] = $file;
+				}
+			}
 		}
 		return $data;
 	}
@@ -544,17 +701,18 @@ class Certman implements \BMO {
 
 	/**
 	 * Save Certificate Information into the Database
-	 * @param {int} $caid				The Certificate Authority ID
+	 * @param {int}    $caid				The Certificate Authority ID (For Self Signed)
 	 * @param {string} $base				The base name of the certificate
 	 * @param {string} $description The description of the certificate
+	 * @param {string} $type				The type of the certificate: ss:: self signed, up:: upload, le:: let's encrypt
 	 */
-	public function saveCertificate($caid,$base,$description) {
+	public function saveCertificate($caid=null,$base,$description,$type='ss',$default=0) {
 		if($this->checkCertificateName($base)) {
 			return false;
 		}
-		$sql = "INSERT INTO certman_certs (`caid`, `basename`, `description`) VALUES (?, ?, ?)";
+		$sql = "INSERT INTO certman_certs (`caid`, `basename`, `description`,`type`,`default`) VALUES (?, ?, ?, ?, ?)";
 		$sth = $this->db->prepare($sql);
-		$sth->execute(array($caid,$base,$description));
+		$sth->execute(array($caid,$base,$description,$type,$default));
 	}
 
 	/**
@@ -562,6 +720,16 @@ class Certman implements \BMO {
 	 */
 	public function getAllManagedCertificates() {
 		$sql = "SELECT * FROM certman_certs";
+		$sth = $this->db->prepare($sql);
+		$sth->execute();
+		return $sth->fetchAll(\PDO::FETCH_ASSOC);
+	}
+
+	/**
+	 * Get all Managed Certificate Signing Requests
+	 */
+	public function getAllManagedCSRs() {
+		$sql = "SELECT * FROM certman_csrs";
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
 		return $sth->fetchAll(\PDO::FETCH_ASSOC);
@@ -577,7 +745,14 @@ class Certman implements \BMO {
 		$sth->execute(array($cid));
 		$data = $sth->fetch(\PDO::FETCH_ASSOC);
 		if(!empty($data)) {
-			$data['files']['pem'] = $this->PKCS->getKeysLocation().'/'.$data['basename'].'.pem';
+			$location = $this->PKCS->getKeysLocation();
+			$files = array(".key" => "key",".crt" => "crt",".csr" => "csr",".pem" => "pem","-ca-bundle.crt" => "ca-bundle");
+			foreach($files as $f => $type) {
+				$file = $location.'/'.$data['basename'].$f;
+				if(file_exists($file)) {
+					$data['files'][$type] = $file;
+				}
+			}
 		}
 		return $data;
 	}
@@ -589,6 +764,19 @@ class Certman implements \BMO {
 	 */
 	public function checkCertificateName($name) {
 		$sql = "SELECT * FROM certman_certs WHERE basename = ?";
+		$sth = $this->db->prepare($sql);
+		$sth->execute(array($name));
+		$data = $sth->fetch(\PDO::FETCH_ASSOC);
+		return !empty($data);
+	}
+
+	/**
+	 * Check Certificate Name to see if it exists
+	 * @param {string} $name Certificate Base Name
+	 * @return boolean True if it exists, false if it doesnt
+	 */
+	public function checkCSRName($name) {
+		$sql = "SELECT * FROM certman_csrs WHERE basename = ?";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($name));
 		$data = $sth->fetch(\PDO::FETCH_ASSOC);
@@ -627,6 +815,28 @@ class Certman implements \BMO {
 		return true;
 	}
 
+	/**
+	 * Remove a Certificate Authority and all of it's child certificates
+	 */
+	public function removeCSR($keepKey = false) {
+		$csrs = $this->getAllManagedCSRs();
+		$loc = $this->PKCS->getKeysLocation();
+		$files[] = $loc ."/".$csrs[0]['basename'].".csr";
+		$files[] = $loc ."/".$csrs[0]['basename'].".csr-config";
+		if(!$keepKey) {
+			$files[] = $loc ."/".$csrs[0]['basename'].".key";
+		}
+		foreach($files as $file) {
+			if(file_exists($file)) {
+				unlink($file);
+			}
+		}
+		$sql = "TRUNCATE certman_csrs";
+		$sth = $this->db->prepare($sql);
+		$sth->execute();
+		return true;
+	}
+
 	public function updateCert($cid,$name,$description) {
 		$o = $this->getCertificateDetails($cid);
 		if(!empty($o)) {
@@ -649,23 +859,69 @@ class Certman implements \BMO {
 			return _('Certificate ID is unknown!');
 		}
 	}
+
+	public function update($cid,$description) {
+		$sql = "UPDATE certman_certs SET description = ? WHERE cid = ?";
+		$sth = $this->db->prepare($sql);
+		$sth->execute(array($description,$cid));
+	}
+
 	public function getRightNav($request) {
 		if(isset($request['action']) && !empty($request['action'])){
 			return load_view(__DIR__."/views/rnav.php",array('caExists' => $this->checkCAexists()));
 		}
 	}
+	public function makeCertDefault($cid) {
+		$cert = $this->getCertificateDetails($cid);
+		if(empty($cert)) {
+			return false;
+		}
+		$sql = "UPDATE certman_certs SET `default` = 0";
+		$sth = $this->db->prepare($sql);
+		$sth->execute();
+
+		$sql = "UPDATE certman_certs SET `default` = ? WHERE cid = ?";
+		$sth = $this->db->prepare($sql);
+		$sth->execute(array(1,$cid));
+		$this->FreePBX->Hooks->processHooks($cert);
+		return true;
+	}
+
+	public function getDefaultCertDetails() {
+		$sql = "SELECT * from certman_certs WHERE `default` = 1";
+		$sth = $this->db->prepare($sql);
+		$sth->execute();
+		$data = $sth->fetch(\PDO::FETCH_ASSOC);
+		if(!empty($data)) {
+			$location = $this->PKCS->getKeysLocation();
+			$files = array(".key" => "key",".crt" => "crt",".csr" => "csr",".pem" => "pem","-ca-bundle.crt" => "ca-bundle");
+			foreach($files as $f => $type) {
+				$file = $location.'/'.$data['basename'].$f;
+				if(file_exists($file)) {
+					$data['files'][$type] = $file;
+				}
+			}
+		}
+		return $data;
+	}
+
 	public function ajaxRequest($req, &$setting) {
-			 switch ($req) {
-					 case 'getJSON':
-							 return true;
-					 break;
-					 default:
-							 return false;
-					 break;
-			 }
-	 }
+		switch ($req) {
+			case 'makeDefault':
+			case 'getJSON':
+				return true;
+			break;
+			default:
+				return false;
+			break;
+		}
+	}
 	public function ajaxHandler(){
 		switch ($_REQUEST['command']) {
+			case 'makeDefault':
+				$res = $this->makeCertDefault($_POST['id']);
+				return array("status" => $res, "message" => "");
+			break;
 			case 'getJSON':
 				switch ($_REQUEST['jdata']) {
 					case 'grid':
