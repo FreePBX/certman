@@ -8,8 +8,6 @@ $("#delCA").click(function() {
 	}
 });
 
-
-
 $("table").on("post-body.bs.table", function () {
 	$(".default-check").click(function() {
 		var $this = this;
@@ -107,35 +105,37 @@ $(function() {
 	});
 
 	$("#Submit").click(function(e) {
-		var stop = false;
-		if($("#certpage").length) {
-
-		} else if($("#hostname").is(":visible")) {
-			$("#caform input[type=\"text\"]").each( function(i, v) {
-				if ($(this).val() === "") {
-					warnInvalid($(this),_("Can not be left blank!"));
-					stop = true;
-					return false;
-				}
-			});
-			if(stop) {
+		var stop = false,
+				type = $("#certtype").val();
+		$("form[name=frm_certman] input[type=\"text\"]").each( function(i, v) {
+			if ($(this).val() === "") {
+				warnInvalid($(this),_("Can not be left blank!"));
+				stop = true;
 				return false;
 			}
-			if ($("#caform input[type=\"password\"]").val() === "") {
-				if (!confirm(_("Are you sure you dont want a passphrase?"))) {
-					$("#caform input[type=\"password\"]").focus();
+		});
+		if(stop) {
+			return false;
+		}
+		if ($("form[name=frm_certman] input[type=\"password\"]").val() === "") {
+			if (!confirm(_("Are you sure you dont want a passphrase?"))) {
+				$("form[name=frm_certman] input[type=\"password\"]").focus();
+				return false;
+			}
+		}
+		if(type == "ss") {
+			if($("#name").length) {
+				var test = /^[a-z0-9]+$/i;
+				if(!test.test($("#name").val())) {
+					alert(_("Base Name must be alphanumeric only"));
 					return false;
 				}
 			}
 		}
-		if(stop) {
-			e.stopPropagation();
-			e.preventDefault();
-		} else {
-			$(this).val(_("Generating.. Please wait"));
-			$(this).prop("disabled", true);
-			$(".fpbx-submit").submit();
-		}
+
+		$(this).val(_("Generating... Please wait"));
+		$(this).prop("disabled", true);
+		$(".fpbx-submit").submit();
 	});
 
 	$("#deletecert").click(function() {

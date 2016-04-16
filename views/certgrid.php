@@ -17,6 +17,7 @@
 	<?php if($ca) { ?>
 		<a href="?display=certman&amp;certaction=delete&amp;type=ca" class="btn btn-danger" id="delCA"><i class="fa fa-times"></i> <?php echo _("Delete Self-Signed CA")?></a>
 	<?php } ?>
+	<a href="?display=certman&amp;certaction=importlocally" class="btn btn-primary"><?php echo _("Import Locally")?></a>
 </div>
 <table data-toolbar="#toolbar-all" data-maintain-selected="true" data-show-columns="true" data-show-toggle="true" data-toggle="table" data-pagination="true" data-search="true" class="table table-striped">
 	<thead>

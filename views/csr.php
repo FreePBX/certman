@@ -47,7 +47,7 @@ if(!empty($message)) {
 													<i class="fa fa-question-circle fpbx-help-icon" data-for="csrcn"></i>
 												</div>
 												<div class="col-md-9">
-													<input type="text" class="form-control" id="csrcn" name="CN" placeholder="server.example.com" required="">
+													<input type="text" class="form-control" id="csrcn" name="CN" placeholder="server.example.com" value="<?php echo $hostname?>" required>
 												</div>
 											</div>
 										</div>
