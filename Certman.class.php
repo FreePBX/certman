@@ -461,41 +461,35 @@ class Certman implements \BMO {
 	public function getActionBar($request) {
 		$buttons = array();
 		$request['action'] = !empty($request['action']) ? $request['action'] : "";
-		switch($request['display']) {
-			case 'certman':
-				$buttons = array(
-					'delete' => array(
-						'name' => 'delete',
-						'id' => 'Delete',
-						'value' => _('Delete')
-						),
-						'reset' => array(
-							'name' => 'reset',
-							'id' => 'Reset',
-							'value' => _('Reset')
-						),
-						'submit' => array(
-							'name' => 'submit',
-							'id' => 'Submit',
-							'value' => _('Submit')
-						)
-					);
-					switch($request['action']){
-						case 'view':
-							$buttons['submit']['value'] = _('Update Certificate');
-							$buttons['delete']['value'] = _('Delete Certificate');
-						break;
-						case 'add':
-						case 'new':
-							unset($buttons['delete']);
-							$buttons['submit']['value'] = isset($_REQUEST['type']) && $_REQUEST['type'] == 'csr' ? _('Generate CSR') : _('Generate Certificate');
-						break;
-						default:
-							$buttons['submit']['class'] = 'hidden';
-							$buttons['reset']['class'] = 'hidden';
-							$buttons['delete']['class'] = 'hidden';
-						break;
-					}
+		$buttons = array(
+			'delete' => array(
+				'name' => 'delete',
+				'id' => 'Delete',
+				'value' => _('Delete')
+				),
+				'reset' => array(
+					'name' => 'reset',
+					'id' => 'Reset',
+					'value' => _('Reset')
+				),
+				'submit' => array(
+					'name' => 'submit',
+					'id' => 'Submit',
+					'value' => _('Submit')
+				)
+			);
+			switch($request['action']){
+				case 'view':
+					$buttons['submit']['value'] = _('Update Certificate');
+					$buttons['delete']['value'] = _('Delete Certificate');
+				break;
+				case 'add':
+				case 'new':
+					unset($buttons['delete']);
+					$buttons['submit']['value'] = isset($_REQUEST['type']) && $_REQUEST['type'] == 'csr' ? _('Generate CSR') : _('Generate Certificate');
+				break;
+				default:
+					$buttons = array();
 				break;
 			}
 		return $buttons;
@@ -950,6 +944,27 @@ class Certman implements \BMO {
 		return $sth->fetchAll(\PDO::FETCH_ASSOC);
 	}
 
+	public function getCertificateDetailsByBasename($basename) {
+		$sql = "SELECT * from certman_certs WHERE basename = ?";
+		$sth = $this->db->prepare($sql);
+		$sth->execute(array($basename));
+		$data = $sth->fetch(\PDO::FETCH_ASSOC);
+		if(!empty($data)) {
+			$location = $this->PKCS->getKeysLocation();
+			$files = array(".key" => "key",".crt" => "crt",".csr" => "csr",".pem" => "pem","-ca-bundle.crt" => "ca-bundle");
+			foreach($files as $f => $type) {
+				$file = $location.'/'.$data['basename'].$f;
+				if(file_exists($file)) {
+					$data['files'][$type] = $file;
+					if($type == 'crt') {
+						$data['info']['crt'] = @openssl_x509_parse(file_get_contents($file));
+					}
+				}
+			}
+		}
+		return $data;
+	}
+
 	/**
 	 * Get details about a specific Authority
 	 * @param {int} $cid The Certificate ID
@@ -966,6 +981,9 @@ class Certman implements \BMO {
 				$file = $location.'/'.$data['basename'].$f;
 				if(file_exists($file)) {
 					$data['files'][$type] = $file;
+					if($type == 'crt') {
+						$data['info']['crt'] = @openssl_x509_parse(file_get_contents($file));
+					}
 				}
 			}
 		}
@@ -1228,6 +1246,14 @@ class Certman implements \BMO {
 		$sql = "UPDATE certman_certs SET `default` = ? WHERE cid = ?";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array(1,$cid));
+
+		$sslfiles = array("certificate.pem", "ca-bundle.crt", "webserver.crt", "webserver.key");
+		foreach ($sslfiles as $f) {
+			if (file_exists("/etc/asterisk/keys/integration/$f")) {
+				unlink("/etc/asterisk/keys/integration/$f");
+			}
+		}
+
 		$this->FreePBX->Hooks->processHooks($cert);
 		return true;
 	}
