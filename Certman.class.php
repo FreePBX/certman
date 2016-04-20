@@ -1247,10 +1247,14 @@ class Certman implements \BMO {
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array(1,$cid));
 
-		$sslfiles = array("certificate.pem", "ca-bundle.crt", "webserver.crt", "webserver.key");
-		foreach ($sslfiles as $f) {
+		$sslfiles = array("pem" => "certificate.pem", "ca-crt" => "ca-bundle.crt", "crt" => "webserver.crt", "key" => "webserver.key");
+		foreach ($sslfiles as $key => $f) {
 			if (file_exists("/etc/asterisk/keys/integration/$f")) {
 				unlink("/etc/asterisk/keys/integration/$f");
+			}
+			if(isset($cert['files'][$key])) {
+				copy($cert['files'][$key],"/etc/asterisk/keys/integration/$f");
+				chmod("/etc/asterisk/keys/integration/$f",0600);
 			}
 		}
 
