@@ -1258,6 +1258,9 @@ class Certman implements \BMO {
 			}
 		}
 
+		$this->FreePBX->Config->update("HTTPTLSCERTFILE","/etc/asterisk/keys/integration/webserver.crt");
+		$this->FreePBX->Config->update("HTTPTLSPRIVATEKEY","/etc/asterisk/keys/integration/webserver.key");
+		$this->FreePBX->Config->update("HTTPTLSENABLE",true);
 		$this->FreePBX->Hooks->processHooks($cert);
 		return true;
 	}
@@ -1278,6 +1281,15 @@ class Certman implements \BMO {
 				$file = $location.'/'.$data['basename'].$f;
 				if(file_exists($file)) {
 					$data['files'][$type] = $file;
+					if($type == 'crt') {
+						$data['info']['crt'] = @openssl_x509_parse(file_get_contents($file));
+					}
+				}
+			}
+			foreach($files as $f => $type) {
+				$file = $location.'/integration/webserver'.$f;
+				if(file_exists($file)) {
+					$data['integration']['files'][$type] = $file;
 				}
 			}
 		} else {
