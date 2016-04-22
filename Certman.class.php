@@ -62,6 +62,7 @@ class Certman implements \BMO {
 					`description` VARCHAR(255) NULL,
 					`type` VARCHAR(2) NOT NULL DEFAULT 'ss',
 					`default` TINYINT NOT NULL DEFAULT 0,
+					`additional` BLOB NULL,
 					PRIMARY KEY (`cid`),
 					UNIQUE KEY `basename_UNIQUE` (`basename`))";
 		$sth = $this->db->prepare($sql);
@@ -94,7 +95,7 @@ class Certman implements \BMO {
 		}
 		$info = $db->getRow('SHOW COLUMNS FROM certman_certs WHERE FIELD = "type"', DB_FETCHMODE_ASSOC);
 		if(empty($info)) {
-			$sql = "ALTER TABLE `certman_certs` ADD COlUMN `type` varchar (2) NOT NULL DEFAULT 'ss'";
+			$sql = "ALTER TABLE `certman_certs` ADD COLUMN `type` varchar (2) NOT NULL DEFAULT 'ss'";
 			$result = $db->query($sql);
 			if (\DB::IsError($result)) {
 				die_freepbx($result->getDebugInfo());
@@ -102,7 +103,15 @@ class Certman implements \BMO {
 		}
 		$info = $db->getRow('SHOW COLUMNS FROM certman_certs WHERE FIELD = "default"', DB_FETCHMODE_ASSOC);
 		if(empty($info)) {
-			$sql = "ALTER TABLE `certman_certs` ADD COlUMN `default` TINYINT NOT NULL DEFAULT 0";
+			$sql = "ALTER TABLE `certman_certs` ADD COLUMN `default` TINYINT NOT NULL DEFAULT 0";
+			$result = $db->query($sql);
+			if (\DB::IsError($result)) {
+				die_freepbx($result->getDebugInfo());
+			}
+		}
+		$info = $db->getRow('SHOW COLUMNS FROM certman_certs WHERE FIELD = "additional"', DB_FETCHMODE_ASSOC);
+		if(empty($info)) {
+			$sql = "ALTER TABLE `certman_certs` ADD COLUMN `additional` BLOB NULL";
 			$result = $db->query($sql);
 			if (\DB::IsError($result)) {
 				die_freepbx($result->getDebugInfo());
@@ -134,6 +143,31 @@ class Certman implements \BMO {
 			outn(_("Generating default certificate..."));
 			$this->generateCertificate($caid,_("default"),_("default self signed certificate generated at install time"));
 			out(_("Done!"));
+		}
+
+
+		$exists = false;
+		$ampsbin = $this->FreePBX->Config->get("AMPSBIN");
+		foreach($this->FreePBX->Cron->getAll() as $cron) {
+			$str = str_replace("/", "\/", $ampsbin."/fwconsole certificates updateall -q");
+			if(preg_match("/fwconsole certificates updateall -q$/",$cron)) {
+				if(!preg_match("/".$str."$/i",$cron)) {
+					$this->FreePBX->Cron->remove($cron);
+				}
+			}
+			if(preg_match("/".$str."/i",$cron,$matches)) {
+				if($exists) {
+					//remove multiple entries (if any)
+					$this->FreePBX->Cron->remove($cron);
+				}
+				$exists = true;
+			}
+		}
+		if(!$exists) {
+			$this->FreePBX->Cron->add(array(
+				"command" => $ampsbin."/fwconsole certificates updateall -q",
+				"hour" => rand(0,3)
+			));
 		}
 
 		return true;
@@ -216,7 +250,7 @@ class Certman implements \BMO {
 								break;
 							}
 
-							$this->update($cert['cid'],$_POST['description']);
+							$this->updateCertificate($cert['cid'],$_POST['description']);
 							if($removeCSR) {
 								$this->removeCSR();
 							}
@@ -233,7 +267,7 @@ class Certman implements \BMO {
 								break;
 							}
 							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
-							$this->update($cert['cid'],$_POST['description']);
+							$this->updateCertificate($cert['cid'],$_POST['description'], array("C" => $_POST['C'], "ST" => $_POST['ST']));
 						} else {
 							$this->message = array('type' => 'danger', 'message' => _('Certificate is invalid'));
 						}
@@ -241,7 +275,7 @@ class Certman implements \BMO {
 					case "ss":
 						$cert = $this->getCertificateDetails($_POST['cid']);
 						if(!empty($cert)) {
-							$this->update($cert['cid'],$_POST['description']);
+							$this->updateCertificate($cert['cid'],$_POST['description']);
 							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
 						} else {
 							$this->message = array('type' => 'danger', 'message' => _('Certificate is invalid'));
@@ -259,7 +293,7 @@ class Certman implements \BMO {
 							$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error updating the certificate: %s'),$e->getMessage()));
 							break 2;
 						}
-						$this->saveCertificate(null,$host,$_POST['description'],'le');
+						$this->saveCertificate(null,$host,$_POST['description'],'le', array("C" => $_POST['C'], "ST" => $_POST['ST']));
 						$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
 					break;
 					case "up":
@@ -454,7 +488,8 @@ class Certman implements \BMO {
 				$certs = $this->getAllManagedCertificates();
 				$csr = $this->checkCSRexists();
 				$ca = $this->checkCAexists();
-				echo load_view(__DIR__.'/views/overview.php',array('certs' => $certs, 'message' => $this->message, 'csr' => $csr, 'ca' => $ca));
+				$location = $this->PKCS->getKeysLocation();
+				echo load_view(__DIR__.'/views/overview.php',array('certs' => $certs, 'location' => $location, 'message' => $this->message, 'csr' => $csr, 'ca' => $ca));
 			break;
 		}
 	}
@@ -493,6 +528,74 @@ class Certman implements \BMO {
 				break;
 			}
 		return $buttons;
+	}
+
+	/**
+	 * Check and/or update all certificates
+	 *
+	 * If a certificate can't be automatically updated add a notice in the interface
+	 *
+	 * @return [type] [description]
+	 */
+	public function checkUpdateCertificates() {
+		$certs = $this->getAllManagedCertificates();
+		$messages = array();
+		foreach($certs as $cert) {
+			$cert = $this->getAdditionalCertDetails($cert);
+			if(empty($cert['files'])) {
+				//there are no files so delete this one
+				$this->removeCertificate($cert['cid']);
+				$messages[] = array('type' => 'danger', 'message' => sprintf(_('There were no files left for certificate "%s" so it was removed'),$cert['basename']));
+				continue;
+			}
+			$validTo = $cert['info']['crt']['validTo_time_t'];
+			$renewafter = $validTo-(86400*30);
+			if(time() > $validTo) {
+				if($cert['type'] == 'le') {
+					try {
+						$this->updateLE($cert['crt']['subject']['CN']);
+						$messages[] = array('type' => 'success', 'message' => sprintf(_('Successfully updated certificate named "%s"'),$cert['basename']));
+					} catch(\Exception $e) {
+						$messages[] = array('type' => 'danger', 'message' => sprintf(_('There was an error updating certificate "%s": %s'),$cert['basename'],$e->getMessage()));
+						continue;
+					}
+				} else {
+					$messages[] = array('type' => 'warning', 'message' => sprintf(_('Certificate named "%s" has expired. Please update this certificate in Certificate Manager'),$cert['basename']));
+					continue;
+				}
+			} elseif (time() > $renewafter) {
+				if($cert['type'] == 'le') {
+					try {
+						$this->updateLE($cert['crt']['subject']['CN']);
+						$messages[] = array('type' => 'success', 'message' => sprintf(_('Successfully updated certificate named "%s"'),$cert['basename']));
+					} catch(\Exception $e) {
+						$messages[] = array('type' => 'danger', 'message' => sprintf(_('There was an error updating certificate "%s": %s'),$cert['basename'],$e->getMessage()));
+						continue;
+					}
+				} else {
+					$messages[] = array('type' => 'warning', 'message' => sprintf(_('Certificate named "%s" is going to expire in less than a month. Please update this certificate in Certificate Manager'),$cert['basename']));
+					continue;
+				}
+			} else {
+				$messages[] = array('type' => 'success', 'message' => sprintf(_('Certificate named "%s" is valid'),$cert['basename']));
+			}
+			//trigger hook
+			$this->updateCertificate($cert['cid'],$cert['description']);
+		}
+		$nt = \notifications::create();
+		$notification = '';
+		foreach($messages as $m) {
+			switch($m['type']) {
+				case "warning":
+				case "danger":
+					$notification .= $m['message'] ."</br>";
+				break;
+			}
+		}
+		if(!empty($notification)) {
+			$nt->add_security("certman", "EXPIRINGCERTS", _("Some Certificates are expiring or have expired"), $extended_text="", "config.php?display=certman", true, true);
+		}
+		return $messages;
 	}
 
 	/**
@@ -915,13 +1018,13 @@ class Certman implements \BMO {
 	 * @param {string} $description The description of the certificate
 	 * @param {string} $type				The type of the certificate: ss:: self signed, up:: upload, le:: let's encrypt
 	 */
-	public function saveCertificate($caid=null,$base,$description,$type='ss',$default=0) {
+	public function saveCertificate($caid=null,$base,$description,$type='ss',$default=0,$addtional=array()) {
 		if($this->checkCertificateName($base)) {
 			return false;
 		}
-		$sql = "INSERT INTO certman_certs (`caid`, `basename`, `description`,`type`,`default`) VALUES (?, ?, ?, ?, ?)";
+		$sql = "INSERT INTO certman_certs (`caid`, `basename`, `description`, `type`, `default`, `additional`) VALUES (?, ?, ?, ?, ?, ?)";
 		$sth = $this->db->prepare($sql);
-		$sth->execute(array($caid,$base,$description,$type,$default));
+		$sth->execute(array($caid,$base,$description,$type,$default,json_encode($additional)));
 	}
 
 	/**
@@ -950,17 +1053,8 @@ class Certman implements \BMO {
 		$sth->execute(array($basename));
 		$data = $sth->fetch(\PDO::FETCH_ASSOC);
 		if(!empty($data)) {
-			$location = $this->PKCS->getKeysLocation();
-			$files = array(".key" => "key",".crt" => "crt",".csr" => "csr",".pem" => "pem","-ca-bundle.crt" => "ca-bundle");
-			foreach($files as $f => $type) {
-				$file = $location.'/'.$data['basename'].$f;
-				if(file_exists($file)) {
-					$data['files'][$type] = $file;
-					if($type == 'crt') {
-						$data['info']['crt'] = @openssl_x509_parse(file_get_contents($file));
-					}
-				}
-			}
+			$default = !empty($data['default']) ? true : false;
+			$data = $this->getAdditionalCertDetails($data, $default);
 		}
 		return $data;
 	}
@@ -975,17 +1069,8 @@ class Certman implements \BMO {
 		$sth->execute(array($cid));
 		$data = $sth->fetch(\PDO::FETCH_ASSOC);
 		if(!empty($data)) {
-			$location = $this->PKCS->getKeysLocation();
-			$files = array(".key" => "key",".crt" => "crt",".csr" => "csr",".pem" => "pem","-ca-bundle.crt" => "ca-bundle");
-			foreach($files as $f => $type) {
-				$file = $location.'/'.$data['basename'].$f;
-				if(file_exists($file)) {
-					$data['files'][$type] = $file;
-					if($type == 'crt') {
-						$data['info']['crt'] = @openssl_x509_parse(file_get_contents($file));
-					}
-				}
-			}
+			$default = !empty($data['default']) ? true : false;
+			$data = $this->getAdditionalCertDetails($data, $default);
 		}
 		return $data;
 	}
@@ -1182,45 +1267,24 @@ class Certman implements \BMO {
 	}
 
 	/**
-	 * Update Certificate
-	 * @param  int $cid         The Certificate ID
-	 * @param  string $name        The certificate name
-	 * @param  string $description The certificate description
-	 * @return mixed              Bool if true, string if false
-	 */
-	public function updateCert($cid,$name,$description) {
-		$o = $this->getCertificateDetails($cid);
-		if(!empty($o)) {
-			$loc = $this->PKCS->getKeysLocation();
-			foreach(glob($loc . "/".$o['basename'].".*") as $file) {
-				$info = pathinfo($file);
-				if(file_exists($loc . "/" . $name . "." . $info['extension'])) {
-					return sprintf(_("%s Already Exists at that location!"), $info['basename']);
-				}
-			}
-			foreach(glob($loc . "/".$o['basename'].".*") as $file) {
-				$info = pathinfo($file);
-				rename($file,$loc . "/" . $name . "." . $info['extension']);
-			}
-			$sql = "UPDATE certman_certs SET basename = ?, description = ? WHERE cid = ?";
-			$sth = $this->db->prepare($sql);
-			$sth->execute(array($name,$description,$cid));
-			return true;
-		} else {
-			return _('Certificate ID is unknown!');
-		}
-	}
-
-	/**
 	 * Update Database about Cert
 	 * @param  int $cid         The Cert ID
 	 * @param  string $description the cert description
 	 * @return [type]              [description]
 	 */
-	public function update($cid,$description) {
-		$sql = "UPDATE certman_certs SET description = ? WHERE cid = ?";
-		$sth = $this->db->prepare($sql);
-		return $sth->execute(array($description,$cid));
+	public function updateCertificate($cid,$description,$additional=array()) {
+		if(empty($additional)) {
+			$sql = "UPDATE certman_certs SET description = ? WHERE cid = ?";
+			$sth = $this->db->prepare($sql);
+			$res = $sth->execute(array($description,$cid));
+		} else {
+			$sql = "UPDATE certman_certs SET description = ?, additional = ? WHERE cid = ?";
+			$sth = $this->db->prepare($sql);
+			$res = $sth->execute(array($description,json_encode($additional),$cid));
+		}
+		$details = $this->getCertificateDetails($cid);
+		$this->FreePBX->Hooks->processHooks($details);
+		return ;
 	}
 
 	public function getRightNav($request) {
@@ -1254,6 +1318,7 @@ class Certman implements \BMO {
 			}
 			if(isset($cert['files'][$key])) {
 				copy($cert['files'][$key],"/etc/asterisk/keys/integration/$f");
+				$cert['integration']['files'][$key] = "/etc/asterisk/keys/integration/$f";
 				chmod("/etc/asterisk/keys/integration/$f",0600);
 			}
 		}
@@ -1275,27 +1340,46 @@ class Certman implements \BMO {
 		$sth->execute();
 		$data = $sth->fetch(\PDO::FETCH_ASSOC);
 		if(!empty($data)) {
-			$location = $this->PKCS->getKeysLocation();
-			$files = array(".key" => "key",".crt" => "crt",".csr" => "csr",".pem" => "pem","-ca-bundle.crt" => "ca-bundle");
-			foreach($files as $f => $type) {
-				$file = $location.'/'.$data['basename'].$f;
-				if(file_exists($file)) {
-					$data['files'][$type] = $file;
-					if($type == 'crt') {
-						$data['info']['crt'] = @openssl_x509_parse(file_get_contents($file));
-					}
-				}
-			}
-			foreach($files as $f => $type) {
-				$file = $location.'/integration/webserver'.$f;
-				if(file_exists($file)) {
-					$data['integration']['files'][$type] = $file;
-				}
-			}
+			$data = $this->getAdditionalCertDetails($data, true);
 		} else {
 			$data = array(); //jic
 		}
 		return $data;
+	}
+
+	/**
+	 * Get Additional Details about a certificate
+	 * @param  array $details The previous details
+	 * @param  boolean $default If this is a default certificate or not
+	 * @return array          $details with more!
+	 */
+	private function getAdditionalCertDetails($details, $default=false) {
+		$location = $this->PKCS->getKeysLocation();
+		$files = array(".key" => "key",".crt" => "crt",".csr" => "csr",".pem" => "pem","-ca-bundle.crt" => "ca-bundle");
+		foreach($files as $f => $type) {
+			$file = $location.'/'.$details['basename'].$f;
+			if(file_exists($file)) {
+				$details['files'][$type] = $file;
+				if($type == 'crt') {
+					$details['info']['crt'] = @openssl_x509_parse(file_get_contents($file));
+				}
+			}
+		}
+		if($default) {
+			foreach($files as $f => $type) {
+				$file = $location.'/integration/webserver'.$f;
+				if(file_exists($file)) {
+					$details['integration']['files'][$type] = $file;
+				}
+			}
+		}
+		if(!empty($details['additional'])) {
+			$tmp = @json_decode($details['additional'],true);
+			$details['additional'] = !empty($tmp) && is_array($tmp) ? $tmp : array();
+		} else {
+			$details['additional'] = array();
+		}
+		return $details;
 	}
 
 	public function ajaxRequest($req, &$setting) {

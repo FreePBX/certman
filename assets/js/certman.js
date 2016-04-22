@@ -104,10 +104,13 @@ $(function() {
 		}
 	});
 
-	$("#Submit").click(function(e) {
+	$(".fpbx-submit").submit(function(e) {
 		var stop = false,
 				type = $("#certtype").val();
 		$("form[name=frm_certman] input[type=\"text\"]").each( function(i, v) {
+			if($(this).attr("name") == "ST" || $(this).attr("name") == "L" || $(this).attr("name") == "OU") {
+				return true;
+			}
 			if ($(this).val() === "") {
 				warnInvalid($(this),_("Can not be left blank!"));
 				stop = true;
@@ -115,6 +118,10 @@ $(function() {
 			}
 		});
 		if(stop) {
+			return false;
+		}
+		if($("#ST").val() === "" && $("#L").val()) {
+			warnInvalid($("#ST"),_("State AND Locality Can not be left blank! One must be filled in!"));
 			return false;
 		}
 		if ($("form[name=frm_certman] input[type=\"password\"]").val() === "") {
@@ -133,12 +140,12 @@ $(function() {
 			}
 		}
 
-		$(this).val(_("Generating... Please wait"));
-		$(this).prop("disabled", true);
-		$(".fpbx-submit").submit();
+		$("#Submit").val(_("Generating... Please wait"));
+		$("#Submit").prop("disabled", true);
+		return true;
 	});
 
-	$("#deletecert").click(function() {
+	$(".deletecert").click(function() {
 		if(!confirm(_("Are you sure you want to delete this certificate?"))) {
 			e.stopPropagation();
 			e.preventDefault();

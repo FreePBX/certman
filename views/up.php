@@ -156,7 +156,7 @@ if(!empty($message)) {
 								</div>
 								<div class="row">
 									<div class="col-md-12">
-										<span id="passphrase-help" class="help-block fpbx-help-block"><?php echo _("The Passphrase of the Private Key")?></span>
+										<span id="passphrase-help" class="help-block fpbx-help-block"><?php echo _("The Passphrase of the Private Key. This will be used to decrypt the private key and the certificate. They will be stored unpassworded on the system to prevent service disruptions.")?></span>
 									</div>
 								</div>
 							</div>

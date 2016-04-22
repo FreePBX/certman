@@ -28,6 +28,23 @@ class Certman extends Command {
 		$certman = \FreePBX::create()->Certman;
 		$pkcs = \FreePBX::create()->PKCS;
 		switch ($command) {
+			case "updateall":
+				$messages = $certman->checkUpdateCertificates();
+				foreach($messages as $message) {
+					$m = $message['message'];
+					switch($message['type']) {
+						case "danger":
+							$output->writeln(_("<error>".$m."</error>"));
+						break;
+						case "warning":
+							$output->writeln(_("<info>".$m."</info>"));
+						break;
+						case "success":
+							$output->writeln($m);
+						break;
+					}
+				}
+			break;
 			case "list":
 				$certs = $certman->getAllManagedCertificates();
 				$rows = array();
@@ -92,6 +109,7 @@ class Certman extends Command {
 				$output->writeln("<error>The command provided is not valid.</error>");
 				$output->writeln("Available commands are:");
 				$output->writeln("<info>list</info> - List all Certificates");
+				$output->writeln("<info>updateall</info> - Check and Update all Certificates");
 				$output->writeln("<info>import</info> - Import any certificates in ".$loc);
 				$output->writeln("<info>default <id></info> - Set Certificate ID as the system default");
 				exit(4);

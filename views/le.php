@@ -23,7 +23,6 @@ if(!empty($message)) {
 											<div class="form-group">
 												<div class="col-md-3">
 													<label class="control-label" for="host"><?php echo _("Host Name")?></label>
-													<i class="fa fa-question-circle fpbx-help-icon" data-for="host"></i>
 												</div>
 												<div class="col-md-9">
 													<?php if (empty($cert['cid'])) { ?>
@@ -36,11 +35,6 @@ if(!empty($message)) {
 										</div>
 									</div>
 								</div>
-								<div class="row">
-									<div class="col-md-12">
-										<span id="host-help" class="help-block fpbx-help-block"><?php echo _("Full name of Server. Must be publicly accessible")?> ("server.example.com")</span>
-									</div>
-								</div>
 							</div>
 							<?php if(!empty($cert['cid'])) { ?>
 								<div class="element-container">
@@ -50,18 +44,12 @@ if(!empty($message)) {
 												<div class="form-group">
 													<div class="col-md-3">
 														<label class="control-label" for="expires"><?php echo _("Valid Until")?></label>
-														<i class="fa fa-question-circle fpbx-help-icon" data-for="expires"></i>
 													</div>
 													<div class="col-md-9">
 														<?php echo date('m/d/Y',$certinfo['validTo_time_t'])?>
 													</div>
 												</div>
 											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-12">
-											<span id="expires-help" class="help-block fpbx-help-block" style=""><?php echo _('How long the certificate is valid until')?></span>
 										</div>
 									</div>
 								</div>
@@ -72,18 +60,12 @@ if(!empty($message)) {
 												<div class="form-group">
 													<div class="col-md-3">
 														<label class="control-label" for="cn"><?php echo _("Common Name")?></label>
-														<i class="fa fa-question-circle fpbx-help-icon" data-for="cn"></i>
 													</div>
 													<div class="col-md-9">
 														<?php echo $certinfo['subject']['CN']?>
 													</div>
 												</div>
 											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-12">
-											<span id="cn-help" class="help-block fpbx-help-block" style=""><?php echo _('The certificate common name, usually the same as the host name')?></span>
 										</div>
 									</div>
 								</div>
@@ -106,7 +88,7 @@ if(!empty($message)) {
 										</div>
 										<div class="row">
 											<div class="col-md-12">
-												<span id="cp-help" class="help-block fpbx-help-block" style=""><?php echo _('TThe certificate policies')?></span>
+												<span id="cp-help" class="help-block fpbx-help-block" style=""><?php echo _('A certificate policy (CP) is a document which aims to state what are the different actors of a public key infrastructure (PKI), their roles and their duties')?></span>
 											</div>
 										</div>
 									</div>
@@ -146,7 +128,7 @@ if(!empty($message)) {
 													<i class="fa fa-question-circle fpbx-help-icon" data-for="C"></i>
 												</div>
 												<div class="col-md-9">
-													<input type="text" class="form-control" id="C" name="C" placeholder="US">
+													<input type="text" class="form-control" id="C" name="C" placeholder="US" value="<?php echo !empty($cert['additional']['C']) ? $cert['additional']['C'] : "US"?>">
 												</div>
 											</div>
 										</div>
@@ -168,7 +150,7 @@ if(!empty($message)) {
 													<i class="fa fa-question-circle fpbx-help-icon" data-for="ST"></i>
 												</div>
 												<div class="col-md-9">
-													<input type="text" class="form-control" id="ST" name="ST" placeholder="Wisconsin">
+													<input type="text" class="form-control" id="ST" name="ST" placeholder="Wisconsin" value="<?php echo $cert['additional']['ST']?>">
 												</div>
 											</div>
 										</div>

@@ -43,19 +43,13 @@ if(!empty($message)) {
 										<div class="row">
 											<div class="form-group">
 												<div class="col-md-3">
-													<label class="control-label" for="csrcn"><?php echo _("Common Name")?> (CN)</label>
-													<i class="fa fa-question-circle fpbx-help-icon" data-for="csrcn"></i>
+													<label class="control-label" for="csrcn"><?php echo _("Common Name (Host Name)")?> (CN)</label>
 												</div>
 												<div class="col-md-9">
 													<input type="text" class="form-control" id="csrcn" name="CN" placeholder="server.example.com" value="<?php echo $hostname?>" required>
 												</div>
 											</div>
 										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-12">
-										<span id="csrcn-help" class="help-block fpbx-help-block"><?php echo _("Full name of Server")?> ("server.example.com")</span>
 									</div>
 								</div>
 							</div>
@@ -113,7 +107,7 @@ if(!empty($message)) {
 													<i class="fa fa-question-circle fpbx-help-icon" data-for="C"></i>
 												</div>
 												<div class="col-md-9">
-													<input type="text" class="form-control" id="C" name="C" placeholder="US">
+													<input type="text" class="form-control" id="C" name="C" placeholder="US" value="US">
 												</div>
 											</div>
 										</div>
