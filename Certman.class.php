@@ -250,7 +250,7 @@ class Certman implements \BMO {
 								break;
 							}
 
-							$this->updateCertificate($cert['cid'],$_POST['description']);
+							$this->updateCertificate($cert,$_POST['description']);
 							if($removeCSR) {
 								$this->removeCSR();
 							}
@@ -267,7 +267,7 @@ class Certman implements \BMO {
 								break;
 							}
 							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
-							$this->updateCertificate($cert['cid'],$_POST['description'], array("C" => $_POST['C'], "ST" => $_POST['ST']));
+							$this->updateCertificate($cert,$_POST['description'], array("C" => $_POST['C'], "ST" => $_POST['ST']));
 						} else {
 							$this->message = array('type' => 'danger', 'message' => _('Certificate is invalid'));
 						}
@@ -275,7 +275,7 @@ class Certman implements \BMO {
 					case "ss":
 						$cert = $this->getCertificateDetails($_POST['cid']);
 						if(!empty($cert)) {
-							$this->updateCertificate($cert['cid'],$_POST['description']);
+							$this->updateCertificate($cert,$_POST['description']);
 							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
 						} else {
 							$this->message = array('type' => 'danger', 'message' => _('Certificate is invalid'));
@@ -580,7 +580,7 @@ class Certman implements \BMO {
 				$messages[] = array('type' => 'success', 'message' => sprintf(_('Certificate named "%s" is valid'),$cert['basename']));
 			}
 			//trigger hook
-			$this->updateCertificate($cert['cid'],$cert['description']);
+			$this->updateCertificate($cert,$cert['description']);
 		}
 		$nt = \notifications::create();
 		$notification = '';
@@ -1268,22 +1268,25 @@ class Certman implements \BMO {
 
 	/**
 	 * Update Database about Cert
-	 * @param  int $cid         The Cert ID
+	 * @param  array $details         Old Cert info
 	 * @param  string $description the cert description
 	 * @return [type]              [description]
 	 */
-	public function updateCertificate($cid,$description,$additional=array()) {
+	public function updateCertificate($oldDetails,$description,$additional=array()) {
 		if(empty($additional)) {
 			$sql = "UPDATE certman_certs SET description = ? WHERE cid = ?";
 			$sth = $this->db->prepare($sql);
-			$res = $sth->execute(array($description,$cid));
+			$res = $sth->execute(array($description,$oldDetails['cid']));
 		} else {
 			$sql = "UPDATE certman_certs SET description = ?, additional = ? WHERE cid = ?";
 			$sth = $this->db->prepare($sql);
-			$res = $sth->execute(array($description,json_encode($additional),$cid));
+			$res = $sth->execute(array($description,json_encode($additional),$oldDetails['cid']));
 		}
-		$details = $this->getCertificateDetails($cid);
-		$this->FreePBX->Hooks->processHooks($details);
+		$newDetails = $this->getCertificateDetails($oldDetails['cid']);
+		if(empty($newDetails)) {
+			throw new \Exception("Could not find updated certificates");
+		}
+		$this->FreePBX->Hooks->processHooks($newDetails,$oldDetails);
 		return ;
 	}
 
@@ -1363,6 +1366,7 @@ class Certman implements \BMO {
 				if($type == 'crt') {
 					$details['info']['crt'] = @openssl_x509_parse(file_get_contents($file));
 				}
+				$details['hashes'][$type] = sha1_file($file);
 			}
 		}
 		if($default) {
@@ -1370,6 +1374,7 @@ class Certman implements \BMO {
 				$file = $location.'/integration/webserver'.$f;
 				if(file_exists($file)) {
 					$details['integration']['files'][$type] = $file;
+					$details['integration']['hashes'][$type] = sha1_file($file);
 				}
 			}
 		}
