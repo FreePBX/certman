@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-22 16:06-0700\n"
+"POT-Creation-Date: 2016-04-27 14:26-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,7 +40,7 @@ msgid ""
 "real certificate from a standard authority or through Let's Encrypt"
 msgstr ""
 
-#: views/le.php:91
+#: views/le.php:92
 msgid ""
 "A certificate policy (CP) is a document which aims to state what are the "
 "different actors of a public key infrastructure (PKI), their roles and their "
@@ -120,7 +120,7 @@ msgstr ""
 msgid "Certificate"
 msgstr ""
 
-#: Certman.class.php:1001
+#: Certman.class.php:1022
 msgid "Certificate Already Exists"
 msgstr ""
 
@@ -158,7 +158,7 @@ msgid ""
 "secure web sessions (HTTPS/WEBRTC[WSS] and more"
 msgstr ""
 
-#: views/le.php:79
+#: views/le.php:80
 #: views/ss.php:114
 #: views/up.php:99
 msgid "Certificate Policies"
@@ -174,7 +174,7 @@ msgid ""
 "private key."
 msgstr ""
 
-#: Certman.class.php:1175
+#: Certman.class.php:1196
 msgid "Certificate is empty"
 msgstr ""
 
@@ -221,7 +221,7 @@ msgstr ""
 msgid "City or Locality"
 msgstr ""
 
-#: views/le.php:62
+#: views/le.php:63
 #: views/ss.php:91
 #: views/up.php:76
 msgid "Common Name"
@@ -232,7 +232,7 @@ msgid "Common Name (Host Name)"
 msgstr ""
 
 #: views/csr.php:106
-#: views/le.php:127
+#: views/le.php:128
 msgid "Country"
 msgstr ""
 
@@ -285,7 +285,7 @@ msgstr ""
 
 #: Console/Certman.class.php:68
 #: views/certgrid.php:26
-#: views/le.php:104
+#: views/le.php:105
 #: views/ss.php:139
 #: views/up.php:124
 #: views/view.php:47
@@ -315,6 +315,12 @@ msgstr ""
 
 #: functions.inc/hook_core.php:61
 msgid "Enable or disable DTLS-SRTP support"
+msgstr ""
+
+#: views/le.php:10
+#, php-format
+msgid ""
+"For this to work properly you will need to allow inbound http access to %s"
 msgstr ""
 
 #: views/overview.php:17
@@ -357,7 +363,7 @@ msgstr ""
 msgid "Here"
 msgstr ""
 
-#: views/le.php:25
+#: views/le.php:26
 #: views/ss.php:212
 msgid "Host Name"
 msgstr ""
@@ -385,7 +391,7 @@ msgstr ""
 msgid "Import Locally"
 msgstr ""
 
-#: Certman.class.php:1195
+#: Certman.class.php:1216
 msgid "Imported from file system"
 msgstr ""
 
@@ -405,19 +411,19 @@ msgstr ""
 msgid "Invalid Certificate"
 msgstr ""
 
-#: Certman.class.php:697
+#: Certman.class.php:719
 msgid "Key does not match certificate"
 msgstr ""
 
-#: Certman.class.php:712
+#: Certman.class.php:734
 msgid "Key does not match certificate after password removal"
 msgstr ""
 
-#: Certman.class.php:1144
+#: Certman.class.php:1165
 msgid "Key is empty"
 msgstr ""
 
-#: Certman.class.php:1154
+#: Certman.class.php:1175
 msgid "Key is password protected or malformed"
 msgstr ""
 
@@ -462,7 +468,7 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: Certman.class.php:672
+#: Certman.class.php:694
 msgid "No Certificate provided"
 msgstr ""
 
@@ -484,7 +490,7 @@ msgstr ""
 #: Certman.class.php:231
 #: Certman.class.php:311
 #: Certman.class.php:319
-#: Certman.class.php:668
+#: Certman.class.php:690
 msgid "No Private key to reference. Try generating a CSR first."
 msgstr ""
 
@@ -594,14 +600,14 @@ msgid "State AND Locality Can not be left blank! One must be filled in!"
 msgstr ""
 
 #: views/csr.php:140
-#: views/le.php:161
+#: views/le.php:162
 msgid ""
 "State or province such as \"Queensland\" or \"Wisconsin\" or \"Ontario.\" Do "
 "not abbreviate. Enter the full name."
 msgstr ""
 
 #: views/csr.php:128
-#: views/le.php:149
+#: views/le.php:150
 msgid "State/Province"
 msgstr ""
 
@@ -650,7 +656,7 @@ msgstr ""
 msgid "The Certificate to use from Certificate Manager"
 msgstr ""
 
-#: views/le.php:116
+#: views/le.php:117
 #: views/ss.php:151
 #: views/up.php:136
 #: views/view.php:59
@@ -739,7 +745,7 @@ msgid "Trusted Chain"
 msgstr ""
 
 #: views/csr.php:118
-#: views/le.php:139
+#: views/le.php:140
 msgid "Two letter country code, such as \"US\", \"CA\", or \"AU\"."
 msgstr ""
 
@@ -761,24 +767,24 @@ msgstr ""
 msgid "Unable to generate Certificate Authority"
 msgstr ""
 
-#: Certman.class.php:693
+#: Certman.class.php:715
 msgid "Unable to read key. Is it password protected?"
 msgstr ""
 
-#: Certman.class.php:1116
+#: Certman.class.php:1137
 #, php-format
 msgid "Unable to remove %s"
 msgstr ""
 
-#: Certman.class.php:1224
+#: Certman.class.php:1245
 msgid "Unable to remove ca.cfg"
 msgstr ""
 
-#: Certman.class.php:1219
+#: Certman.class.php:1240
 msgid "Unable to remove ca.crt"
 msgstr ""
 
-#: Certman.class.php:1214
+#: Certman.class.php:1235
 msgid "Unable to remove ca.key"
 msgstr ""
 
@@ -790,13 +796,13 @@ msgstr ""
 msgid "Unable to remove the Certificate Signing Request"
 msgstr ""
 
-#: Certman.class.php:1229
+#: Certman.class.php:1250
 msgid "Unable to remove tmp.cfg"
 msgstr ""
 
-#: Certman.class.php:676
-#: Certman.class.php:680
-#: Certman.class.php:684
+#: Certman.class.php:698
+#: Certman.class.php:702
+#: Certman.class.php:706
 #, php-format
 msgid "Unable to write to %s"
 msgstr ""
@@ -838,7 +844,7 @@ msgstr ""
 msgid "Use Certificate"
 msgstr ""
 
-#: views/le.php:46
+#: views/le.php:47
 #: views/ss.php:69
 #: views/up.php:54
 msgid "Valid Until"
