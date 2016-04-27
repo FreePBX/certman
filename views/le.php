@@ -7,6 +7,7 @@ if(!empty($message)) {
 <div class="container-fluid">
 	<h1><?php echo !empty($cert['cid']) ? _("Edit Let's Encrypt Certificate") : _("New Let's Encrypt Certificate")?></h1>
 	<?php echo !empty($messagehtml) ? $messagehtml : "" ?>
+	<div class="alert alert-info"><?php echo sprintf(_("For this to work properly you will need to allow inbound http access to %s"),"outbound1.letsencrypt.org, outbound2.letsencrypt.org, mirror1.freepbx.org, mirror2.freepbx.org")?></div>
 	<div class = "display full-border">
 		<div class="row">
 			<div class="col-sm-12">

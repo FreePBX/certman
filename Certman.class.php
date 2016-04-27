@@ -625,6 +625,28 @@ class Certman implements \BMO {
 			}
 		}
 
+		//check freepbx.org first
+		if($needsgen) {
+			$basePathCheck = "/.freepbx-known";
+			if(!file_exists($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck)) {
+				mkdir($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck,0777);
+			}
+			$token = bin2hex(openssl_random_pseudo_bytes(16));
+			$pathCheck = $basePathCheck."/".$token;
+			file_put_contents($this->FreePBX->Config->get("AMPWEBROOT").$pathCheck,$token);
+			$pest = new \PestJSON('http://mirror1.freepbx.org');
+			$pest->curl_opts[CURLOPT_FOLLOWLOCATION] = true;
+			$thing = $pest->get('/lechecker.php',  array('host' => $host, 'path' => $pathCheck, 'token' => $token));
+			if(empty($thing)) {
+				throw new \Exception("No valid response from http://mirror1.freepbx.org");
+			}
+			if(!$thing['status']) {
+				throw new \Exception($thing['message']);
+			}
+			@unlink($this->FreePBX->Config->get("AMPWEBROOT").$pathCheck);
+		}
+
+		//Now check let's encrypt
 		if($needsgen) {
 			$le = new \Analogic\ACME\Lescript($location, $this->FreePBX->Config->get("AMPWEBROOT"), $logger);
 			if($staging) {
@@ -738,24 +760,23 @@ class Certman implements \BMO {
 		foreach($this->getAllDTLSOptions() as $device) {
 			$o = $this->FreePBX->Core->getDevice($device['id']);
 			$cert = $this->getCertificateDetails($device['cid']);
-			$ca = $this->getCADetails($cert['caid']);
-			if(empty($cert) || empty($ca)) {
-				continue;
+			if(empty($cert['files']['crt']) || empty($cert['files']['key'])) {
+				return false;
 			}
 			switch($o['tech']) {
 				case 'sip':
 					$core_conf->addSipAdditional($device['id'],'dtlsenable','yes');
 					$core_conf->addSipAdditional($device['id'],'dtlsverify',$device['verify']);
-					$core_conf->addSipAdditional($device['id'],'dtlscertfile',$cert['files']['pem']);
-					$core_conf->addSipAdditional($device['id'],'dtlscafile',$ca['files']['crt']);
+					$core_conf->addSipAdditional($device['id'],'dtlscertfile',$cert['files']['crt']);
+					$core_conf->addSipAdditional($device['id'],'dtlsprivatekey',$cert['files']['key']);
 					$core_conf->addSipAdditional($device['id'],'dtlssetup',$device['setup']);
 					$core_conf->addSipAdditional($device['id'],'dtlsrekey',$device['rekey']);
 				break;
 				case 'pjsip':
 					$this->FreePBX->PJSip->addEndpoint($device['id'], 'media_encryption', 'dtls');
 					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_verify', $device['verify']);
-					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_cert_file', $cert['files']['pem']);
-					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_ca_file', $ca['files']['crt']);
+					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_cert_file', $cert['files']['crt']);
+					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_private_key', $cert['files']['key']);
 					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_setup', $device['setup']);
 					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_rekey', $device['rekey']);
 				break;
