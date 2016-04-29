@@ -760,8 +760,9 @@ class Certman implements \BMO {
 		foreach($this->getAllDTLSOptions() as $device) {
 			$o = $this->FreePBX->Core->getDevice($device['id']);
 			$cert = $this->getCertificateDetails($device['cid']);
-			if(empty($cert['files']['crt']) || empty($cert['files']['key'])) {
-				return false;
+			//TODO: should we throw an exception if the certificate is invalid??
+			if(empty($o) || empty($cert['files']['crt']) || empty($cert['files']['key'])) {
+				continue;
 			}
 			switch($o['tech']) {
 				case 'sip':
