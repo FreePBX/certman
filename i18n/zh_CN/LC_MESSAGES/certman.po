@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-27 14:26-0700\n"
+"POT-Creation-Date: 2016-04-29 13:35-0700\n"
 "PO-Revision-Date: 2015-11-23 13:55+0200\n"
 "Last-Translator: james <zhulizhong@gmail.com>\n"
 "Language-Team: Simplified Chinese <http://weblate.freepbx.org/projects/"
@@ -117,7 +117,7 @@ msgstr ""
 msgid "Certificate"
 msgstr ""
 
-#: Certman.class.php:1022
+#: Certman.class.php:1023
 msgid "Certificate Already Exists"
 msgstr ""
 
@@ -167,7 +167,7 @@ msgid ""
 "private key."
 msgstr ""
 
-#: Certman.class.php:1196
+#: Certman.class.php:1197
 msgid "Certificate is empty"
 msgstr ""
 
@@ -369,7 +369,7 @@ msgstr ""
 msgid "Import Locally"
 msgstr ""
 
-#: Certman.class.php:1216
+#: Certman.class.php:1217
 msgid "Imported from file system"
 msgstr ""
 
@@ -395,11 +395,11 @@ msgstr ""
 msgid "Key does not match certificate after password removal"
 msgstr ""
 
-#: Certman.class.php:1165
+#: Certman.class.php:1166
 msgid "Key is empty"
 msgstr ""
 
-#: Certman.class.php:1175
+#: Certman.class.php:1176
 msgid "Key is password protected or malformed"
 msgstr ""
 
@@ -718,20 +718,20 @@ msgstr ""
 msgid "Unable to read key. Is it password protected?"
 msgstr ""
 
-#: Certman.class.php:1137
+#: Certman.class.php:1138
 #, php-format
 msgid "Unable to remove %s"
 msgstr ""
 
-#: Certman.class.php:1245
+#: Certman.class.php:1246
 msgid "Unable to remove ca.cfg"
 msgstr ""
 
-#: Certman.class.php:1240
+#: Certman.class.php:1241
 msgid "Unable to remove ca.crt"
 msgstr ""
 
-#: Certman.class.php:1235
+#: Certman.class.php:1236
 msgid "Unable to remove ca.key"
 msgstr ""
 
@@ -743,7 +743,7 @@ msgstr ""
 msgid "Unable to remove the Certificate Signing Request"
 msgstr ""
 
-#: Certman.class.php:1250
+#: Certman.class.php:1251
 msgid "Unable to remove tmp.cfg"
 msgstr ""
 
