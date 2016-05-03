@@ -141,7 +141,7 @@ class Certman implements \BMO {
 			$caid = $this->generateCA('ca', gethostname(), gethostname(), $passwd, true);
 			out(_("Done!"));
 			outn(_("Generating default certificate..."));
-			$this->generateCertificate($caid,_("default"),_("default self signed certificate generated at install time"));
+			$this->generateCertificate($caid,_("default"),_("default self signed certificate generated at install time"), $passwd);
 			out(_("Done!"));
 		}
 
