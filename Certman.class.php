@@ -253,7 +253,7 @@ class Certman implements \BMO {
 
 							$this->updateCertificate($cert,$_POST['description']);
 							if($removeCSR) {
-								$this->removeCSR();
+								$this->removeCSR(true);
 							}
 							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
 						}
@@ -327,7 +327,7 @@ class Certman implements \BMO {
 						}
 						$this->saveCertificate(null,$name,$_POST['description'],'up');
 						if($removeCSR) {
-							$this->removeCSR();
+							$this->removeCSR(true);
 						}
 						$this->message = array('type' => 'success', 'message' => _('Added new certificate'));
 					break;
@@ -390,7 +390,7 @@ class Certman implements \BMO {
 						}
 					break;
 					case 'csr':
-						$status = $this->removeCSR();
+						$status = $this->removeCSR(true);
 						if($status) {
 							$this->message = array('type' => 'success', 'message' => _('Successfully deleted the Certificate Signing Request'));
 						} else {
@@ -1337,20 +1337,25 @@ class Certman implements \BMO {
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array(1,$cid));
 
+		$location = $this->PKCS->getKeysLocation();
+		if(!file_exists($location.'/integration')) {
+			mkdir($location.'/integration',0777,true);
+		}
+
 		$sslfiles = array("pem" => "certificate.pem", "ca-crt" => "ca-bundle.crt", "crt" => "webserver.crt", "key" => "webserver.key");
 		foreach ($sslfiles as $key => $f) {
-			if (file_exists("/etc/asterisk/keys/integration/$f")) {
-				unlink("/etc/asterisk/keys/integration/$f");
+			if (file_exists($location."/integration/$f")) {
+				unlink($location."/integration/$f");
 			}
 			if(isset($cert['files'][$key])) {
-				copy($cert['files'][$key],"/etc/asterisk/keys/integration/$f");
-				$cert['integration']['files'][$key] = "/etc/asterisk/keys/integration/$f";
-				chmod("/etc/asterisk/keys/integration/$f",0600);
+				copy($cert['files'][$key],$location."/integration/$f");
+				$cert['integration']['files'][$key] = $location."/integration/$f";
+				chmod($location."/integration/$f",0600);
 			}
 		}
 
-		$this->FreePBX->Config->update("HTTPTLSCERTFILE","/etc/asterisk/keys/integration/webserver.crt");
-		$this->FreePBX->Config->update("HTTPTLSPRIVATEKEY","/etc/asterisk/keys/integration/webserver.key");
+		$this->FreePBX->Config->update("HTTPTLSCERTFILE",$location."/integration/webserver.crt");
+		$this->FreePBX->Config->update("HTTPTLSPRIVATEKEY",$location."/integration/webserver.key");
 		$this->FreePBX->Config->update("HTTPTLSENABLE",true);
 		$this->FreePBX->Hooks->processHooks($cert);
 		return true;
