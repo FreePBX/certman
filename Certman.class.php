@@ -129,17 +129,22 @@ class Certman implements \BMO {
 		$certs = $this->getAllManagedCertificates();
 		if(empty($certs)) {
 			out(_("No Certificates exist"));
-			outn(_("Generating default CA..."));
 
-			// See if we can random
-			if (function_exists('openssl_random_pseudo_bytes')) {
-				$passwd = base64_encode(openssl_random_pseudo_bytes(32));
+			if(!$this->checkCAexists()) {
+				outn(_("Generating default CA..."));
+				// See if we can random
+				if (function_exists('openssl_random_pseudo_bytes')) {
+					$passwd = base64_encode(openssl_random_pseudo_bytes(32));
+				} else {
+					$passwd = "";
+				}
+				$caid = $this->generateCA('ca', gethostname(), gethostname(), $passwd, true);
+				out(_("Done!"));
 			} else {
-				$passwd = "";
+				$dat = $this->getAllManagedCAs();
+				$caid = $dat[0]['uid'];
 			}
 
-			$caid = $this->generateCA('ca', gethostname(), gethostname(), $passwd, true);
-			out(_("Done!"));
 			outn(_("Generating default certificate..."));
 			// Do not i18n the NAME of the cert, it is 'default'.
 			$this->generateCertificate($caid,"default",_("Default Self-Signed certificate"), $passwd);
