@@ -260,6 +260,7 @@ class Certman implements \BMO {
 							if($removeCSR) {
 								$this->removeCSR(true);
 							}
+							needreload();
 							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
 						}
 					break;
@@ -272,8 +273,9 @@ class Certman implements \BMO {
 								$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error updating the certificate: %s'),$e->getMessage()));
 								break;
 							}
-							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
 							$this->updateCertificate($cert,$_POST['description'], array("C" => $_POST['C'], "ST" => $_POST['ST']));
+							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
+							needreload();
 						} else {
 							$this->message = array('type' => 'danger', 'message' => _('Certificate is invalid'));
 						}
@@ -283,6 +285,7 @@ class Certman implements \BMO {
 						if(!empty($cert)) {
 							$this->updateCertificate($cert,$_POST['description']);
 							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
+							needreload();
 						} else {
 							$this->message = array('type' => 'danger', 'message' => _('Certificate is invalid'));
 						}
@@ -556,11 +559,19 @@ class Certman implements \BMO {
 			}
 			$validTo = $cert['info']['crt']['validTo_time_t'];
 			$renewafter = $validTo-(86400*30);
+			$update = false;
 			if(time() > $validTo) {
 				if($cert['type'] == 'le') {
 					try {
 						$this->updateLE($cert['crt']['subject']['CN']);
 						$messages[] = array('type' => 'success', 'message' => sprintf(_('Successfully updated certificate named "%s"'),$cert['basename']));
+						$this->FreePBX->astman->Reload();
+						//Until https://issues.asterisk.org/jira/browse/ASTERISK-25966 is fixed
+						$a = fpbx_which("asterisk");
+						if(!empty($a)) {
+							exec($a . " -rx 'dialplan reload'");
+						}
+						$update = true;
 					} catch(\Exception $e) {
 						$messages[] = array('type' => 'danger', 'message' => sprintf(_('There was an error updating certificate "%s": %s'),$cert['basename'],$e->getMessage()));
 						continue;
@@ -574,6 +585,13 @@ class Certman implements \BMO {
 					try {
 						$this->updateLE($cert['crt']['subject']['CN']);
 						$messages[] = array('type' => 'success', 'message' => sprintf(_('Successfully updated certificate named "%s"'),$cert['basename']));
+						$this->FreePBX->astman->Reload();
+						//Until https://issues.asterisk.org/jira/browse/ASTERISK-25966 is fixed
+						$a = fpbx_which("asterisk");
+						if(!empty($a)) {
+							exec($a . " -rx 'dialplan reload'");
+						}
+						$update = true;
 					} catch(\Exception $e) {
 						$messages[] = array('type' => 'danger', 'message' => sprintf(_('There was an error updating certificate "%s": %s'),$cert['basename'],$e->getMessage()));
 						continue;
@@ -599,7 +617,10 @@ class Certman implements \BMO {
 			}
 		}
 		if(!empty($notification)) {
-			$nt->add_security("certman", "EXPIRINGCERTS", _("Some Certificates are expiring or have expired"), $extended_text="", "config.php?display=certman", true, true);
+			$nt->add_security("certman", "EXPIRINGCERTS", _("Some Certificates are expiring or have expired"), $notification, "config.php?display=certman", true, true);
+		}
+		if($update) {
+			$nt->add_security("certman", "UPDATEDCERTS", _("Updated Certificates"), _("Some SSL/TLS Certificates have been automatically updated. You may need to ensure all services have the correctly update certificate by restarting PBX services"), "", true,true);
 		}
 		return $messages;
 	}
