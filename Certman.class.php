@@ -447,6 +447,11 @@ class Certman implements \BMO {
 			case 'add':
 				switch($request['type']) {
 					case 'le':
+						// Have we been asked to update firewall rules?
+						if (isset($request['updatefw'])) {
+							$api = $this->getFirewallAPI();
+							$api->addMissingHosts();
+						}
 						$hostname = $this->PKCS->getHostname();
 						echo load_view(__DIR__.'/views/le.php',array('message' => $this->message, 'hostname' => $hostname));
 					break;
@@ -1465,5 +1470,21 @@ class Certman implements \BMO {
 			break;
 		}
 		return false;
+	}
+
+	/**
+	 * Get FirewallAPI Object
+	 *
+	 * @return FirewallAPI
+	 */
+	public function getFirewallAPI() {
+		static $api = false;
+		if (!$api) {
+			if (!class_exists('FirewallAPI')) {
+				include __DIR__."/FirewallAPI.class.php";
+			}
+			$api = new Certman\FirewallAPI();
+		}
+		return $api;
 	}
 }

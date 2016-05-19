@@ -105,6 +105,11 @@ $(function() {
 	});
 
 	$(".fpbx-submit").submit(function(e) {
+		if (e.target.id == "updatefw") {
+			// We're not posting anything else, skip
+			return true;
+		}
+
 		var stop = false,
 				type = $("#certtype").val();
 		$("form[name=frm_certman] input[type=\"text\"]").each( function(i, v) {
