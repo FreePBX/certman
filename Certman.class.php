@@ -129,17 +129,22 @@ class Certman implements \BMO {
 		$certs = $this->getAllManagedCertificates();
 		if(empty($certs)) {
 			out(_("No Certificates exist"));
-			outn(_("Generating default CA..."));
 
-			// See if we can random
-			if (function_exists('openssl_random_pseudo_bytes')) {
-				$passwd = base64_encode(openssl_random_pseudo_bytes(32));
+			if(!$this->checkCAexists()) {
+				outn(_("Generating default CA..."));
+				// See if we can random
+				if (function_exists('openssl_random_pseudo_bytes')) {
+					$passwd = base64_encode(openssl_random_pseudo_bytes(32));
+				} else {
+					$passwd = "";
+				}
+				$caid = $this->generateCA('ca', gethostname(), gethostname(), $passwd, true);
+				out(_("Done!"));
 			} else {
-				$passwd = "";
+				$dat = $this->getAllManagedCAs();
+				$caid = $dat[0]['uid'];
 			}
 
-			$caid = $this->generateCA('ca', gethostname(), gethostname(), $passwd, true);
-			out(_("Done!"));
 			outn(_("Generating default certificate..."));
 			// Do not i18n the NAME of the cert, it is 'default'.
 			$this->generateCertificate($caid,"default",_("Default Self-Signed certificate"), $passwd);
@@ -253,8 +258,9 @@ class Certman implements \BMO {
 
 							$this->updateCertificate($cert,$_POST['description']);
 							if($removeCSR) {
-								$this->removeCSR();
+								$this->removeCSR(true);
 							}
+							needreload();
 							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
 						}
 					break;
@@ -267,8 +273,9 @@ class Certman implements \BMO {
 								$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error updating the certificate: %s'),$e->getMessage()));
 								break;
 							}
-							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
 							$this->updateCertificate($cert,$_POST['description'], array("C" => $_POST['C'], "ST" => $_POST['ST']));
+							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
+							needreload();
 						} else {
 							$this->message = array('type' => 'danger', 'message' => _('Certificate is invalid'));
 						}
@@ -278,6 +285,7 @@ class Certman implements \BMO {
 						if(!empty($cert)) {
 							$this->updateCertificate($cert,$_POST['description']);
 							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
+							needreload();
 						} else {
 							$this->message = array('type' => 'danger', 'message' => _('Certificate is invalid'));
 						}
@@ -327,7 +335,7 @@ class Certman implements \BMO {
 						}
 						$this->saveCertificate(null,$name,$_POST['description'],'up');
 						if($removeCSR) {
-							$this->removeCSR();
+							$this->removeCSR(true);
 						}
 						$this->message = array('type' => 'success', 'message' => _('Added new certificate'));
 					break;
@@ -390,7 +398,7 @@ class Certman implements \BMO {
 						}
 					break;
 					case 'csr':
-						$status = $this->removeCSR();
+						$status = $this->removeCSR(true);
 						if($status) {
 							$this->message = array('type' => 'success', 'message' => _('Successfully deleted the Certificate Signing Request'));
 						} else {
@@ -551,11 +559,19 @@ class Certman implements \BMO {
 			}
 			$validTo = $cert['info']['crt']['validTo_time_t'];
 			$renewafter = $validTo-(86400*30);
+			$update = false;
 			if(time() > $validTo) {
 				if($cert['type'] == 'le') {
 					try {
 						$this->updateLE($cert['crt']['subject']['CN']);
 						$messages[] = array('type' => 'success', 'message' => sprintf(_('Successfully updated certificate named "%s"'),$cert['basename']));
+						$this->FreePBX->astman->Reload();
+						//Until https://issues.asterisk.org/jira/browse/ASTERISK-25966 is fixed
+						$a = fpbx_which("asterisk");
+						if(!empty($a)) {
+							exec($a . " -rx 'dialplan reload'");
+						}
+						$update = true;
 					} catch(\Exception $e) {
 						$messages[] = array('type' => 'danger', 'message' => sprintf(_('There was an error updating certificate "%s": %s'),$cert['basename'],$e->getMessage()));
 						continue;
@@ -569,6 +585,13 @@ class Certman implements \BMO {
 					try {
 						$this->updateLE($cert['crt']['subject']['CN']);
 						$messages[] = array('type' => 'success', 'message' => sprintf(_('Successfully updated certificate named "%s"'),$cert['basename']));
+						$this->FreePBX->astman->Reload();
+						//Until https://issues.asterisk.org/jira/browse/ASTERISK-25966 is fixed
+						$a = fpbx_which("asterisk");
+						if(!empty($a)) {
+							exec($a . " -rx 'dialplan reload'");
+						}
+						$update = true;
 					} catch(\Exception $e) {
 						$messages[] = array('type' => 'danger', 'message' => sprintf(_('There was an error updating certificate "%s": %s'),$cert['basename'],$e->getMessage()));
 						continue;
@@ -594,7 +617,10 @@ class Certman implements \BMO {
 			}
 		}
 		if(!empty($notification)) {
-			$nt->add_security("certman", "EXPIRINGCERTS", _("Some Certificates are expiring or have expired"), $extended_text="", "config.php?display=certman", true, true);
+			$nt->add_security("certman", "EXPIRINGCERTS", _("Some Certificates are expiring or have expired"), $notification, "config.php?display=certman", true, true);
+		}
+		if($update) {
+			$nt->add_security("certman", "UPDATEDCERTS", _("Updated Certificates"), _("Some SSL/TLS Certificates have been automatically updated. You may need to ensure all services have the correctly update certificate by restarting PBX services"), "", true,true);
 		}
 		return $messages;
 	}
@@ -1337,20 +1363,25 @@ class Certman implements \BMO {
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array(1,$cid));
 
+		$location = $this->PKCS->getKeysLocation();
+		if(!file_exists($location.'/integration')) {
+			mkdir($location.'/integration',0777,true);
+		}
+
 		$sslfiles = array("pem" => "certificate.pem", "ca-crt" => "ca-bundle.crt", "crt" => "webserver.crt", "key" => "webserver.key");
 		foreach ($sslfiles as $key => $f) {
-			if (file_exists("/etc/asterisk/keys/integration/$f")) {
-				unlink("/etc/asterisk/keys/integration/$f");
+			if (file_exists($location."/integration/$f")) {
+				unlink($location."/integration/$f");
 			}
 			if(isset($cert['files'][$key])) {
-				copy($cert['files'][$key],"/etc/asterisk/keys/integration/$f");
-				$cert['integration']['files'][$key] = "/etc/asterisk/keys/integration/$f";
-				chmod("/etc/asterisk/keys/integration/$f",0600);
+				copy($cert['files'][$key],$location."/integration/$f");
+				$cert['integration']['files'][$key] = $location."/integration/$f";
+				chmod($location."/integration/$f",0600);
 			}
 		}
 
-		$this->FreePBX->Config->update("HTTPTLSCERTFILE","/etc/asterisk/keys/integration/webserver.crt");
-		$this->FreePBX->Config->update("HTTPTLSPRIVATEKEY","/etc/asterisk/keys/integration/webserver.key");
+		$this->FreePBX->Config->update("HTTPTLSCERTFILE",$location."/integration/webserver.crt");
+		$this->FreePBX->Config->update("HTTPTLSPRIVATEKEY",$location."/integration/webserver.key");
 		$this->FreePBX->Config->update("HTTPTLSENABLE",true);
 		$this->FreePBX->Hooks->processHooks($cert);
 		return true;
