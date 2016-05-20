@@ -4,7 +4,7 @@ if(!empty($message)) {
 }
 
 $fwapi = \FreePBX::Certman()->getFirewallAPI();
-$letext = sprintf(_("LetsEncrypt requires following hosts to be permitted inbound http access:<br /> <tt>%s</tt>"), join(", ", $fwapi->getRequiredHosts()));
+$letext = sprintf(_("LetsEncrypt requires the following hosts to be permitted for inbound http access:<br /> <tt>%s</tt>"), join(", ", $fwapi->getRequiredHosts()));
 
 // Is firewall enabled and available?
 if ($fwapi->isAvailable()) {
@@ -26,7 +26,7 @@ if ($fwapi->isAvailable()) {
 } else {
 	$alert = "<div class='alert alert-info'><h3>"._("Firewall Warning")."</h3>";
 	$alert .= "<p>$letext</p>";
-	$alert .= "<p>"._("As you're not using System Firewall this can not be verified. You will have to manually verify inbound connectivity.")."</p>";
+	$alert .= "<p>"._("PBX System Firewall is not in use so this can not be verified. Please manually verify inbound connectivity.")."</p>";
 	$alert .= "</div>";
 }
 ?>
