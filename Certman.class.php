@@ -44,87 +44,160 @@ class Certman implements \BMO {
 	 * Used to setup the database
 	 */
 	public function install() {
-		$sql = "CREATE TABLE IF NOT EXISTS `certman_cas` (
-					`uid` INT NOT NULL AUTO_INCREMENT,
-					`basename` VARCHAR(255) NOT NULL,
-					`cn` VARCHAR(255) NOT NULL,
-					`on` VARCHAR(255) NOT NULL,
-					`passphrase` VARCHAR(255) NULL,
-					`salt` VARCHAR(255) NULL,
-					PRIMARY KEY (`uid`),
-					UNIQUE KEY `basename_UNIQUE` (`basename`))";
-		$sth = $this->db->prepare($sql);
-		$sth->execute();
-		$sql = "CREATE TABLE IF NOT EXISTS `certman_certs` (
-					`cid` INT NOT NULL AUTO_INCREMENT,
-					`caid` INT NULL,
-					`basename` VARCHAR(45) NOT NULL,
-					`description` VARCHAR(255) NULL,
-					`type` VARCHAR(2) NOT NULL DEFAULT 'ss',
-					`default` TINYINT NOT NULL DEFAULT 0,
-					`additional` BLOB NULL,
-					PRIMARY KEY (`cid`),
-					UNIQUE KEY `basename_UNIQUE` (`basename`))";
-		$sth = $this->db->prepare($sql);
-		$sth->execute();
-		$sql = "CREATE TABLE IF NOT EXISTS `certman_csrs` (
-					`cid` INT NOT NULL AUTO_INCREMENT,
-					`basename` VARCHAR(45) NOT NULL,
-					PRIMARY KEY (`cid`),
-					UNIQUE KEY `basename_UNIQUE` (`basename`))";
-		$sth = $this->db->prepare($sql);
-		$sth->execute();
-		$sql = "CREATE TABLE IF NOT EXISTS `certman_mapping` (
-					`id` varchar(20) NOT NULL,
-					`cid` int(11) DEFAULT NULL,
-					`verify` varchar(45) DEFAULT NULL,
-					`setup` varchar(45) DEFAULT NULL,
-					`rekey` int(11) DEFAULT NULL,
-					PRIMARY KEY (`id`))";
-		$sth = $this->db->prepare($sql);
-		$sth->execute();
+		$table = $this->FreePBX->Database->migrate("certman_cas");
+		$cols = array(
+			"uid" => array(
+				"type" => "integer",
+				"primaryKey" => true,
+				"autoincrement" => true
+			),
+			"basename" => array(
+				"type" => "string",
+				"length" => 255,
+				"notnull" => true,
+				"customSchemaOptions" => array(
+					"unique" => true
+				)
+			),
+			"cn" => array(
+				"type" => "string",
+				"length" => 255,
+				"notnull" => true,
+			),
+			"on" => array(
+				"type" => "string",
+				"length" => 255,
+				"notnull" => true,
+			),
+			"passphrase" => array(
+				"type" => "string",
+				"length" => 255,
+				"notnull" => false,
+			),
+			"salt" => array(
+				"type" => "string",
+				"length" => 255,
+				"notnull" => false,
+			),
+		);
+		$indexes = array(
+			"basename_UNIQUE" => array(
+				"type" => "unique",
+				"cols" => array(
+					"basename"
+				)
+			)
+		);
+		$table->modify($cols);
+		unset($table);
 
-		global $db;
-		$info = $db->getRow('SHOW COLUMNS FROM certman_mapping WHERE FIELD = "id"', DB_FETCHMODE_ASSOC);
-		if($info['Type'] != "varchar(20)") {
-			$sql = "ALTER TABLE `certman_mapping` CHANGE COLUMN `id` `id` VARCHAR(20) NOT NULL";
-			$result = $db->query($sql);
-			if (\DB::IsError($result)) {
-				die_freepbx($result->getDebugInfo());
-			}
-		}
-		$info = $db->getRow('SHOW COLUMNS FROM certman_certs WHERE FIELD = "type"', DB_FETCHMODE_ASSOC);
-		if(empty($info)) {
-			$sql = "ALTER TABLE `certman_certs` ADD COLUMN `type` varchar (2) NOT NULL DEFAULT 'ss'";
-			$result = $db->query($sql);
-			if (\DB::IsError($result)) {
-				die_freepbx($result->getDebugInfo());
-			}
-		}
-		$info = $db->getRow('SHOW COLUMNS FROM certman_certs WHERE FIELD = "default"', DB_FETCHMODE_ASSOC);
-		if(empty($info)) {
-			$sql = "ALTER TABLE `certman_certs` ADD COLUMN `default` TINYINT NOT NULL DEFAULT 0";
-			$result = $db->query($sql);
-			if (\DB::IsError($result)) {
-				die_freepbx($result->getDebugInfo());
-			}
-		}
-		$info = $db->getRow('SHOW COLUMNS FROM certman_certs WHERE FIELD = "additional"', DB_FETCHMODE_ASSOC);
-		if(empty($info)) {
-			$sql = "ALTER TABLE `certman_certs` ADD COLUMN `additional` BLOB NULL";
-			$result = $db->query($sql);
-			if (\DB::IsError($result)) {
-				die_freepbx($result->getDebugInfo());
-			}
-		}
-		$info = $db->getRow('SHOW COLUMNS FROM certman_certs WHERE FIELD = "caid"', DB_FETCHMODE_ASSOC);
-		if($info['Null'] == "NO") {
-			$sql = "ALTER TABLE `certman_certs` CHANGE COLUMN `caid` `caid` INT NULL";
-			$result = $db->query($sql);
-			if (\DB::IsError($result)) {
-				die_freepbx($result->getDebugInfo());
-			}
-		}
+		$table = $this->FreePBX->Database->migrate("certman_certs");
+		$cols = array(
+			"cid" => array(
+				"type" => "integer",
+				"primaryKey" => true,
+				"autoincrement" => true
+			),
+			"caid" => array(
+				"type" => "integer",
+				"notnull" => false,
+			),
+			"basename" => array(
+				"type" => "string",
+				"length" => 45,
+				"notnull" => true,
+				"customSchemaOptions" => array(
+					"unique" => true
+				)
+			),
+			"description" => array(
+				"type" => "string",
+				"length" => 255,
+				"notnull" => false,
+			),
+			"type" => array(
+				"type" => "string",
+				"length" => 2,
+				"notnull" => true,
+				"default" => 'ss'
+			),
+			"default" => array(
+				"type" => "boolean",
+				"notnull" => true,
+				"default" => 0
+			),
+			"additional" => array(
+				"type" => "blob",
+				"notnull" => false,
+			),
+		);
+		$indexes = array(
+			"basename_UNIQUE" => array(
+				"type" => "unique",
+				"cols" => array(
+					"basename"
+				)
+			)
+		);
+		$table->modify($cols);
+		unset($table);
+
+		$table = $this->FreePBX->Database->migrate("certman_csrs");
+		$cols = array(
+			"cid" => array(
+				"type" => "integer",
+				"primaryKey" => true,
+				"autoincrement" => true
+			),
+			"basename" => array(
+				"type" => "string",
+				"length" => 45,
+				"notnull" => true,
+				"customSchemaOptions" => array(
+					"unique" => true
+				)
+			)
+		);
+		$indexes = array(
+			"basename_UNIQUE" => array(
+				"type" => "unique",
+				"cols" => array(
+					"basename"
+				)
+			)
+		);
+		$table->modify($cols);
+		unset($table);
+
+		$table = $this->FreePBX->Database->migrate("certman_mapping");
+		$cols = array(
+			"id" => array(
+				"type" => "string",
+				"length" => 20,
+				"primaryKey" => true,
+				"notnull" => true
+			),
+			"cid" => array(
+				"type" => "integer",
+				"notnull" => false
+			),
+			"verify" => array(
+				"type" => "string",
+				"length" => 45,
+				"notnull" => false
+			),
+			"setup" => array(
+				"type" => "string",
+				"length" => 45,
+				"notnull" => false
+			),
+			"rekey" => array(
+				"type" => "integer",
+				"notnull" => false
+			),
+		);
+		$table->modify($cols);
+		unset($table);
 
 		$certs = $this->getAllManagedCertificates();
 		if(empty($certs)) {
