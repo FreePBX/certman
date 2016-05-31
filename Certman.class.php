@@ -1494,6 +1494,9 @@ class Certman implements \BMO {
 		foreach($files as $f => $type) {
 			$file = $location.'/'.$details['basename'].$f;
 			if(file_exists($file)) {
+				if(!is_readable($file)) {
+					throw new \Exception(sprintf(_("Certificate %s is not readable! Can not continue!"),$file));
+				}
 				$details['files'][$type] = $file;
 				if($type == 'crt') {
 					$details['info']['crt'] = @openssl_x509_parse(file_get_contents($file));
@@ -1505,6 +1508,9 @@ class Certman implements \BMO {
 			foreach($files as $f => $type) {
 				$file = $location.'/integration/webserver'.$f;
 				if(file_exists($file)) {
+					if(!is_readable($file)) {
+						throw new \Exception(sprintf(_("Certificate %s is not readable! Can not continue!"),$file));
+					}
 					$details['integration']['files'][$type] = $file;
 					$details['integration']['hashes'][$type] = sha1_file($file);
 				}
