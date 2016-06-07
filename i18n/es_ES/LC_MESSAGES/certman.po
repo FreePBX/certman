@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-31 11:44-0700\n"
-"PO-Revision-Date: 2016-06-07 00:24+0200\n"
+"PO-Revision-Date: 2016-06-07 02:17+0200\n"
 "Last-Translator: Ernesto <ecasas@sangoma.com>\n"
 "Language-Team: Spanish "
 "<http://weblate.freepbx.org/projects/freepbx/certman/es_ES/>\n"
@@ -682,11 +682,11 @@ msgstr "Certificado llamado \"%s\" actualizado satisfactoriamente"
 
 #: views/ss.php:126 views/up.php:111
 msgid "TThe certificate policies"
-msgstr ""
+msgstr "Las Políticas de certificados"
 
 #: Console/Certman.class.php:101
 msgid "That is not a valid ID"
-msgstr ""
+msgstr "Este no es un ID Valido"
 
 #: functions.inc/hook_core.php:76
 msgid "The Certificate to use from Certificate Manager"
@@ -710,6 +710,9 @@ msgid ""
 "key and the certificate. They will be stored unpassworded on the system to "
 "prevent service disruptions."
 msgstr ""
+"La Contraseña de la Llave Privada. Esta sera usada para descifrar la Llave "
+"Privada y el Certificado. Serán almacenada sin contraseña en el sistema para "
+"prevenir disrupciones."
 
 #: views/csr.php:36 views/ss.php:57 views/up.php:42 views/view.php:35
 msgid ""
@@ -720,39 +723,40 @@ msgstr ""
 #: views/ss.php:103 views/up.php:88
 msgid "The certificate common name, usually the same as the host name"
 msgstr ""
+"El nombre común del certificado, usualmente el mismo que el nombre del Host"
 
 #: Console/Certman.class.php:96
 msgid "The command provided is not valid"
-msgstr ""
+msgstr "El comando provisto no es valido"
 
 #: views/overview.php:21
 msgid "There are three different types of certificates this module can handle:"
-msgstr ""
+msgstr "Hay tres tipos de certificados que este modulo puede manejar:"
 
 #: Console/Certman.class.php:86
 #, php-format
 msgid "There was an error importing %s. The error was: %s"
-msgstr ""
+msgstr "Hubo un error importando %s. El error fue: %s"
 
 #: Certman.class.php:328 Certman.class.php:407
 #, php-format
 msgid "There was an error importing the certificate: %s"
-msgstr ""
+msgstr "Hubo un error importando el certificado: %s"
 
 #: Certman.class.php:654 Certman.class.php:674
 #, php-format
 msgid "There was an error updating certificate \"%s\": %s"
-msgstr ""
+msgstr "Hubo un error actualizando el certificado \"%s\": %s"
 
 #: Certman.class.php:346 Certman.class.php:375
 #, php-format
 msgid "There was an error updating the certificate: %s"
-msgstr ""
+msgstr "Hubo un error actualizando el certificado: %s"
 
 #: Certman.class.php:635
 #, php-format
 msgid "There were no files left for certificate \"%s\" so it was removed"
-msgstr ""
+msgstr "No quedan archivos para certificado \"%s\", por lo tanto fue removido"
 
 #: views/le.php:23
 msgid ""
@@ -760,6 +764,10 @@ msgid ""
 "possible that other external firewalls may block access. If you are having "
 "problems validating your certificate, this could be the issue."
 msgstr ""
+"Estas entradas están correctamente configurados en el módulo Firewall. Sin "
+"embargo, es posible que otros servidores de seguridad externos pueden "
+"bloquear el acceso. Si usted está teniendo problemas de validación de su "
+"certificado, esto podría ser el problema."
 
 #: views/le.php:17
 msgid ""
@@ -768,6 +776,10 @@ msgid ""
 "issueance will fail. To automatically add these hosts, please click on the "
 "'Update Firewall' button."
 msgstr ""
+"Estos host <strong> no están configuradas en el servidor de seguridad  "
+"</strong>. LetsEncrypt no será capaz de validar este host, y la emisión del "
+"certificado fallará. Para agregar automáticamente estos anfitriones, por "
+"favor haga clic en el botón \"Actualizar Firewall '."
 
 #: views/csr.php:28 views/ss.php:46 views/up.php:31
 msgid "This field cannot be blank and must be alphanumeric"
@@ -779,69 +791,71 @@ msgid ""
 "To manually import certificate files place them into %s and make sure they "
 "have the same basename, EG: %s"
 msgstr ""
+"Para importar manualmente los archivos de certificados colóquelos en %s y "
+"asegúrese de que tienen el mismo nombre base, EG: %s"
 
 #: views/up.php:214
 msgid "Trusted Chain"
-msgstr ""
+msgstr "Cadena Confiable"
 
 #: views/csr.php:118 views/le.php:167
 msgid "Two letter country code, such as \"US\", \"CA\", or \"AU\"."
-msgstr ""
+msgstr "Código de País de 2 letras, como \"US\", \"BR\" o \"MX\"."
 
 #: Console/Certman.class.php:68 views/certgrid.php:27
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #: Certman.class.php:456
 #, php-format
 msgid "Unable to create CSR: %s"
-msgstr ""
+msgstr "Incapaz de crear CSR: %s"
 
 #: Certman.class.php:429
 msgid "Unable to find Certificate Authority"
-msgstr ""
+msgstr "Incapaz de encontrar Autoridad de Certificado"
 
 #: Certman.class.php:422
 msgid "Unable to generate Certificate Authority"
-msgstr ""
+msgstr "Incapaz de generar Autoridad de Certificado"
 
 #: Certman.class.php:820
 msgid "Unable to read key. Is it password protected?"
-msgstr ""
+msgstr "Incapaz de leer llave. Esta protegida por contraseña?"
 
 #: Certman.class.php:1243
 #, php-format
 msgid "Unable to remove %s"
-msgstr ""
+msgstr "Incapaz de remover %s"
 
 #: Certman.class.php:1351
 msgid "Unable to remove ca.cfg"
-msgstr ""
+msgstr "Incapaz de remover ca.cfg"
 
 #: Certman.class.php:1346
 msgid "Unable to remove ca.crt"
-msgstr ""
+msgstr "Incapaz de remover ca.crt"
 
 #: Certman.class.php:1341
 msgid "Unable to remove ca.key"
-msgstr ""
+msgstr "Incapaz de remover ca.key"
 
 #: Certman.class.php:470
 msgid "Unable to remove the Certificate Authority"
-msgstr ""
+msgstr "Incapaz de remover Certificado de Autoridad"
 
 #: Certman.class.php:478
 msgid "Unable to remove the Certificate Signing Request"
-msgstr ""
+msgstr "Incapaz de remover la Solicitud de Firma de Certificado"
 
 #: Certman.class.php:1356
 msgid "Unable to remove tmp.cfg"
-msgstr ""
+msgstr "Incapaz de remover tmp.cfg"
 
 #: Certman.class.php:803 Certman.class.php:807 Certman.class.php:811
 #, php-format
 msgid "Unable to write to %s"
-msgstr ""
+msgstr "Incapaz de escribir en %s"
 
 #: Certman.class.php:605
 msgid "Update Certificate"
@@ -849,20 +863,20 @@ msgstr "Actualizar Certificado"
 
 #: views/ss.php:22 views/up.php:8
 msgid "Update Existing Certificate"
-msgstr ""
+msgstr "Actualiza Certificado Existente"
 
 #: views/le.php:18
 msgid "Update Firewall"
-msgstr ""
+msgstr "Actualiza Firewall"
 
 #: Certman.class.php:701
 msgid "Updated Certificates"
-msgstr ""
+msgstr "Certificados Actualizados"
 
 #: Certman.class.php:337 Certman.class.php:350 Certman.class.php:360
 #: Certman.class.php:379
 msgid "Updated certificate"
-msgstr ""
+msgstr "Certificado Actualizado"
 
 #: views/ca.php:42
 msgid "Upload CA"
@@ -874,11 +888,11 @@ msgstr "Subir Certificado"
 
 #: views/certgrid.php:43
 msgid "Uploaded"
-msgstr ""
+msgstr "Subido"
 
 #: views/overview.php:24
 msgid "Uploaded:"
-msgstr ""
+msgstr "Subido:"
 
 #: functions.inc/hook_core.php:75
 msgid "Use Certificate"
@@ -886,7 +900,7 @@ msgstr "Use Certificado"
 
 #: views/le.php:74 views/ss.php:69 views/up.php:54
 msgid "Valid Until"
-msgstr ""
+msgstr "Unidad Valida"
 
 #: functions.inc/hook_core.php:89
 msgid ""
@@ -917,7 +931,7 @@ msgstr ""
 
 #: views/overview.php:12
 msgid "What is Certificate Manager?"
-msgstr ""
+msgstr "Que es Gestor de Certificado?"
 
 #: views/ss.php:301
 msgid ""
@@ -926,6 +940,10 @@ msgid ""
 "\t\t\t\t\t\t\t\t\t\t\t<b>WARNING!!</b> The Passphrase is stored in "
 "PLAINTEXT! You have been warned. Use Something you dont care about or use!"
 msgstr ""
+"Definir si se almacena la contraseña en la base de datos de manera que "
+"nuevos certificados se puedan generar automáticamente.<br/>\n"
+"\t\t\t\t\t\t\t\t\t\t\t<b>CUIDADO!!</b> La contraseña esta almacenada como "
+"TEXTOSIMPLE! Usted ha sido advertido. Use Algo que no le preocupe o use!"
 
 #: functions.inc/hook_core.php:107
 msgid ""
@@ -961,6 +979,11 @@ msgid ""
 "below. This may be left blank, or updated at any time. They can be added in "
 "any order."
 msgstr ""
+"Su CA también puede requerir una Cadena de Confianza para ser instalado. "
+"Esta será proporcionada por la CA, y consistirá en uno, o múltiples, "
+"archivos de certificados. Pegar el contenido de todos los archivos de la "
+"cadena, en su caso, en la casilla inferior. Esto puede dejarse en blanco, o "
+"actualizar en cualquier momento. Se pueden añadir en cualquier orden."
 
 #~ msgid "Are you sure you dont want a passphrase?"
 #~ msgstr "¿Seguro que no quieres una frase de paso?"
