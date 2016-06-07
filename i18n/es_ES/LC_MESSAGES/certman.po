@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-31 11:44-0700\n"
-"PO-Revision-Date: 2016-06-06 21:40+0200\n"
+"PO-Revision-Date: 2016-06-07 00:24+0200\n"
 "Last-Translator: Ernesto <ecasas@sangoma.com>\n"
 "Language-Team: Spanish "
 "<http://weblate.freepbx.org/projects/freepbx/certman/es_ES/>\n"
@@ -96,18 +96,24 @@ msgid ""
 "and return a Signed Certificate. That certificate should be pasted in the "
 "box below. If you leave this box blank, the certificate will not be updated."
 msgstr ""
+"Después de haber presentado una CSR a una CA, van a firmar el documento, "
+"después de la validación, y devolver un certificado firmado. Dicho "
+"certificado debe pegar en el cuadro de abajo. Si deja este cuadro en blanco, "
+"no se actualizará el certificado."
 
 #: assets/js/certman.js:14
 msgid "Are you sure you want to make this certificate the system default?"
 msgstr ""
+"Esta seguro que quieres que este certificado sea el \"por defecto\" del "
+"sistema?"
 
 #: Console/Certman.class.php:68
 msgid "Base Name"
-msgstr ""
+msgstr "Nombre Base"
 
 #: views/up.php:170
 msgid "CSR Reference"
-msgstr ""
+msgstr "Referencia CSR"
 
 #: views/ca.php:89 views/certgrid.php:25 views/rnav.php:7 views/up.php:205
 msgid "Certificate"
@@ -116,7 +122,7 @@ msgstr "Certificado"
 #: Certman.class.php:1498 Certman.class.php:1512
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
-msgstr ""
+msgstr "Certificado %s no puede leerse! No se puede continuar!"
 
 #: Certman.class.php:1128
 msgid "Certificate Already Exists"
@@ -155,10 +161,12 @@ msgid ""
 "Certificate Manager manages certificates for secure calling (TLS/SRTP), "
 "secure web sessions (HTTPS/WEBRTC[WSS] and more"
 msgstr ""
+"El Gestor de Certificados administra certificados para llamadas seguras "
+"(TLS/SRTP), sesiones web seguras (HTTPS/WEBRTC[WSS]) y mas"
 
 #: views/le.php:107 views/ss.php:114 views/up.php:99
 msgid "Certificate Policies"
-msgstr ""
+msgstr "Políticas de Certificados"
 
 #: views/view.php:10
 msgid "Certificate Settings"
@@ -169,18 +177,20 @@ msgid ""
 "Certificate Signing Request to reference. Select 'None' to upload your own "
 "private key."
 msgstr ""
+"Solicitud de Firma de Certificado a referenciar. Selecciones \"none/ninguno\""
+" para subir su propia clave privada."
 
 #: Certman.class.php:1302
 msgid "Certificate is empty"
-msgstr ""
+msgstr "Certificado esta vacío"
 
 #: Certman.class.php:353 Certman.class.php:363
 msgid "Certificate is invalid"
-msgstr ""
+msgstr "Certificado Invalido"
 
 #: Certman.class.php:384 Certman.class.php:442
 msgid "Certificate name is already in use"
-msgstr ""
+msgstr "Nombre de Certificado ya esta en uso"
 
 #: Certman.class.php:658
 #, php-format
@@ -188,6 +198,8 @@ msgid ""
 "Certificate named \"%s\" has expired. Please update this certificate in "
 "Certificate Manager"
 msgstr ""
+"Certificado llamado '%s' ha expirado. Por favor actualice este certificado "
+"en le Gestor de Certificados"
 
 #: Certman.class.php:678
 #, php-format
@@ -195,11 +207,13 @@ msgid ""
 "Certificate named \"%s\" is going to expire in less than a month. Please "
 "update this certificate in Certificate Manager"
 msgstr ""
+"Certificado llamado '%s' va a expirar en menos de un mes. Por favor "
+"actualícelo en el Gestor de Certificados"
 
 #: Certman.class.php:682
 #, php-format
 msgid "Certificate named \"%s\" is valid"
-msgstr ""
+msgstr "Certificado llamado '%s' es valido"
 
 #: views/ca.php:104
 msgid "Certificate to use for this CA (must reference the Private Key)"
@@ -210,26 +224,28 @@ msgid ""
 "City name such as \"Toronto\" or \"Brisbane.\" Do not abbreviate. For "
 "example, enter \"Saint Louis\" not \"St. Louis\""
 msgstr ""
+"Nombre de ciudad tal como \"Toronto\" o \"San Francisco\". Por ejemplo, "
+"entre \"Saint Louis\" no \"St' Louis\""
 
 #: views/csr.php:150
 msgid "City or Locality"
-msgstr ""
+msgstr "Ciudad o Localidad"
 
 #: views/le.php:90 views/ss.php:91 views/up.php:76
 msgid "Common Name"
-msgstr ""
+msgstr "Nombre Común"
 
 #: views/csr.php:46
 msgid "Common Name (Host Name)"
-msgstr ""
+msgstr "Nombre Común (Host name)"
 
 #: views/csr.php:106 views/le.php:155
 msgid "Country"
-msgstr ""
+msgstr "País"
 
 #: views/ss.php:224
 msgid "DNS name or your IP address"
-msgstr ""
+msgstr "Nombre DNS o su dirección IP"
 
 #: functions.inc/hook_core.php:120
 msgid "DTLS Rekey Interval"
@@ -245,11 +261,11 @@ msgstr "Verificar DTLS"
 
 #: Console/Certman.class.php:68 views/certgrid.php:28
 msgid "Default"
-msgstr ""
+msgstr "Defecto"
 
 #: Certman.class.php:223
 msgid "Default Self-Signed certificate"
-msgstr ""
+msgstr "Certificado auto-firmado por defecto"
 
 #: Certman.class.php:590
 msgid "Delete"
@@ -257,7 +273,7 @@ msgstr "Borrar"
 
 #: views/certgrid.php:15
 msgid "Delete CSR"
-msgstr ""
+msgstr "Borrar CSR"
 
 #: Certman.class.php:606
 msgid "Delete Certificate"
@@ -265,7 +281,7 @@ msgstr "Borrar Certificado"
 
 #: views/certgrid.php:18
 msgid "Delete Self-Signed CA"
-msgstr ""
+msgstr "Borrar CA Auto firmado"
 
 #: Certman.class.php:488
 msgid "Deleted Certificate"
@@ -276,6 +292,8 @@ msgid ""
 "Deleting the certificate authority will invalidate all certificates "
 "generated by this one (They will be deleted). Is that OK?"
 msgstr ""
+"Borrar la autoridad de certificación va a invalidar todos los certificados "
+"generados por ella (Seran eliminados). Esta de acuerdo?"
 
 #: Console/Certman.class.php:68 views/certgrid.php:26 views/le.php:132
 #: views/ss.php:139 views/up.php:124 views/view.php:47
@@ -288,7 +306,7 @@ msgstr "Hecho!"
 
 #: views/certgrid.php:14
 msgid "Download CSR"
-msgstr ""
+msgstr "Bajar CSR"
 
 #: views/ca.php:13
 msgid "Edit Certificate Authority Settings"
@@ -296,7 +314,7 @@ msgstr "Editar la configuración de la autoridad del certificado"
 
 #: views/le.php:35
 msgid "Edit Let's Encrypt Certificate"
-msgstr ""
+msgstr "Editar Certificado Let's Encrypt"
 
 #: functions.inc/hook_core.php:60
 msgid "Enable DTLS"
@@ -308,21 +326,24 @@ msgstr "Habilitar o deshabilitar soporte a DTLS-SRTP"
 
 #: views/le.php:21
 msgid "Firewall Validated"
-msgstr ""
+msgstr "Cortafuegos Validado"
 
 #: views/le.php:15 views/le.php:27
 msgid "Firewall Warning"
-msgstr ""
+msgstr "Advertencia Cortafuego"
 
 #: views/overview.php:17
 msgid ""
 "From this interface you can generate a Certificate Signing Request (CSR) "
 "which you can then use to issue a certificate to use for this server"
 msgstr ""
+"Desde esta interfaz se puede generar una solicitud de firma de certificado "
+"(CSR) que luego se puede utilizar para emitir un certificado a utilizar para "
+"este servidor"
 
 #: Certman.class.php:611 views/certgrid.php:12
 msgid "Generate CSR"
-msgstr ""
+msgstr "Generar CSR"
 
 #: Certman.class.php:611 assets/js/certman.js:57
 msgid "Generate Certificate"
@@ -330,11 +351,11 @@ msgstr "Generar Certificado"
 
 #: views/certgrid.php:7
 msgid "Generate Let's Encrypt Certificate"
-msgstr ""
+msgstr "Generar Certificado Let's Encrypt"
 
 #: views/certgrid.php:9
 msgid "Generate Self-Signed Certificate"
-msgstr ""
+msgstr "Generar Certificado auto-firmado"
 
 #: Certman.class.php:207
 msgid "Generating default CA..."
@@ -346,7 +367,7 @@ msgstr "Generando Certificados por defecto..."
 
 #: views/overview.php:18
 msgid "Here"
-msgstr ""
+msgstr "Aquí"
 
 #: views/le.php:53 views/ss.php:212
 msgid "Host Name"
@@ -357,10 +378,12 @@ msgid ""
 "Hover over the 'Default' column and click to make a certificate the system "
 "default"
 msgstr ""
+"Pase el ratón sobre la columna \"Default\" y haga clic para hacer un "
+"certificado el sistema por defecto"
 
 #: views/ss.php:81 views/up.php:66
 msgid "How long the certificate is valid until"
-msgstr ""
+msgstr "Hasta cuando el certificado es valido"
 
 #: views/ca.php:7
 msgid "I Know what I am doing"
@@ -368,19 +391,19 @@ msgstr "Sé lo que estoy haciendo"
 
 #: views/up.php:198
 msgid "If you have a separate private key paste it here."
-msgstr ""
+msgstr "Si tiene una clave privada péguela aquí."
 
 #: views/certgrid.php:20
 msgid "Import Locally"
-msgstr ""
+msgstr "Importar Localmente"
 
 #: Certman.class.php:1322
 msgid "Imported from file system"
-msgstr ""
+msgstr "Importado del sistema de archivos"
 
 #: views/overview.php:23 views/overview.php:24 views/overview.php:25
 msgid "Information"
-msgstr ""
+msgstr "Información"
 
 #: functions.inc/hook_core.php:121
 msgid ""
@@ -393,27 +416,27 @@ msgstr ""
 
 #: Certman.class.php:484
 msgid "Invalid Certificate"
-msgstr ""
+msgstr "Certificado Invalido"
 
 #: Certman.class.php:824
 msgid "Key does not match certificate"
-msgstr ""
+msgstr "Llave no coincide con el certificado"
 
 #: Certman.class.php:839
 msgid "Key does not match certificate after password removal"
-msgstr ""
+msgstr "Llave no coincide con el certificado luego de remover la contraseña"
 
 #: Certman.class.php:1271
 msgid "Key is empty"
-msgstr ""
+msgstr "Llave esta vacía"
 
 #: Certman.class.php:1281
 msgid "Key is password protected or malformed"
-msgstr ""
+msgstr "La llave esta protegida por Contraseña o esta mal-formada"
 
 #: views/overview.php:23
 msgid "Let's Encrypt:"
-msgstr ""
+msgstr "Let's Encrypt:"
 
 #: views/le.php:7
 #, php-format
@@ -421,6 +444,8 @@ msgid ""
 "LetsEncrypt requires the following hosts to be permitted for inbound http "
 "access:<br /> <tt>%s</tt>"
 msgstr ""
+"LetsEncrypt requiere que los siguientes host tengan permitido acceso "
+"entrante a: <br /> <tt>%s</tt>"
 
 #: views/overview.php:33
 #, php-format
@@ -431,6 +456,11 @@ msgid ""
 "standard set of the certificate and it's key into %s for use by other "
 "applications"
 msgstr ""
+"Haciendo un certificado el \"por defecto\" cambia la configuración del "
+"certificado en Ajustes avanzados. Obligará a dicho certificado que sea el "
+"predeterminado para las opciones de configuración avanzadas que exigen "
+"certificados. También colocará un conjunto estándar del certificado y es "
+"llave en %s para su uso por otras aplicaciones"
 
 #: views/csr.php:24 views/ss.php:41 views/up.php:26 views/view.php:23
 msgid "Name"
@@ -446,11 +476,11 @@ msgstr "Ajustes Autoridad nuevo certificado"
 
 #: views/csr.php:8
 msgid "New Certificate Signing Request"
-msgstr ""
+msgstr "Nueva Petición de Firma de Certificado"
 
 #: views/le.php:35
 msgid "New Let's Encrypt Certificate"
-msgstr ""
+msgstr "Nuevo Certificado Let's Encrypt"
 
 #: views/ss.php:293
 msgid "No"
@@ -458,7 +488,7 @@ msgstr "No"
 
 #: Certman.class.php:799
 msgid "No Certificate provided"
-msgstr ""
+msgstr "No Certificado provisto"
 
 #: Certman.class.php:204
 msgid "No Certificates exist"
@@ -470,35 +500,37 @@ msgid ""
 "No Certificates to import. Try placing a certificate (<name>.crt) and its "
 "key (<name>.crt) into %s"
 msgstr ""
+"No Certificado a Importar. Intente colocando un certificado (<nombre>.crt) y "
+"tu llave (<nombre>.crt) en %s"
 
 #: Certman.class.php:319
 msgid "No Private key to reference."
-msgstr ""
+msgstr "No llave privada a referenciar."
 
 #: Certman.class.php:310 Certman.class.php:393 Certman.class.php:401
 #: Certman.class.php:795
 msgid "No Private key to reference. Try generating a CSR first."
-msgstr ""
+msgstr "No llave privada a referenciar. Intente generando un CSR primero."
 
 #: Certman.class.php:295
 msgid "No certificates to import"
-msgstr ""
+msgstr "No certificado a importar"
 
 #: views/up.php:175
 msgid "None"
-msgstr ""
+msgstr "Ninguno"
 
 #: views/up.php:209 views/up.php:218
 msgid "Not Shown for your security. Paste a new certificate here"
-msgstr ""
+msgstr "No mostrado por su seguridad. Pegar un nuevo certificado aquí"
 
 #: views/up.php:199
 msgid "Not Shown for your security. Paste a new key here"
-msgstr ""
+msgstr "No mostrado por su seguridad. Pegue una nueva llave aquí"
 
 #: views/overview.php:33
 msgid "Note:"
-msgstr ""
+msgstr "Nota:"
 
 #: views/csr.php:62 views/ss.php:234
 msgid "Organization Name"
@@ -507,23 +539,27 @@ msgstr "Nombre de Organización"
 #: views/csr.php:74
 #, php-format
 msgid "Organization Name such as %s"
-msgstr ""
+msgstr "Nombre Organización tal como %s"
 
 #: views/csr.php:84
 msgid "Organization Unit"
-msgstr ""
+msgstr "Unidad Organizativa"
 
 #: views/csr.php:96
 msgid ""
 "Organizational Unit. This can be a doing business as (DBA) name, or the name "
 "of a department within the business. This may be left blank."
 msgstr ""
+"Unidad Organizativa. Esto podría ser nombre ficticio (DBA), o nombre del "
+"departamento dentro de la empresa. Se puede dejar en blanco."
 
 #: views/le.php:29
 msgid ""
 "PBX System Firewall is not in use so this can not be verified. Please "
 "manually verify inbound connectivity."
 msgstr ""
+"Sistema Cortafuego del PBX no esta en uso y esto no puede ser verificado. "
+"Por favor verifique manualmente conectividad entrante."
 
 #: views/ss.php:164 views/ss.php:256 views/up.php:147
 msgid "Passphrase"
@@ -540,14 +576,22 @@ msgid ""
 "certificate you will have to provide the passphrase everytime a new "
 "certificate is needed"
 msgstr ""
+"Contraseña usada para accesar este certificado y generar nuevos certificados "
+"de cliente.\n"
+"\t\t\t\t\t\t\t\t\t\t\tSi usted no usa una contraseñara cuando genera un "
+"nuevo certificado, entonces la llave privada no sera cifrada con un cifrador "
+"simétrico - es sacado en forma totalmente desprotegida.\n"
+"\t\t\t\t\t\t\t\t\t\t\tSi usted no provee una contraseña cuando sube un "
+"certificado usted tendrá que proveer una cada vez que un certificado sea "
+"requerido"
 
 #: views/up.php:209 views/up.php:218
 msgid "Paste new certificate here"
-msgstr ""
+msgstr "Pegue nuevo certificado aquí"
 
 #: views/up.php:199
 msgid "Paste new key here"
-msgstr ""
+msgstr "Pegar nueva llave aquí"
 
 #: views/ca.php:62 views/up.php:195
 msgid "Private Key"
@@ -573,15 +617,15 @@ msgstr ""
 
 #: views/certgrid.php:40
 msgid "Self Signed"
-msgstr ""
+msgstr "Auto-Firmado"
 
 #: views/overview.php:25
 msgid "Self-Signed:"
-msgstr ""
+msgstr "Auto-Firmado:"
 
 #: Certman.class.php:698
 msgid "Some Certificates are expiring or have expired"
-msgstr ""
+msgstr "Algunos certificados han expirado o están por expirar"
 
 #: Certman.class.php:701
 msgid ""
@@ -589,16 +633,21 @@ msgid ""
 "ensure all services have the correctly update certificate by restarting PBX "
 "services"
 msgstr ""
+"Algunos Certificados TLS/SSL han sido actualizados automáticamente. Puede "
+"que necesite para asegurar el correcto funcionamiento, reiniciar los "
+"servicios de la PBX"
 
 #: views/csr.php:140 views/le.php:189
 msgid ""
 "State or province such as \"Queensland\" or \"Wisconsin\" or \"Ontario.\" Do "
 "not abbreviate. Enter the full name."
 msgstr ""
+"Estado o Provincia tal como \"Ontario\" o \"Veracruz\" o \"Florida\". No use "
+"abreviaciones. Use el nombre completo."
 
 #: views/csr.php:128 views/le.php:177
 msgid "State/Province"
-msgstr ""
+msgstr "Estado/Provincia"
 
 #: Certman.class.php:600
 msgid "Submit"
@@ -610,26 +659,26 @@ msgstr "Autoridad de Certificacion satisfactoriamente borrada"
 
 #: Certman.class.php:476
 msgid "Successfully deleted the Certificate Signing Request"
-msgstr ""
+msgstr "La solicitud de Firma de Certificado borrada satisfactoriamente"
 
 #: Console/Certman.class.php:83
 #, php-format
 msgid "Successfully imported %s"
-msgstr ""
+msgstr "Importado Satisfactoriamente %s"
 
 #: Certman.class.php:292
 msgid "Successfully imported certificates"
-msgstr ""
+msgstr "Certificados Importados Satisfactoriamente"
 
 #: Console/Certman.class.php:105
 #, php-format
 msgid "Successfully set %s as the default"
-msgstr ""
+msgstr "Establecido %s como valor por defecto satisfactoriamente"
 
 #: Certman.class.php:645 Certman.class.php:665
 #, php-format
 msgid "Successfully updated certificate named \"%s\""
-msgstr ""
+msgstr "Certificado llamado \"%s\" actualizado satisfactoriamente"
 
 #: views/ss.php:126 views/up.php:111
 msgid "TThe certificate policies"
