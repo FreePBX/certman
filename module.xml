@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>13.0.22</version>
+	<version>13.0.23</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -13,6 +13,7 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
+		*13.0.23* FREEPBX-12407 require newer version of framework for sha256
 		*13.0.22* FREEPBX-12446 make sure certificates are readable before parsing
 		*13.0.21* FREEPBX-12355 firewall integration
 		*13.0.20* Reload asterisk when a Lets Encrypt cert updates
@@ -50,6 +51,6 @@
 	<depends>
 		<phpversion>5.3.3</phpversion>
 		<module>core ge 12.0.1beta6</module>
-		<version>13.0.121</version>
+		<version>13.0.130</version>
 	</depends>
 </module>

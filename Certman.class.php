@@ -88,7 +88,7 @@ class Certman implements \BMO {
 				)
 			)
 		);
-		$table->modify($cols);
+		$table->modify($cols,$indexes);
 		unset($table);
 
 		$table = $this->FreePBX->Database->migrate("certman_certs");
@@ -139,7 +139,7 @@ class Certman implements \BMO {
 				)
 			)
 		);
-		$table->modify($cols);
+		$table->modify($cols,$indexes);
 		unset($table);
 
 		$table = $this->FreePBX->Database->migrate("certman_csrs");
@@ -220,8 +220,14 @@ class Certman implements \BMO {
 
 			outn(_("Generating default certificate..."));
 			// Do not i18n the NAME of the cert, it is 'default'.
-			$this->generateCertificate($caid,"default",_("Default Self-Signed certificate"), $passwd);
-			out(_("Done!"));
+			try {
+				$cid = $this->generateCertificate($caid,"default",_("Default Self-Signed certificate"), $passwd);
+				$this->makeCertDefault($cid);
+				out(_("Done!"));
+			} catch(\Exception $e) {
+				out(_("Failed!"));
+				//return false;
+			}
 		}
 
 
@@ -1129,13 +1135,8 @@ class Certman implements \BMO {
 		}
 		$ca = $this->getCADetails($caid);
 		$passphrase = !empty($passphrase) ? $passphrase : $ca['passphrase'];
-		try {
-			$this->PKCS->createCert($base,$ca['basename'],$passphrase);
-		} catch(\Exception $e) {
-			return $e->getMessage();
-		}
-		$this->saveCertificate($caid,$base,$description);
-		return true;
+		$this->PKCS->createCert($base,$ca['basename'],$passphrase);
+		return $this->saveCertificate($caid,$base,$description);
 	}
 
 	/**
@@ -1152,6 +1153,7 @@ class Certman implements \BMO {
 		$sql = "INSERT INTO certman_certs (`caid`, `basename`, `description`, `type`, `default`, `additional`) VALUES (?, ?, ?, ?, ?, ?)";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($caid,$base,$description,$type,$default,json_encode($additional)));
+		return $this->db->lastInsertId();
 	}
 
 	/**
