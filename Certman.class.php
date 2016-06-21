@@ -647,7 +647,7 @@ class Certman implements \BMO {
 			if(time() > $validTo) {
 				if($cert['type'] == 'le') {
 					try {
-						$this->updateLE($cert['crt']['subject']['CN']);
+						$this->updateLE($cert['info']['crt']['subject']['CN']);
 						$messages[] = array('type' => 'success', 'message' => sprintf(_('Successfully updated certificate named "%s"'),$cert['basename']));
 						$this->FreePBX->astman->Reload();
 						//Until https://issues.asterisk.org/jira/browse/ASTERISK-25966 is fixed
@@ -667,7 +667,7 @@ class Certman implements \BMO {
 			} elseif (time() > $renewafter) {
 				if($cert['type'] == 'le') {
 					try {
-						$this->updateLE($cert['crt']['subject']['CN']);
+						$this->updateLE($cert['info']['crt']['subject']['CN']);
 						$messages[] = array('type' => 'success', 'message' => sprintf(_('Successfully updated certificate named "%s"'),$cert['basename']));
 						$this->FreePBX->astman->Reload();
 						//Until https://issues.asterisk.org/jira/browse/ASTERISK-25966 is fixed
