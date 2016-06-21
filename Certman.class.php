@@ -716,6 +716,8 @@ class Certman implements \BMO {
 	 * @return boolean          True if success, false if not
 	 */
 	public function updateLE($host,$countryCode='US',$state='Wisconsin',$staging=false) {
+		$countryCode = !empty($countryCode) ? $countryCode : 'US';
+		$state = !empty($state) ? $state : 'Wisconsin';
 		$location = $this->PKCS->getKeysLocation();
 		$logger = new Certman\Logger();
 		$host = basename($host);
@@ -1145,14 +1147,15 @@ class Certman implements \BMO {
 	 * @param {string} $base				The base name of the certificate
 	 * @param {string} $description The description of the certificate
 	 * @param {string} $type				The type of the certificate: ss:: self signed, up:: upload, le:: let's encrypt
+	 * @param {string} $additional  Additional data in an array format
 	 */
-	public function saveCertificate($caid=null,$base,$description,$type='ss',$default=0,$addtional=array()) {
+	public function saveCertificate($caid=null,$base,$description,$type='ss',$addtional=array()) {
 		if($this->checkCertificateName($base)) {
 			return false;
 		}
-		$sql = "INSERT INTO certman_certs (`caid`, `basename`, `description`, `type`, `default`, `additional`) VALUES (?, ?, ?, ?, ?, ?)";
+		$sql = "INSERT INTO certman_certs (`caid`, `basename`, `description`, `type`, `additional`) VALUES (?, ?, ?, ?, ?)";
 		$sth = $this->db->prepare($sql);
-		$sth->execute(array($caid,$base,$description,$type,$default,json_encode($additional)));
+		$sth->execute(array($caid,$base,$description,$type,json_encode($additional)));
 		return $this->db->lastInsertId();
 	}
 

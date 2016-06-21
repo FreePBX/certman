@@ -125,10 +125,18 @@ $(function() {
 		if(stop) {
 			return false;
 		}
-		if($("#ST").val() === "" && $("#L").val()) {
-			warnInvalid($("#ST"),_("State AND Locality Can not be left blank! One must be filled in!"));
-			return false;
+		if(type == "le") {
+			if($("#ST").val() === "") {
+				warnInvalid($("#ST"),_("State can not be left blank!"));
+				return false;
+			}
+		} else {
+			if($("#ST").val() === "" && $("#L").val() === "") {
+				warnInvalid($("#ST"),_("State AND Locality Can not be left blank! One must be filled in!"));
+				return false;
+			}
 		}
+
 		if ($("form[name=frm_certman] input[type=\"password\"]").val() === "") {
 			if (!confirm(_("Are you sure you dont want a passphrase?"))) {
 				$("form[name=frm_certman] input[type=\"password\"]").focus();
