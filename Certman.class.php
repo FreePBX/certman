@@ -211,7 +211,9 @@ class Certman implements \BMO {
 				} else {
 					$passwd = "";
 				}
-				$caid = $this->generateCA('ca', gethostname(), gethostname(), $passwd, true);
+				$hostname = gethostname();
+				$hostname = !empty($hostname) ? $hostname : 'localhost';
+				$caid = $this->generateCA('ca', $hostname, $hostname, $passwd, true);
 				out(_("Done!"));
 			} else {
 				$dat = $this->getAllManagedCAs();
@@ -1033,6 +1035,15 @@ class Certman implements \BMO {
 	 * @param {bool} $savepass		 Whether to save the password above in the database
 	 */
 	public function generateCA($basename, $commonname, $orgname, $passphrase, $savepass) {
+		if(empty($basename)) {
+			throw new \Exception("Basename can not be empty!");
+		}
+		if(empty($commonname)) {
+			throw new \Exception("Commonname can not be empty!");
+		}
+		if(empty($orgname)) {
+			throw new \Exception("Organization can not be empty!");
+		}
 		$this->generateConfig($basename,$commonname,$orgname);
 		$this->PKCS->createCA($basename,$passphrase);
 		if ($savepass) {
