@@ -130,6 +130,10 @@ $(function() {
 				warnInvalid($("#ST"),_("State can not be left blank!"));
 				return false;
 			}
+			if($("#host").val() === "") {
+				warnInvalid($("#host"),_("Host Name can not be left blank!"));
+				return false;
+			}
 		} else {
 			if($("#ST").val() === "" && $("#L").val() === "") {
 				warnInvalid($("#ST"),_("State AND Locality Can not be left blank! One must be filled in!"));
@@ -150,6 +154,10 @@ $(function() {
 					alert(_("Base Name must be alphanumeric only"));
 					return false;
 				}
+			}
+			if($("#hostname").val() === "") {
+				warnInvalid($("#hostname"),_("Hostname can not be left blank!"));
+				return false;
 			}
 		}
 
