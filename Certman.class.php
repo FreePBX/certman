@@ -261,12 +261,15 @@ class Certman implements \BMO {
 	}
 
 	public function uninstall() {
-		$this->removeCSR();
-		$this->removeCA();
-		$certs = $this->getAllManagedCertificates();
-		foreach($certs as $cert) {
-			$this->removeCertificate($cert['cid']);
-		}
+		try {
+			$this->removeCSR();
+			$this->removeCA();
+			$certs = $this->getAllManagedCertificates();
+			foreach($certs as $cert) {
+				$this->removeCertificate($cert['cid']);
+			}
+		} catch(\Exception $e) {}
+
 		$sql = "DROP TABLE certman_mapping";
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
@@ -1507,6 +1510,9 @@ class Certman implements \BMO {
 	private function getAdditionalCertDetails($details, $default=false) {
 		$location = $this->PKCS->getKeysLocation();
 		$files = array(".key" => "key",".crt" => "crt",".csr" => "csr",".pem" => "pem","-ca-bundle.crt" => "ca-bundle");
+		$details['files'] = !empty($details['files']) ? $details['files'] : array();
+		$details['hashes'] = !empty($details['hashes']) ? $details['hashes'] : array();
+		$details['info'] = !empty($details['info']) ? $details['info'] : array();
 		foreach($files as $f => $type) {
 			$file = $location.'/'.$details['basename'].$f;
 			if(file_exists($file)) {
@@ -1521,6 +1527,7 @@ class Certman implements \BMO {
 			}
 		}
 		if($default) {
+			$details['integration'] = !empty($details['integration']) ? $details['integration'] : array();
 			foreach($files as $f => $type) {
 				$file = $location.'/integration/webserver'.$f;
 				if(file_exists($file)) {
