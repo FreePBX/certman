@@ -747,7 +747,10 @@ class Certman implements \BMO {
 		if($needsgen) {
 			$basePathCheck = "/.freepbx-known";
 			if(!file_exists($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck)) {
-				mkdir($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck,0777);
+				$mkdirok = @mkdir($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck,0777);
+				if (!$mkdirok) {
+					throw new \Exception("Unable to create directory ".$this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck);
+				}
 			}
 			$token = bin2hex(openssl_random_pseudo_bytes(16));
 			$pathCheck = $basePathCheck."/".$token;
