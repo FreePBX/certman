@@ -781,13 +781,16 @@ class Certman implements \BMO {
 
 		if(file_exists($location."/".$host)) {
 			copy($location."/".$host."/private.pem",$location."/".$host.".key"); //webserver.key
-			copy($location."/".$host."/fullchain.pem",$location."/".$host.".crt"); //webserver.crt
+			copy($location."/".$host."/chain.pem",$location."/".$host."-ca-bundle.crt"); //ca-bundle.crt
+			copy($location."/".$host."/cert.pem",$location."/".$host.".crt"); //webserver.crt
 			$key = file_get_contents($location."/".$host.".key");
 			$cert = file_get_contents($location."/".$host.".crt");
-			file_put_contents($location."/".$host.".pem",$key."\n".$cert);
+			$bundle = file_get_contents($location."/".$host."-ca-bundle.crt");
+			file_put_contents($location."/".$host.".pem",$key."\n".$cert."\n".$bundle); //should the chain be in here??
 			chmod($location."/".$host.".crt",0600);
 			chmod($location."/".$host.".key",0600);
 			chmod($location."/".$host.".pem",0600);
+			chmod($location."/".$host."-ca-bundle.crt",0600);
 		}
 		return true;
 	}
@@ -860,11 +863,14 @@ class Certman implements \BMO {
 
 		if(!empty($certificateChain)) {
 			file_put_contents($location."/".$name."-ca-bundle.crt", $certificateChain);
+			$bundle = file_get_contents($location."/".$name."-ca-bundle.crt");
+			file_put_contents($location . "/" . $name . ".pem", $privateKey ."\n". $signedCertificate."\n".$bundle);
 			chmod($location."/".$name."-ca-bundle.crt",0600);
-			//TODO: what to do with this?
+		} else {
+			file_put_contents($location . "/" . $name . ".pem", $privateKey ."\n". $signedCertificate);
 		}
 
-		file_put_contents($location . "/" . $name . ".pem", $privateKey ."\n". $signedCertificate);
+
 		chmod($location."/".$name.".crt",0600);
 		chmod($location."/".$name.".key",0600);
 		chmod($location."/".$name.".pem",0600);

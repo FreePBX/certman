@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>13.0.27</version>
+	<version>13.0.28</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -13,6 +13,7 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
+		*13.0.28* Better support of certificates with chains
 		*13.0.27* Fix user errors
 		*13.0.26* Prevent blank hostnames
 		*13.0.25* FREEPBX-12627 a valid hostname is required
