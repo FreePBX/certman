@@ -780,6 +780,7 @@ class Certman implements \BMO {
 		}
 
 		if(file_exists($location."/".$host)) {
+			//https://community.letsencrypt.org/t/solved-why-isnt-my-certificate-trusted/2479/4
 			copy($location."/".$host."/private.pem",$location."/".$host.".key"); //webserver.key
 			copy($location."/".$host."/chain.pem",$location."/".$host."-ca-bundle.crt"); //ca-bundle.crt
 			copy($location."/".$host."/cert.pem",$location."/".$host.".crt"); //webserver.crt
