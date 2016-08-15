@@ -13,7 +13,7 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
-		*13.0.31* Beta support for https Lets Encryp Challenges
+		*13.0.31* Beta support for https Lets Encrypt Challenges
 		*13.0.30* Better error messages
 		*13.0.29* FREEPBX-12912 Certificate Manager Cancel button acts like OK
 		*13.0.28* Better support of certificates with chains
