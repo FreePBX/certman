@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-10 11:44-0700\n"
+"POT-Creation-Date: 2016-08-15 16:17-0700\n"
 "PO-Revision-Date: 2015-11-23 13:55+0200\n"
 "Last-Translator: james <zhulizhong@gmail.com>\n"
 "Language-Team: Simplified Chinese <http://weblate.freepbx.org/projects/"
@@ -101,12 +101,12 @@ msgstr ""
 msgid "Certificate"
 msgstr ""
 
-#: Certman.class.php:1530 Certman.class.php:1545
+#: Certman.class.php:1535 Certman.class.php:1550
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr ""
 
-#: Certman.class.php:1160
+#: Certman.class.php:1165
 msgid "Certificate Already Exists"
 msgstr ""
 
@@ -156,7 +156,7 @@ msgid ""
 "private key."
 msgstr ""
 
-#: Certman.class.php:1331
+#: Certman.class.php:1336
 msgid "Certificate is empty"
 msgstr ""
 
@@ -191,6 +191,10 @@ msgstr ""
 msgid "Certificate to use for this CA (must reference the Private Key)"
 msgstr ""
 
+#: views/le.php:156
+msgid "Challenge Over"
+msgstr ""
+
 #: views/csr.php:162
 msgid ""
 "City name such as \"Toronto\" or \"Brisbane.\" Do not abbreviate. For "
@@ -209,7 +213,7 @@ msgstr ""
 msgid "Common Name (Host Name)"
 msgstr ""
 
-#: views/csr.php:106 views/le.php:155
+#: views/csr.php:106 views/le.php:182
 msgid "Country"
 msgstr ""
 
@@ -364,7 +368,7 @@ msgstr ""
 msgid "Import Locally"
 msgstr ""
 
-#: Certman.class.php:1351
+#: Certman.class.php:1356
 msgid "Imported from file system"
 msgstr ""
 
@@ -382,19 +386,19 @@ msgstr ""
 msgid "Invalid Certificate"
 msgstr ""
 
-#: Certman.class.php:844
+#: Certman.class.php:849
 msgid "Key does not match certificate"
 msgstr ""
 
-#: Certman.class.php:859
+#: Certman.class.php:864
 msgid "Key does not match certificate after password removal"
 msgstr ""
 
-#: Certman.class.php:1300
+#: Certman.class.php:1305
 msgid "Key is empty"
 msgstr ""
 
-#: Certman.class.php:1310
+#: Certman.class.php:1315
 msgid "Key is password protected or malformed"
 msgstr ""
 
@@ -443,7 +447,7 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: Certman.class.php:819
+#: Certman.class.php:824
 msgid "No Certificate provided"
 msgstr ""
 
@@ -463,7 +467,7 @@ msgid "No Private key to reference."
 msgstr ""
 
 #: Certman.class.php:321 Certman.class.php:404 Certman.class.php:412
-#: Certman.class.php:815
+#: Certman.class.php:820
 msgid "No Private key to reference. Try generating a CSR first."
 msgstr ""
 
@@ -575,13 +579,13 @@ msgid ""
 "services"
 msgstr ""
 
-#: views/csr.php:140 views/le.php:189
+#: views/csr.php:140 views/le.php:216
 msgid ""
 "State or province such as \"Queensland\" or \"Wisconsin\" or \"Ontario.\" Do "
 "not abbreviate. Enter the full name."
 msgstr ""
 
-#: views/csr.php:128 views/le.php:177
+#: views/csr.php:128 views/le.php:204
 msgid "State/Province"
 msgstr ""
 
@@ -664,6 +668,12 @@ msgstr ""
 msgid "There are three different types of certificates this module can handle:"
 msgstr ""
 
+#: views/le.php:171
+msgid ""
+"There are two methods you can have Let's Encrypt Challenge over: HTTP (80) "
+"or HTTPS (443)"
+msgstr ""
+
 #: Console/Certman.class.php:86
 #, php-format
 msgid "There was an error importing %s. The error was: %s"
@@ -719,7 +729,7 @@ msgstr ""
 msgid "Trusted Chain"
 msgstr ""
 
-#: views/csr.php:118 views/le.php:167
+#: views/csr.php:118 views/le.php:194
 msgid "Two letter country code, such as \"US\", \"CA\", or \"AU\"."
 msgstr ""
 
@@ -740,24 +750,24 @@ msgstr ""
 msgid "Unable to generate Certificate Authority"
 msgstr ""
 
-#: Certman.class.php:840
+#: Certman.class.php:845
 msgid "Unable to read key. Is it password protected?"
 msgstr ""
 
-#: Certman.class.php:1272
+#: Certman.class.php:1277
 #, php-format
 msgid "Unable to remove %s"
 msgstr ""
 
-#: Certman.class.php:1380
+#: Certman.class.php:1385
 msgid "Unable to remove ca.cfg"
 msgstr ""
 
-#: Certman.class.php:1375
+#: Certman.class.php:1380
 msgid "Unable to remove ca.crt"
 msgstr ""
 
-#: Certman.class.php:1370
+#: Certman.class.php:1375
 msgid "Unable to remove ca.key"
 msgstr ""
 
@@ -769,11 +779,11 @@ msgstr ""
 msgid "Unable to remove the Certificate Signing Request"
 msgstr ""
 
-#: Certman.class.php:1385
+#: Certman.class.php:1390
 msgid "Unable to remove tmp.cfg"
 msgstr ""
 
-#: Certman.class.php:823 Certman.class.php:827 Certman.class.php:831
+#: Certman.class.php:828 Certman.class.php:832 Certman.class.php:836
 #, php-format
 msgid "Unable to write to %s"
 msgstr ""
