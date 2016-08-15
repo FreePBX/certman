@@ -352,12 +352,12 @@ class Certman implements \BMO {
 						$cert = $this->getCertificateDetails($_POST['cid']);
 						if(!empty($cert)) {
 							try {
-								$this->updateLE($cert['basename'],$_POST['C'],$_POST['ST']);
+								$this->updateLE($cert['basename'],$_POST['C'],$_POST['ST'],$_POST['challengetype']);
 							} catch(\Exception $e) {
 								$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error updating the certificate: %s'),$e->getMessage()));
 								break;
 							}
-							$this->updateCertificate($cert,$_POST['description'], array("C" => $_POST['C'], "ST" => $_POST['ST']));
+							$this->updateCertificate($cert,$_POST['description'], array("C" => $_POST['C'], "ST" => $_POST['ST'], 'challengetype' => $_POST['challengetype']));
 							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
 							needreload();
 						} else {
@@ -381,7 +381,7 @@ class Certman implements \BMO {
 					case "le":
 						$host = basename($_POST['host']);
 						try{
-							$this->updateLE($host,$_POST['C'],$_POST['ST']);
+							$this->updateLE($host,$_POST['C'],$_POST['ST'],$_POST['challengetype']);
 						} catch(\Exception $e) {
 							$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error updating the certificate: %s'),$e->getMessage()));
 							break 2;
@@ -652,7 +652,7 @@ class Certman implements \BMO {
 			if(time() > $validTo) {
 				if($cert['type'] == 'le') {
 					try {
-						$this->updateLE($cert['info']['crt']['subject']['CN']);
+						$this->updateLE($cert['info']['crt']['subject']['CN'],$cert['additional']['C'],$cert['additional']['ST'],$cert['additional']['challengetype']);
 						$messages[] = array('type' => 'success', 'message' => sprintf(_('Successfully updated certificate named "%s"'),$cert['basename']));
 						$this->FreePBX->astman->Reload();
 						//Until https://issues.asterisk.org/jira/browse/ASTERISK-25966 is fixed
@@ -672,7 +672,7 @@ class Certman implements \BMO {
 			} elseif (time() > $renewafter) {
 				if($cert['type'] == 'le') {
 					try {
-						$this->updateLE($cert['info']['crt']['subject']['CN']);
+						$this->updateLE($cert['info']['crt']['subject']['CN'],$cert['additional']['C'],$cert['additional']['ST'],$cert['additional']['challengetype']);
 						$messages[] = array('type' => 'success', 'message' => sprintf(_('Successfully updated certificate named "%s"'),$cert['basename']));
 						$this->FreePBX->astman->Reload();
 						//Until https://issues.asterisk.org/jira/browse/ASTERISK-25966 is fixed
@@ -720,9 +720,10 @@ class Certman implements \BMO {
 	 * @param  boolean $staging Whether to use the staging server or not
 	 * @return boolean          True if success, false if not
 	 */
-	public function updateLE($host,$countryCode='US',$state='Wisconsin',$staging=false) {
+	public function updateLE($host,$countryCode='US',$state='Wisconsin',$challengetype='http',$staging=false) {
 		$countryCode = !empty($countryCode) ? $countryCode : 'US';
 		$state = !empty($state) ? $state : 'Wisconsin';
+		$challengetype = !empty($challengetype) ? $challengetype : 'http';
 		$location = $this->PKCS->getKeysLocation();
 		$logger = new Certman\Logger();
 		$host = basename($host);
@@ -776,7 +777,11 @@ class Certman implements \BMO {
 			$le->countryCode = $countryCode;
 			$le->state = $state;
 			$le->initAccount();
+			if($challengetype == 'https') {
+				$le->challenge = 'tls-sni-01';
+			}
 			$le->signDomains(array($host));
+			//challengetype
 		}
 
 		if(file_exists($location."/".$host)) {

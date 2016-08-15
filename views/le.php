@@ -146,6 +146,33 @@ if ($fwapi->isAvailable()) {
 								</div>
 							</div>
 							<!--END Description-->
+							<!--Description-->
+							<div class="element-container">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="row">
+											<div class="form-group">
+												<div class="col-md-3">
+													<label class="control-label" for="challengetype"><?php echo _("Challenge Over")?></label>
+													<i class="fa fa-question-circle fpbx-help-icon" data-for="challengetype"></i>
+												</div>
+												<div class="col-md-9 radioset">
+													<input type="radio" class="" id="challengetype_http" name="challengetype" value="http" <?php echo empty($cert['additional']['challengetype']) || (!empty($cert['additional']['challengetype']) && $cert['additional']['challengetype'] == 'http') ? 'checked' : ""?>>
+													<label for="challengetype_http">HTTP</label>
+													<input type="radio" class="" id="challengetype_https" name="challengetype" value="https" <?php echo !empty($cert['additional']['challengetype']) && $cert['additional']['challengetype'] == 'https' ? 'checked' : ""?>>
+													<label for="challengetype_https">HTTPS</label>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<span id="challengetype-help" class="help-block fpbx-help-block"><?php echo _("There are two methods you can have Let's Encrypt Challenge over: HTTP (80) or HTTPS (443)")?></span>
+									</div>
+								</div>
+							</div>
+							<!--END Description-->
 							<div class="element-container">
 								<div class="row">
 									<div class="col-md-12">

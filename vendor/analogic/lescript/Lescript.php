@@ -10,6 +10,8 @@ class Lescript
     public $countryCode = 'CZ';
     public $state = "Czech Republic";
 
+    public $challenge = 'http-01';
+
     private $certificatesDir;
     private $webRootDir;
 
@@ -72,8 +74,7 @@ class Lescript
                 throw new \RuntimeException("HTTP Challenge for $domain is not available. Whole response: ".json_encode($response));
             }
 
-            // choose http-01 challange only
-            $challenge = array_reduce($response['challenges'], function($v, $w) { return $v ? $v : ($w['type'] == 'http-01' ? $w : false); });
+            $challenge = array_reduce($response['challenges'], function($v, $w) { return $v ? $v : ($w['type'] == $this->challenge ? $w : false); });
             if(!$challenge) throw new \RuntimeException("HTTP Challenge for $domain is not available. Whole response: ".json_encode($response));
 
             $this->log("Got challenge token for $domain");
@@ -121,7 +122,7 @@ class Lescript
                 $challenge['uri'],
                 array(
                     "resource" => "challenge",
-                    "type" => "http-01",
+                    "type" => $this->challenge,
                     "keyAuthorization" => $payload,
                     "token" => $challenge['token']
                 )
