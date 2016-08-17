@@ -1447,7 +1447,11 @@ class Certman implements \BMO {
 		if(empty($newDetails)) {
 			throw new \Exception("Could not find updated certificates");
 		}
+		//
 		$this->FreePBX->Hooks->processHooks($newDetails,$oldDetails);
+		if($newDetails['default']) {
+			$this->makeCertDefault($oldDetails['cid']);
+		}
 		return ;
 	}
 
