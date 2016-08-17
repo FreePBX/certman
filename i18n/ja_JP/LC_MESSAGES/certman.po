@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-15 16:17-0700\n"
+"POT-Creation-Date: 2016-08-16 23:33-0700\n"
 "PO-Revision-Date: 2015-10-30 06:37+0200\n"
 "Last-Translator: Kevin <kevin@qloog.com>\n"
 "Language-Team: Japanese <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -101,7 +101,7 @@ msgstr ""
 msgid "Certificate"
 msgstr ""
 
-#: Certman.class.php:1535 Certman.class.php:1550
+#: Certman.class.php:1539 Certman.class.php:1554
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr ""
