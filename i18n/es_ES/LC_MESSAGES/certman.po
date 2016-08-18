@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-16 23:33-0700\n"
+"POT-Creation-Date: 2016-08-18 10:16-0700\n"
 "PO-Revision-Date: 2016-06-08 06:15+0200\n"
 "Last-Translator: Ernesto <ecasas@sangoma.com>\n"
 "Language-Team: Spanish <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -49,7 +49,7 @@ msgstr ""
 "recomendamos conseguir un certificado real de una autoridad estándar o a "
 "través del proyecto Let's Encrypt"
 
-#: views/le.php:119
+#: views/le.php:120
 msgid ""
 "A certificate policy (CP) is a document which aims to state what are the "
 "different actors of a public key infrastructure (PKI), their roles and their "
@@ -164,7 +164,7 @@ msgstr ""
 "El Gestor de Certificados administra certificados para llamadas seguras (TLS/"
 "SRTP), sesiones web seguras (HTTPS/WEBRTC[WSS]) y mas"
 
-#: views/le.php:107 views/ss.php:114 views/up.php:99
+#: views/le.php:108 views/ss.php:114 views/up.php:99
 msgid "Certificate Policies"
 msgstr "Políticas de Certificados"
 
@@ -219,7 +219,7 @@ msgstr "Certificado llamado '%s' es valido"
 msgid "Certificate to use for this CA (must reference the Private Key)"
 msgstr "Certificado a usar para esta CA (debe referenciar a la Clave Privada)"
 
-#: views/le.php:156
+#: views/le.php:157
 msgid "Challenge Over"
 msgstr ""
 
@@ -235,7 +235,7 @@ msgstr ""
 msgid "City or Locality"
 msgstr "Ciudad o Localidad"
 
-#: views/le.php:90 views/ss.php:91 views/up.php:76
+#: views/le.php:91 views/ss.php:91 views/up.php:76
 msgid "Common Name"
 msgstr "Nombre Común"
 
@@ -243,7 +243,7 @@ msgstr "Nombre Común"
 msgid "Common Name (Host Name)"
 msgstr "Nombre Común (Host name)"
 
-#: views/csr.php:106 views/le.php:182
+#: views/csr.php:106 views/le.php:183
 msgid "Country"
 msgstr "País"
 
@@ -299,7 +299,7 @@ msgstr ""
 "Borrar la autoridad de certificación va a invalidar todos los certificados "
 "generados por ella (Seran eliminados). Esta de acuerdo?"
 
-#: Console/Certman.class.php:68 views/certgrid.php:26 views/le.php:132
+#: Console/Certman.class.php:68 views/certgrid.php:26 views/le.php:133
 #: views/ss.php:139 views/up.php:124 views/view.php:47
 msgid "Description"
 msgstr "Descripción"
@@ -377,7 +377,7 @@ msgstr "Generando Certificados por defecto..."
 msgid "Here"
 msgstr "Aquí"
 
-#: views/le.php:53 views/ss.php:212
+#: views/le.php:54 views/ss.php:212
 msgid "Host Name"
 msgstr "Nombre del Host"
 
@@ -441,6 +441,14 @@ msgstr "Llave esta vacía"
 #: Certman.class.php:1315
 msgid "Key is password protected or malformed"
 msgstr "La llave esta protegida por Contraseña o esta mal-formada"
+
+#: views/le.php:38
+msgid ""
+"Let's Encrypt Certificates are time limited to 90 days. At around 30 days "
+"left the PBX will attempt to automatically update your certificate and all "
+"services using this certificate. Please do not install your own certifcate "
+"updaters"
+msgstr ""
 
 #: views/overview.php:23
 msgid "Let's Encrypt:"
@@ -645,7 +653,7 @@ msgstr ""
 "que necesite para asegurar el correcto funcionamiento, reiniciar los "
 "servicios de la PBX"
 
-#: views/csr.php:140 views/le.php:216
+#: views/csr.php:140 views/le.php:217
 msgid ""
 "State or province such as \"Queensland\" or \"Wisconsin\" or \"Ontario.\" Do "
 "not abbreviate. Enter the full name."
@@ -653,7 +661,7 @@ msgstr ""
 "Estado o Provincia tal como \"Ontario\" o \"Veracruz\" o \"Florida\". No use "
 "abreviaciones. Use el nombre completo."
 
-#: views/csr.php:128 views/le.php:204
+#: views/csr.php:128 views/le.php:205
 msgid "State/Province"
 msgstr "Estado/Provincia"
 
@@ -700,7 +708,7 @@ msgstr "Este no es un ID Valido"
 msgid "The Certificate to use from Certificate Manager"
 msgstr "Certificado a usar desde el Gestor de Certificados"
 
-#: views/le.php:144 views/ss.php:151 views/up.php:136 views/view.php:59
+#: views/le.php:145 views/ss.php:151 views/up.php:136 views/view.php:59
 msgid "The Description of this certificate. Used in the module only"
 msgstr "La Descripción de este certificado. Usado en el modulo únicamente"
 
@@ -741,7 +749,7 @@ msgstr "El comando provisto no es valido"
 msgid "There are three different types of certificates this module can handle:"
 msgstr "Hay tres tipos de certificados que este modulo puede manejar:"
 
-#: views/le.php:171
+#: views/le.php:172
 msgid ""
 "There are two methods you can have Let's Encrypt Challenge over: HTTP (80) "
 "or HTTPS (443)"
@@ -812,7 +820,7 @@ msgstr ""
 msgid "Trusted Chain"
 msgstr "Cadena Confiable"
 
-#: views/csr.php:118 views/le.php:194
+#: views/csr.php:118 views/le.php:195
 msgid "Two letter country code, such as \"US\", \"CA\", or \"AU\"."
 msgstr "Código de País de 2 letras, como \"US\", \"BR\" o \"MX\"."
 
@@ -912,7 +920,7 @@ msgstr "Subido:"
 msgid "Use Certificate"
 msgstr "Use Certificado"
 
-#: views/le.php:74 views/ss.php:69 views/up.php:54
+#: views/le.php:75 views/ss.php:69 views/up.php:54
 msgid "Valid Until"
 msgstr "Unidad Valida"
 
