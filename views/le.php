@@ -35,6 +35,7 @@ if ($fwapi->isAvailable()) {
 	<h1><?php echo !empty($cert['cid']) ? _("Edit Let's Encrypt Certificate") : _("New Let's Encrypt Certificate")?></h1>
 	<?php echo !empty($messagehtml) ? $messagehtml : "" ?>
 	<?php echo $alert; ?>
+	<div class='alert alert-info'><?php echo _("Let's Encrypt Certificates are time limited to 90 days. At around 30 days left the PBX will attempt to automatically update your certificate and all services using this certificate. Please do not install your own certifcate updaters")?></div>
 	<div class = "display full-border">
 		<div class="row">
 			<div class="col-sm-12">
