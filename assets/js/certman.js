@@ -169,6 +169,7 @@ $(function() {
 		if(!confirm(_("Are you sure you want to delete this certificate?"))) {
 			e.stopPropagation();
 			e.preventDefault();
+			return false;
 		}
 	});
 });

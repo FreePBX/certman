@@ -51,7 +51,7 @@
 				<td><a href='?display=certman&amp;action=view&amp;id=<?php echo $cert['cid']?>'>
 					<i class="fa fa-edit"></i></a>&nbsp;&nbsp;
 					<a class="deletecert" href='config.php?display=certman&amp;certaction=delete&amp;type=cert&amp;id=<?php echo $cert['cid']?>'>
-					<i class="fa fa-trash-o"></i></a>
+					<i class="fa fa-trash"></i></a>
 				</td>
 			</tr>
 		<?php } ?>
