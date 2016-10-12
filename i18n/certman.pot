@@ -9,10 +9,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-18 10:16-0700\n"
+"POT-Creation-Date: 2016-10-12 16:40-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -47,7 +48,7 @@ msgid ""
 "duties"
 msgstr ""
 
-#: views/certgrid.php:29
+#: views/certgrid.php:31
 msgid "Action"
 msgstr ""
 
@@ -98,7 +99,7 @@ msgid "CSR Reference"
 msgstr ""
 
 #: views/ca.php:89
-#: views/certgrid.php:25
+#: views/certgrid.php:27
 #: views/rnav.php:7
 #: views/up.php:205
 msgid "Certificate"
@@ -247,7 +248,7 @@ msgid "DTLS Verify"
 msgstr ""
 
 #: Console/Certman.class.php:68
-#: views/certgrid.php:28
+#: views/certgrid.php:30
 msgid "Default"
 msgstr ""
 
@@ -259,7 +260,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: views/certgrid.php:15
+#: views/certgrid.php:17
 msgid "Delete CSR"
 msgstr ""
 
@@ -267,7 +268,7 @@ msgstr ""
 msgid "Delete Certificate"
 msgstr ""
 
-#: views/certgrid.php:18
+#: views/certgrid.php:20
 msgid "Delete Self-Signed CA"
 msgstr ""
 
@@ -282,7 +283,7 @@ msgid ""
 msgstr ""
 
 #: Console/Certman.class.php:68
-#: views/certgrid.php:26
+#: views/certgrid.php:28
 #: views/le.php:133
 #: views/ss.php:139
 #: views/up.php:124
@@ -295,7 +296,7 @@ msgstr ""
 msgid "Done!"
 msgstr ""
 
-#: views/certgrid.php:14
+#: views/certgrid.php:16
 msgid "Download CSR"
 msgstr ""
 
@@ -335,7 +336,7 @@ msgid ""
 msgstr ""
 
 #: Certman.class.php:622
-#: views/certgrid.php:12
+#: views/certgrid.php:14
 msgid "Generate CSR"
 msgstr ""
 
@@ -344,11 +345,11 @@ msgstr ""
 msgid "Generate Certificate"
 msgstr ""
 
-#: views/certgrid.php:7
+#: views/certgrid.php:8
 msgid "Generate Let's Encrypt Certificate"
 msgstr ""
 
-#: views/certgrid.php:9
+#: views/certgrid.php:10
 msgid "Generate Self-Signed Certificate"
 msgstr ""
 
@@ -388,7 +389,7 @@ msgstr ""
 msgid "If you have a separate private key paste it here."
 msgstr ""
 
-#: views/certgrid.php:20
+#: views/certgrid.php:22
 msgid "Import Locally"
 msgstr ""
 
@@ -464,7 +465,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: views/certgrid.php:4
+#: views/certgrid.php:5
 msgid "New Certificate"
 msgstr ""
 
@@ -605,7 +606,7 @@ msgstr ""
 msgid "Select this for additional fields used to upload your own certificate."
 msgstr ""
 
-#: views/certgrid.php:40
+#: views/certgrid.php:42
 msgid "Self Signed"
 msgstr ""
 
@@ -796,7 +797,7 @@ msgid "Two letter country code, such as \"US\", \"CA\", or \"AU\"."
 msgstr ""
 
 #: Console/Certman.class.php:68
-#: views/certgrid.php:27
+#: views/certgrid.php:29
 msgid "Type"
 msgstr ""
 
@@ -881,12 +882,12 @@ msgstr ""
 msgid "Upload CA"
 msgstr ""
 
-#: views/certgrid.php:8
+#: views/certgrid.php:9
 #: assets/js/certman.js:52
 msgid "Upload Certificate"
 msgstr ""
 
-#: views/certgrid.php:43
+#: views/certgrid.php:45
 msgid "Uploaded"
 msgstr ""
 

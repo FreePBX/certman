@@ -9,15 +9,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-18 10:16-0700\n"
+"POT-Creation-Date: 2016-10-12 16:40-0700\n"
 "PO-Revision-Date: 2016-06-08 06:15+0200\n"
 "Last-Translator: Ernesto <ecasas@sangoma.com>\n"
 "Language-Team: Spanish <http://weblate.freepbx.org/projects/freepbx/certman/"
 "es_ES/>\n"
+"Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es_ES\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2.4\n"
 
@@ -59,7 +59,7 @@ msgstr ""
 "cuales son los distintos actores en una infraestructura de claves publicas "
 "(PKI), sus roles y sus deberes"
 
-#: views/certgrid.php:29
+#: views/certgrid.php:31
 msgid "Action"
 msgstr "Acción"
 
@@ -115,7 +115,7 @@ msgstr "Nombre Base"
 msgid "CSR Reference"
 msgstr "Referencia CSR"
 
-#: views/ca.php:89 views/certgrid.php:25 views/rnav.php:7 views/up.php:205
+#: views/ca.php:89 views/certgrid.php:27 views/rnav.php:7 views/up.php:205
 msgid "Certificate"
 msgstr "Certificado"
 
@@ -263,7 +263,7 @@ msgstr "Configuración DTLS"
 msgid "DTLS Verify"
 msgstr "Verificar DTLS"
 
-#: Console/Certman.class.php:68 views/certgrid.php:28
+#: Console/Certman.class.php:68 views/certgrid.php:30
 msgid "Default"
 msgstr "Defecto"
 
@@ -275,7 +275,7 @@ msgstr "Certificado auto-firmado por defecto"
 msgid "Delete"
 msgstr "Borrar"
 
-#: views/certgrid.php:15
+#: views/certgrid.php:17
 msgid "Delete CSR"
 msgstr "Borrar CSR"
 
@@ -283,7 +283,7 @@ msgstr "Borrar CSR"
 msgid "Delete Certificate"
 msgstr "Borrar Certificado"
 
-#: views/certgrid.php:18
+#: views/certgrid.php:20
 msgid "Delete Self-Signed CA"
 msgstr "Borrar CA Auto firmado"
 
@@ -299,7 +299,7 @@ msgstr ""
 "Borrar la autoridad de certificación va a invalidar todos los certificados "
 "generados por ella (Seran eliminados). Esta de acuerdo?"
 
-#: Console/Certman.class.php:68 views/certgrid.php:26 views/le.php:133
+#: Console/Certman.class.php:68 views/certgrid.php:28 views/le.php:133
 #: views/ss.php:139 views/up.php:124 views/view.php:47
 msgid "Description"
 msgstr "Descripción"
@@ -308,7 +308,7 @@ msgstr "Descripción"
 msgid "Done!"
 msgstr "Hecho!"
 
-#: views/certgrid.php:14
+#: views/certgrid.php:16
 msgid "Download CSR"
 msgstr "Bajar CSR"
 
@@ -349,7 +349,7 @@ msgstr ""
 "(CSR) que luego se puede utilizar para emitir un certificado a utilizar para "
 "este servidor"
 
-#: Certman.class.php:622 views/certgrid.php:12
+#: Certman.class.php:622 views/certgrid.php:14
 msgid "Generate CSR"
 msgstr "Generar CSR"
 
@@ -357,11 +357,11 @@ msgstr "Generar CSR"
 msgid "Generate Certificate"
 msgstr "Generar Certificado"
 
-#: views/certgrid.php:7
+#: views/certgrid.php:8
 msgid "Generate Let's Encrypt Certificate"
 msgstr "Generar Certificado Let's Encrypt"
 
-#: views/certgrid.php:9
+#: views/certgrid.php:10
 msgid "Generate Self-Signed Certificate"
 msgstr "Generar Certificado auto-firmado"
 
@@ -401,7 +401,7 @@ msgstr "Sé lo que estoy haciendo"
 msgid "If you have a separate private key paste it here."
 msgstr "Si tiene una clave privada péguela aquí."
 
-#: views/certgrid.php:20
+#: views/certgrid.php:22
 msgid "Import Locally"
 msgstr "Importar Localmente"
 
@@ -482,7 +482,7 @@ msgstr ""
 msgid "Name"
 msgstr "Nombre"
 
-#: views/certgrid.php:4
+#: views/certgrid.php:5
 msgid "New Certificate"
 msgstr "Nuevo Certificado"
 
@@ -631,7 +631,7 @@ msgstr ""
 "Selecciones este para campos adicionales usados para bajar su propio "
 "certificado."
 
-#: views/certgrid.php:40
+#: views/certgrid.php:42
 msgid "Self Signed"
 msgstr "Auto-Firmado"
 
@@ -824,7 +824,7 @@ msgstr "Cadena Confiable"
 msgid "Two letter country code, such as \"US\", \"CA\", or \"AU\"."
 msgstr "Código de País de 2 letras, como \"US\", \"BR\" o \"MX\"."
 
-#: Console/Certman.class.php:68 views/certgrid.php:27
+#: Console/Certman.class.php:68 views/certgrid.php:29
 msgid "Type"
 msgstr "Tipo"
 
@@ -904,11 +904,11 @@ msgstr "Certificado Actualizado"
 msgid "Upload CA"
 msgstr "Subir CA"
 
-#: views/certgrid.php:8 assets/js/certman.js:52
+#: views/certgrid.php:9 assets/js/certman.js:52
 msgid "Upload Certificate"
 msgstr "Subir Certificado"
 
-#: views/certgrid.php:43
+#: views/certgrid.php:45
 msgid "Uploaded"
 msgstr "Subido"
 
