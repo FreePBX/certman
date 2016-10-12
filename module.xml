@@ -13,6 +13,7 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
+		*13.0.34.2* Fix dropdown menu in 14
 		*13.0.34.1* FREEPBX-12661 Dont remove certificate if canceling from certificate delete
 		*13.0.34* Add message about Let's Encrypt updating
 		*13.0.33* FREEPBX-12969

@@ -1,13 +1,15 @@
 <!-- Certificates table-->
 <div id="toolbar-all">
-	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-		<i class="fa fa-plus">&nbsp;</i><?php echo _('New Certificate')?> <span class="caret"></span>
-	</button>
-	<ul class="dropdown-menu" role="menu">
-		<li><a href="?display=certman&amp;action=add&amp;type=le"><i class="fa fa-plus"></i> <strong><?php echo _("Generate Let's Encrypt Certificate")?></strong></a></li>
-		<li><a href="?display=certman&amp;action=add&amp;type=up"><i class="fa fa-plus"></i> <strong><?php echo _("Upload Certificate")?></strong></a></li>
-		<li><a href="?display=certman&amp;action=add&amp;type=ss"><i class="fa fa-plus"></i> <strong><?php echo _("Generate Self-Signed Certificate")?></strong></a></li>
-	</ul>
+	<div class="dropdown" style="display:inline-block;">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+			<i class="fa fa-plus">&nbsp;</i><?php echo _('New Certificate')?> <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="?display=certman&amp;action=add&amp;type=le"><i class="fa fa-plus"></i> <strong><?php echo _("Generate Let's Encrypt Certificate")?></strong></a></li>
+			<li><a href="?display=certman&amp;action=add&amp;type=up"><i class="fa fa-plus"></i> <strong><?php echo _("Upload Certificate")?></strong></a></li>
+			<li><a href="?display=certman&amp;action=add&amp;type=ss"><i class="fa fa-plus"></i> <strong><?php echo _("Generate Self-Signed Certificate")?></strong></a></li>
+		</ul>
+	</div>
 	<?php if(!$csr) { ?>
 		<a href="?display=certman&amp;action=add&amp;type=csr" class="btn btn-primary"><i class="fa fa-plus"></i> <?php echo _("Generate CSR")?></a>
 	<?php } else { ?>
