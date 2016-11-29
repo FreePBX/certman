@@ -75,7 +75,7 @@ if ($fwapi->isAvailable()) {
 														<label class="control-label" for="expires"><?php echo _("Valid Until")?></label>
 													</div>
 													<div class="col-md-9">
-														<?php echo date('m/d/Y',$certinfo['validTo_time_t'])?>
+														<?php echo is_numeric($certinfo['validTo_time_t']) ? date('m/d/Y',$certinfo['validTo_time_t']) : _("N/A")?>
 													</div>
 												</div>
 											</div>

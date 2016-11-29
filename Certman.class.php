@@ -1495,8 +1495,11 @@ class Certman implements \BMO {
 				chmod($location."/integration/$f",0600);
 			}
 		}
-
-		$this->FreePBX->Config->update("HTTPTLSCERTFILE",$location."/integration/webserver.crt");
+		if(isset($cert['files']['pem'])) {
+			$this->FreePBX->Config->update("HTTPTLSCERTFILE",$location."/integration/certificate.pem");
+		} else {
+			$this->FreePBX->Config->update("HTTPTLSCERTFILE",$location."/integration/webserver.crt");
+		}
 		$this->FreePBX->Config->update("HTTPTLSPRIVATEKEY",$location."/integration/webserver.key");
 		$this->FreePBX->Config->update("HTTPTLSENABLE",true);
 		$this->FreePBX->Hooks->processHooks($cert);

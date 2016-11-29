@@ -55,7 +55,7 @@ if(!empty($message)) {
 														<i class="fa fa-question-circle fpbx-help-icon" data-for="expires"></i>
 													</div>
 													<div class="col-md-9">
-														<?php echo date('m/d/Y',$certinfo['validTo_time_t'])?>
+														<?php echo is_numeric($certinfo['validTo_time_t']) ? date('m/d/Y',$certinfo['validTo_time_t']) : _("N/A")?>
 													</div>
 												</div>
 											</div>
