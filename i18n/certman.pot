@@ -9,11 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-12 16:40-0700\n"
+"POT-Creation-Date: 2016-11-29 09:49-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -105,8 +104,8 @@ msgstr ""
 msgid "Certificate"
 msgstr ""
 
-#: Certman.class.php:1539
-#: Certman.class.php:1554
+#: Certman.class.php:1542
+#: Certman.class.php:1557
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr ""
@@ -456,6 +455,12 @@ msgid ""
 "in Advanced Settings that require certificates. It will also place a "
 "standard set of the certificate and it's key into %s for use by other "
 "applications"
+msgstr ""
+
+#: views/le.php:78
+#: views/ss.php:73
+#: views/up.php:58
+msgid "N/A"
 msgstr ""
 
 #: views/csr.php:24

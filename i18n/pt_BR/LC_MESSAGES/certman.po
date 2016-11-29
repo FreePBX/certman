@@ -9,15 +9,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-12 16:40-0700\n"
+"POT-Creation-Date: 2016-11-29 09:49-0800\n"
 "PO-Revision-Date: 2015-04-29 08:33+0200\n"
 "Last-Translator: Renato <fiuza@tecnologia.inf.br>\n"
 "Language-Team: Portuguese (Brazil) <http://weblate.freepbx.org/projects/"
 "freepbx/certman/pt_BR/>\n"
-"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2.2-dev\n"
 
@@ -101,7 +101,7 @@ msgstr ""
 msgid "Certificate"
 msgstr ""
 
-#: Certman.class.php:1539 Certman.class.php:1554
+#: Certman.class.php:1542 Certman.class.php:1557
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr ""
@@ -429,6 +429,10 @@ msgid ""
 "in Advanced Settings that require certificates. It will also place a "
 "standard set of the certificate and it's key into %s for use by other "
 "applications"
+msgstr ""
+
+#: views/le.php:78 views/ss.php:73 views/up.php:58
+msgid "N/A"
 msgstr ""
 
 #: views/csr.php:24 views/ss.php:41 views/up.php:26 views/view.php:23
