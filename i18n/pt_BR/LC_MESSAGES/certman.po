@@ -10,16 +10,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-29 09:49-0800\n"
-"PO-Revision-Date: 2015-04-29 08:33+0200\n"
-"Last-Translator: Renato <fiuza@tecnologia.inf.br>\n"
-"Language-Team: Portuguese (Brazil) <http://weblate.freepbx.org/projects/"
-"freepbx/certman/pt_BR/>\n"
+"PO-Revision-Date: 2016-12-03 08:42+0200\n"
+"Last-Translator: Alexander <alexander.schley@paranagua.pr.gov.br>\n"
+"Language-Team: Portuguese (Brazil) "
+"<http://weblate.freepbx.org/projects/freepbx/certman/pt_BR/>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.2-dev\n"
+"X-Generator: Weblate 2.4\n"
 
 #: Console/Certman.class.php:37
 msgid "<error>"
@@ -243,7 +243,7 @@ msgstr ""
 
 #: Certman.class.php:601
 msgid "Delete"
-msgstr ""
+msgstr "Deletar"
 
 #: views/certgrid.php:17
 msgid "Delete CSR"
@@ -457,7 +457,7 @@ msgstr ""
 
 #: views/ss.php:293
 msgid "No"
-msgstr ""
+msgstr "Não"
 
 #: Certman.class.php:824
 msgid "No Certificate provided"
@@ -562,7 +562,7 @@ msgstr ""
 
 #: Certman.class.php:606
 msgid "Reset"
-msgstr ""
+msgstr "Desfazer"
 
 #: views/ss.php:288
 msgid "Save Passphrase"
@@ -887,7 +887,7 @@ msgstr ""
 
 #: views/ss.php:292
 msgid "Yes"
-msgstr ""
+msgstr "Sim"
 
 #: views/up.php:217
 msgid ""
