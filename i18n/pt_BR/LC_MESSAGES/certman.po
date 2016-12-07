@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-29 09:49-0800\n"
-"PO-Revision-Date: 2016-12-06 02:33+0200\n"
+"PO-Revision-Date: 2016-12-07 01:27+0200\n"
 "Last-Translator: Alexander <alexander.schley@paranagua.pr.gov.br>\n"
 "Language-Team: Portuguese (Brazil) "
 "<http://weblate.freepbx.org/projects/freepbx/certman/pt_BR/>\n"
@@ -562,7 +562,7 @@ msgstr ""
 
 #: Certman.class.php:606
 msgid "Reset"
-msgstr "Desfazer"
+msgstr "Reiniciar"
 
 #: views/ss.php:288
 msgid "Save Passphrase"
