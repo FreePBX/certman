@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-29 09:49-0800\n"
-"PO-Revision-Date: 2016-12-07 21:49+0200\n"
+"PO-Revision-Date: 2016-12-07 23:56+0200\n"
 "Last-Translator: Alexander <alexander.schley@paranagua.pr.gov.br>\n"
 "Language-Team: Portuguese (Brazil) "
 "<http://weblate.freepbx.org/projects/freepbx/certman/pt_BR/>\n"
@@ -243,7 +243,7 @@ msgstr ""
 
 #: Certman.class.php:601
 msgid "Delete"
-msgstr "Deletar"
+msgstr "Apagar"
 
 #: views/certgrid.php:17
 msgid "Delete CSR"
@@ -603,7 +603,7 @@ msgstr ""
 
 #: Certman.class.php:611
 msgid "Submit"
-msgstr ""
+msgstr "Enviar"
 
 #: Certman.class.php:479
 msgid "Successfully deleted the Certificate Authority"
