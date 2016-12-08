@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-29 09:49-0800\n"
-"PO-Revision-Date: 2016-12-07 01:27+0200\n"
+"PO-Revision-Date: 2016-12-07 21:49+0200\n"
 "Last-Translator: Alexander <alexander.schley@paranagua.pr.gov.br>\n"
 "Language-Team: Portuguese (Brazil) "
 "<http://weblate.freepbx.org/projects/freepbx/certman/pt_BR/>\n"
@@ -747,7 +747,7 @@ msgstr ""
 
 #: Console/Certman.class.php:68 views/certgrid.php:29
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #: Certman.class.php:467
 #, php-format
