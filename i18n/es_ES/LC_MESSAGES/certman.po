@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-29 09:49-0800\n"
-"PO-Revision-Date: 2016-12-09 08:16+0200\n"
+"PO-Revision-Date: 2016-12-09 20:45+0200\n"
 "Last-Translator: Ernesto <ecasas@sangoma.com>\n"
 "Language-Team: Spanish "
 "<http://weblate.freepbx.org/projects/freepbx/certman/es_ES/>\n"
@@ -221,7 +221,7 @@ msgstr "Certificado a usar para esta CA (debe referenciar a la Clave Privada)"
 
 #: views/le.php:157
 msgid "Challenge Over"
-msgstr ""
+msgstr "Reto Encima"
 
 #: views/csr.php:162
 msgid ""
@@ -330,7 +330,7 @@ msgstr "Habilitar o deshabilitar soporte a DTLS-SRTP"
 
 #: Certman.class.php:230
 msgid "Failed!"
-msgstr ""
+msgstr "Fallido!"
 
 #: views/le.php:21
 msgid "Firewall Validated"
@@ -449,6 +449,10 @@ msgid ""
 "services using this certificate. Please do not install your own certifcate "
 "updaters"
 msgstr ""
+"Los certificados de Let's Encrypt están limitados a 90 días. Alrededor de 30 "
+"días, la PBX intentará actualizar automáticamente su certificado y todos los "
+"servicios que utilicen este certificado. No instale sus propios "
+"actualizadores de certificados"
 
 #: views/overview.php:23
 msgid "Let's Encrypt:"
@@ -480,7 +484,7 @@ msgstr ""
 
 #: views/le.php:78 views/ss.php:73 views/up.php:58
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #: views/csr.php:24 views/ss.php:41 views/up.php:26 views/view.php:23
 msgid "Name"
@@ -758,6 +762,8 @@ msgid ""
 "There are two methods you can have Let's Encrypt Challenge over: HTTP (80) "
 "or HTTPS (443)"
 msgstr ""
+"Hay dos métodos que usted puede tener para los retos de  Let's Encrypt: HTTP "
+"(80) o HTTPS (443)"
 
 #: Console/Certman.class.php:86
 #, php-format
