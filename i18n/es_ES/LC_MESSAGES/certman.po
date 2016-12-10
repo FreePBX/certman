@@ -10,10 +10,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-29 09:49-0800\n"
-"PO-Revision-Date: 2016-12-09 22:46+0200\n"
-"Last-Translator: Ernesto <ecasas@sangoma.com>\n"
+"PO-Revision-Date: 2016-07-14 06:05+0200\n"
+"Last-Translator: The <james.finstrom@schmoozecom.com>\n"
 "Language-Team: Spanish "
-"<http://weblate.freepbx.org/projects/freepbx/certman/es_ES/>\n"
+"<http://weblate.freepbx.org/projects/freepbx/framework/es_ES/>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -88,7 +88,7 @@ msgstr ""
 
 #: certman.i18n.php:6 certman.i18n.php:12
 msgid "Admin"
-msgstr "Admin"
+msgstr "Administ"
 
 #: views/up.php:208
 msgid ""
@@ -265,7 +265,7 @@ msgstr "Verificar DTLS"
 
 #: Console/Certman.class.php:68 views/certgrid.php:30
 msgid "Default"
-msgstr "Defecto"
+msgstr "Por defecto"
 
 #: Certman.class.php:226
 msgid "Default Self-Signed certificate"
@@ -273,7 +273,7 @@ msgstr "Certificado auto-firmado por defecto"
 
 #: Certman.class.php:601
 msgid "Delete"
-msgstr "Borrar"
+msgstr "Eliminar"
 
 #: views/certgrid.php:17
 msgid "Delete CSR"
@@ -542,7 +542,7 @@ msgstr "No certificado a importar"
 
 #: views/up.php:175
 msgid "None"
-msgstr "Ninguno"
+msgstr "Nada"
 
 #: views/up.php:209 views/up.php:218
 msgid "Not Shown for your security. Paste a new certificate here"
@@ -627,7 +627,7 @@ msgstr "Archivo de Clave Privada a ser usado para esta CA"
 
 #: Certman.class.php:606
 msgid "Reset"
-msgstr "Reiniciar"
+msgstr "Restaura"
 
 #: views/ss.php:288
 msgid "Save Passphrase"
@@ -858,11 +858,11 @@ msgstr "Incapaz de leer llave. Esta protegida por contraseña?"
 #: Certman.class.php:1277
 #, php-format
 msgid "Unable to remove %s"
-msgstr "Incapaz de remover %s"
+msgstr "No se puede eliminar %s"
 
 #: Certman.class.php:1385
 msgid "Unable to remove ca.cfg"
-msgstr "Incapaz de remover ca.cfg"
+msgstr "No se puede eliminar ca.cfg"
 
 #: Certman.class.php:1380
 msgid "Unable to remove ca.crt"
@@ -882,7 +882,7 @@ msgstr "Incapaz de remover la Solicitud de Firma de Certificado"
 
 #: Certman.class.php:1390
 msgid "Unable to remove tmp.cfg"
-msgstr "Incapaz de remover tmp.cfg"
+msgstr "No se puede eliminar tmp.cfg"
 
 #: Certman.class.php:828 Certman.class.php:832 Certman.class.php:836
 #, php-format
