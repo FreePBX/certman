@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-29 09:49-0800\n"
-"PO-Revision-Date: 2016-12-10 22:37+0200\n"
+"PO-Revision-Date: 2016-12-11 01:57+0200\n"
 "Last-Translator: Ernesto <ecasas@sangoma.com>\n"
 "Language-Team: Spanish "
 "<http://weblate.freepbx.org/projects/freepbx/certman/es_ES/>\n"
@@ -265,7 +265,7 @@ msgstr "Verificar DTLS"
 
 #: Console/Certman.class.php:68 views/certgrid.php:30
 msgid "Default"
-msgstr "Por defecto"
+msgstr "Predeterminado"
 
 #: Certman.class.php:226
 msgid "Default Self-Signed certificate"
