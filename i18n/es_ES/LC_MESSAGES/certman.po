@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-29 09:49-0800\n"
-"PO-Revision-Date: 2016-12-11 07:33+0200\n"
+"PO-Revision-Date: 2016-12-11 12:44+0200\n"
 "Last-Translator: Ernesto <ecasas@sangoma.com>\n"
 "Language-Team: Spanish "
 "<http://weblate.freepbx.org/projects/freepbx/certman/es_ES/>\n"
@@ -146,7 +146,7 @@ msgstr "Gestión Certificado"
 
 #: certman.i18n.php:4
 msgid "Certificate Manager"
-msgstr "Gestor de Certificado"
+msgstr "Administrador de certificados"
 
 #: certman.i18n.php:8
 msgid ""
