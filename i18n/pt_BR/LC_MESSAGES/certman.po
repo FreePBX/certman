@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-29 09:49-0800\n"
-"PO-Revision-Date: 2016-12-14 03:05+0200\n"
+"PO-Revision-Date: 2016-12-14 03:10+0200\n"
 "Last-Translator: Renato <fiuza@tecnologia.inf.br>\n"
 "Language-Team: Portuguese (Brazil) "
 "<http://weblate.freepbx.org/projects/freepbx/certman/pt_BR/>\n"
@@ -454,7 +454,7 @@ msgstr ""
 
 #: views/overview.php:23
 msgid "Let's Encrypt:"
-msgstr ""
+msgstr "Let's Encrypt:"
 
 #: views/le.php:7
 #, php-format
