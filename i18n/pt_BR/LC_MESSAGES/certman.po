@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-29 09:49-0800\n"
-"PO-Revision-Date: 2016-12-13 01:12+0200\n"
+"PO-Revision-Date: 2016-12-13 21:16+0200\n"
 "Last-Translator: Alexander <alexander.schley@paranagua.pr.gov.br>\n"
 "Language-Team: Portuguese (Brazil) "
 "<http://weblate.freepbx.org/projects/freepbx/certman/pt_BR/>\n"
@@ -506,7 +506,7 @@ msgstr "Novo Certificado Let's Encrypt"
 
 #: views/ss.php:293
 msgid "No"
-msgstr "Yes"
+msgstr "Não"
 
 #: Certman.class.php:824
 msgid "No Certificate provided"
