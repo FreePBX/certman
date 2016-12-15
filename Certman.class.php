@@ -53,7 +53,7 @@ class Certman implements \BMO {
 			),
 			"basename" => array(
 				"type" => "string",
-				"length" => 255,
+				"length" => 100,
 				"notnull" => true,
 				"customSchemaOptions" => array(
 					"unique" => true
@@ -80,15 +80,7 @@ class Certman implements \BMO {
 				"notnull" => false,
 			),
 		);
-		$indexes = array(
-			"basename_UNIQUE" => array(
-				"type" => "unique",
-				"cols" => array(
-					"basename"
-				)
-			)
-		);
-		$table->modify($cols,$indexes);
+		$table->modify($cols);
 		unset($table);
 
 		$table = $this->FreePBX->Database->migrate("certman_certs");
