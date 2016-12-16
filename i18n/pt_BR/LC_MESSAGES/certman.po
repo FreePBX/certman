@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-29 09:49-0800\n"
-"PO-Revision-Date: 2016-12-14 03:10+0200\n"
-"Last-Translator: Renato <fiuza@tecnologia.inf.br>\n"
+"PO-Revision-Date: 2016-12-16 00:16+0200\n"
+"Last-Translator: Alexander <alexander.schley@paranagua.pr.gov.br>\n"
 "Language-Team: Portuguese (Brazil) "
 "<http://weblate.freepbx.org/projects/freepbx/certman/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -712,7 +712,7 @@ msgstr "Este não é um ID válido"
 
 #: functions.inc/hook_core.php:76
 msgid "The Certificate to use from Certificate Manager"
-msgstr "Certificado a ser utilizado pelo Gerenciador de Certificados"
+msgstr "Certificado a ser usado pelo Gerenciador de Certificados"
 
 #: views/le.php:145 views/ss.php:151 views/up.php:136 views/view.php:59
 msgid "The Description of this certificate. Used in the module only"
