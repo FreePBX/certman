@@ -10,23 +10,25 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-15 10:01-0800\n"
-"PO-Revision-Date: 2016-12-15 10:01-0800\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: \n"
+"PO-Revision-Date: 2017-01-09 15:26+0200\n"
+"Last-Translator: Sven <spiderrs4@web.de>\n"
+"Language-Team: German "
+"<http://weblate.freepbx.org/projects/freepbx/certman/de_DE/>\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.4\n"
 
 #: Console/Certman.class.php:37
 msgid "<error>"
-msgstr ""
+msgstr "<Fehler>"
 
 #: Console/Certman.class.php:40 Console/Certman.class.php:76
 #: Console/Certman.class.php:83
 msgid "<info>"
-msgstr ""
+msgstr "<Info>"
 
 #: views/ca.php:5
 msgid ""
@@ -50,15 +52,15 @@ msgstr ""
 
 #: views/certgrid.php:31
 msgid "Action"
-msgstr ""
+msgstr "Aktion"
 
 #: views/ss.php:22 views/up.php:8
 msgid "Add New Certificate"
-msgstr ""
+msgstr "Neues Zertifikat hinzufügen"
 
 #: Certman.class.php:416 Certman.class.php:439
 msgid "Added new certificate"
-msgstr ""
+msgstr "Neues Zertifikat hinzugefügt"
 
 #: Certman.class.php:462
 msgid "Added new certificate signing request"
@@ -74,7 +76,7 @@ msgstr ""
 
 #: certman.i18n.php:6 certman.i18n.php:12
 msgid "Admin"
-msgstr ""
+msgstr "Administrator"
 
 #: views/up.php:208
 msgid ""
@@ -85,32 +87,32 @@ msgstr ""
 
 #: assets/js/certman.js:14
 msgid "Are you sure you want to make this certificate the system default?"
-msgstr ""
+msgstr "Möchten Sie dieses Zertifikat wirklich zum Systemstandard machen?"
 
 #: Console/Certman.class.php:68
 msgid "Base Name"
-msgstr ""
+msgstr "Basisname"
 
 #: views/up.php:170
 msgid "CSR Reference"
-msgstr ""
+msgstr "CSR-Referenz"
 
 #: views/ca.php:89 views/certgrid.php:27 views/rnav.php:7 views/up.php:205
 msgid "Certificate"
-msgstr ""
+msgstr "Zertifikat"
 
 #: Certman.class.php:1534 Certman.class.php:1549
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
-msgstr ""
+msgstr "Zertifikat %s ist nicht lesbar! Es kann nicht fortgefahren werden!"
 
 #: Certman.class.php:1157
 msgid "Certificate Already Exists"
-msgstr ""
+msgstr "Zertifikat ist bereits vorhanden"
 
 #: views/ss.php:189
 msgid "Certificate Authority"
-msgstr ""
+msgstr "Zertifizierungsstelle"
 
 #: views/ss.php:201
 msgid "Certificate Authority to Reference"
@@ -118,15 +120,15 @@ msgstr ""
 
 #: views/rnav.php:2
 msgid "Certificate List"
-msgstr ""
+msgstr "Zertifikatsliste"
 
 #: Console/Certman.class.php:21 certman.i18n.php:10 views/overview.php:7
 msgid "Certificate Management"
-msgstr ""
+msgstr "Zertifikatverwaltung"
 
 #: certman.i18n.php:4
 msgid "Certificate Manager"
-msgstr ""
+msgstr "Zertifikatmanager"
 
 #: certman.i18n.php:8
 msgid ""
@@ -142,11 +144,11 @@ msgstr ""
 
 #: views/le.php:108 views/ss.php:114 views/up.php:99
 msgid "Certificate Policies"
-msgstr ""
+msgstr "Zertifikatrichtlinien"
 
 #: views/view.php:10
 msgid "Certificate Settings"
-msgstr ""
+msgstr "Zertifikateinstellungen"
 
 #: views/up.php:187
 msgid ""
@@ -156,15 +158,15 @@ msgstr ""
 
 #: Certman.class.php:1328
 msgid "Certificate is empty"
-msgstr ""
+msgstr "Zertifikat ist leer"
 
 #: Certman.class.php:356 Certman.class.php:366
 msgid "Certificate is invalid"
-msgstr ""
+msgstr "Zertifikat ist ungültig"
 
 #: Certman.class.php:387 Certman.class.php:445
 msgid "Certificate name is already in use"
-msgstr ""
+msgstr "Zertifikatsname wird bereits verwendet"
 
 #: Certman.class.php:661
 #, php-format
@@ -183,7 +185,7 @@ msgstr ""
 #: Certman.class.php:685
 #, php-format
 msgid "Certificate named \"%s\" is valid"
-msgstr ""
+msgstr "Zertifikat mit dem Namen \"%s\" ist gültig"
 
 #: views/ca.php:104
 msgid "Certificate to use for this CA (must reference the Private Key)"
@@ -201,23 +203,23 @@ msgstr ""
 
 #: views/csr.php:150
 msgid "City or Locality"
-msgstr ""
+msgstr "Stadt oder Ort"
 
 #: views/le.php:91 views/ss.php:91 views/up.php:76
 msgid "Common Name"
-msgstr ""
+msgstr "Gemeinsamer Name"
 
 #: views/csr.php:46
 msgid "Common Name (Host Name)"
-msgstr ""
+msgstr "Gemeinsamer Name (Host Name)"
 
 #: views/csr.php:106 views/le.php:183
 msgid "Country"
-msgstr ""
+msgstr "Land"
 
 #: views/ss.php:224
 msgid "DNS name or your IP address"
-msgstr ""
+msgstr "DNS-Name oder IP-Adresse"
 
 #: functions.inc/hook_core.php:120
 msgid "DTLS Rekey Interval"
@@ -233,23 +235,23 @@ msgstr ""
 
 #: Console/Certman.class.php:68 views/certgrid.php:30
 msgid "Default"
-msgstr ""
+msgstr "Standard"
 
 #: Certman.class.php:218
 msgid "Default Self-Signed certificate"
-msgstr ""
+msgstr "Standard selbst signiertes Zertifikat"
 
 #: Certman.class.php:593
 msgid "Delete"
-msgstr ""
+msgstr "Löschen"
 
 #: views/certgrid.php:17
 msgid "Delete CSR"
-msgstr ""
+msgstr "CSR löschen"
 
 #: Certman.class.php:609
 msgid "Delete Certificate"
-msgstr ""
+msgstr "Zertifikat löschen"
 
 #: views/certgrid.php:20
 msgid "Delete Self-Signed CA"
@@ -257,7 +259,7 @@ msgstr ""
 
 #: Certman.class.php:491
 msgid "Deleted Certificate"
-msgstr ""
+msgstr "Gelöschtes Zertifikat"
 
 #: assets/js/certman.js:5
 msgid ""
@@ -268,19 +270,19 @@ msgstr ""
 #: Console/Certman.class.php:68 views/certgrid.php:28 views/le.php:133
 #: views/ss.php:139 views/up.php:124 views/view.php:47
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
 #: Certman.class.php:209 Certman.class.php:220
 msgid "Done!"
-msgstr ""
+msgstr "Erledigt!"
 
 #: views/certgrid.php:16
 msgid "Download CSR"
-msgstr ""
+msgstr "CSR herunterladen"
 
 #: views/ca.php:13
 msgid "Edit Certificate Authority Settings"
-msgstr ""
+msgstr "Einstellungen der Zertifizierungsstelle bearbeiten."
 
 #: views/le.php:35
 msgid "Edit Let's Encrypt Certificate"
@@ -296,7 +298,7 @@ msgstr ""
 
 #: Certman.class.php:222
 msgid "Failed!"
-msgstr ""
+msgstr "Gescheitert!"
 
 #: views/le.php:21
 msgid "Firewall Validated"
@@ -314,11 +316,11 @@ msgstr ""
 
 #: Certman.class.php:614 views/certgrid.php:14
 msgid "Generate CSR"
-msgstr ""
+msgstr "CSR generieren"
 
 #: Certman.class.php:614 assets/js/certman.js:56
 msgid "Generate Certificate"
-msgstr ""
+msgstr "Zertifikat generieren"
 
 #: views/certgrid.php:8
 msgid "Generate Let's Encrypt Certificate"
@@ -334,15 +336,15 @@ msgstr ""
 
 #: Certman.class.php:215
 msgid "Generating default certificate..."
-msgstr ""
+msgstr "Standard-Zertifikat generieren ..."
 
 #: views/overview.php:18
 msgid "Here"
-msgstr ""
+msgstr "Hier"
 
 #: views/le.php:54 views/ss.php:212
 msgid "Host Name"
-msgstr ""
+msgstr "Hostname"
 
 #: views/overview.php:32
 msgid ""
@@ -356,23 +358,24 @@ msgstr ""
 
 #: views/ca.php:7
 msgid "I Know what I am doing"
-msgstr ""
+msgstr "Ich weiß, was ich tue."
 
 #: views/up.php:198
 msgid "If you have a separate private key paste it here."
 msgstr ""
+"Wenn Sie einen eigenen privaten Schlüssel haben, fügen Sie ihn hier ein."
 
 #: views/certgrid.php:22
 msgid "Import Locally"
-msgstr ""
+msgstr "Lokal importieren"
 
 #: Certman.class.php:1348
 msgid "Imported from file system"
-msgstr ""
+msgstr "Aus Dateisystem importiert"
 
 #: views/overview.php:23 views/overview.php:24 views/overview.php:25
 msgid "Information"
-msgstr ""
+msgstr "Information"
 
 #: functions.inc/hook_core.php:121
 msgid ""
@@ -382,23 +385,24 @@ msgstr ""
 
 #: Certman.class.php:487
 msgid "Invalid Certificate"
-msgstr ""
+msgstr "Ungültiges Zertifikat"
 
 #: Certman.class.php:841
 msgid "Key does not match certificate"
-msgstr ""
+msgstr "Schlüssel entspricht nicht dem Zertifikat."
 
 #: Certman.class.php:856
 msgid "Key does not match certificate after password removal"
 msgstr ""
+"Schlüssel entspricht nach dem Entfernen des Kennworts nicht dem Zertifikat."
 
 #: Certman.class.php:1297
 msgid "Key is empty"
-msgstr ""
+msgstr "Schlüssel ist leer"
 
 #: Certman.class.php:1307
 msgid "Key is password protected or malformed"
-msgstr ""
+msgstr "Schlüssel ist passwortgeschützt oder fehlerhaft."
 
 #: views/le.php:38
 msgid ""
@@ -435,15 +439,15 @@ msgstr ""
 
 #: views/csr.php:24 views/ss.php:41 views/up.php:26 views/view.php:23
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 #: views/certgrid.php:5
 msgid "New Certificate"
-msgstr ""
+msgstr "Neues Zertifikat"
 
 #: views/ca.php:13
 msgid "New Certificate Authority Settings"
-msgstr ""
+msgstr "Neue Zertifizierungsstelleneinstellungen"
 
 #: views/csr.php:8
 msgid "New Certificate Signing Request"
@@ -455,7 +459,7 @@ msgstr ""
 
 #: views/ss.php:293
 msgid "No"
-msgstr ""
+msgstr "Nein"
 
 #: Certman.class.php:816
 msgid "No Certificate provided"
