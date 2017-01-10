@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-15 10:01-0800\n"
-"PO-Revision-Date: 2017-01-09 15:26+0200\n"
+"PO-Revision-Date: 2017-01-09 18:01+0200\n"
 "Last-Translator: Sven <spiderrs4@web.de>\n"
 "Language-Team: German "
 "<http://weblate.freepbx.org/projects/freepbx/certman/de_DE/>\n"
@@ -463,11 +463,11 @@ msgstr "Nein"
 
 #: Certman.class.php:816
 msgid "No Certificate provided"
-msgstr ""
+msgstr "Kein Zertifikat bereitgestellt"
 
 #: Certman.class.php:196
 msgid "No Certificates exist"
-msgstr ""
+msgstr "Keine Zertifikate vorhanden"
 
 #: Console/Certman.class.php:76
 #, php-format
@@ -487,11 +487,11 @@ msgstr ""
 
 #: Certman.class.php:298
 msgid "No certificates to import"
-msgstr ""
+msgstr "Keine Zertifikate zum Importieren"
 
 #: views/up.php:175
 msgid "None"
-msgstr ""
+msgstr "keine"
 
 #: views/up.php:209 views/up.php:218
 msgid "Not Shown for your security. Paste a new certificate here"
@@ -503,11 +503,11 @@ msgstr ""
 
 #: views/overview.php:33
 msgid "Note:"
-msgstr ""
+msgstr "Hinweis:"
 
 #: views/csr.php:62 views/ss.php:234
 msgid "Organization Name"
-msgstr ""
+msgstr "Name der Organisation"
 
 #: views/csr.php:74
 #, php-format
@@ -516,7 +516,7 @@ msgstr ""
 
 #: views/csr.php:84
 msgid "Organization Unit"
-msgstr ""
+msgstr "Organisationseinheit"
 
 #: views/csr.php:96
 msgid ""
@@ -548,15 +548,15 @@ msgstr ""
 
 #: views/up.php:209 views/up.php:218
 msgid "Paste new certificate here"
-msgstr ""
+msgstr "Neues Zertifikat hier einfügen"
 
 #: views/up.php:199
 msgid "Paste new key here"
-msgstr ""
+msgstr "Neuen Schlüssel hier einfügen"
 
 #: views/ca.php:62 views/up.php:195
 msgid "Private Key"
-msgstr ""
+msgstr "Privater Schlüssel"
 
 #: views/ca.php:77
 msgid "Private Key File to use for this CA"
@@ -564,7 +564,7 @@ msgstr ""
 
 #: Certman.class.php:598
 msgid "Reset"
-msgstr ""
+msgstr "Zurücksetzen"
 
 #: views/ss.php:288
 msgid "Save Passphrase"
@@ -576,11 +576,11 @@ msgstr ""
 
 #: views/certgrid.php:42
 msgid "Self Signed"
-msgstr ""
+msgstr "Selbst Signiert"
 
 #: views/overview.php:25
 msgid "Self-Signed:"
-msgstr ""
+msgstr "Selbst-Signiert:"
 
 #: Certman.class.php:701
 msgid "Some Certificates are expiring or have expired"
@@ -601,19 +601,19 @@ msgstr ""
 
 #: views/csr.php:128 views/le.php:205
 msgid "State/Province"
-msgstr ""
+msgstr "Bundesstaat / Provinz"
 
 #: Certman.class.php:603
 msgid "Submit"
-msgstr ""
+msgstr "Bestätigen"
 
 #: Certman.class.php:471
 msgid "Successfully deleted the Certificate Authority"
-msgstr ""
+msgstr "Die Zertifizierungsstelle wurde erfolgreich gelöscht."
 
 #: Certman.class.php:479
 msgid "Successfully deleted the Certificate Signing Request"
-msgstr ""
+msgstr "Die Zertifikatsignierungsanforderung wurde erfolgreich gelöscht."
 
 #: Console/Certman.class.php:83
 #, php-format
@@ -640,7 +640,7 @@ msgstr ""
 
 #: Console/Certman.class.php:101
 msgid "That is not a valid ID"
-msgstr ""
+msgstr "Das ist keine gültige ID"
 
 #: functions.inc/hook_core.php:76
 msgid "The Certificate to use from Certificate Manager"
@@ -652,7 +652,7 @@ msgstr ""
 
 #: views/ss.php:246
 msgid "The Organization Name"
-msgstr ""
+msgstr "Name der Organisation"
 
 #: views/ss.php:176
 msgid "The Passphrase of the Certificate Authority"
@@ -691,22 +691,23 @@ msgstr ""
 #: Console/Certman.class.php:86
 #, php-format
 msgid "There was an error importing %s. The error was: %s"
-msgstr ""
+msgstr "Beim Importieren von %s ist ein Fehler aufgetreten. Der Fehler war: %s"
 
 #: Certman.class.php:331 Certman.class.php:410
 #, php-format
 msgid "There was an error importing the certificate: %s"
-msgstr ""
+msgstr "Beim Importieren des Zertifikats ist ein Fehler aufgetreten: %s"
 
 #: Certman.class.php:657 Certman.class.php:677
 #, php-format
 msgid "There was an error updating certificate \"%s\": %s"
 msgstr ""
+"Beim Aktualisieren des Zertifikats \"%s\" ist ein Fehler aufgetreten: %s"
 
 #: Certman.class.php:349 Certman.class.php:378
 #, php-format
 msgid "There was an error updating the certificate: %s"
-msgstr ""
+msgstr "Beim Aktualisieren des Zertifikats ist ein Fehler aufgetreten: %s"
 
 #: Certman.class.php:638
 #, php-format
@@ -730,7 +731,7 @@ msgstr ""
 
 #: views/csr.php:28 views/ss.php:46 views/up.php:31
 msgid "This field cannot be blank and must be alphanumeric"
-msgstr ""
+msgstr "Dieses Feld darf nicht leer sein und muss alphanumerisch sein."
 
 #: views/overview.php:20
 #, php-format
@@ -749,7 +750,7 @@ msgstr ""
 
 #: Console/Certman.class.php:68 views/certgrid.php:29
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 #: Certman.class.php:459
 #, php-format
@@ -804,24 +805,24 @@ msgstr ""
 
 #: Certman.class.php:608
 msgid "Update Certificate"
-msgstr ""
+msgstr "Zertifikat aktualisieren"
 
 #: views/ss.php:22 views/up.php:8
 msgid "Update Existing Certificate"
-msgstr ""
+msgstr "Vorhandenes Zertifikat aktualisieren"
 
 #: views/le.php:18
 msgid "Update Firewall"
-msgstr ""
+msgstr "Firewall aktualisieren"
 
 #: Certman.class.php:704
 msgid "Updated Certificates"
-msgstr ""
+msgstr "Zertifikate aktualisiert"
 
 #: Certman.class.php:340 Certman.class.php:353 Certman.class.php:363
 #: Certman.class.php:382
 msgid "Updated certificate"
-msgstr ""
+msgstr "Zertifikat aktualisiert"
 
 #: views/ca.php:42
 msgid "Upload CA"
@@ -833,15 +834,15 @@ msgstr ""
 
 #: views/certgrid.php:45
 msgid "Uploaded"
-msgstr ""
+msgstr "Hochgeladen"
 
 #: views/overview.php:24
 msgid "Uploaded:"
-msgstr ""
+msgstr "Hochgeladen:"
 
 #: functions.inc/hook_core.php:75
 msgid "Use Certificate"
-msgstr ""
+msgstr "Zertifikat verwenden"
 
 #: views/le.php:75 views/ss.php:69 views/up.php:54
 msgid "Valid Until"
@@ -864,7 +865,7 @@ msgstr ""
 
 #: views/overview.php:12
 msgid "What is Certificate Manager?"
-msgstr ""
+msgstr "Was ist ein Zertifikatmanager?"
 
 #: views/ss.php:301
 msgid ""
@@ -889,7 +890,7 @@ msgstr ""
 
 #: views/ss.php:292
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: views/up.php:217
 msgid ""
