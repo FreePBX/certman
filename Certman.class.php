@@ -1484,6 +1484,8 @@ class Certman implements \BMO {
 			mkdir($location.'/integration',0777,true);
 		}
 
+		$user = $this->FreePBX->Config->get('AMPASTERISKWEBUSER');
+		$group = $this->FreePBX->Config->get("AMPASTERISKWEBGROUP");
 		$sslfiles = array("pem" => "certificate.pem", "ca-crt" => "ca-bundle.crt", "crt" => "webserver.crt", "key" => "webserver.key");
 		foreach ($sslfiles as $key => $f) {
 			if (file_exists($location."/integration/$f")) {
@@ -1493,6 +1495,8 @@ class Certman implements \BMO {
 				copy($cert['files'][$key],$location."/integration/$f");
 				$cert['integration']['files'][$key] = $location."/integration/$f";
 				chmod($location."/integration/$f",0600);
+				chown($location."/integration/$f",$user);
+				chgrp($location."/integration/$f",$group);
 			}
 		}
 		if(isset($cert['files']['pem'])) {

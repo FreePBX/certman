@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>13.0.34.4</version>
+	<version>13.0.34.5</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -13,6 +13,7 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
+		*13.0.34.5* FREEPBX-13833 Running 'fwconsole certificates updateall' as root requires chown afterwards
 		*13.0.34.4* Fix error reported on the forum with basename too long
 		*13.0.35.3* FREEPBX-12929 date() expects parameter 2 to be long, string given
 		*13.0.34.2* Fix dropdown menu in 14
