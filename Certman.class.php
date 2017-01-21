@@ -1439,6 +1439,14 @@ class Certman implements \BMO {
 		if(empty($newDetails)) {
 			throw new \Exception("Could not find updated certificates");
 		}
+		if(is_array($newDetails['files']) && posix_geteuid() === 0) {
+			$user = $this->FreePBX->Config->get('AMPASTERISKWEBUSER');
+			$group = $this->FreePBX->Config->get("AMPASTERISKWEBGROUP");
+			foreach($newDetails['files'] as $file) {
+				chown($file,$user);
+				chgrp($file,$group);
+			}
+		}
 		$this->FreePBX->Hooks->processHooks($newDetails,$oldDetails);
 		//if this is a default certificate then run the default hooks
 		if($newDetails['default']) {
