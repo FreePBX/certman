@@ -773,7 +773,10 @@ class Certman implements \BMO {
 				$le->challenge = 'tls-sni-01';
 			}
 			$le->signDomains(array($host));
-			//challengetype
+		}
+
+		if(!file_exists($location."/".$host."/private.pem") || !file_exists($location."/".$host."/cert.pem")) {
+			throw new \Exception("Certificates are missing. Unable to continue");
 		}
 
 		if(file_exists($location."/".$host)) {
@@ -1484,6 +1487,10 @@ class Certman implements \BMO {
 			mkdir($location.'/integration',0777,true);
 		}
 
+		if(empty($cert['files']['crt']) || empty($cert['files']['key'])) {
+			throw new \Exception("Unable to make certficate default. Certificates are missing");
+		}
+
 		$user = $this->FreePBX->Config->get('AMPASTERISKWEBUSER');
 		$group = $this->FreePBX->Config->get("AMPASTERISKWEBGROUP");
 		$sslfiles = array("pem" => "certificate.pem", "ca-crt" => "ca-bundle.crt", "crt" => "webserver.crt", "key" => "webserver.key");
@@ -1499,6 +1506,7 @@ class Certman implements \BMO {
 				chgrp($location."/integration/$f",$group);
 			}
 		}
+
 		if(isset($cert['files']['pem'])) {
 			$this->FreePBX->Config->update("HTTPTLSCERTFILE",$location."/integration/certificate.pem");
 		} else {
