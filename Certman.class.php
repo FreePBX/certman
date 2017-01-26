@@ -797,6 +797,31 @@ class Certman implements \BMO {
 	}
 
 	/**
+	 * FreePBX chown hooks
+	 */
+	public function chownFreepbx() {
+		$certs = $this->getAllManagedCertificates();
+		foreach($certs as $cert) {
+			$details = $this->getCertificateDetails($cert['cid']);
+			if(!empty($details['files'])) {
+				foreach($details['files'] as $file) {
+					$files[] = array('type' => 'file',
+						'path' => $file,
+						'perms' => 0600);
+				}
+			}
+			if(!empty($details['integration']['files'])) {
+				foreach($details['integration']['files'] as $file) {
+					$files[] = array('type' => 'file',
+						'path' => $file,
+						'perms' => 0600);
+				}
+			}
+		}
+		return $files;
+	}
+
+	/**
 	 * Validate and import a certificate
 	 *
 	 * IF any private key has a passphrase this WILL strip the passphrase!!
@@ -1482,17 +1507,20 @@ class Certman implements \BMO {
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array(1,$cid));
 
+		$user = $this->FreePBX->Config->get('AMPASTERISKWEBUSER');
+		$group = $this->FreePBX->Config->get("AMPASTERISKWEBGROUP");
+
 		$location = $this->PKCS->getKeysLocation();
 		if(!file_exists($location.'/integration')) {
 			mkdir($location.'/integration',0777,true);
+			chown($location."/integration",$user);
+			chgrp($location."/integration",$group);
 		}
 
 		if(empty($cert['files']['crt']) || empty($cert['files']['key'])) {
 			throw new \Exception("Unable to make certficate default. Certificates are missing");
 		}
 
-		$user = $this->FreePBX->Config->get('AMPASTERISKWEBUSER');
-		$group = $this->FreePBX->Config->get("AMPASTERISKWEBGROUP");
 		$sslfiles = array("pem" => "certificate.pem", "ca-crt" => "ca-bundle.crt", "crt" => "webserver.crt", "key" => "webserver.key");
 		foreach ($sslfiles as $key => $f) {
 			if (file_exists($location."/integration/$f")) {
@@ -1571,6 +1599,14 @@ class Certman implements \BMO {
 					$details['integration']['files'][$type] = $file;
 					$details['integration']['hashes'][$type] = sha1_file($file);
 				}
+			}
+			$file = $location.'/integration/certificate.pem';
+			if(file_exists($file)) {
+				if(!is_readable($file)) {
+					throw new \Exception(sprintf(_("Certificate %s is not readable! Can not continue!"),$file));
+				}
+				$details['integration']['files'][$type] = $file;
+				$details['integration']['hashes'][$type] = sha1_file($file);
 			}
 		}
 		if(!empty($details['additional'])) {
