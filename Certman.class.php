@@ -966,7 +966,7 @@ class Certman implements \BMO {
 			return array(
 				"enable" => "no",
 				"verify" => "fingerprint",
-				"certificate" => "",
+				"cid" => "",
 				"setup" => "actpass",
 				"rekey" => "0"
 			);

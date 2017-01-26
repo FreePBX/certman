@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>13.0.34.7</version>
+	<version>13.0.34.8</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -13,6 +13,7 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
+		*13.0.34.8* Fix output of DTLS when theres no certificates
 		*13.0.34.7* FREEPBX-14013 Integration Certificates have wrong permissions after update
 		*13.0.34.6* Add more error handling
 		*13.0.34.5* FREEPBX-13833 Running 'fwconsole certificates updateall' as root requires chown afterwards
