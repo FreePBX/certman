@@ -26,7 +26,7 @@ if(count($cas) == 1){
 			<div class="col-sm-12">
 				<div class="fpbx-container">
 					<div class="display full-border" id='certpage'>
-						<form class="fpbx-submit" name="frm_certman" action="config.php?display=certman" method="post" enctype="multipart/form-data">
+						<form class="fpbx-submit" name="frm_certman" action="config.php?display=certman" method="post" enctype="multipart/form-data" data-fpbx-delete="config.php?display=certman&amp;type=cert&amp;certaction=delete&amp;id=<?php echo $cert['cid']?>">
 							<input id="certaction" type="hidden" name="certaction" value="<?php echo !empty($cert['cid']) ? 'edit' : 'add'?>">
 							<input id="certtype" type="hidden" name="type" value="ss">
 							<input id="cid" type="hidden" name="cid" value="<?php echo !empty($cert['cid']) ? $cert['cid'] : ''?>">
