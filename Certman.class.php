@@ -550,6 +550,11 @@ class Certman implements \BMO {
 				}
 			break;
 			case 'view':
+				// Have we been asked to update firewall rules?
+				if (isset($request['updatefw'])) {
+					$api = $this->getFirewallAPI();
+					$api->addMissingHosts();
+				}
 				$cert = $this->getCertificateDetails($request['id']);
 				$certinfo = '';
 				if(file_exists($cert['files']['crt'])) {
