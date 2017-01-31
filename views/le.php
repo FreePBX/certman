@@ -107,27 +107,7 @@ if ($fwapi->isAvailable()) {
 									</div>
 								<?php } ?>
 							<?php } ?>
-							<!--Description-->
-							<div class="element-container">
-								<div class="row">
-									<div class="form-group">
-										<div class="col-md-3">
-											<label class="control-label" for="description"><?php echo _("Description")?></label>
-											<i class="fa fa-question-circle fpbx-help-icon" data-for="description"></i>
-										</div>
-										<div class="col-md-9">
-											<input type="text" class="form-control" autocomplete="off" name="description" id="description" value="<?php echo !empty($cert['description']) ? $cert['description'] : ""?>">
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-12">
-										<span id="description-help" class="help-block fpbx-help-block"><?php echo _("The Description of this certificate. Used in the module only")?></span>
-									</div>
-								</div>
-							</div>
-							<!--END Description-->
-							<!--Description-->
+							<!-- Challenge Method -->
 							<div class="element-container">
 								<div class="row">
 									<div class="form-group">
@@ -145,11 +125,11 @@ if ($fwapi->isAvailable()) {
 								</div>
 								<div class="row">
 									<div class="col-md-12">
-										<span id="challengetype-help" class="help-block fpbx-help-block"><?php echo _("There are two methods you can have Let's Encrypt Challenge over: HTTP (80) or HTTPS (443)")?></span>
+										<span id="challengetype-help" class="help-block fpbx-help-block"><?php echo _("This is the method that Let's Encrypt will use to verify this machine. The default is HTTP on port 80.")?></span>
 									</div>
 								</div>
 							</div>
-							<!--END Description-->
+							<!-- END Challenge Method -->
 							<div class="element-container">
 								<div class="row">
 									<div class="form-group">
