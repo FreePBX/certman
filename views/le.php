@@ -47,20 +47,16 @@ if ($fwapi->isAvailable()) {
 							<input id="cid" type="hidden" name="cid" value="<?php echo !empty($cert['cid']) ? $cert['cid'] : ''?>">
 							<div class="element-container">
 								<div class="row">
-									<div class="col-md-12">
-										<div class="row">
-											<div class="form-group">
-												<div class="col-md-3">
-													<label class="control-label" for="host"><?php echo _("Host Name")?></label>
-												</div>
-												<div class="col-md-9">
-													<?php if (empty($cert['cid'])) { ?>
-														<input type="text" class="form-control" id="host" name="host" placeholder="server.example.com" required value="<?php echo $hostname?>">
-													<?php } else { ?>
-														<?php echo !empty($cert['basename']) ? $cert['basename'] : ""?>
-													<?php } ?>
-												</div>
-											</div>
+									<div class="form-group">
+										<div class="col-md-3">
+											<label class="control-label" for="host"><?php echo _("Host Name")?></label>
+										</div>
+										<div class="col-md-9">
+											<?php if (empty($cert['cid'])) { ?>
+												<input type="text" class="form-control" id="host" name="host" placeholder="server.example.com" required value="<?php echo $hostname?>">
+											<?php } else { ?>
+												<?php echo !empty($cert['basename']) ? $cert['basename'] : ""?>
+											<?php } ?>
 										</div>
 									</div>
 								</div>
@@ -68,32 +64,24 @@ if ($fwapi->isAvailable()) {
 							<?php if(!empty($cert['cid'])) { ?>
 								<div class="element-container">
 									<div class="row">
-										<div class="col-md-12">
-											<div class="row">
-												<div class="form-group">
-													<div class="col-md-3">
-														<label class="control-label" for="expires"><?php echo _("Valid Until")?></label>
-													</div>
-													<div class="col-md-9">
-														<?php echo is_numeric($certinfo['validTo_time_t']) ? date('m/d/Y',$certinfo['validTo_time_t']) : _("N/A")?>
-													</div>
-												</div>
+										<div class="form-group">
+											<div class="col-md-3">
+												<label class="control-label" for="expires"><?php echo _("Valid Until")?></label>
+											</div>
+											<div class="col-md-9">
+												<?php echo is_numeric($certinfo['validTo_time_t']) ? date('m/d/Y',$certinfo['validTo_time_t']) : _("N/A")?>
 											</div>
 										</div>
 									</div>
 								</div>
 								<div class="element-container">
 									<div class="row">
-										<div class="col-md-12">
-											<div class="row">
-												<div class="form-group">
-													<div class="col-md-3">
-														<label class="control-label" for="cn"><?php echo _("Common Name")?></label>
-													</div>
-													<div class="col-md-9">
-														<?php echo $certinfo['subject']['CN']?>
-													</div>
-												</div>
+										<div class="form-group">
+											<div class="col-md-3">
+												<label class="control-label" for="cn"><?php echo _("Common Name")?></label>
+											</div>
+											<div class="col-md-9">
+												<?php echo $certinfo['subject']['CN']?>
 											</div>
 										</div>
 									</div>
@@ -101,17 +89,13 @@ if ($fwapi->isAvailable()) {
 								<?php if(!empty($certinfo['extensions']['certificatePolicies'])) {?>
 									<div class="element-container">
 										<div class="row">
-											<div class="col-md-12">
-												<div class="row">
-													<div class="form-group">
-														<div class="col-md-3">
-															<label class="control-label" for="cp"><?php echo _("Certificate Policies")?></label>
-															<i class="fa fa-question-circle fpbx-help-icon" data-for="cp"></i>
-														</div>
-														<div class="col-md-9">
-															<textarea class="form-control" readonly><?php echo $certinfo['extensions']['certificatePolicies']?></textarea>
-														</div>
-													</div>
+											<div class="form-group">
+												<div class="col-md-3">
+													<label class="control-label" for="cp"><?php echo _("Certificate Policies")?></label>
+													<i class="fa fa-question-circle fpbx-help-icon" data-for="cp"></i>
+												</div>
+												<div class="col-md-9">
+													<textarea class="form-control" readonly><?php echo $certinfo['extensions']['certificatePolicies']?></textarea>
 												</div>
 											</div>
 										</div>
@@ -126,17 +110,13 @@ if ($fwapi->isAvailable()) {
 							<!--Description-->
 							<div class="element-container">
 								<div class="row">
-									<div class="col-md-12">
-										<div class="row">
-											<div class="form-group">
-												<div class="col-md-3">
-													<label class="control-label" for="description"><?php echo _("Description")?></label>
-													<i class="fa fa-question-circle fpbx-help-icon" data-for="description"></i>
-												</div>
-												<div class="col-md-9">
-													<input type="text" class="form-control" autocomplete="off" name="description" id="description" value="<?php echo !empty($cert['description']) ? $cert['description'] : ""?>">
-												</div>
-											</div>
+									<div class="form-group">
+										<div class="col-md-3">
+											<label class="control-label" for="description"><?php echo _("Description")?></label>
+											<i class="fa fa-question-circle fpbx-help-icon" data-for="description"></i>
+										</div>
+										<div class="col-md-9">
+											<input type="text" class="form-control" autocomplete="off" name="description" id="description" value="<?php echo !empty($cert['description']) ? $cert['description'] : ""?>">
 										</div>
 									</div>
 								</div>
@@ -150,20 +130,16 @@ if ($fwapi->isAvailable()) {
 							<!--Description-->
 							<div class="element-container">
 								<div class="row">
-									<div class="col-md-12">
-										<div class="row">
-											<div class="form-group">
-												<div class="col-md-3">
-													<label class="control-label" for="challengetype"><?php echo _("Challenge Over")?></label>
-													<i class="fa fa-question-circle fpbx-help-icon" data-for="challengetype"></i>
-												</div>
-												<div class="col-md-9 radioset">
-													<input type="radio" class="" id="challengetype_http" name="challengetype" value="http" <?php echo empty($cert['additional']['challengetype']) || (!empty($cert['additional']['challengetype']) && $cert['additional']['challengetype'] == 'http') ? 'checked' : ""?>>
-													<label for="challengetype_http">HTTP</label>
-													<input type="radio" class="" id="challengetype_https" name="challengetype" value="https" <?php echo !empty($cert['additional']['challengetype']) && $cert['additional']['challengetype'] == 'https' ? 'checked' : ""?>>
-													<label for="challengetype_https">HTTPS</label>
-												</div>
-											</div>
+									<div class="form-group">
+										<div class="col-md-3">
+											<label class="control-label" for="challengetype"><?php echo _("Challenge Over")?></label>
+											<i class="fa fa-question-circle fpbx-help-icon" data-for="challengetype"></i>
+										</div>
+										<div class="col-md-9 radioset">
+											<input type="radio" class="" id="challengetype_http" name="challengetype" value="http" <?php echo empty($cert['additional']['challengetype']) || (!empty($cert['additional']['challengetype']) && $cert['additional']['challengetype'] == 'http') ? 'checked' : ""?>>
+											<label for="challengetype_http">HTTP</label>
+											<input type="radio" class="" id="challengetype_https" name="challengetype" value="https" <?php echo !empty($cert['additional']['challengetype']) && $cert['additional']['challengetype'] == 'https' ? 'checked' : ""?>>
+											<label for="challengetype_https">HTTPS</label>
 										</div>
 									</div>
 								</div>
@@ -176,17 +152,13 @@ if ($fwapi->isAvailable()) {
 							<!--END Description-->
 							<div class="element-container">
 								<div class="row">
-									<div class="col-md-12">
-										<div class="row">
-											<div class="form-group">
-												<div class="col-md-3">
-													<label class="control-label" for="c"><?php echo _("Country")?></label>
-													<i class="fa fa-question-circle fpbx-help-icon" data-for="C"></i>
-												</div>
-												<div class="col-md-9">
-													<input type="text" class="form-control" id="C" name="C" placeholder="US" value="<?php echo !empty($cert['additional']['C']) ? $cert['additional']['C'] : "US"?>">
-												</div>
-											</div>
+									<div class="form-group">
+										<div class="col-md-3">
+											<label class="control-label" for="c"><?php echo _("Country")?></label>
+											<i class="fa fa-question-circle fpbx-help-icon" data-for="C"></i>
+										</div>
+										<div class="col-md-9">
+											<input type="text" class="form-control" id="C" name="C" placeholder="US" value="<?php echo !empty($cert['additional']['C']) ? $cert['additional']['C'] : "US"?>">
 										</div>
 									</div>
 								</div>
@@ -198,19 +170,16 @@ if ($fwapi->isAvailable()) {
 							</div>
 							<div class="element-container">
 								<div class="row">
-									<div class="col-md-12">
-										<div class="row">
-											<div class="form-group">
-												<div class="col-md-3">
-													<label class="control-label" for="st"><?php echo _("State/Province")?></label>
-													<i class="fa fa-question-circle fpbx-help-icon" data-for="ST"></i>
-												</div>
-												<div class="col-md-9">
-													<input type="text" class="form-control" id="ST" name="ST" placeholder="Wisconsin" value="<?php echo $cert['additional']['ST']?>">
-												</div>
-											</div>
+									<div class="form-group">
+										<div class="col-md-3">
+											<label class="control-label" for="st"><?php echo _("State/Province")?></label>
+											<i class="fa fa-question-circle fpbx-help-icon" data-for="ST"></i>
+										</div>
+										<div class="col-md-9">
+											<input type="text" class="form-control" id="ST" name="ST" placeholder="Wisconsin" value="<?php echo $cert['additional']['ST']?>">
 										</div>
 									</div>
+								</div>
 								</div>
 								<div class="row">
 									<div class="col-md-12">
