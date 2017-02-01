@@ -1664,4 +1664,35 @@ class Certman implements \BMO {
 		}
 		return $api;
 	}
+
+	/**
+	 * Return a human readable expiration date
+	 *
+	 * This tries to use the 'humanReadable' function from FreePBX 14. If
+	 * that is not available, a rough implementation is used instead.
+	 * This will also return 'Expired!' if the date is in the past.
+	 *
+	 * @param timestamp int utime
+	 */
+	public function getReadableExpiration($timestamp = false) {
+		if (!is_numeric($timestamp)) {
+			return _("Unknown Expiration");
+		}
+
+		$ret = date('Y-m-d', $timestamp)." ";
+
+		// How many seconds until it expires?
+		$diff = $timestamp - time();
+
+		// If $diff is negative, it means that the certificate has ALREADY expired.
+		if ($diff < 0) {
+			$ret .= "<strong>"._("Certificate Expired!")."</strong> ";
+		}
+
+		// humanDiff is not available in 13.
+		$days = floor($diff/86400);
+		$ret .= sprintf(_("(%s days)"), $days);
+
+		return $ret;
+	}
 }

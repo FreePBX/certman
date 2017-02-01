@@ -54,9 +54,7 @@ if(!empty($message)) {
 														<label class="control-label" for="expires"><?php echo _("Valid Until")?></label>
 														<i class="fa fa-question-circle fpbx-help-icon" data-for="expires"></i>
 													</div>
-													<div class="col-md-9">
-														<?php echo is_numeric($certinfo['validTo_time_t']) ? date('m/d/Y',$certinfo['validTo_time_t']) : _("N/A")?>
-													</div>
+													<div class="col-md-9"><?php echo \FreePBX::Certman()->getReadableExpiration($certinfo['validTo_time_t']); ?></div>
 												</div>
 											</div>
 										</div>
