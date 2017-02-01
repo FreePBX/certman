@@ -1,3 +1,4 @@
+<script type='text/javascript' src='modules/certman/assets/js/views/regions.js?123'></script>
 <?php
 if(!empty($message)) {
 	$messagehtml = '<div class="alert alert-' . $message['type'] .'">'. $message['message'] . '</div>';
@@ -75,7 +76,7 @@ if ($fwapi->isAvailable()) {
 								</div>
 								<div class="row">
 									<div class="col-md-12">
-										<span id="email-help" class="help-block fpbx-help-block" style=""><?php echo _("This email address is given to Let's Encrypt. It may be used by them if the certificate is approaching expiration and it has not been renewed. Optional, but recommended.")?></span>
+										<span id="email-help" class="help-block fpbx-help-block" style=""><?php echo _("This email address is given to Let's Encrypt. It may be used by them if the certificate is approaching expiration and it has not been renewed.")?></span>
 									</div>
 								</div>
 							</div>
