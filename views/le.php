@@ -70,7 +70,7 @@ if ($fwapi->isAvailable()) {
 											<i class="fa fa-question-circle fpbx-help-icon" data-for="email"></i>
 										</div>
 										<div class="col-md-9">
-											<input type="text" class="form-control" id="email" name="email" placeholder="you@example.com" required value="<?php echo $email?>">
+											<input type="text" class="form-control" id="email" name="email" placeholder="you@example.com" required value="<?php echo $cert['additional']['email']; ?>">
 										</div>
 									</div>
 								</div>

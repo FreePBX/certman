@@ -344,12 +344,22 @@ class Certman implements \BMO {
 						$cert = $this->getCertificateDetails($_POST['cid']);
 						if(!empty($cert)) {
 							try {
-								$this->updateLE($cert['basename'],$_POST['C'],$_POST['ST'],$_POST['challengetype']);
+								$this->updateLE($cert['basename'], array(
+									"countryCode" => $_POST['C'],
+									"state" => $_POST['ST'],
+									"challengetype" => $_POST['challengetype'], 
+									"email" => $_POST['email']
+								));
 							} catch(\Exception $e) {
 								$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error updating the certificate: %s'),$e->getMessage()));
 								break;
 							}
-							$this->updateCertificate($cert,$_POST['description'], array("C" => $_POST['C'], "ST" => $_POST['ST'], 'challengetype' => $_POST['challengetype']));
+							$this->updateCertificate($cert,$_POST['C'], array(
+								"C" => $_POST['C'],
+								"ST" => $_POST['ST'],
+								'challengetype' => $_POST['challengetype'],
+								'email' => $_POST['email']
+							));
 							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
 							needreload();
 						} else {
@@ -373,12 +383,17 @@ class Certman implements \BMO {
 					case "le":
 						$host = basename($_POST['host']);
 						try{
-							$this->updateLE($host,$_POST['C'],$_POST['ST'],$_POST['challengetype']);
+							$this->updateLE($host, array(
+								"countryCode" => $_POST['C'],
+								"state" => $_POST['ST'],
+								"challengetype" => $_POST['challengetype'], 
+								"email" => $_POST['email']
+							));
 						} catch(\Exception $e) {
 							$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error updating the certificate: %s'),$e->getMessage()));
 							break 2;
 						}
-						$this->saveCertificate(null,$host,$_POST['description'],'le', array("C" => $_POST['C'], "ST" => $_POST['ST']));
+						$this->saveCertificate(null,$host,$host,'le', array("C" => $_POST['C'], "ST" => $_POST['ST'], "email" => $_POST['email']));
 						$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
 					break;
 					case "up":
@@ -646,12 +661,25 @@ class Certman implements \BMO {
 			$validTo = $cert['info']['crt']['validTo_time_t'];
 			$renewafter = $validTo-(86400*30);
 			$update = false;
+
+			// Has this certificate expired?
 			if(time() > $validTo) {
 				if($cert['type'] == 'le') {
 					try {
-						$this->updateLE($cert['info']['crt']['subject']['CN'],$cert['additional']['C'],$cert['additional']['ST'],$cert['additional']['challengetype']);
+
+						// This will probably fail if they're using http_S_ with an expired
+						// cert, but LE should never get to this point.
+						$this->updateLE($cert['info']['crt']['subject']['CN'], array(
+							"countryCode" => $cert['additional']['C'],
+							"state" => $cert['additional']['ST'],
+							"challengetype" => $cert['additional']['challengetype'],
+							"email" => $cert['additional']['email']
+						));
+
+						// If that didn't throw, the certificate was succesfully updated
 						$messages[] = array('type' => 'success', 'message' => sprintf(_('Successfully updated certificate named "%s"'),$cert['basename']));
 						$this->FreePBX->astman->Reload();
+
 						//Until https://issues.asterisk.org/jira/browse/ASTERISK-25966 is fixed
 						$a = fpbx_which("asterisk");
 						if(!empty($a)) {
@@ -667,9 +695,15 @@ class Certman implements \BMO {
 					continue;
 				}
 			} elseif (time() > $renewafter) {
+				// It hasn't expired, but it should be renewed.
 				if($cert['type'] == 'le') {
 					try {
-						$this->updateLE($cert['info']['crt']['subject']['CN'],$cert['additional']['C'],$cert['additional']['ST'],$cert['additional']['challengetype']);
+						$this->updateLE($cert['info']['crt']['subject']['CN'], array(
+							"countryCode" => $cert['additional']['C'],
+							"state" => $cert['additional']['ST'],
+							"challengetype" => $cert['additional']['challengetype'],
+							"email" => $cert['additional']['email']
+						));
 						$messages[] = array('type' => 'success', 'message' => sprintf(_('Successfully updated certificate named "%s"'),$cert['basename']));
 						$this->FreePBX->astman->Reload();
 						//Until https://issues.asterisk.org/jira/browse/ASTERISK-25966 is fixed
@@ -713,14 +747,23 @@ class Certman implements \BMO {
 
 	/**
 	 * Update or Add Let's Encrypt
-	 * @param  string $host    The hostname (MUST BE A VALID FQDN)
+	 * @param  string $host     The hostname (MUST BE A VALID FQDN)
+	 * @param  array $settings  Array of settings for this certificate 
 	 * @param  boolean $staging Whether to use the staging server or not
+	 *
 	 * @return boolean          True if success, false if not
 	 */
-	public function updateLE($host,$countryCode='US',$state='Wisconsin',$challengetype='http',$staging=false) {
-		$countryCode = !empty($countryCode) ? $countryCode : 'US';
-		$state = !empty($state) ? $state : 'Wisconsin';
-		$challengetype = !empty($challengetype) ? $challengetype : 'http';
+	public function updateLE($host, $settings = false, $staging = false) {
+		if (!is_array($settings)) {
+			throw new \Exception("BUG: Settings is not an array. Old code?");
+		}
+
+		// Get our variables from $settings
+		$countryCode = !empty($settings['countryCode']) ? $settings['countryCode'] : 'CA';
+		$state = !empty($settings['state']) ? $settings['state'] : 'Ontario';
+		$challengetype = !empty($settings['challengetype']) ? $settings['challengetype'] : 'http';
+		$email = !empty($settings['email']) ? $settings['email'] : '';
+
 		$location = $this->PKCS->getKeysLocation();
 		$logger = new Certman\Logger();
 		$host = basename($host);
@@ -774,6 +817,9 @@ class Certman implements \BMO {
 			$le->countryCode = $countryCode;
 			$le->state = $state;
 			$le->initAccount();
+			if (!empty($email)) {
+				$le->contact = array($email);
+			}
 			if($challengetype == 'https') {
 				$le->challenge = 'tls-sni-01';
 			}
@@ -1203,10 +1249,14 @@ class Certman implements \BMO {
 	 * @param {string} $type				The type of the certificate: ss:: self signed, up:: upload, le:: let's encrypt
 	 * @param {string} $additional  Additional data in an array format
 	 */
-	public function saveCertificate($caid=null,$base,$description,$type='ss',$addtional=array()) {
+	public function saveCertificate($caid=null,$base,$description,$type='ss',$additional=array()) {
 		if($this->checkCertificateName($base)) {
 			return false;
 		}
+		if (!is_array($additional)) {
+			$additional = array();
+		}
+
 		$sql = "INSERT INTO certman_certs (`caid`, `basename`, `description`, `type`, `additional`) VALUES (?, ?, ?, ?, ?)";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($caid,$base,$description,$type,json_encode($additional)));
@@ -1459,15 +1509,13 @@ class Certman implements \BMO {
 	 * @return [type]              [description]
 	 */
 	public function updateCertificate($oldDetails,$description,$additional=array()) {
-		if(empty($additional)) {
-			$sql = "UPDATE certman_certs SET description = ? WHERE cid = ?";
-			$sth = $this->db->prepare($sql);
-			$res = $sth->execute(array($description,$oldDetails['cid']));
-		} else {
-			$sql = "UPDATE certman_certs SET description = ?, additional = ? WHERE cid = ?";
-			$sth = $this->db->prepare($sql);
-			$res = $sth->execute(array($description,json_encode($additional),$oldDetails['cid']));
+		if(!is_array($additional)) {
+			$additional = array();
 		}
+		$sql = "UPDATE certman_certs SET description = ?, additional = ? WHERE cid = ?";
+		$sth = $this->db->prepare($sql);
+		$res = $sth->execute(array($description,json_encode($additional),$oldDetails['cid']));
+
 		$newDetails = $this->getCertificateDetails($oldDetails['cid']);
 		if(empty($newDetails)) {
 			throw new \Exception("Could not find updated certificates");
@@ -1620,6 +1668,12 @@ class Certman implements \BMO {
 		} else {
 			$details['additional'] = array();
 		}
+
+		// Make sure that additional ALWAYS has an 'email' attribute, even if it's blank
+		if (!isset($details['additional']['email'])) {
+			$details['additional']['email'] = "";
+		}
+
 		return $details;
 	}
 
