@@ -61,6 +61,24 @@ if ($fwapi->isAvailable()) {
 									</div>
 								</div>
 							</div>
+							<div class="element-container">
+								<div class="row">
+									<div class="form-group">
+										<div class="col-md-3">
+											<label class="control-label" for="email"><?php echo _("Owners Email")?></label>
+											<i class="fa fa-question-circle fpbx-help-icon" data-for="email"></i>
+										</div>
+										<div class="col-md-9">
+											<input type="text" class="form-control" id="email" name="email" placeholder="you@example.com" required value="<?php echo $email?>">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<span id="email-help" class="help-block fpbx-help-block" style=""><?php echo _("This email address is given to Let's Encrypt. It may be used by them if the certificate is approaching expiration and it has not been renewed. Optional, but recommended.")?></span>
+									</div>
+								</div>
+							</div>
 							<?php if(!empty($cert['cid'])) { ?>
 								<div class="element-container">
 									<div class="row">
@@ -68,9 +86,7 @@ if ($fwapi->isAvailable()) {
 											<div class="col-md-3">
 												<label class="control-label" for="expires"><?php echo _("Valid Until")?></label>
 											</div>
-											<div class="col-md-9">
-												<?php echo is_numeric($certinfo['validTo_time_t']) ? date('m/d/Y',$certinfo['validTo_time_t']) : _("N/A")?>
-											</div>
+											<div class="col-md-9"> <?php echo \FreePBX::Certman()->getReadableExpiration($certinfo['validTo_time_t']); ?> </div>
 										</div>
 									</div>
 								</div>
@@ -134,17 +150,15 @@ if ($fwapi->isAvailable()) {
 								<div class="row">
 									<div class="form-group">
 										<div class="col-md-3">
-											<label class="control-label" for="c"><?php echo _("Country")?></label>
-											<i class="fa fa-question-circle fpbx-help-icon" data-for="C"></i>
+											<label class="control-label" for="C"><?php echo _("Country")?></label>
 										</div>
 										<div class="col-md-9">
-											<input type="text" class="form-control" id="C" name="C" placeholder="US" value="<?php echo !empty($cert['additional']['C']) ? $cert['additional']['C'] : "US"?>">
+<?php 
+$country = !empty($cert['additional']['C']) ? $cert['additional']['C'] : "CA"; 
+$state = !empty($cert['additional']['ST']) ? $cert['additional']['ST'] : "Ontario";
+?>
+											<select class="form-control" id="C" name="C" data-current="<?php echo $country; ?>" disabled> </select>
 										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-12">
-										<span id="C-help" class="help-block fpbx-help-block"><?php echo _('Two letter country code, such as "US", "CA", or "AU".')?></span>
 									</div>
 								</div>
 							</div>
@@ -152,18 +166,11 @@ if ($fwapi->isAvailable()) {
 								<div class="row">
 									<div class="form-group">
 										<div class="col-md-3">
-											<label class="control-label" for="st"><?php echo _("State/Province")?></label>
-											<i class="fa fa-question-circle fpbx-help-icon" data-for="ST"></i>
+											<label class="control-label" for="st"><?php echo _("State/Province/Region")?></label>
 										</div>
 										<div class="col-md-9">
-											<input type="text" class="form-control" id="ST" name="ST" placeholder="Wisconsin" value="<?php echo $cert['additional']['ST']?>">
+											<select class="form-control" id="ST" name="ST" data-current="<?php echo $state; ?>"> </select>
 										</div>
-									</div>
-								</div>
-								</div>
-								<div class="row">
-									<div class="col-md-12">
-										<span id="ST-help" class="help-block fpbx-help-block" style=""><?php echo _('State or province such as "Queensland" or "Wisconsin" or "Ontario." Do not abbreviate. Enter the full name.')?></span>
 									</div>
 								</div>
 							</div>
