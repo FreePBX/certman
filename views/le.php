@@ -36,7 +36,7 @@ if ($fwapi->isAvailable()) {
 	<h1><?php echo !empty($cert['cid']) ? _("Edit Let's Encrypt Certificate") : _("New Let's Encrypt Certificate")?></h1>
 	<?php echo !empty($messagehtml) ? $messagehtml : "" ?>
 	<?php echo $alert; ?>
-	<div class='alert alert-info'><?php echo _("Let's Encrypt Certificates are time limited to 90 days. At around 30 days left the PBX will attempt to automatically update your certificate and all services using this certificate. Please do not install your own certifcate updaters")?></div>
+	<div class='alert alert-info'><?php echo _("Let's Encrypt Certificates are time limited to 90 days. At around 30 days left the PBX will attempt to automatically update your certificate and all services using this certificate. Please do not install your own certificate updaters.")?></div>
 	<div class = "display full-border">
 		<div class="row">
 			<div class="col-sm-12">
@@ -50,7 +50,8 @@ if ($fwapi->isAvailable()) {
 								<div class="row">
 									<div class="form-group">
 										<div class="col-md-3">
-											<label class="control-label" for="host"><?php echo _("Host Name")?></label>
+											<label class="control-label" for="host"><?php echo _("Certificate Host Name")?></label>
+											<i class="fa fa-question-circle fpbx-help-icon" data-for="host"></i>
 										</div>
 										<div class="col-md-9">
 											<?php if (empty($cert['cid'])) { ?>
@@ -61,6 +62,10 @@ if ($fwapi->isAvailable()) {
 										</div>
 									</div>
 								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<span id="host-help" class="help-block fpbx-help-block" style=""><?php echo _("This must be the hostname you are requesting a certificate for. LetsEncrypt will validate that the hostname resolves to this machine, and attempt to connect to it.")?></span>
+									</div>
 							</div>
 							<div class="element-container">
 								<div class="row">
