@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>13.0.35.1</version>
+	<version>13.0.35.2</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -13,6 +13,7 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
+		*13.0.35.2* Allow stage 1 validation to happen over https
 		*13.0.35.1* FREEPBX-13075 and Make LetsEncrypt interface more intuitive
 		*13.0.34.8* Fix output of DTLS when theres no certificates
 		*13.0.34.7* FREEPBX-14013 Integration Certificates have wrong permissions after update

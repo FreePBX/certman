@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-01 16:00+1100\n"
+"POT-Creation-Date: 2017-02-03 10:39+1100\n"
 "PO-Revision-Date: 2016-12-21 21:25+0200\n"
 "Last-Translator: Alexander <alexander.schley@paranagua.pr.gov.br>\n"
 "Language-Team: Portuguese (Brazil) <http://weblate.freepbx.org/projects/"
@@ -54,7 +54,7 @@ msgstr ""
 "você obtenha um certificado real de uma autoridade padrão ou através do "
 "projeto Let's Encrypt"
 
-#: views/le.php:121
+#: views/le.php:126
 msgid ""
 "A certificate policy (CP) is a document which aims to state what are the "
 "different actors of a public key infrastructure (PKI), their roles and their "
@@ -143,6 +143,10 @@ msgstr "Autoridade Certificadora para Referência"
 msgid "Certificate Expired!"
 msgstr ""
 
+#: views/le.php:53
+msgid "Certificate Host Name"
+msgstr ""
+
 #: views/rnav.php:2
 msgid "Certificate List"
 msgstr "Lista de Certificados"
@@ -171,7 +175,7 @@ msgstr ""
 "O Gerenciador de Certificados gerencia certificados para chamadas seguras "
 "(TLS/SRTP), sessões web seguras (HTTPS/WEBRT[WSS] e mais"
 
-#: views/le.php:111 views/ss.php:114 views/up.php:97
+#: views/le.php:116 views/ss.php:114 views/up.php:97
 msgid "Certificate Policies"
 msgstr "Política de Certificados"
 
@@ -227,7 +231,7 @@ msgid "Certificate to use for this CA (must reference the Private Key)"
 msgstr ""
 "Certificado a ser usado para esta CA (deve referenciar à chave privada)"
 
-#: views/le.php:132
+#: views/le.php:137
 #, fuzzy
 msgid "Challenge Over"
 msgstr "Desafio"
@@ -244,7 +248,7 @@ msgstr ""
 msgid "City or Locality"
 msgstr "Cidade ou Localidade"
 
-#: views/le.php:98 views/ss.php:91 views/up.php:74
+#: views/le.php:103 views/ss.php:91 views/up.php:74
 msgid "Common Name"
 msgstr "Nome Comum"
 
@@ -252,7 +256,7 @@ msgstr "Nome Comum"
 msgid "Common Name (Host Name)"
 msgstr "Nome Comum (Nome do Host)"
 
-#: views/csr.php:106 views/le.php:154
+#: views/csr.php:106 views/le.php:159
 msgid "Country"
 msgstr "País"
 
@@ -386,7 +390,7 @@ msgstr "Gerando certificado padrão..."
 msgid "Here"
 msgstr "Aqui"
 
-#: views/le.php:53 views/ss.php:212
+#: views/ss.php:212
 msgid "Host Name"
 msgstr "Nome do Host"
 
@@ -454,13 +458,9 @@ msgstr "A chave é protegida por senha ou está malformada"
 msgid ""
 "Let's Encrypt Certificates are time limited to 90 days. At around 30 days "
 "left the PBX will attempt to automatically update your certificate and all "
-"services using this certificate. Please do not install your own certifcate "
-"updaters"
+"services using this certificate. Please do not install your own certificate "
+"updaters."
 msgstr ""
-"Certificados Let's Encrypt  são limitados temporariamente a 90 dias. Com "
-"cerca de 30 dias, o PBX tentará atualizar automaticamente seu certificado e "
-"todos os serviços usando este certificado. Não instale seus próprios "
-"atualizadores de certificados"
 
 #: views/overview.php:23
 msgid "Let's Encrypt:"
@@ -586,7 +586,7 @@ msgstr ""
 "Unidade Organizacional. Isso pode ser um setor,  cargo como (DBA), ou o nome "
 "de um departamento dentro da empresa. Isso pode ser deixado em branco."
 
-#: views/le.php:69
+#: views/le.php:74
 msgid "Owners Email"
 msgstr ""
 
@@ -686,7 +686,7 @@ msgstr ""
 msgid "State/Province"
 msgstr "Estado"
 
-#: views/le.php:170
+#: views/le.php:175
 msgid "State/Province/Region"
 msgstr ""
 
@@ -822,7 +822,7 @@ msgstr ""
 "certificados falhará. Para adicionar automaticamente esses hosts, clique no "
 "botão 'Atualizar Firewall'."
 
-#: views/le.php:79
+#: views/le.php:84
 msgid ""
 "This email address is given to Let's Encrypt. It may be used by them if the "
 "certificate is approaching expiration and it has not been renewed."
@@ -832,10 +832,17 @@ msgstr ""
 msgid "This field cannot be blank and must be alphanumeric"
 msgstr "Este campo não pode ficar em branco e deve ser alfanumérico"
 
-#: views/le.php:145
+#: views/le.php:150
 msgid ""
 "This is the method that Let's Encrypt will use to verify this machine. The "
 "default is HTTP on port 80."
+msgstr ""
+
+#: views/le.php:67
+msgid ""
+"This must be the hostname you are requesting a certificate for. LetsEncrypt "
+"will validate that the hostname resolves to this machine, and attempt to "
+"connect to it."
 msgstr ""
 
 #: views/overview.php:20
@@ -955,7 +962,7 @@ msgstr "Carregado:"
 msgid "Use Certificate"
 msgstr "Usar Certificado"
 
-#: views/le.php:88 views/ss.php:69 views/up.php:54
+#: views/le.php:93 views/ss.php:69 views/up.php:54
 msgid "Valid Until"
 msgstr "Válido Até"
 
@@ -1040,6 +1047,17 @@ msgstr ""
 "vários arquivos de certificado. Cole o conteúdo de todos os arquivos da "
 "cadeia, se houver, no campo abaixo. Isso pode ser deixado em branco ou "
 "atualizado a qualquer momento. Eles podem ser adicionados em qualquer ordem."
+
+#~ msgid ""
+#~ "Let's Encrypt Certificates are time limited to 90 days. At around 30 days "
+#~ "left the PBX will attempt to automatically update your certificate and "
+#~ "all services using this certificate. Please do not install your own "
+#~ "certifcate updaters"
+#~ msgstr ""
+#~ "Certificados Let's Encrypt  são limitados temporariamente a 90 dias. Com "
+#~ "cerca de 30 dias, o PBX tentará atualizar automaticamente seu certificado "
+#~ "e todos os serviços usando este certificado. Não instale seus próprios "
+#~ "atualizadores de certificados"
 
 #~ msgid ""
 #~ "There are two methods you can have Let's Encrypt Challenge over: HTTP "

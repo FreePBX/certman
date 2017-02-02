@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-01 16:00+1100\n"
+"POT-Creation-Date: 2017-02-03 10:39+1100\n"
 "PO-Revision-Date: 2015-11-23 13:55+0200\n"
 "Last-Translator: james <zhulizhong@gmail.com>\n"
 "Language-Team: Simplified Chinese <http://weblate.freepbx.org/projects/"
@@ -48,7 +48,7 @@ msgid ""
 "real certificate from a standard authority or through Let's Encrypt"
 msgstr ""
 
-#: views/le.php:121
+#: views/le.php:126
 msgid ""
 "A certificate policy (CP) is a document which aims to state what are the "
 "different actors of a public key infrastructure (PKI), their roles and their "
@@ -127,6 +127,10 @@ msgstr ""
 msgid "Certificate Expired!"
 msgstr ""
 
+#: views/le.php:53
+msgid "Certificate Host Name"
+msgstr ""
+
 #: views/rnav.php:2
 msgid "Certificate List"
 msgstr ""
@@ -151,7 +155,7 @@ msgid ""
 "secure web sessions (HTTPS/WEBRTC[WSS] and more"
 msgstr ""
 
-#: views/le.php:111 views/ss.php:114 views/up.php:97
+#: views/le.php:116 views/ss.php:114 views/up.php:97
 msgid "Certificate Policies"
 msgstr ""
 
@@ -200,7 +204,7 @@ msgstr ""
 msgid "Certificate to use for this CA (must reference the Private Key)"
 msgstr ""
 
-#: views/le.php:132
+#: views/le.php:137
 msgid "Challenge Over"
 msgstr ""
 
@@ -214,7 +218,7 @@ msgstr ""
 msgid "City or Locality"
 msgstr ""
 
-#: views/le.php:98 views/ss.php:91 views/up.php:74
+#: views/le.php:103 views/ss.php:91 views/up.php:74
 msgid "Common Name"
 msgstr ""
 
@@ -222,7 +226,7 @@ msgstr ""
 msgid "Common Name (Host Name)"
 msgstr ""
 
-#: views/csr.php:106 views/le.php:154
+#: views/csr.php:106 views/le.php:159
 msgid "Country"
 msgstr ""
 
@@ -351,7 +355,7 @@ msgstr ""
 msgid "Here"
 msgstr ""
 
-#: views/le.php:53 views/ss.php:212
+#: views/ss.php:212
 msgid "Host Name"
 msgstr ""
 
@@ -415,8 +419,8 @@ msgstr ""
 msgid ""
 "Let's Encrypt Certificates are time limited to 90 days. At around 30 days "
 "left the PBX will attempt to automatically update your certificate and all "
-"services using this certificate. Please do not install your own certifcate "
-"updaters"
+"services using this certificate. Please do not install your own certificate "
+"updaters."
 msgstr ""
 
 #: views/overview.php:23
@@ -531,7 +535,7 @@ msgid ""
 "of a department within the business. This may be left blank."
 msgstr ""
 
-#: views/le.php:69
+#: views/le.php:74
 msgid "Owners Email"
 msgstr ""
 
@@ -614,7 +618,7 @@ msgstr ""
 msgid "State/Province"
 msgstr ""
 
-#: views/le.php:170
+#: views/le.php:175
 msgid "State/Province/Region"
 msgstr ""
 
@@ -737,7 +741,7 @@ msgid ""
 "'Update Firewall' button."
 msgstr ""
 
-#: views/le.php:79
+#: views/le.php:84
 msgid ""
 "This email address is given to Let's Encrypt. It may be used by them if the "
 "certificate is approaching expiration and it has not been renewed."
@@ -747,10 +751,17 @@ msgstr ""
 msgid "This field cannot be blank and must be alphanumeric"
 msgstr ""
 
-#: views/le.php:145
+#: views/le.php:150
 msgid ""
 "This is the method that Let's Encrypt will use to verify this machine. The "
 "default is HTTP on port 80."
+msgstr ""
+
+#: views/le.php:67
+msgid ""
+"This must be the hostname you are requesting a certificate for. LetsEncrypt "
+"will validate that the hostname resolves to this machine, and attempt to "
+"connect to it."
 msgstr ""
 
 #: views/overview.php:20
@@ -868,7 +879,7 @@ msgstr ""
 msgid "Use Certificate"
 msgstr "使用证书"
 
-#: views/le.php:88 views/ss.php:69 views/up.php:54
+#: views/le.php:93 views/ss.php:69 views/up.php:54
 msgid "Valid Until"
 msgstr ""
 
