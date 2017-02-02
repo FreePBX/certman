@@ -493,10 +493,9 @@ $(document).ready(function () {
 
 	// Does our current 'data' country exist in our known good list?
 	if ($("option[value="+current+"]", "#C").length === 0) {
-		// No. Set it to US
+		// No. Set it to Canada
 		current = "CA";
 	}
-
 
 	// And this will set the country to be what it should be, and update the states
 	c.val(current);
@@ -512,13 +511,16 @@ function updateStateSelect() {
 	var newcountry = window.countrycodes[$("#C").val()];
 	var state = $("#ST");
 	var thisstate = false;
+	var selectstate = _("-- Select State --");
 
-	// Remove all the existing states
+	// Remove all the existing states, and unbind our change handler
 	state.html("");
+
+	state.unbind("change");
 
 	// Do we have a state already?
 	if (!state.data("current")) {
-		state.append("<option other=true>-- Select State --</option>");
+		state.append("<option other=true>"+selectstate+"</option>");
 	} else {
 		// We have a state.
 		thisstate = state.data("current");
@@ -539,7 +541,7 @@ function updateStateSelect() {
 		} else {
 			// Ah. It's not valid.
 			thisstate = false;
-			state.append("<option other=true>-- Select State --</option>");
+			state.append("<option other=true>"+selectstate+"</option>");
 			state.data("current", false);
 		}
 	}
@@ -550,4 +552,8 @@ function updateStateSelect() {
 			state.append("<option>" + v + "</option>");
 		}
 	});
+
+	// Now bind to change, so that 'selectstate' is deleted as soon as it's
+	// no longer needed.
+	state.change(function() { $("option[other=true]", "#ST").remove(); });
 }
