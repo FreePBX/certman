@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-02-03 10:39+1100\n"
-"PO-Revision-Date: 2017-02-14 17:03+0200\n"
+"PO-Revision-Date: 2017-02-24 20:10+0200\n"
 "Last-Translator: Kingvoice <suporte@kingvoice.com.br>\n"
 "Language-Team: Portuguese (Brazil) "
 "<http://weblate.freepbx.org/projects/freepbx/certman/pt_BR/>\n"
@@ -24,7 +24,7 @@ msgstr ""
 #: Certman.class.php:1748
 #, php-format
 msgid "(%s days)"
-msgstr ""
+msgstr "(%s dias)"
 
 #: Console/Certman.class.php:37
 msgid "<error>"
@@ -141,11 +141,11 @@ msgstr "Autoridade Certificadora para Referência"
 
 #: Certman.class.php:1743
 msgid "Certificate Expired!"
-msgstr ""
+msgstr "Certificado Expirado!"
 
 #: views/le.php:53
 msgid "Certificate Host Name"
-msgstr ""
+msgstr "Host Name do Certificado"
 
 #: views/rnav.php:2
 msgid "Certificate List"
@@ -232,9 +232,8 @@ msgstr ""
 "Certificado a ser usado para esta CA (deve referenciar à chave privada)"
 
 #: views/le.php:137
-#, fuzzy
 msgid "Challenge Over"
-msgstr "Desafio"
+msgstr "Fim do Desafio"
 
 #: views/csr.php:162
 msgid ""
@@ -461,6 +460,10 @@ msgid ""
 "services using this certificate. Please do not install your own certificate "
 "updaters."
 msgstr ""
+"Certificados Let's Encrypt tem tempo limitado de 90 dias. Após 30 dias o PBX "
+"irá tentar automaticamente atualizar seu certificado e todos os serviços "
+"usando este certificado. Por favor não instale atualizações de seu próprio "
+"certificado."
 
 #: views/overview.php:23
 msgid "Let's Encrypt:"
@@ -588,7 +591,7 @@ msgstr ""
 
 #: views/le.php:74
 msgid "Owners Email"
-msgstr ""
+msgstr "Email dos Donos"
 
 #: views/le.php:30
 msgid ""
@@ -688,7 +691,7 @@ msgstr "Estado"
 
 #: views/le.php:175
 msgid "State/Province/Region"
-msgstr ""
+msgstr "Estado/Província/Região"
 
 #: Certman.class.php:623
 msgid "Submit"
@@ -827,6 +830,8 @@ msgid ""
 "This email address is given to Let's Encrypt. It may be used by them if the "
 "certificate is approaching expiration and it has not been renewed."
 msgstr ""
+"Este endereço de email é fornecido ao Let's Encrypt. Isto pode ser usado por "
+"eles se o certificado está próximo da expiração e não foi renovado."
 
 #: views/csr.php:28 views/ss.php:46 views/up.php:31
 msgid "This field cannot be blank and must be alphanumeric"
@@ -837,6 +842,8 @@ msgid ""
 "This is the method that Let's Encrypt will use to verify this machine. The "
 "default is HTTP on port 80."
 msgstr ""
+"Este é o método que o Let's Encrypt irá usar para verificar seu servidor. O "
+"padrão é HTTP na porta 80."
 
 #: views/le.php:67
 msgid ""
@@ -844,6 +851,9 @@ msgid ""
 "will validate that the hostname resolves to this machine, and attempt to "
 "connect to it."
 msgstr ""
+"Isto pode ser o hosname que você está requisitando o certificado. Let's "
+"Encrypt irá validar que o hostname resolve nesta máquina, e tentar se "
+"conectar a ela."
 
 #: views/overview.php:20
 #, php-format
@@ -919,7 +929,7 @@ msgstr "Não é possível gravar em %s"
 
 #: Certman.class.php:1733
 msgid "Unknown Expiration"
-msgstr ""
+msgstr "Expiração Desconhecida"
 
 #: Certman.class.php:628
 msgid "Update Certificate"
