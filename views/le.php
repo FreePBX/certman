@@ -48,7 +48,7 @@ if ($fwapi->isAvailable()) {
 							<input id="cid" type="hidden" name="cid" value="<?php echo !empty($cert['cid']) ? $cert['cid'] : ''?>">
 							<div class="element-container">
 								<div class="row">
-									<div class="form-group">
+									<div class="form-group form-horizontal">
 										<div class="col-md-3">
 											<label class="control-label" for="host"><?php echo _("Certificate Host Name")?></label>
 											<i class="fa fa-question-circle fpbx-help-icon" data-for="host"></i>
@@ -61,15 +61,14 @@ if ($fwapi->isAvailable()) {
 											<?php } ?>
 										</div>
 									</div>
-								</div>
-								<div class="row">
 									<div class="col-md-12">
 										<span id="host-help" class="help-block fpbx-help-block" style=""><?php echo _("This must be the hostname you are requesting a certificate for. LetsEncrypt will validate that the hostname resolves to this machine, and attempt to connect to it.")?></span>
 									</div>
+								</div>
 							</div>
 							<div class="element-container">
 								<div class="row">
-									<div class="form-group">
+									<div class="form-group form-horizontal">
 										<div class="col-md-3">
 											<label class="control-label" for="email"><?php echo _("Owners Email")?></label>
 											<i class="fa fa-question-circle fpbx-help-icon" data-for="email"></i>
@@ -78,8 +77,6 @@ if ($fwapi->isAvailable()) {
 											<input type="text" class="form-control" id="email" name="email" placeholder="you@example.com" required value="<?php echo $cert['additional']['email']; ?>">
 										</div>
 									</div>
-								</div>
-								<div class="row">
 									<div class="col-md-12">
 										<span id="email-help" class="help-block fpbx-help-block" style=""><?php echo _("This email address is given to Let's Encrypt. It may be used by them if the certificate is approaching expiration and it has not been renewed.")?></span>
 									</div>
@@ -88,7 +85,7 @@ if ($fwapi->isAvailable()) {
 							<?php if(!empty($cert['cid'])) { ?>
 								<div class="element-container">
 									<div class="row">
-										<div class="form-group">
+										<div class="form-group form-horizontal">
 											<div class="col-md-3">
 												<label class="control-label" for="expires"><?php echo _("Valid Until")?></label>
 											</div>
@@ -98,7 +95,7 @@ if ($fwapi->isAvailable()) {
 								</div>
 								<div class="element-container">
 									<div class="row">
-										<div class="form-group">
+										<div class="form-group form-horizontal">
 											<div class="col-md-3">
 												<label class="control-label" for="cn"><?php echo _("Common Name")?></label>
 											</div>
@@ -111,7 +108,7 @@ if ($fwapi->isAvailable()) {
 								<?php if(!empty($certinfo['extensions']['certificatePolicies'])) {?>
 									<div class="element-container">
 										<div class="row">
-											<div class="form-group">
+											<div class="form-group form-horizontal">
 												<div class="col-md-3">
 													<label class="control-label" for="cp"><?php echo _("Certificate Policies")?></label>
 													<i class="fa fa-question-circle fpbx-help-icon" data-for="cp"></i>
@@ -120,8 +117,6 @@ if ($fwapi->isAvailable()) {
 													<textarea class="form-control" readonly><?php echo $certinfo['extensions']['certificatePolicies']?></textarea>
 												</div>
 											</div>
-										</div>
-										<div class="row">
 											<div class="col-md-12">
 												<span id="cp-help" class="help-block fpbx-help-block" style=""><?php echo _('A certificate policy (CP) is a document which aims to state what are the different actors of a public key infrastructure (PKI), their roles and their duties')?></span>
 											</div>
@@ -132,29 +127,24 @@ if ($fwapi->isAvailable()) {
 							<!-- Challenge Method -->
 							<div class="element-container">
 								<div class="row">
-									<div class="form-group">
+									<div class="form-group form-horizontal">
 										<div class="col-md-3">
 											<label class="control-label" for="challengetype"><?php echo _("Challenge Over")?></label>
 											<i class="fa fa-question-circle fpbx-help-icon" data-for="challengetype"></i>
 										</div>
-										<div class="col-md-9 radioset">
-											<input type="radio" class="" id="challengetype_http" name="challengetype" value="http" <?php echo empty($cert['additional']['challengetype']) || (!empty($cert['additional']['challengetype']) && $cert['additional']['challengetype'] == 'http') ? 'checked' : ""?>>
-											<label for="challengetype_http">HTTP</label>
-											<input type="radio" class="" id="challengetype_https" name="challengetype" value="https" <?php echo !empty($cert['additional']['challengetype']) && $cert['additional']['challengetype'] == 'https' ? 'checked' : ""?>>
-											<label for="challengetype_https">HTTPS</label>
+										<div class="col-md-9">
+											<span class="form-control" disabled><strong>HTTP <?php echo _("(Port 80)"); ?></strong></span>
 										</div>
 									</div>
-								</div>
-								<div class="row">
 									<div class="col-md-12">
-										<span id="challengetype-help" class="help-block fpbx-help-block"><?php echo _("This is the method that Let's Encrypt will use to verify this machine. The default is HTTP on port 80.")?></span>
+										<span id="challengetype-help" class="help-block fpbx-help-block"><?php echo _("LetsEncrypt only supports hostname validation on port 80.")?></span>
 									</div>
 								</div>
 							</div>
 							<!-- END Challenge Method -->
 							<div class="element-container">
 								<div class="row">
-									<div class="form-group">
+									<div class="form-group form-horizontal">
 										<div class="col-md-3">
 											<label class="control-label" for="C"><?php echo _("Country")?></label>
 										</div>
@@ -170,7 +160,7 @@ $state = !empty($cert['additional']['ST']) ? $cert['additional']['ST'] : "Ontari
 							</div>
 							<div class="element-container">
 								<div class="row">
-									<div class="form-group">
+									<div class="form-group form-horizontal">
 										<div class="col-md-3">
 											<label class="control-label" for="st"><?php echo _("State/Province/Region")?></label>
 										</div>

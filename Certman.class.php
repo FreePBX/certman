@@ -347,7 +347,7 @@ class Certman implements \BMO {
 								$this->updateLE($cert['basename'], array(
 									"countryCode" => $_POST['C'],
 									"state" => $_POST['ST'],
-									"challengetype" => $_POST['challengetype'], 
+									"challengetype" => "http", // https will not work.
 									"email" => $_POST['email']
 								));
 							} catch(\Exception $e) {
@@ -357,7 +357,7 @@ class Certman implements \BMO {
 							$this->updateCertificate($cert,$_POST['C'], array(
 								"C" => $_POST['C'],
 								"ST" => $_POST['ST'],
-								'challengetype' => $_POST['challengetype'],
+								'challengetype' => "http", // https will not work
 								'email' => $_POST['email']
 							));
 							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
@@ -386,7 +386,7 @@ class Certman implements \BMO {
 							$this->updateLE($host, array(
 								"countryCode" => $_POST['C'],
 								"state" => $_POST['ST'],
-								"challengetype" => $_POST['challengetype'], 
+								"challengetype" => "http", // https will not work
 								"email" => $_POST['email']
 							));
 						} catch(\Exception $e) {
@@ -672,7 +672,7 @@ class Certman implements \BMO {
 						$this->updateLE($cert['info']['crt']['subject']['CN'], array(
 							"countryCode" => $cert['additional']['C'],
 							"state" => $cert['additional']['ST'],
-							"challengetype" => $cert['additional']['challengetype'],
+							"challengetype" => "http", // https will not work
 							"email" => $cert['additional']['email']
 						));
 
@@ -701,7 +701,7 @@ class Certman implements \BMO {
 						$this->updateLE($cert['info']['crt']['subject']['CN'], array(
 							"countryCode" => $cert['additional']['C'],
 							"state" => $cert['additional']['ST'],
-							"challengetype" => $cert['additional']['challengetype'],
+							"challengetype" => "http", // https will not work
 							"email" => $cert['additional']['email']
 						));
 						$messages[] = array('type' => 'success', 'message' => sprintf(_('Successfully updated certificate named "%s"'),$cert['basename']));
@@ -761,7 +761,7 @@ class Certman implements \BMO {
 		// Get our variables from $settings
 		$countryCode = !empty($settings['countryCode']) ? $settings['countryCode'] : 'CA';
 		$state = !empty($settings['state']) ? $settings['state'] : 'Ontario';
-		$challengetype = !empty($settings['challengetype']) ? $settings['challengetype'] : 'http';
+		$challengetype = "http"; // Always http
 		$email = !empty($settings['email']) ? $settings['email'] : '';
 
 		$location = $this->PKCS->getKeysLocation();
@@ -819,9 +819,6 @@ class Certman implements \BMO {
 			$le->initAccount();
 			if (!empty($email)) {
 				$le->contact = array($email);
-			}
-			if($challengetype == 'https') {
-				$le->challenge = 'tls-sni-01';
 			}
 			$le->signDomains(array($host));
 		}
