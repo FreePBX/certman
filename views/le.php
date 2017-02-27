@@ -36,7 +36,7 @@ if ($fwapi->isAvailable()) {
 	<h1><?php echo !empty($cert['cid']) ? _("Edit Let's Encrypt Certificate") : _("New Let's Encrypt Certificate")?></h1>
 	<?php echo !empty($messagehtml) ? $messagehtml : "" ?>
 	<?php echo $alert; ?>
-	<div class='alert alert-info'><?php echo _("Let's Encrypt Certificates are time limited to 90 days. At around 30 days left the PBX will attempt to automatically update your certificate and all services using this certificate. Please do not install your own certificate updaters.")?></div>
+	<div class='alert alert-info'><?php printf(_("Let's Encrypt Certificates are <strong>automatically</strong> updated by %s when required (Approximately every 2 months). Do not install your own certificate updaters!"), \FreePBX::Config()->get("DASHBOARD_FREEPBX_BRAND")); ?></div>
 	<div class = "display full-border">
 		<div class="row">
 			<div class="col-sm-12">
@@ -137,7 +137,7 @@ if ($fwapi->isAvailable()) {
 										</div>
 									</div>
 									<div class="col-md-12">
-										<span id="challengetype-help" class="help-block fpbx-help-block"><?php echo _("LetsEncrypt only supports hostname validation on port 80.")?></span>
+										<span id="challengetype-help" class="help-block fpbx-help-block"><?php echo _("LetsEncrypt only supports hostname validation via HTTP on port 80.")?></span>
 									</div>
 								</div>
 							</div>
