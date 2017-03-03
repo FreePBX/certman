@@ -197,15 +197,9 @@ class Certman implements \BMO {
 
 			if(!$this->checkCAexists()) {
 				outn(_("Generating default CA..."));
-				// See if we can random
-				if (function_exists('openssl_random_pseudo_bytes')) {
-					$passwd = base64_encode(openssl_random_pseudo_bytes(32));
-				} else {
-					$passwd = "";
-				}
 				$hostname = gethostname();
 				$hostname = !empty($hostname) ? $hostname : 'localhost';
-				$caid = $this->generateCA('ca', $hostname, $hostname, $passwd, true);
+				$caid = $this->generateCA('ca', $hostname, $hostname, "", false);
 				out(_("Done!"));
 			} else {
 				$dat = $this->getAllManagedCAs();
@@ -215,7 +209,7 @@ class Certman implements \BMO {
 			outn(_("Generating default certificate..."));
 			// Do not i18n the NAME of the cert, it is 'default'.
 			try {
-				$cid = $this->generateCertificate($caid,"default",_("Default Self-Signed certificate"), $passwd);
+				$cid = $this->generateCertificate($caid,"default",_("Default Self-Signed certificate"), "");
 				$this->makeCertDefault($cid);
 				out(_("Done!"));
 			} catch(\Exception $e) {
@@ -748,7 +742,7 @@ class Certman implements \BMO {
 	/**
 	 * Update or Add Let's Encrypt
 	 * @param  string $host     The hostname (MUST BE A VALID FQDN)
-	 * @param  array $settings  Array of settings for this certificate 
+	 * @param  array $settings  Array of settings for this certificate
 	 * @param  boolean $staging Whether to use the staging server or not
 	 *
 	 * @return boolean          True if success, false if not

@@ -140,12 +140,6 @@ $(function() {
 			}
 		}
 
-		if ($("form[name=frm_certman] input[type=\"password\"]").val() === "") {
-			if (!confirm(_("Are you sure you dont want a passphrase?"))) {
-				$("form[name=frm_certman] input[type=\"password\"]").focus();
-				return false;
-			}
-		}
 		if(type == "ss") {
 			if($("#name").length) {
 				var test = /^[a-z0-9]+$/i;

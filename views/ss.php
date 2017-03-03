@@ -4,7 +4,6 @@ if(!empty($message)) {
 }
 //ca input
 if(count($cas) == 1){
-	$rpf = !empty($cas[0]['passphrase']) ? 'no' : 'yes';
 	$cainput = '<b>' . $cas[0]['on'] . '</b>';
 	$cainput .= '<input type="hidden" name="ca" id="ca" value="' . $cas[0]['uid'] . '" data-requirespassphrase="'. $rpf . '" >';
 }else{
@@ -153,32 +152,6 @@ if(count($cas) == 1){
 								</div>
 							</div>
 							<!--END Description-->
-							<!--Passphrase-->
-							<?php if($rpf == 'yes') {?>
-								<div class="element-container">
-									<div class="row">
-										<div class="col-md-12">
-											<div class="row">
-												<div class="form-group">
-													<div class="col-md-3">
-														<label class="control-label" for="passphrase"><?php echo _("Passphrase")?></label>
-														<i class="fa fa-question-circle fpbx-help-icon" data-for="passphrase"></i>
-													</div>
-													<div class="col-md-9">
-														<input type="password" class="form-control" autocomplete="off" name="passphrase" id="passphrase">
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-12">
-											<span id="passphrase-help" class="help-block fpbx-help-block"><?php echo _("The Passphrase of the Certificate Authority")?></span>
-										</div>
-									</div>
-								</div>
-							<?php } ?>
-							<!--END Passphrase-->
 							<?php if($caExists) { ?>
 								<div class="element-container">
 									<div class="row">
@@ -190,7 +163,7 @@ if(count($cas) == 1){
 														<i class="fa fa-question-circle fpbx-help-icon" data-for="ca"></i>
 													</div>
 													<div class="col-md-9">
-														<b><?php echo $cas[0]['on']?></b> <a href="?display=certman&amp;action=certaction&amp;type=ca" id="delCA"><i class="fa fa-trash-o"></i></i>
+														<b><?php echo $cas[0]['on']?></b> <a href="?display=certman&amp;certaction=delete&amp;type=ca" id="delCA"><i class="fa fa-trash-o"></i></i>
 													</div>
 												</div>
 											</div>
@@ -247,62 +220,9 @@ if(count($cas) == 1){
 										</div>
 									</div>
 								</div>
-								<div class="element-container">
-									<div class="row">
-										<div class="col-md-12">
-											<div class="row">
-												<div class="form-group">
-													<div class="col-md-3">
-														<label class="control-label" for="passphrase"><?php echo  _("Passphrase") ?></label>
-														<i class="fa fa-question-circle fpbx-help-icon" data-for="passphrase"></i>
-													</div>
-													<div class="col-md-9">
-														<div class="input-group">
-															<input type="password" class="form-control" id="passphrase" name="passphrase" value="<?php echo !empty($cert['cid']) ? '' : $pass?>">
-															<span class="input-group-btn">
-																<button data-id="passphrase" class="btn btn-default toggle-password" type="button">
-																	<i class="fa fa-2x fa-eye" style="margin-top: -2px;"></i>
-																</button>
-															</span>
-														</div>
-
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-12">
-											<span id="passphrase-help" class="help-block fpbx-help-block"><?php echo  _("Passphrase used to access this certificate and generate new client certificates.
-											If you don't use a passphrase when generating a new certifcate, then the private key is not encrypted with any symmetric cipher - it is output completely unprotected.
-											If you don't provide a passphrase when uploading a certificate you will have to provide the passphrase everytime a new certificate is needed")?></span>
-										</div>
-									</div>
-								</div>
-								<div class="element-container">
-									<div class="row">
-										<div class="col-md-12">
-											<div class="row">
-												<div class="form-group">
-													<div class="col-md-3">
-														<label class="control-label" for="savepassphrase"><?php echo _("Save Passphrase") ?></label>
-														<i class="fa fa-question-circle fpbx-help-icon" data-for="savepassphrase"></i>
-													</div>
-													<div class="col-md-9 radioset">
-														<input type="radio" name="savepassphrase" value="yes" id="phsaveyes" checked><label for="phsaveyes"><?php echo _("Yes")?></label>
-														<input type="radio" name="savepassphrase" value="no" id="phsaveno"><label for="phsaveno"><?php echo _("No")?></label>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-12">
-											<span id="savepassphrase-help" class="help-block fpbx-help-block"><?php echo _("Whether to store the password in the database so that new certificates can be generated automatically.<br/>
-											<b>WARNING!!</b> The Passphrase is stored in PLAINTEXT! You have been warned. Use Something you dont care about or use!") ?></span>
-										</div>
-									</div>
-								</div>
+								<!-- old remove later -->
+								<input type="hidden" class="form-control" id="passphrase" name="passphrase" value="<?php echo !empty($cert['cid']) ? '' : $pass?>">
+								<input type="hidden" name="savepassphrase" value="no" id="phsaveno">
 							<?php } ?>
 						</form>
 					</div>
