@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-02 17:17-0800\n"
-"PO-Revision-Date: 2017-03-03 15:42+0200\n"
+"PO-Revision-Date: 2017-03-07 02:51+0200\n"
 "Last-Translator: hammer125 <auswertung@aon.at>\n"
 "Language-Team: German "
 "<http://weblate.freepbx.org/projects/freepbx/certman/de_DE/>\n"
@@ -681,7 +681,7 @@ msgstr ""
 
 #: Console/Certman.class.php:96
 msgid "The command provided is not valid"
-msgstr ""
+msgstr "Der verwendete Befehl ist nicht gültig"
 
 #: views/overview.php:21
 msgid "There are three different types of certificates this module can handle:"
