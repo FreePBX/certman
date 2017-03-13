@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-02 17:17-0800\n"
-"PO-Revision-Date: 2017-03-12 18:30+0200\n"
-"Last-Translator: Nicolas <freepbx@riendeau.org>\n"
+"PO-Revision-Date: 2017-03-12 20:22+0200\n"
+"Last-Translator: Francis <fbinet@solist.ca>\n"
 "Language-Team: French "
 "<http://weblate.freepbx.org/projects/freepbx/certman/fr_FR/>\n"
 "Language: fr_FR\n"
@@ -506,7 +506,7 @@ msgstr ""
 
 #: views/up.php:173
 msgid "None"
-msgstr ""
+msgstr "Aucun"
 
 #: views/up.php:207 views/up.php:216
 msgid "Not Shown for your security. Paste a new certificate here"
