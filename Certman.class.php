@@ -199,7 +199,7 @@ class Certman implements \BMO {
 				outn(_("Generating default CA..."));
 				$hostname = gethostname();
 				$hostname = !empty($hostname) ? $hostname : 'localhost';
-				$caid = $this->generateCA('ca', $hostname, $hostname, "", false);
+				$caid = $this->generateCA('ca', $hostname, $hostname);
 				out(_("Done!"));
 			} else {
 				$dat = $this->getAllManagedCAs();
@@ -209,7 +209,7 @@ class Certman implements \BMO {
 			outn(_("Generating default certificate..."));
 			// Do not i18n the NAME of the cert, it is 'default'.
 			try {
-				$cid = $this->generateCertificate($caid,"default",_("Default Self-Signed certificate"), "");
+				$cid = $this->generateCertificate($caid,"default",_("Default Self-Signed certificate"));
 				$this->makeCertDefault($cid);
 				out(_("Done!"));
 			} catch(\Exception $e) {
@@ -383,11 +383,11 @@ class Certman implements \BMO {
 								"challengetype" => "http", // https will not work
 								"email" => $_POST['email']
 							));
+							$this->saveCertificate(null,$host,$host,'le', array("C" => $_POST['C'], "ST" => $_POST['ST'], "email" => $_POST['email']));
 						} catch(\Exception $e) {
 							$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error updating the certificate: %s'),$e->getMessage()));
 							break 2;
 						}
-						$this->saveCertificate(null,$host,$host,'le', array("C" => $_POST['C'], "ST" => $_POST['ST'], "email" => $_POST['email']));
 						$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
 					break;
 					case "up":
@@ -415,10 +415,10 @@ class Certman implements \BMO {
 						}
 						try {
 							$status = $this->importCertificate($name,$pkey,$_POST['signedcert'],$_POST['certchain'],$_POST['passphrase']);
+							$this->saveCertificate(null,$name,$_POST['description'],'up');
 						} catch(\Exception $e) {
 							$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error importing the certificate: %s'),$e->getMessage()));
 						}
-						$this->saveCertificate(null,$name,$_POST['description'],'up');
 						if($removeCSR) {
 							$this->removeCSR(true);
 						}
@@ -428,8 +428,7 @@ class Certman implements \BMO {
 						if(empty($request['caid'])) {
 							//generate new cert authority
 							$this->generateConfig('ca',$request['hostname'],$request['orgname']);
-							$sph = (!empty($request['savepassphrase']) && $request['savepassphrase'] == 'yes') ? true : false;
-							$caid = $this->generateCA('ca',$request['hostname'],$request['orgname'],$request['passphrase'],$sph);
+							$caid = $this->generateCA('ca',$request['hostname'],$request['orgname']);
 							if(empty($caid)) {
 								$this->message = array('type' => 'danger', 'message' => _('Unable to generate Certificate Authority'));
 								break;
@@ -443,8 +442,12 @@ class Certman implements \BMO {
 							}
 							$caid = $dat[0]['uid'];
 						}
-						$request['passphrase'] = !empty($request['passphrase']) ? $request['passphrase'] : null;
-						$this->generateCertificate($caid,$request['name'],$request['description'],$request['passphrase']);
+						try {
+							$this->generateCertificate($caid,$request['hostname'],$request['description']);
+						} catch(\Exception $e) {
+							$this->message = array('type' => 'danger', 'message' => sprintf(_('Unable to generate certificate: %s'),$e->getMessage()));
+							break;
+						}
 						$this->message = array('type' => 'success', 'message' => _('Added new certificate'));
 					break;
 					case "csr":
@@ -1111,10 +1114,8 @@ class Certman implements \BMO {
 	 * @param {string} $basename	 The basename of the file to generate
 	 * @param {string} $commonname The common name, usually FQDN or IP
 	 * @param {string} $orgname		The organization name
-	 * @param {string} $passphrase The password, if null then the certificate will be passwordless (insecure)
-	 * @param {bool} $savepass		 Whether to save the password above in the database
 	 */
-	public function generateCA($basename, $commonname, $orgname, $passphrase, $savepass) {
+	public function generateCA($basename, $commonname, $orgname) {
 		if(empty($basename)) {
 			throw new \Exception("Basename can not be empty!");
 		}
@@ -1125,12 +1126,8 @@ class Certman implements \BMO {
 			throw new \Exception("Organization can not be empty!");
 		}
 		$this->generateConfig($basename,$commonname,$orgname);
-		$this->PKCS->createCA($basename,$passphrase);
-		if ($savepass) {
-			return $this->saveCA($basename, $commonname, $orgname, $passphrase);
-		} else {
-			return $this->saveCA($basename, $commonname, $orgname, '');
-		}
+		$this->PKCS->createCA($basename);
+		return $this->saveCA($basename, $commonname, $orgname);
 	}
 
 	/**
@@ -1150,10 +1147,10 @@ class Certman implements \BMO {
 	 * @param {string} $orgname		The organization name
 	 * @param {string} $passphrase The passphrase (to be encrypted)
 	 */
-	public function saveCA($basename,$commonname,$orgname,$passphrase) {
-		$sql = "INSERT INTO certman_cas (`basename`, `cn`, `on`, `passphrase`, `salt`) VALUES (?, ?, ?, ?, ?)";
+	public function saveCA($basename,$commonname,$orgname) {
+		$sql = "INSERT INTO certman_cas (`basename`, `cn`, `on`) VALUES (?, ?, ?)";
 		$sth = $this->db->prepare($sql);
-		$sth->execute(array($basename, $commonname,$orgname,$passphrase,'1'));
+		$sth->execute(array($basename, $commonname,$orgname));
 		return $this->db->lastInsertId();
 	}
 
@@ -1218,16 +1215,13 @@ class Certman implements \BMO {
 	 * @param {int} $caid						The Managed Certificate Authority ID
 	 * @param {string} $base						The base name to generate
 	 * @param {string} $description		 Description of this certificate
-	 * @param {string} $passphrase=null The provided passphrase,
-	 *																	used if the CA requires a passphrase but
-	 *																	it was not stored internally
 	 */
-	public function generateCertificate($caid,$base,$description,$passphrase=null) {
+	public function generateCertificate($caid,$base,$description) {
 		if($this->checkCertificateName($base)) {
-			return _('Certificate Already Exists');
+			throw new \Exception(sprintf(_("%s already exists!"),$base));
 		}
 		$ca = $this->getCADetails($caid);
-		$passphrase = !empty($passphrase) ? $passphrase : $ca['passphrase'];
+		$passphrase = $ca['passphrase'];
 		$this->PKCS->createCert($base,$ca['basename'],$passphrase);
 		return $this->saveCertificate($caid,$base,$description);
 	}
@@ -1242,7 +1236,7 @@ class Certman implements \BMO {
 	 */
 	public function saveCertificate($caid=null,$base,$description,$type='ss',$additional=array()) {
 		if($this->checkCertificateName($base)) {
-			return false;
+			throw new \Exception(sprintf(_("%s already exists!"),$base));
 		}
 		if (!is_array($additional)) {
 			$additional = array();

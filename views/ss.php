@@ -37,15 +37,11 @@ if(count($cas) == 1){
 										<div class="row">
 											<div class="form-group">
 												<div class="col-md-3">
-													<label class="control-label" for="name"><?php echo _("Name")?></label>
-													<i class="fa fa-question-circle fpbx-help-icon" data-for="name"></i>
+													<label class="control-label" for="hostname"><?php echo  _("Host Name") ?></label>
+													<i class="fa fa-question-circle fpbx-help-icon" data-for="hostname"></i>
 												</div>
 												<div class="col-md-9">
-													<?php if (empty($cert['cid'])) { ?>
-														<input type="text" class="form-control" autocomplete="off" name="name" id="name" placeholder="BaseName" data-invalid="<?php echo _('This field cannot be blank and must be alphanumeric')?>" value="<?php echo !empty($cert['basename']) ? $cert['basename'] : ""?>" required pattern="[A-Za-z0-9]{3,100}">
-													<?php } else { ?>
-														<?php echo !empty($cert['basename']) ? $cert['basename'] : ""?>
-													<?php } ?>
+													<input type="text" class="form-control" id="hostname" name="hostname" placeholder="<?php echo $hostname ?>" value="<?php echo $hostname?>" required>
 												</div>
 											</div>
 										</div>
@@ -53,7 +49,7 @@ if(count($cas) == 1){
 								</div>
 								<div class="row">
 									<div class="col-md-12">
-										<span id="name-help" class="help-block fpbx-help-block"><?php echo _("The base name of the certificate, Can only contain alphanumeric characters")?></span>
+										<span id="hostname-help" class="help-block fpbx-help-block"><?php echo _("DNS name or your IP address")?></span>
 									</div>
 								</div>
 							</div>
@@ -176,28 +172,6 @@ if(count($cas) == 1){
 									</div>
 								</div>
 							<?php } else { ?>
-								<div class="element-container">
-									<div class="row">
-										<div class="col-md-12">
-											<div class="row">
-												<div class="form-group">
-													<div class="col-md-3">
-														<label class="control-label" for="hostname"><?php echo  _("Host Name") ?></label>
-														<i class="fa fa-question-circle fpbx-help-icon" data-for="hostname"></i>
-													</div>
-													<div class="col-md-9">
-														<input type="text" class="form-control" id="hostname" name="hostname" placeholder="<?php echo $hostname ?>" value="<?php echo $hostname?>" required>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-12">
-											<span id="hostname-help" class="help-block fpbx-help-block"><?php echo _("DNS name or your IP address")?></span>
-										</div>
-									</div>
-								</div>
 								<div class="element-container">
 									<div class="row">
 										<div class="col-md-12">
