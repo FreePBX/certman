@@ -10,14 +10,14 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-02 17:17-0800\n"
-"PO-Revision-Date: 2016-11-25 04:11+0200\n"
-"Last-Translator: Pascal <pascal.noyel@ipexia.com>\n"
-"Language-Team: French <http://weblate.freepbx.org/projects/freepbx/certman/"
-"fr_FR/>\n"
+"PO-Revision-Date: 2017-03-12 20:22+0200\n"
+"Last-Translator: Francis <fbinet@solist.ca>\n"
+"Language-Team: French "
+"<http://weblate.freepbx.org/projects/freepbx/certman/fr_FR/>\n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr_FR\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 2.4\n"
 
@@ -506,7 +506,7 @@ msgstr ""
 
 #: views/up.php:173
 msgid "None"
-msgstr ""
+msgstr "Aucun"
 
 #: views/up.php:207 views/up.php:216
 msgid "Not Shown for your security. Paste a new certificate here"
@@ -571,7 +571,7 @@ msgstr ""
 
 #: Certman.class.php:612
 msgid "Reset"
-msgstr "Remise à zéro"
+msgstr "Réinitialiser"
 
 #: views/ca.php:50
 msgid "Select this for additional fields used to upload your own certificate."
@@ -612,7 +612,7 @@ msgstr ""
 
 #: Certman.class.php:617
 msgid "Submit"
-msgstr "Envoyer"
+msgstr "Soumettre"
 
 #: Certman.class.php:480
 msgid "Successfully deleted the Certificate Authority"
@@ -759,7 +759,7 @@ msgstr ""
 
 #: Console/Certman.class.php:68 views/certgrid.php:29
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
 #: Certman.class.php:468
 #, php-format
