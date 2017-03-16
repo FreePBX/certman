@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-15 09:48-0700\n"
+"POT-Creation-Date: 2017-03-15 17:01-0700\n"
 "PO-Revision-Date: 2017-03-08 21:15+0200\n"
 "Last-Translator: Kingvoice <suporte@kingvoice.com.br>\n"
 "Language-Team: Portuguese (Brazil) <http://weblate.freepbx.org/projects/"
@@ -136,11 +136,11 @@ msgstr "Certificado"
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr "O certificado %s não é legível! Não é possível continuar!"
 
-#: views/ss.php:158
+#: views/ss.php:159
 msgid "Certificate Authority"
 msgstr "Autoridade Certificadora"
 
-#: views/ss.php:170
+#: views/ss.php:171
 msgid "Certificate Authority to Reference"
 msgstr "Autoridade Certificadora para Referência"
 
@@ -180,7 +180,7 @@ msgstr ""
 "O Gerenciador de Certificados gerencia certificados para chamadas seguras "
 "(TLS/SRTP), sessões web seguras (HTTPS/WEBRT[WSS] e mais"
 
-#: views/le.php:113 views/ss.php:109 views/up.php:97
+#: views/le.php:113 views/ss.php:85 views/up.php:97
 msgid "Certificate Policies"
 msgstr "Política de Certificados"
 
@@ -252,7 +252,7 @@ msgstr ""
 msgid "City or Locality"
 msgstr "Cidade ou Localidade"
 
-#: views/le.php:100 views/ss.php:86 views/up.php:74
+#: views/le.php:100 views/up.php:74
 msgid "Common Name"
 msgstr "Nome Comum"
 
@@ -264,7 +264,7 @@ msgstr "Nome Comum (Nome do Host)"
 msgid "Country"
 msgstr "País"
 
-#: views/ss.php:52
+#: views/ss.php:122
 msgid "DNS name or your IP address"
 msgstr "Nome DNS ou seu endereço IP"
 
@@ -316,7 +316,7 @@ msgstr ""
 "Excluir a autoridade certificadora invalidará todos os certificados gerados "
 "por ela (eles serão excluídos). Está tudo bem?"
 
-#: Console/Certman.class.php:68 views/certgrid.php:28 views/ss.php:134
+#: Console/Certman.class.php:68 views/certgrid.php:28 views/ss.php:135
 #: views/up.php:122 views/view.php:47
 msgid "Description"
 msgstr "Descrição"
@@ -394,7 +394,7 @@ msgstr "Gerando certificado padrão..."
 msgid "Here"
 msgstr "Aqui"
 
-#: views/ss.php:40
+#: views/ss.php:40 views/ss.php:110
 msgid "Host Name"
 msgstr "Nome do Host"
 
@@ -406,7 +406,7 @@ msgstr ""
 "Passe o mouse sobre a coluna \"Padrão\" e clique para fazer um certificado "
 "padrão do sistema"
 
-#: views/ss.php:76 views/up.php:64
+#: views/ss.php:74 views/up.php:64
 msgid "How long the certificate is valid until"
 msgstr "Até quanto tempo o certificado será válido"
 
@@ -502,7 +502,7 @@ msgstr ""
 "certificados. Ele também colocará um conjunto padrão de certificado e sua "
 "chave em %s para uso por outras aplicações"
 
-#: views/ss.php:68
+#: views/ss.php:66
 msgid "N/A"
 msgstr "N/D"
 
@@ -573,7 +573,7 @@ msgstr "Não mostrado para sua própria segurança. Colar uma nova chave aqui"
 msgid "Note:"
 msgstr "Comentário:"
 
-#: views/csr.php:62 views/ss.php:181
+#: views/csr.php:62 views/ss.php:182
 msgid "Organization Name"
 msgstr "Nome da Organização"
 
@@ -705,7 +705,7 @@ msgstr "Definido %s como padrão com sucesso"
 msgid "Successfully updated certificate named \"%s\""
 msgstr "Certificado nomeado \"%s\" foi atualizado com sucesso"
 
-#: views/ss.php:121 views/up.php:109
+#: views/ss.php:97 views/up.php:109
 msgid "TThe certificate policies"
 msgstr "Políticas de certificado"
 
@@ -717,11 +717,11 @@ msgstr "Não é um ID válido"
 msgid "The Certificate to use from Certificate Manager"
 msgstr "Certificado a ser usado pelo Gerenciador de Certificados"
 
-#: views/ss.php:146 views/up.php:134 views/view.php:59
+#: views/ss.php:147 views/up.php:134 views/view.php:59
 msgid "The Description of this certificate. Used in the module only"
 msgstr "A Descrição deste certificado. Usado somente no módulo"
 
-#: views/ss.php:193
+#: views/ss.php:194
 msgid "The Organization Name"
 msgstr "Nome da Organização"
 
@@ -740,7 +740,7 @@ msgid ""
 "The base name of the certificate, Can only contain alphanumeric characters"
 msgstr "O nome base do certificado. Só pode conter caracteres alfanuméricos"
 
-#: views/ss.php:98 views/up.php:86
+#: views/ss.php:52 views/up.php:86
 msgid "The certificate common name, usually the same as the host name"
 msgstr "O nome comum do certificado, geralmente o mesmo nome do host"
 
@@ -946,7 +946,7 @@ msgstr "Carregado:"
 msgid "Use Certificate"
 msgstr "Usar Certificado"
 
-#: views/le.php:90 views/ss.php:64 views/up.php:54
+#: views/le.php:90 views/ss.php:62 views/up.php:54
 msgid "Valid Until"
 msgstr "Válido Até"
 
