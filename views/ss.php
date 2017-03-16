@@ -30,31 +30,29 @@ if(count($cas) == 1){
 							<input id="certtype" type="hidden" name="type" value="ss">
 							<input id="cid" type="hidden" name="cid" value="<?php echo !empty($cert['cid']) ? $cert['cid'] : ''?>">
 							<input id="caid" type="hidden" name="caid" value="<?php echo !empty($cas[0]['uid']) ? $cas[0]['uid'] : ""?>">
-							<!--Name-->
-							<div class="element-container">
-								<div class="row">
-									<div class="col-md-12">
-										<div class="row">
-											<div class="form-group">
-												<div class="col-md-3">
-													<label class="control-label" for="hostname"><?php echo  _("Host Name") ?></label>
-													<i class="fa fa-question-circle fpbx-help-icon" data-for="hostname"></i>
-												</div>
-												<div class="col-md-9">
-													<input type="text" class="form-control" id="hostname" name="hostname" placeholder="<?php echo $hostname ?>" value="<?php echo $hostname?>" required>
+							<?php if(!empty($cert['cid'])) { ?>
+								<div class="element-container">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-3">
+														<label class="control-label" for="cn"><?php echo _("Host Name")?></label>
+														<i class="fa fa-question-circle fpbx-help-icon" data-for="cn"></i>
+													</div>
+													<div class="col-md-9">
+														<?php echo $certinfo['subject']['CN']?>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-12">
-										<span id="hostname-help" class="help-block fpbx-help-block"><?php echo _("DNS name or your IP address")?></span>
+									<div class="row">
+										<div class="col-md-12">
+											<span id="cn-help" class="help-block fpbx-help-block" style=""><?php echo _('The certificate common name, usually the same as the host name')?></span>
+										</div>
 									</div>
 								</div>
-							</div>
-							<!--END Name-->
-							<?php if(!empty($cert['cid'])) { ?>
 								<div class="element-container">
 									<div class="row">
 										<div class="col-md-12">
@@ -74,28 +72,6 @@ if(count($cas) == 1){
 									<div class="row">
 										<div class="col-md-12">
 											<span id="expires-help" class="help-block fpbx-help-block" style=""><?php echo _('How long the certificate is valid until')?></span>
-										</div>
-									</div>
-								</div>
-								<div class="element-container">
-									<div class="row">
-										<div class="col-md-12">
-											<div class="row">
-												<div class="form-group">
-													<div class="col-md-3">
-														<label class="control-label" for="cn"><?php echo _("Common Name")?></label>
-														<i class="fa fa-question-circle fpbx-help-icon" data-for="cn"></i>
-													</div>
-													<div class="col-md-9">
-														<?php echo $certinfo['subject']['CN']?>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-12">
-											<span id="cn-help" class="help-block fpbx-help-block" style=""><?php echo _('The certificate common name, usually the same as the host name')?></span>
 										</div>
 									</div>
 								</div>
@@ -123,6 +99,31 @@ if(count($cas) == 1){
 										</div>
 									</div>
 								<?php } ?>
+							<?php } else { ?>
+								<!--Name-->
+								<div class="element-container">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-3">
+														<label class="control-label" for="hostname"><?php echo  _("Host Name") ?></label>
+														<i class="fa fa-question-circle fpbx-help-icon" data-for="hostname"></i>
+													</div>
+													<div class="col-md-9">
+														<input type="text" class="form-control" id="hostname" name="hostname" placeholder="<?php echo $hostname ?>" value="<?php echo $hostname?>" required>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<span id="hostname-help" class="help-block fpbx-help-block"><?php echo _("DNS name or your IP address")?></span>
+										</div>
+									</div>
+								</div>
+								<!--END Name-->
 							<?php } ?>
 							<!--Description-->
 							<div class="element-container">
@@ -159,7 +160,7 @@ if(count($cas) == 1){
 														<i class="fa fa-question-circle fpbx-help-icon" data-for="ca"></i>
 													</div>
 													<div class="col-md-9">
-														<b><?php echo $cas[0]['on']?></b> <a href="?display=certman&amp;certaction=delete&amp;type=ca" id="delCA"><i class="fa fa-trash-o"></i></i>
+														<b><?php echo $cas[0]['on']?></b> <a href="?display=certman&amp;certaction=delete&amp;type=ca" id="delCA"><i class="fa fa-trash-o"></i></a>
 													</div>
 												</div>
 											</div>
