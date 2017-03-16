@@ -10,45 +10,48 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-15 09:48-0700\n"
-"PO-Revision-Date: 2017-03-12 20:22+0200\n"
-"Last-Translator: Francis <fbinet@solist.ca>\n"
-"Language-Team: French <http://weblate.freepbx.org/projects/freepbx/certman/"
-"fr_FR/>\n"
+"PO-Revision-Date: 2017-03-16 01:15+0200\n"
+"Last-Translator: Nicolas <freepbx@riendeau.org>\n"
+"Language-Team: French "
+"<http://weblate.freepbx.org/projects/freepbx/certman/fr_FR/>\n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr_FR\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 2.4\n"
 
 #: Certman.class.php:1221 Certman.class.php:1239
 #, php-format
 msgid "%s already exists!"
-msgstr ""
+msgstr "%s existe déjà !"
 
 #: Certman.class.php:1733
 #, php-format
 msgid "(%s days)"
-msgstr ""
+msgstr "(%s jours)"
 
 #: views/le.php:136
 msgid "(Port 80)"
-msgstr ""
+msgstr "(Port 80)"
 
 #: Console/Certman.class.php:37
 msgid "<error>"
-msgstr ""
+msgstr "<erreur>"
 
 #: Console/Certman.class.php:40 Console/Certman.class.php:76
 #: Console/Certman.class.php:83
 msgid "<info>"
-msgstr ""
+msgstr "<info>"
 
 #: views/ca.php:5
 msgid ""
 "A Certificate Authority is already present on this system. Deleting/"
 "Generating/Uploading will invalidate all of your current certificates!"
 msgstr ""
+"Une autorité de certification (AC/CA) est déjà présente sur ce système. La "
+"suppression/génération/téléversement d'un nouveau invalidera tous vos "
+"certificats actuels !"
 
 #: views/overview.php:19
 msgid ""
@@ -56,6 +59,10 @@ msgid ""
 "this certificate now to get started however we strongly urge you to get a "
 "real certificate from a standard authority or through Let's Encrypt"
 msgstr ""
+"Un certificat auto-signé a été généré pour vous lors de l'installation. Vous "
+"pouvez utiliser ce certificat pour commencer mais nous vous suggérons "
+"fortement d'obtenir un vrai certificat d'une autorité reconnue ou par "
+"l'intermédiaire de \"Let's Encrypt\""
 
 #: views/le.php:121
 msgid ""
@@ -70,11 +77,11 @@ msgstr "Action"
 
 #: views/ss.php:21 views/up.php:8
 msgid "Add New Certificate"
-msgstr ""
+msgstr "Ajouter un nouveau certificat"
 
 #: Certman.class.php:425 Certman.class.php:451
 msgid "Added new certificate"
-msgstr ""
+msgstr "Nouveau certificat ajouté"
 
 #: Certman.class.php:474
 msgid "Added new certificate signing request"
@@ -118,11 +125,11 @@ msgstr "Certificat"
 #: Certman.class.php:1620 Certman.class.php:1635 Certman.class.php:1644
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
-msgstr ""
+msgstr "Le certificat %s n'est pas lisible ! Impossible de continuer !"
 
 #: views/ss.php:158
 msgid "Certificate Authority"
-msgstr ""
+msgstr "Autorité de certification"
 
 #: views/ss.php:170
 msgid "Certificate Authority to Reference"
@@ -130,11 +137,11 @@ msgstr ""
 
 #: Certman.class.php:1728
 msgid "Certificate Expired!"
-msgstr ""
+msgstr "Le certificat est expiré !"
 
 #: views/le.php:53
 msgid "Certificate Host Name"
-msgstr ""
+msgstr "Nom d'hôte du certificat"
 
 #: views/rnav.php:2
 msgid "Certificate List"
@@ -142,11 +149,11 @@ msgstr "Liste de certificats"
 
 #: Console/Certman.class.php:21 certman.i18n.php:10 views/overview.php:7
 msgid "Certificate Management"
-msgstr ""
+msgstr "Gestion des certificats"
 
 #: certman.i18n.php:4
 msgid "Certificate Manager"
-msgstr ""
+msgstr "Gestionnaire des certificats"
 
 #: certman.i18n.php:8
 msgid ""
@@ -166,7 +173,7 @@ msgstr ""
 
 #: views/view.php:10
 msgid "Certificate Settings"
-msgstr ""
+msgstr "Paramètres des certificats"
 
 #: views/up.php:185
 msgid ""
@@ -176,15 +183,15 @@ msgstr ""
 
 #: Certman.class.php:1396
 msgid "Certificate is empty"
-msgstr ""
+msgstr "Le certificat est vide"
 
 #: Certman.class.php:360 Certman.class.php:370
 msgid "Certificate is invalid"
-msgstr ""
+msgstr "Le certificat est invalide"
 
 #: Certman.class.php:396 Certman.class.php:457
 msgid "Certificate name is already in use"
-msgstr ""
+msgstr "Le nom de certificat est déjà en utilisation"
 
 #: Certman.class.php:691
 #, php-format
@@ -192,6 +199,8 @@ msgid ""
 "Certificate named \"%s\" has expired. Please update this certificate in "
 "Certificate Manager"
 msgstr ""
+"Le certificat \"%s\" est expiré. Veuillez le mettre à jour dans le "
+"gestionnaire de certificat"
 
 #: Certman.class.php:717
 #, php-format
@@ -199,11 +208,13 @@ msgid ""
 "Certificate named \"%s\" is going to expire in less than a month. Please "
 "update this certificate in Certificate Manager"
 msgstr ""
+"Le certificat \"%s\"  va expirer dans moins de un mois. Veuillez le mettre à "
+"jour dans le gestionnaire de certificat"
 
 #: Certman.class.php:721
 #, php-format
 msgid "Certificate named \"%s\" is valid"
-msgstr ""
+msgstr "Le certificat \"%s\" est valide"
 
 #: views/ca.php:104
 msgid "Certificate to use for this CA (must reference the Private Key)"
@@ -233,7 +244,7 @@ msgstr ""
 
 #: views/csr.php:106 views/le.php:149
 msgid "Country"
-msgstr ""
+msgstr "Pays"
 
 #: views/ss.php:52
 msgid "DNS name or your IP address"
