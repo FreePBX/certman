@@ -10,14 +10,14 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-15 17:01-0700\n"
-"PO-Revision-Date: 2017-03-08 21:15+0200\n"
+"PO-Revision-Date: 2017-03-23 13:47+0200\n"
 "Last-Translator: Kingvoice <suporte@kingvoice.com.br>\n"
-"Language-Team: Portuguese (Brazil) <http://weblate.freepbx.org/projects/"
-"freepbx/certman/pt_BR/>\n"
+"Language-Team: Portuguese (Brazil) "
+"<http://weblate.freepbx.org/projects/freepbx/certman/pt_BR/>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2.4\n"
 
@@ -874,7 +874,7 @@ msgstr "Não foi possível remover %s"
 
 #: Certman.class.php:1445
 msgid "Unable to remove ca.cfg"
-msgstr "Não é possível remover ca.cfg"
+msgstr "Não foi possível remover ca.cfg"
 
 #: Certman.class.php:1440
 msgid "Unable to remove ca.crt"
@@ -894,7 +894,7 @@ msgstr "Não é possível remover a Solicitação de Assinatura de Certificado"
 
 #: Certman.class.php:1450
 msgid "Unable to remove tmp.cfg"
-msgstr "Não é possível remover tmp.cfg"
+msgstr "Não foi possível remover tmp.cfg"
 
 #: Certman.class.php:893 Certman.class.php:897 Certman.class.php:901
 #, php-format
