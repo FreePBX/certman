@@ -96,7 +96,7 @@ class Certman implements \BMO {
 			),
 			"basename" => array(
 				"type" => "string",
-				"length" => 255,
+				"length" => 190,
 				"notnull" => true,
 				"customSchemaOptions" => array(
 					"unique" => true
@@ -143,7 +143,7 @@ class Certman implements \BMO {
 			),
 			"basename" => array(
 				"type" => "string",
-				"length" => 255,
+				"length" => 190,
 				"notnull" => true,
 				"customSchemaOptions" => array(
 					"unique" => true
