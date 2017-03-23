@@ -9,11 +9,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-15 17:01-0700\n"
+"POT-Creation-Date: 2017-03-23 14:24+0000\n"
 "PO-Revision-Date: 2017-03-23 13:47+0200\n"
 "Last-Translator: Kingvoice <suporte@kingvoice.com.br>\n"
-"Language-Team: Portuguese (Brazil) "
-"<http://weblate.freepbx.org/projects/freepbx/certman/pt_BR/>\n"
+"Language-Team: Portuguese (Brazil) <http://weblate.freepbx.org/projects/"
+"freepbx/certman/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -100,7 +100,7 @@ msgstr ""
 "inscrever-se para um certificado GRÁTIS  do projeto Let's Encrypt. Saiba "
 "mais %s"
 
-#: certman.i18n.php:6
+#: certman.i18n.php:6 certman.i18n.php:12
 msgid "Admin"
 msgstr "Admin"
 
