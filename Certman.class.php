@@ -834,7 +834,7 @@ class Certman implements \BMO {
 			$key = file_get_contents($location."/".$host.".key");
 			$cert = file_get_contents($location."/".$host.".crt");
 			$bundle = file_get_contents($location."/".$host."-ca-bundle.crt");
-			file_put_contents($location."/".$host.".pem",$key."\n".$cert."\n".$bundle); //should the chain be in here??
+			file_put_contents($location."/".$host.".pem",$key."\n".$cert."\n".$bundle);
 			chmod($location."/".$host.".crt",0600);
 			chmod($location."/".$host.".key",0600);
 			chmod($location."/".$host.".pem",0600);
