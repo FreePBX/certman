@@ -720,8 +720,10 @@ class Certman implements \BMO {
 			} else {
 				$messages[] = array('type' => 'success', 'message' => sprintf(_('Certificate named "%s" is valid'),$cert['basename']));
 			}
-			//trigger hook
-			$this->updateCertificate($cert,$cert['description']);
+			//trigger hook only if we really updated though
+			if($update) {
+				$this->updateCertificate($cert,$cert['description']);
+			}
 		}
 		$nt = \notifications::create();
 		$notification = '';
