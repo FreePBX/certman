@@ -1645,8 +1645,8 @@ class Certman implements \BMO {
 				if(!is_readable($file)) {
 					throw new \Exception(sprintf(_("Certificate %s is not readable! Can not continue!"),$file));
 				}
-				$details['integration']['files'][$type] = $file;
-				$details['integration']['hashes'][$type] = sha1_file($file);
+				$details['integration']['files']['pem'] = $file;
+				$details['integration']['hashes']['pem'] = sha1_file($file);
 			}
 		}
 		if(!empty($details['additional'])) {
