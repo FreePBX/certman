@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>13.0.36.6</version>
+	<version>13.0.36.7</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -13,6 +13,7 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
+		*13.0.36.7* If CA files are missing or not in database then rebuild
 		*13.0.36.6* Send back proper pem
 		*13.0.36.5* Only execute updateCertificate if the certificate really updated
 		*13.0.36.4* Minor fix for uft8mb4 support

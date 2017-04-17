@@ -213,7 +213,7 @@ class Certman implements \BMO {
 				$this->makeCertDefault($cid);
 				out(_("Done!"));
 			} catch(\Exception $e) {
-				out(_("Failed!"));
+				out(sprintf(_("Failed! [%s]"),$e->getMessage()));
 				//return false;
 			}
 		}
@@ -1068,8 +1068,9 @@ class Certman implements \BMO {
 	public function checkCAexists() {
 		$o = $this->getAllAuthorityFiles();
 		$z = $this->getAllManagedCAs();
-		if(empty($o) && !empty($z)) {
-			//files are missing from hard drive. run delete
+		if((!empty($o) && empty($z)) || (empty($o) && !empty($z))) {
+			//files are missing from hard drive/database, so something is corrupt.
+			//run delete to resolve
 			$this->removeCA();
 			return false;
 		}
