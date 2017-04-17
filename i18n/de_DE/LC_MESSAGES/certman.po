@@ -9,24 +9,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-12 18:22-0400\n"
+"POT-Creation-Date: 2017-04-17 10:43-0700\n"
 "PO-Revision-Date: 2017-03-19 19:32+0200\n"
 "Last-Translator: hammer125 <auswertung@aon.at>\n"
 "Language-Team: German <http://weblate.freepbx.org/projects/freepbx/certman/"
 "de_DE/>\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2.4\n"
 
-#: Certman.class.php:1223 Certman.class.php:1241
+#: Certman.class.php:1224 Certman.class.php:1242
 #, php-format
 msgid "%s already exists!"
 msgstr ""
 
-#: Certman.class.php:1735
+#: Certman.class.php:1736
 #, php-format
 msgid "(%s days)"
 msgstr ""
@@ -115,7 +115,7 @@ msgstr "CSR-Referenz"
 msgid "Certificate"
 msgstr "Zertifikat"
 
-#: Certman.class.php:1622 Certman.class.php:1637 Certman.class.php:1646
+#: Certman.class.php:1623 Certman.class.php:1638 Certman.class.php:1647
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr "Zertifikat %s ist nicht lesbar! Es kann nicht fortgefahren werden!"
@@ -128,7 +128,7 @@ msgstr "Zertifizierungsstelle"
 msgid "Certificate Authority to Reference"
 msgstr ""
 
-#: Certman.class.php:1730
+#: Certman.class.php:1731
 msgid "Certificate Expired!"
 msgstr ""
 
@@ -174,7 +174,7 @@ msgid ""
 "private key."
 msgstr ""
 
-#: Certman.class.php:1398
+#: Certman.class.php:1399
 msgid "Certificate is empty"
 msgstr "Zertifikat ist leer"
 
@@ -315,8 +315,9 @@ msgid "Enable or disable DTLS-SRTP support"
 msgstr ""
 
 #: Certman.class.php:216
-msgid "Failed!"
-msgstr "Gescheitert!"
+#, php-format
+msgid "Failed! [%s]"
+msgstr ""
 
 #: views/le.php:22
 msgid "Firewall Validated"
@@ -387,7 +388,7 @@ msgstr ""
 msgid "Import Locally"
 msgstr "Lokal importieren"
 
-#: Certman.class.php:1418
+#: Certman.class.php:1419
 msgid "Imported from file system"
 msgstr "Aus Dateisystem importiert"
 
@@ -414,11 +415,11 @@ msgid "Key does not match certificate after password removal"
 msgstr ""
 "Schlüssel entspricht nach dem Entfernen des Kennworts nicht dem Zertifikat."
 
-#: Certman.class.php:1367
+#: Certman.class.php:1368
 msgid "Key is empty"
 msgstr "Schlüssel ist leer"
 
-#: Certman.class.php:1377
+#: Certman.class.php:1378
 msgid "Key is password protected or malformed"
 msgstr "Schlüssel ist passwortgeschützt oder fehlerhaft."
 
@@ -787,20 +788,20 @@ msgstr ""
 msgid "Unable to read key. Is it password protected?"
 msgstr ""
 
-#: Certman.class.php:1339
+#: Certman.class.php:1340
 #, php-format
 msgid "Unable to remove %s"
 msgstr ""
 
-#: Certman.class.php:1447
+#: Certman.class.php:1448
 msgid "Unable to remove ca.cfg"
 msgstr ""
 
-#: Certman.class.php:1442
+#: Certman.class.php:1443
 msgid "Unable to remove ca.crt"
 msgstr ""
 
-#: Certman.class.php:1437
+#: Certman.class.php:1438
 msgid "Unable to remove ca.key"
 msgstr ""
 
@@ -812,7 +813,7 @@ msgstr ""
 msgid "Unable to remove the Certificate Signing Request"
 msgstr ""
 
-#: Certman.class.php:1452
+#: Certman.class.php:1453
 msgid "Unable to remove tmp.cfg"
 msgstr ""
 
@@ -821,7 +822,7 @@ msgstr ""
 msgid "Unable to write to %s"
 msgstr ""
 
-#: Certman.class.php:1720
+#: Certman.class.php:1721
 msgid "Unknown Expiration"
 msgstr ""
 
@@ -910,6 +911,9 @@ msgid ""
 "below. This may be left blank, or updated at any time. They can be added in "
 "any order."
 msgstr ""
+
+#~ msgid "Failed!"
+#~ msgstr "Gescheitert!"
 
 #~ msgid "Certificate Already Exists"
 #~ msgstr "Zertifikat ist bereits vorhanden"
