@@ -834,6 +834,10 @@ class Certman implements \BMO {
 			$key = file_get_contents($location."/".$host.".key");
 			$cert = file_get_contents($location."/".$host.".crt");
 			$bundle = file_get_contents($location."/".$host."-ca-bundle.crt");
+			//https://issues.freepbx.org/browse/FREEPBX-14631
+			$root = file_get_contents(__DIR__."/files/x3-root-ca.cert");
+			$bundle = $bundle."\n-----BEGIN CERTIFICATE-----\n".$root."-----END CERTIFICATE-----\n";
+			file_put_contents($location."/".$host."-ca-bundle.crt",$bundle);
 			file_put_contents($location."/".$host.".pem",$key."\n".$cert."\n".$bundle);
 			chmod($location."/".$host.".crt",0600);
 			chmod($location."/".$host.".key",0600);
