@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-27 16:01-0400\n"
-"PO-Revision-Date: 2017-06-14 09:49+0200\n"
+"PO-Revision-Date: 2017-06-15 21:57+0200\n"
 "Last-Translator: Peter Trinh <ftek@ymail.com>\n"
 "Language-Team: Vietnamese "
 "<http://weblate.freepbx.org/projects/freepbx/certman/vi/>\n"
@@ -24,31 +24,33 @@ msgstr ""
 #: Certman.class.php:1228 Certman.class.php:1246
 #, php-format
 msgid "%s already exists!"
-msgstr ""
+msgstr "%s  đã tồn tại!"
 
 #: Certman.class.php:1740
 #, php-format
 msgid "(%s days)"
-msgstr ""
+msgstr "(%s ngày)"
 
 #: views/le.php:136
 msgid "(Port 80)"
-msgstr ""
+msgstr "( Cổng giao tiếp 80)"
 
 #: Console/Certman.class.php:37
 msgid "<error>"
-msgstr ""
+msgstr "<lỗi>"
 
 #: Console/Certman.class.php:40 Console/Certman.class.php:76
 #: Console/Certman.class.php:83
 msgid "<info>"
-msgstr ""
+msgstr "<thông tin>"
 
 #: views/ca.php:5
 msgid ""
 "A Certificate Authority is already present on this system. Deleting/"
 "Generating/Uploading will invalidate all of your current certificates!"
 msgstr ""
+"Một nhà cung cấp chứng thực đã có mặt trong hệ thống này. Đang xóa/ Đang "
+"khởi tạo/ Đang tải lên sẽ làm mất tất cả các chứng chỉ hiện có của bạn!"
 
 #: views/overview.php:19
 msgid ""
@@ -56,6 +58,10 @@ msgid ""
 "this certificate now to get started however we strongly urge you to get a "
 "real certificate from a standard authority or through Let's Encrypt"
 msgstr ""
+"Một chứng chỉ tự ký vừa được tạo cho bạn  lúc cài đặt. Ngay bây giờ bạn có "
+"thể sử dụng chứng chỉ này để khởi động tuy nhiên chúng tôi rất mong bạn nên "
+"có một chứng chỉ thực sự từ nhà cung cấp chứng chỉ tiêu chuẩn hoặc thông qua "
+"Let's Encrypt"
 
 #: views/le.php:121
 msgid ""
@@ -63,22 +69,25 @@ msgid ""
 "different actors of a public key infrastructure (PKI), their roles and their "
 "duties"
 msgstr ""
+"Luật chứng chỉ ( CP) là một tài liệu với mục đích để nêu rõ vai trò và nhiệm "
+"vụ của những đối tượng khác nhau của hạ tầng khóa công khai (Tiếng anh: "
+"public key infrastructure, viết tắt PKI)"
 
 #: views/certgrid.php:31
 msgid "Action"
-msgstr ""
+msgstr "Thao tác"
 
 #: views/ss.php:21 views/up.php:8
 msgid "Add New Certificate"
-msgstr ""
+msgstr "Thêm chứng chỉ mới"
 
 #: Certman.class.php:425 Certman.class.php:451
 msgid "Added new certificate"
-msgstr ""
+msgstr "Đã thêm chứng chỉ mới"
 
 #: Certman.class.php:474
 msgid "Added new certificate signing request"
-msgstr ""
+msgstr "Đã thêm yêu cầu ký chứng chỉ mới"
 
 #: views/overview.php:18
 #, php-format
@@ -87,10 +96,12 @@ msgid ""
 "can signup for a FREE certificate from the Let's Encrypt project. Learn more "
 "%s"
 msgstr ""
+"Thêm vào đó, nếu bạn đã mở truy nhập internet đến thế giới bên ngoài bạn có "
+"thể đăng ký một chứng chỉ miễn phí từ dự án Let's Encrypt. Tìm hiểu thêm %s"
 
 #: certman.i18n.php:6
 msgid "Admin"
-msgstr ""
+msgstr "Quản trị viên"
 
 #: views/up.php:206
 msgid ""
@@ -98,93 +109,104 @@ msgid ""
 "and return a Signed Certificate. That certificate should be pasted in the "
 "box below. If you leave this box blank, the certificate will not be updated."
 msgstr ""
+"Sau khi bạn gửi đi một CSR ( Certificate singing request- Yêu cầu ký chứng "
+"chỉ) tới một CA ( nhà cung cấp chứng chỉ), họ sẽ ký nó. Sau khi hợp lệ và "
+"gửi lại một Chứng chỉ đã ký. Chứng chỉ đó phải được dán vào hộp sau. Nếu bạn "
+"để hộp này trống, chứng chỉ sẽ không được cập nhật."
 
 #: assets/js/certman.js:14
 msgid "Are you sure you want to make this certificate the system default?"
-msgstr ""
+msgstr "Bạn có chắc bạn muốn đặt chứng chỉ này là mặc định của hệ thống?"
 
 #: Console/Certman.class.php:68
 msgid "Base Name"
-msgstr ""
+msgstr "Tên cơ sở"
 
 #: views/up.php:168
 msgid "CSR Reference"
-msgstr ""
+msgstr "Tham chiếu CSR ( yêu cầu ký chứng chỉ)"
 
 #: views/ca.php:89 views/certgrid.php:27 views/rnav.php:7 views/up.php:203
 msgid "Certificate"
-msgstr ""
+msgstr "Chứng chỉ"
 
 #: Certman.class.php:1627 Certman.class.php:1642 Certman.class.php:1651
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
-msgstr ""
+msgstr "Chứng chỉ %s không thể đọc được! Không thể tiếp tục!"
 
 #: views/ss.php:159
 msgid "Certificate Authority"
-msgstr ""
+msgstr "Nhà cung cấp chứng chỉ"
 
 #: views/ss.php:171
 msgid "Certificate Authority to Reference"
-msgstr ""
+msgstr "Nhà cung cấp chứng chỉ để tham chiếu"
 
 #: Certman.class.php:1735
 msgid "Certificate Expired!"
-msgstr ""
+msgstr "Chứng chỉ đã hết han!"
 
 #: views/le.php:53
 msgid "Certificate Host Name"
-msgstr ""
+msgstr "Tên Host của chứng chỉ"
 
 #: views/rnav.php:2
 msgid "Certificate List"
-msgstr ""
+msgstr "Danh sách chứng chỉ"
 
 #: Console/Certman.class.php:21 certman.i18n.php:10 views/overview.php:7
 msgid "Certificate Management"
-msgstr ""
+msgstr "Quản lý chứng chỉ"
 
 #: certman.i18n.php:4
 msgid "Certificate Manager"
-msgstr ""
+msgstr "Bộ quản lý chứng chỉ"
 
 #: certman.i18n.php:8
 msgid ""
 "Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
 "WebRTC and secure traffic)"
 msgstr ""
+"Bộ quản lý chứng chỉ cho Asterisk. Được sử dụng cho kết nối TLS, DTLS  ( "
+"think WebRTC and lưu lượng truy cập an toàn)"
 
 #: views/overview.php:16
 msgid ""
 "Certificate Manager manages certificates for secure calling (TLS/SRTP), "
 "secure web sessions (HTTPS/WEBRTC[WSS] and more"
 msgstr ""
+"Bộ quản lý chứng chỉ quản lý các chứng chỉ để đảm bảo an toàn cuộc goi ( "
+"TLS/SRTP), đảm bảo an toàn cho các phiên truy cập we (HTTPS/WEBRTC[WSS] và "
+"nhiều hơn thế"
 
 #: views/le.php:113 views/ss.php:85 views/up.php:97
 msgid "Certificate Policies"
-msgstr ""
+msgstr "Các luật chứng chỉ"
 
 #: views/view.php:10
 msgid "Certificate Settings"
-msgstr ""
+msgstr "Cài đặt chứng chỉ"
 
 #: views/up.php:185
 msgid ""
 "Certificate Signing Request to reference. Select 'None' to upload your own "
 "private key."
 msgstr ""
+"Yêu cầu ký chứng chỉ để tham chiếu. Chọn \"None\" để tải lên khóa cá nhân "
+"của chính bạn."
 
 #: Certman.class.php:1403
 msgid "Certificate is empty"
-msgstr ""
+msgstr "Chứng chỉ trống"
 
 #: Certman.class.php:360 Certman.class.php:370
 msgid "Certificate is invalid"
-msgstr ""
+msgstr "Chứng chỉ không hợp lệ"
 
 #: Certman.class.php:396 Certman.class.php:457
 msgid "Certificate name is already in use"
-msgstr ""
+msgstr "Tên chứng chỉ đang đang được sử dụng"
 
 #: Certman.class.php:691
 #, php-format
@@ -192,6 +214,8 @@ msgid ""
 "Certificate named \"%s\" has expired. Please update this certificate in "
 "Certificate Manager"
 msgstr ""
+"Chứng chỉ đã có tên \"%s\" vừa hết hạn. Vui lòng cập nhật chứng chỉ này "
+"trong bộ quản lý chứng chỉ"
 
 #: Certman.class.php:717
 #, php-format
@@ -199,65 +223,70 @@ msgid ""
 "Certificate named \"%s\" is going to expire in less than a month. Please "
 "update this certificate in Certificate Manager"
 msgstr ""
+"Thời hạn của chứng chỉ  \"%s\" chỉ còn dưới một tháng. Vui lòng cập nhật "
+"chứng chỉ này trong bộ quản lý chứng chỉ"
 
 #: Certman.class.php:721
 #, php-format
 msgid "Certificate named \"%s\" is valid"
-msgstr ""
+msgstr "Chứng chỉ đã có tên \"%s\" hợp lệ"
 
 #: views/ca.php:104
 msgid "Certificate to use for this CA (must reference the Private Key)"
 msgstr ""
+"Chứng chỉ sử dụng cho nhà cung cấp này ( phải tham chiếu đến Khóa cá nhân)"
 
 #: views/le.php:132
 msgid "Challenge Over"
-msgstr ""
+msgstr "Thử thách kết thúc"
 
 #: views/csr.php:162
 msgid ""
 "City name such as \"Toronto\" or \"Brisbane.\" Do not abbreviate. For "
 "example, enter \"Saint Louis\" not \"St. Louis\""
 msgstr ""
+"Tên thành phố ví dụ \"Toronto\" hay \"Brisbane.\". Không được viết tắt. Ví "
+"dụ, nhập tên đầy đủ là \"Saint Louis\"  chứ không được viết là \"St. Louis\""
 
 #: views/csr.php:150
 msgid "City or Locality"
-msgstr ""
+msgstr "Thành phố hoặc Địa phương"
 
 #: views/le.php:100 views/up.php:74
 msgid "Common Name"
-msgstr ""
+msgstr "Tên chung"
 
 #: views/csr.php:46
 msgid "Common Name (Host Name)"
-msgstr ""
+msgstr "Tên chung ( Tên host)"
 
 #: views/csr.php:106 views/le.php:149
 msgid "Country"
-msgstr ""
+msgstr "Quốc gia"
 
 #: views/ss.php:122
 msgid "DNS name or your IP address"
-msgstr ""
+msgstr "Tên DNS hoặc địa chỉ IP của bạn"
 
 #: functions.inc/hook_core.php:120
 msgid "DTLS Rekey Interval"
-msgstr ""
+msgstr "Khoảng thời gian Rekey DTLS"
 
 #: functions.inc/hook_core.php:106
 msgid "DTLS Setup"
-msgstr ""
+msgstr "Thiết lập DTLS"
 
 #: functions.inc/hook_core.php:88
 msgid "DTLS Verify"
-msgstr ""
+msgstr "Xác minh DTLS"
 
 #: Console/Certman.class.php:68 views/certgrid.php:30
 msgid "Default"
-msgstr ""
+msgstr "Mặc định"
 
 #: Certman.class.php:212
 msgid "Default Self-Signed certificate"
-msgstr ""
+msgstr "Chứng chỉ tự ký mặc định"
 
 #: Certman.class.php:610
 msgid "Delete"
@@ -265,25 +294,27 @@ msgstr "Xóa"
 
 #: views/certgrid.php:17
 msgid "Delete CSR"
-msgstr ""
+msgstr "Xóa CSR"
 
 #: Certman.class.php:626
 msgid "Delete Certificate"
-msgstr ""
+msgstr "Xóa chứng chỉ"
 
 #: views/certgrid.php:20
 msgid "Delete Self-Signed CA"
-msgstr ""
+msgstr "Xóa nhà cung cấp chứng chỉ tự ký"
 
 #: Certman.class.php:503
 msgid "Deleted Certificate"
-msgstr ""
+msgstr "Chứng chỉ đã xóa"
 
 #: assets/js/certman.js:5
 msgid ""
 "Deleting the certificate authority will invalidate all certificates "
 "generated by this one (They will be deleted). Is that OK?"
 msgstr ""
+"Đang xóa nhà cung cấp chứng chỉ sẽ làm mất tất cả các chứng chỉ được tạo bởi "
+"họ ( Chúng sẽ bị xóa). Điều này có được không?"
 
 #: Console/Certman.class.php:68 views/certgrid.php:28 views/ss.php:135
 #: views/up.php:122 views/view.php:47
@@ -292,46 +323,48 @@ msgstr "Mô tả"
 
 #: Certman.class.php:203 Certman.class.php:214
 msgid "Done!"
-msgstr ""
+msgstr "Đã xong!"
 
 #: views/certgrid.php:16
 msgid "Download CSR"
-msgstr ""
+msgstr "Tải xuống CSR"
 
 #: views/ca.php:13
 msgid "Edit Certificate Authority Settings"
-msgstr ""
+msgstr "Hiệu chỉnh cài đặt nhà cung cấp chứng chỉ"
 
 #: views/le.php:36
 msgid "Edit Let's Encrypt Certificate"
-msgstr ""
+msgstr "Hiệu chỉnh chứng chỉ Let's Encrypt"
 
 #: functions.inc/hook_core.php:60
 msgid "Enable DTLS"
-msgstr ""
+msgstr "Bật DTLS"
 
 #: functions.inc/hook_core.php:61
 msgid "Enable or disable DTLS-SRTP support"
-msgstr ""
+msgstr "Bật hoặc Tắt hỗ trợ DTLS-SRTP"
 
 #: Certman.class.php:216
 #, php-format
 msgid "Failed! [%s]"
-msgstr ""
+msgstr "Thất bại!  [%s]"
 
 #: views/le.php:22
 msgid "Firewall Validated"
-msgstr ""
+msgstr "Tường lửa đã hợp lệ"
 
 #: views/le.php:16 views/le.php:28
 msgid "Firewall Warning"
-msgstr ""
+msgstr "Tường lửa đang cảnh báo"
 
 #: views/overview.php:17
 msgid ""
 "From this interface you can generate a Certificate Signing Request (CSR) "
 "which you can then use to issue a certificate to use for this server"
 msgstr ""
+"Từ giao diện này bạn có thể khởi tạo một yêu cầu ký chứng chỉ ( CSR) cho "
+"việc bạn hành một chứng chỉ sử dụng máy chủ này"
 
 #: Certman.class.php:631 views/certgrid.php:14
 msgid "Generate CSR"
@@ -653,7 +686,7 @@ msgstr ""
 
 #: functions.inc/hook_core.php:76
 msgid "The Certificate to use from Certificate Manager"
-msgstr ""
+msgstr "Chứng chỉ sử dụng từ bộ quản lý chứng chỉ"
 
 #: views/ss.php:147 views/up.php:134 views/view.php:59
 msgid "The Description of this certificate. Used in the module only"
@@ -885,7 +918,7 @@ msgstr ""
 
 #: views/overview.php:12
 msgid "What is Certificate Manager?"
-msgstr ""
+msgstr "Certificate Manager là gì?"
 
 #: functions.inc/hook_core.php:107
 msgid ""
