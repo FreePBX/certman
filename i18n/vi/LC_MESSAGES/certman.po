@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-27 16:01-0400\n"
-"PO-Revision-Date: 2017-06-15 21:57+0200\n"
+"PO-Revision-Date: 2017-06-15 22:44+0200\n"
 "Last-Translator: Peter Trinh <ftek@ymail.com>\n"
 "Language-Team: Vietnamese "
 "<http://weblate.freepbx.org/projects/freepbx/certman/vi/>\n"
@@ -368,35 +368,35 @@ msgstr ""
 
 #: Certman.class.php:631 views/certgrid.php:14
 msgid "Generate CSR"
-msgstr ""
+msgstr "Khởi tạo CSR"
 
 #: Certman.class.php:631 assets/js/certman.js:56
 msgid "Generate Certificate"
-msgstr ""
+msgstr "Khởi tạo chứng chỉ"
 
 #: views/certgrid.php:8
 msgid "Generate Let's Encrypt Certificate"
-msgstr ""
+msgstr "Khởi tạo Chứng chỉ Let's Encrypt"
 
 #: views/certgrid.php:10
 msgid "Generate Self-Signed Certificate"
-msgstr ""
+msgstr "Khởi tạo Chứng chỉ tự ký"
 
 #: Certman.class.php:199
 msgid "Generating default CA..."
-msgstr ""
+msgstr "Đang hởi tạo nhà cung cấp chứng chỉ mặc định..."
 
 #: Certman.class.php:209
 msgid "Generating default certificate..."
-msgstr ""
+msgstr "Đang khởi tạo chứng chỉ mặc định..."
 
 #: views/overview.php:18
 msgid "Here"
-msgstr ""
+msgstr "Ở đây"
 
 #: views/ss.php:40 views/ss.php:110
 msgid "Host Name"
-msgstr ""
+msgstr "Tên Host"
 
 #: views/overview.php:32
 msgid ""
@@ -406,27 +406,27 @@ msgstr ""
 
 #: views/ss.php:74 views/up.php:64
 msgid "How long the certificate is valid until"
-msgstr ""
+msgstr "Chứng chỉ có hiệu lực tới khi nào"
 
 #: views/ca.php:7
 msgid "I Know what I am doing"
-msgstr ""
+msgstr "Tôi biết tôi đang làm gì"
 
 #: views/up.php:196
 msgid "If you have a separate private key paste it here."
-msgstr ""
+msgstr "Nếu bạn có một khóa cá nhân riêng dán nó vào đây."
 
 #: views/certgrid.php:22
 msgid "Import Locally"
-msgstr ""
+msgstr "Nhập tại chỗ"
 
 #: Certman.class.php:1423
 msgid "Imported from file system"
-msgstr ""
+msgstr "Đã nhập từ hệ thống tệp"
 
 #: views/overview.php:23 views/overview.php:24 views/overview.php:25
 msgid "Information"
-msgstr ""
+msgstr "Thông tin"
 
 #: functions.inc/hook_core.php:121
 msgid ""
@@ -436,23 +436,23 @@ msgstr ""
 
 #: Certman.class.php:499
 msgid "Invalid Certificate"
-msgstr ""
+msgstr "Chứng chỉ mất không hợp lệ"
 
 #: Certman.class.php:920
 msgid "Key does not match certificate"
-msgstr ""
+msgstr "Khóa không khớp với chứng chỉ"
 
 #: Certman.class.php:935
 msgid "Key does not match certificate after password removal"
-msgstr ""
+msgstr "Khóa không khớp với chứng chỉ sau khi xóa mật khẩu"
 
 #: Certman.class.php:1372
 msgid "Key is empty"
-msgstr ""
+msgstr "Khóa trống"
 
 #: Certman.class.php:1382
 msgid "Key is password protected or malformed"
-msgstr ""
+msgstr "Khóa được bảo vệ bằng mật khẩu hoặc bị sai khóa"
 
 #: views/le.php:39
 #, php-format
