@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-27 16:01-0400\n"
-"PO-Revision-Date: 2017-06-15 22:44+0200\n"
+"PO-Revision-Date: 2017-06-16 15:59+0200\n"
 "Last-Translator: Peter Trinh <ftek@ymail.com>\n"
 "Language-Team: Vietnamese "
 "<http://weblate.freepbx.org/projects/freepbx/certman/vi/>\n"
@@ -403,6 +403,8 @@ msgid ""
 "Hover over the 'Default' column and click to make a certificate the system "
 "default"
 msgstr ""
+"Di chuột  đến cột 'Defualt\" ( Mặc định)  và kích vào đó đặt một chứng chỉ "
+"là mặc định trong hệ thống"
 
 #: views/ss.php:74 views/up.php:64
 msgid "How long the certificate is valid until"
@@ -433,6 +435,9 @@ msgid ""
 "Interval at which to renegotiate the TLS session and rekey the SRTP session. "
 "If this is not set or the value provided is 0 rekeying will be disabled"
 msgstr ""
+"Khoảng thời gian để dàn xếp lại phiên TLS và thay đổi khóa của phiên SRTP. "
+"Nếu điều này không được cài đặt hoặc giá trị được cung cấp là 0 việc thay "
+"đổi khóa sẽ bị vô hiệu"
 
 #: Certman.class.php:499
 msgid "Invalid Certificate"
@@ -461,14 +466,19 @@ msgid ""
 "when required (Approximately every 2 months). Do not install your own "
 "certificate updaters!"
 msgstr ""
+"Những chứng chỉ Let's Encrypt  là <strong>tự động</strong> cập nhật bằng %s "
+"khi được yêu cầu ( xấp xỉ 2 tháng 1 lần). Không cài đặt các cập nhật chứng "
+"chỉ của riêng bạn!"
 
 #: views/overview.php:23
 msgid "Let's Encrypt:"
-msgstr ""
+msgstr "Chứng chỉ Let's Encrypt:"
 
 #: views/le.php:140
 msgid "LetsEncrypt only supports hostname validation via HTTP on port 80."
 msgstr ""
+"LetsEncrypt chỉ hỗ trợ  xác nhận hostname thông qua HTTP trên cổng giao tiếp "
+"80 ( Port 80)."
 
 #: views/le.php:8
 #, php-format
@@ -476,6 +486,8 @@ msgid ""
 "LetsEncrypt requires the following hosts to be permitted for inbound http "
 "access:<br /> <tt>%s</tt>"
 msgstr ""
+"LetsEncrypt yêu cầu các host sau được cho phép đối với việc truy cập vào "
+"http: <br /> <tt>%s</tt>"
 
 #: views/overview.php:33
 #, php-format
@@ -486,38 +498,43 @@ msgid ""
 "standard set of the certificate and it's key into %s for use by other "
 "applications"
 msgstr ""
+"Tạo chứng chỉ 'mặc định' sẽ thay đổi các cài đặt chứng chỉ trong mỗi Cài đặt "
+"nâng cao. Điều này bặt buộc chứng chỉ được nói đến là mặc định cho các tùy "
+"chọn trong Cài đặt nâng cao yêu cầu phải có chứng chỉ. Nó sẽ đặt một bộ "
+"chứng chỉ tiêu chuẩn và đây là khóa để vào trong %s cho các ứng dụng khác sử "
+"dụng"
 
 #: views/ss.php:66
 msgid "N/A"
-msgstr ""
+msgstr "N/A ( Non Available- không khả dụng)"
 
 #: views/csr.php:24 views/up.php:26 views/view.php:23
 msgid "Name"
-msgstr ""
+msgstr "Tên"
 
 #: views/certgrid.php:5
 msgid "New Certificate"
-msgstr ""
+msgstr "Chứng chỉ mới"
 
 #: views/ca.php:13
 msgid "New Certificate Authority Settings"
-msgstr ""
+msgstr "Cài đặt nhà cung cấp chứng chỉ mới"
 
 #: views/csr.php:8
 msgid "New Certificate Signing Request"
-msgstr ""
+msgstr "Yêu cầu ký chứng chỉ mới"
 
 #: views/le.php:36
 msgid "New Let's Encrypt Certificate"
-msgstr ""
+msgstr "Chứng chỉ Let's Encrypt mới"
 
 #: Certman.class.php:895
 msgid "No Certificate provided"
-msgstr ""
+msgstr "Không có chứng chỉ nào được cấp"
 
 #: Certman.class.php:196
 msgid "No Certificates exist"
-msgstr ""
+msgstr "Không có chứng chỉ nào tồn tại"
 
 #: Console/Certman.class.php:76
 #, php-format
