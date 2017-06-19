@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-27 16:01-0400\n"
-"PO-Revision-Date: 2017-06-19 15:59+0200\n"
+"PO-Revision-Date: 2017-06-19 17:16+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese "
 "<http://weblate.freepbx.org/projects/freepbx/certman/vi/>\n"
@@ -743,40 +743,40 @@ msgstr "Tên cơ sở của chứng chỉ, chỉ có thể bao gồm các ký t�
 
 #: views/ss.php:52 views/up.php:86
 msgid "The certificate common name, usually the same as the host name"
-msgstr ""
+msgstr "Tên thông thường của chứng chỉ, thường giống như tên host"
 
 #: Console/Certman.class.php:96
 msgid "The command provided is not valid"
-msgstr ""
+msgstr "Lệnh được cung cấp không hợp lệ"
 
 #: views/overview.php:21
 msgid "There are three different types of certificates this module can handle:"
-msgstr ""
+msgstr "Có nhiều loại chứng chỉ mà mô đun này có thể xử lý:"
 
 #: Console/Certman.class.php:86
 #, php-format
 msgid "There was an error importing %s. The error was: %s"
-msgstr ""
+msgstr "Xảy ra lỗi khi nhập %s. Lỗi này là: %s"
 
 #: Certman.class.php:325 Certman.class.php:420
 #, php-format
 msgid "There was an error importing the certificate: %s"
-msgstr ""
+msgstr "Xảy ra lỗi khi nhập chứng chỉ: %s"
 
 #: Certman.class.php:687 Certman.class.php:713
 #, php-format
 msgid "There was an error updating certificate \"%s\": %s"
-msgstr ""
+msgstr "Xảy ra lỗi khi cập nhật chứng chỉ  \"%s\": %s"
 
 #: Certman.class.php:348 Certman.class.php:388
 #, php-format
 msgid "There was an error updating the certificate: %s"
-msgstr ""
+msgstr "Xảy ra lỗi khi cập nhật chứng chỉ: %s"
 
 #: Certman.class.php:655
 #, php-format
 msgid "There were no files left for certificate \"%s\" so it was removed"
-msgstr ""
+msgstr "Không còn tệp nào cho chứng chỉ \"%s\" vì vậy nó bị xóa"
 
 #: views/le.php:24
 msgid ""
@@ -784,6 +784,9 @@ msgid ""
 "possible that other external firewalls may block access. If you are having "
 "problems validating your certificate, this could be the issue."
 msgstr ""
+"Các mục nhập này được cài đặt chính xác trên mô đun tường lửa. Tuy nhiên, "
+"các tường lửa nội bộ khác có thể chặn truy nhập. Nếu bạn đang gặp vấn đề "
+"trong việc hợp lệ hóa các chứng chỉ, đây có thể là vấn đề."
 
 #: views/le.php:18
 msgid ""
@@ -792,16 +795,22 @@ msgid ""
 "issueance will fail. To automatically add these hosts, please click on the "
 "'Update Firewall' button."
 msgstr ""
+"Các host <strong> không được cấu hình trong tường lửa hệ thống </strong>. "
+"LetsEncrypt  sẽ không thể xác nhận host này, và việc ban hành chứng chỉ sẽ "
+"không thành công. Để tự động thêm các host này, vui lòng kích vào nút "
+"'Update Firewall'."
 
 #: views/le.php:81
 msgid ""
 "This email address is given to Let's Encrypt. It may be used by them if the "
 "certificate is approaching expiration and it has not been renewed."
 msgstr ""
+"Địa chỉ email này được gửi tới Let's Encryp. Nó được sử dụng bởi Let's "
+"Encrypt nếu chứng chỉ đang gần hết hạn và sẽ được làm mới."
 
 #: views/csr.php:28 views/up.php:31
 msgid "This field cannot be blank and must be alphanumeric"
-msgstr ""
+msgstr "Trường này không thể để trống và phải là chữ và số"
 
 #: views/le.php:65
 msgid ""
@@ -809,6 +818,8 @@ msgid ""
 "will validate that the hostname resolves to this machine, and attempt to "
 "connect to it."
 msgstr ""
+"Đây phải là tên host bạn đang yêu cầu một chứng chỉ cho nó.  LetsEncrypt sẽ "
+"xác nhận rằng tên host liên quan tới máy này, và cố gắng để kết nối với nó."
 
 #: views/overview.php:20
 #, php-format
@@ -816,6 +827,8 @@ msgid ""
 "To manually import certificate files place them into %s and make sure they "
 "have the same basename, EG: %s"
 msgstr ""
+"Để nhập các tệp chứng chỉ tự động thì đặt chúng vào %s  và đảm bảo chúng có "
+"cùng tên cơ sở, EG: %s"
 
 #: views/up.php:212
 msgid "Trusted Chain"
