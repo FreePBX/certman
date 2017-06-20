@@ -9,24 +9,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-27 16:01-0400\n"
+"POT-Creation-Date: 2017-06-20 13:33-0400\n"
 "PO-Revision-Date: 2017-06-20 15:59+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
-"Language-Team: Vietnamese "
-"<http://weblate.freepbx.org/projects/freepbx/certman/vi/>\n"
-"Language: vi\n"
+"Language-Team: Vietnamese <http://weblate.freepbx.org/projects/freepbx/"
+"certman/vi/>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: vi\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 2.4\n"
 
-#: Certman.class.php:1228 Certman.class.php:1246
+#: Certman.class.php:1237 Certman.class.php:1255
 #, php-format
 msgid "%s already exists!"
 msgstr "%s  đã tồn tại!"
 
-#: Certman.class.php:1740
+#: Certman.class.php:1749
 #, php-format
 msgid "(%s days)"
 msgstr "(%s ngày)"
@@ -70,8 +70,8 @@ msgid ""
 "duties"
 msgstr ""
 "Luật chứng thực ( CP) là một tài liệu với mục đích để nêu rõ vai trò và "
-"nhiệm vụ của những đối tượng khác nhau của hạ tầng khóa công khai (Tiếng anh:"
-" public key infrastructure, viết tắt PKI)"
+"nhiệm vụ của những đối tượng khác nhau của hạ tầng khóa công khai (Tiếng "
+"anh: public key infrastructure, viết tắt PKI)"
 
 #: views/certgrid.php:31
 msgid "Action"
@@ -130,7 +130,7 @@ msgstr "Tham chiếu CSR ( yêu cầu ký chứng chỉ)"
 msgid "Certificate"
 msgstr "Chứng thực"
 
-#: Certman.class.php:1627 Certman.class.php:1642 Certman.class.php:1651
+#: Certman.class.php:1636 Certman.class.php:1651 Certman.class.php:1660
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr "Chứng thực %s không thể đọc được! Không thể tiếp tục!"
@@ -143,7 +143,7 @@ msgstr "Nhà cung cấp chứng thực"
 msgid "Certificate Authority to Reference"
 msgstr "Nhà cung cấp chứng thực để tham chiếu"
 
-#: Certman.class.php:1735
+#: Certman.class.php:1744
 msgid "Certificate Expired!"
 msgstr "Chứng thực đã hết han!"
 
@@ -168,16 +168,16 @@ msgid ""
 "Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
 "WebRTC and secure traffic)"
 msgstr ""
-"Bộ quản lý chứng thực cho Asterisk. Được sử dụng cho kết nối TLS, DTLS  ( "
-"think WebRTC and lưu lượng truy cập an toàn)"
+"Bộ quản lý chứng thực cho Asterisk. Được sử dụng cho kết nối TLS, DTLS  "
+"( think WebRTC and lưu lượng truy cập an toàn)"
 
 #: views/overview.php:16
 msgid ""
 "Certificate Manager manages certificates for secure calling (TLS/SRTP), "
 "secure web sessions (HTTPS/WEBRTC[WSS] and more"
 msgstr ""
-"Bộ quản lý chứng thực quản lý các chứng thực để đảm bảo an toàn cuộc goi ( "
-"TLS/SRTP), đảm bảo an toàn cho các phiên truy cập we (HTTPS/WEBRTC[WSS] và "
+"Bộ quản lý chứng thực quản lý các chứng thực để đảm bảo an toàn cuộc goi "
+"( TLS/SRTP), đảm bảo an toàn cho các phiên truy cập we (HTTPS/WEBRTC[WSS] và "
 "nhiều hơn thế"
 
 #: views/le.php:113 views/ss.php:85 views/up.php:97
@@ -196,7 +196,7 @@ msgstr ""
 "Yêu cầu ký chứng thực để tham chiếu. Chọn \"None\" để tải lên khóa cá nhân "
 "của chính bạn."
 
-#: Certman.class.php:1403
+#: Certman.class.php:1412
 msgid "Certificate is empty"
 msgstr "Chứng thực trống"
 
@@ -422,7 +422,7 @@ msgstr "Nếu bạn có một khóa cá nhân riêng dán nó vào đây."
 msgid "Import Locally"
 msgstr "Nhập tại chỗ"
 
-#: Certman.class.php:1423
+#: Certman.class.php:1432
 msgid "Imported from file system"
 msgstr "Đã nhập từ hệ thống tệp"
 
@@ -443,19 +443,19 @@ msgstr ""
 msgid "Invalid Certificate"
 msgstr "Chứng thực không hợp lệ"
 
-#: Certman.class.php:920
+#: Certman.class.php:929
 msgid "Key does not match certificate"
 msgstr "Khóa không khớp với chứng thực"
 
-#: Certman.class.php:935
+#: Certman.class.php:944
 msgid "Key does not match certificate after password removal"
 msgstr "Khóa không khớp với chứng thực sau khi xóa mật khẩu"
 
-#: Certman.class.php:1372
+#: Certman.class.php:1381
 msgid "Key is empty"
 msgstr "Khóa trống"
 
-#: Certman.class.php:1382
+#: Certman.class.php:1391
 msgid "Key is password protected or malformed"
 msgstr "Khóa được bảo vệ bằng mật khẩu hoặc bị sai khóa"
 
@@ -860,24 +860,24 @@ msgstr "Không thể khởi tạo nhà cung cấp chứng thực"
 msgid "Unable to generate certificate: %s"
 msgstr "Không thể khởi tạo chứng thực: %s"
 
-#: Certman.class.php:916
+#: Certman.class.php:925
 msgid "Unable to read key. Is it password protected?"
 msgstr "Không thể đọc khóa. Nó có được bảo vệ bằng mật khẩu không?"
 
-#: Certman.class.php:1344
+#: Certman.class.php:1353
 #, php-format
 msgid "Unable to remove %s"
 msgstr "Không thể xóa %s"
 
-#: Certman.class.php:1452
+#: Certman.class.php:1461
 msgid "Unable to remove ca.cfg"
 msgstr "Không thể xóa  ca.cfg"
 
-#: Certman.class.php:1447
+#: Certman.class.php:1456
 msgid "Unable to remove ca.crt"
 msgstr "Không thể xóa  ca.crt"
 
-#: Certman.class.php:1442
+#: Certman.class.php:1451
 msgid "Unable to remove ca.key"
 msgstr "Không thể xóa ca.key"
 
@@ -889,16 +889,16 @@ msgstr "Không thể xóa nhà cung cấp chứng thực"
 msgid "Unable to remove the Certificate Signing Request"
 msgstr "Không thể xóa Yêu cầu ký chứng thực"
 
-#: Certman.class.php:1457
+#: Certman.class.php:1466
 msgid "Unable to remove tmp.cfg"
 msgstr "Không thể xóa tmp.cfg"
 
-#: Certman.class.php:899 Certman.class.php:903 Certman.class.php:907
+#: Certman.class.php:908 Certman.class.php:912 Certman.class.php:916
 #, php-format
 msgid "Unable to write to %s"
 msgstr "Không thể ghi vào %s"
 
-#: Certman.class.php:1725
+#: Certman.class.php:1734
 msgid "Unknown Expiration"
 msgstr "Thời gian hết hạn không xác định"
 
@@ -967,10 +967,10 @@ msgstr ""
 "thực</li>\n"
 "<li>Một giá trị của  'no' sẽ khôngthực hiện việc xác minh vân ay hoặc chứng "
 "thực</li>\n"
-"<li>Một giá trị của 'fingerprint' sẽ chỉ thực hiện việc xác minh vân tay</li>"
-"\n"
-"<li>Một giá trị của 'certificate' sẽ chỉ thực hiện việc xác minh chứng "
-"thực</li>\n"
+"<li>Một giá trị của 'fingerprint' sẽ chỉ thực hiện việc xác minh vân tay</"
+"li>\n"
+"<li>Một giá trị của 'certificate' sẽ chỉ thực hiện việc xác minh chứng thực</"
+"li>\n"
 "</ul>"
 
 #: views/overview.php:12
