@@ -895,6 +895,15 @@ class Certman implements \BMO {
 			throw new \Exception(_('No Certificate provided'));
 		}
 
+		//https://stackoverflow.com/questions/11852476/php-removing-windows-m-character
+		//Remove Windows control characters from certificate files as Asterisk
+		//refuses to load the certifcate if it has them - Joao
+		$privateKey = str_ireplace("\x0D", "\n", $privateKey);
+		$signedCertificate = str_ireplace("\x0D", "\n", $signedCertificate);
+		if(!empty($certificateChain)) {
+			$certificateChain = str_ireplace("\x0D", "\n", $certificateChain);
+		}
+
 		if(file_exists($location."/".$name.".key") && !is_writable($location."/".$name.".key")) {
 			throw new \Exception(sprintf(_('Unable to write to %s'),$location."/".$name.".key"));
 		}
