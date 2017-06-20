@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-27 16:01-0400\n"
-"PO-Revision-Date: 2017-06-19 17:16+0200\n"
+"PO-Revision-Date: 2017-06-19 20:49+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese "
 "<http://weblate.freepbx.org/projects/freepbx/certman/vi/>\n"
@@ -832,11 +832,11 @@ msgstr ""
 
 #: views/up.php:212
 msgid "Trusted Chain"
-msgstr ""
+msgstr "Chuỗi tin tưởng"
 
 #: views/csr.php:118
 msgid "Two letter country code, such as \"US\", \"CA\", or \"AU\"."
-msgstr ""
+msgstr "Mã quốc gia gồm 2 chữ cái, ví dụ  \"US\", \"CA\", or \"AU\"."
 
 #: Console/Certman.class.php:68 views/certgrid.php:29
 msgid "Type"
@@ -845,107 +845,107 @@ msgstr "Kiểu"
 #: Certman.class.php:471
 #, php-format
 msgid "Unable to create CSR: %s"
-msgstr ""
+msgstr "Không thể tạo CSR: %s"
 
 #: Certman.class.php:440
 msgid "Unable to find Certificate Authority"
-msgstr ""
+msgstr "Không thể tìm thấy nhà cung cấp chứng chỉ"
 
 #: Certman.class.php:433
 msgid "Unable to generate Certificate Authority"
-msgstr ""
+msgstr "Không thể khởi tạo nhà cung cấp chứng chỉ"
 
 #: Certman.class.php:448
 #, php-format
 msgid "Unable to generate certificate: %s"
-msgstr ""
+msgstr "Không thể khởi tạo chứng chỉ: %s"
 
 #: Certman.class.php:916
 msgid "Unable to read key. Is it password protected?"
-msgstr ""
+msgstr "Không thể đọc khóa. Nó có được bảo vệ bằng mật khẩu không?"
 
 #: Certman.class.php:1344
 #, php-format
 msgid "Unable to remove %s"
-msgstr ""
+msgstr "Không thể xóa %s"
 
 #: Certman.class.php:1452
 msgid "Unable to remove ca.cfg"
-msgstr ""
+msgstr "Không thể xóa  ca.cfg"
 
 #: Certman.class.php:1447
 msgid "Unable to remove ca.crt"
-msgstr ""
+msgstr "Không thể xóa  ca.crt"
 
 #: Certman.class.php:1442
 msgid "Unable to remove ca.key"
-msgstr ""
+msgstr "Không thể xóa ca.key"
 
 #: Certman.class.php:485
 msgid "Unable to remove the Certificate Authority"
-msgstr ""
+msgstr "Không thể xóa nhà cung cấp chứng chỉ"
 
 #: Certman.class.php:493
 msgid "Unable to remove the Certificate Signing Request"
-msgstr ""
+msgstr "Không thể xóa Yêu cầu ký chứng chỉ"
 
 #: Certman.class.php:1457
 msgid "Unable to remove tmp.cfg"
-msgstr ""
+msgstr "Không thể xóa tmp.cfg"
 
 #: Certman.class.php:899 Certman.class.php:903 Certman.class.php:907
 #, php-format
 msgid "Unable to write to %s"
-msgstr ""
+msgstr "Không thể ghi vào %s"
 
 #: Certman.class.php:1725
 msgid "Unknown Expiration"
-msgstr ""
+msgstr "Thời gian hết hạn không xác định"
 
 #: Certman.class.php:625
 msgid "Update Certificate"
-msgstr ""
+msgstr "Cập nhật chứng chỉ"
 
 #: views/ss.php:21 views/up.php:8
 msgid "Update Existing Certificate"
-msgstr ""
+msgstr "Cập nhật chứng chỉ hiện có"
 
 #: views/le.php:19
 msgid "Update Firewall"
-msgstr ""
+msgstr "Cập nhật tường lửa"
 
 #: Certman.class.php:742
 msgid "Updated Certificates"
-msgstr ""
+msgstr "Các chứng chỉ đã cập nhật"
 
 #: Certman.class.php:334 Certman.class.php:357 Certman.class.php:367
 #: Certman.class.php:391
 msgid "Updated certificate"
-msgstr ""
+msgstr "Chứng chỉ đã cập nhật"
 
 #: views/ca.php:42
 msgid "Upload CA"
-msgstr ""
+msgstr "Tải lên nhà cung cấp chứng chỉ"
 
 #: views/certgrid.php:9 assets/js/certman.js:52
 msgid "Upload Certificate"
-msgstr ""
+msgstr "Tải lên chứng chỉ"
 
 #: views/certgrid.php:45
 msgid "Uploaded"
-msgstr ""
+msgstr "Đã tải lên"
 
 #: views/overview.php:24
 msgid "Uploaded:"
-msgstr ""
+msgstr "Đã tải lên:"
 
 #: functions.inc/hook_core.php:75
 msgid "Use Certificate"
-msgstr ""
+msgstr "Sử dụng chứng thực"
 
 #: views/le.php:90 views/ss.php:62 views/up.php:54
 msgid "Valid Until"
-msgstr ""
+msgstr "Có hiệu lực đến"
 
 #: functions.inc/hook_core.php:89
 msgid ""
@@ -961,6 +961,17 @@ msgid ""
 "verification</li>\n"
 "\t\t\t</ul>"
 msgstr ""
+"Xác minh rằng các chứng chỉ được cung cấp và vân tay hợp lệ\n"
+"<ul>\n"
+"<li>Một giá trị của 'yes' sẽ thựa hiện cả việc xác minh dấn vân tay và chứng "
+"chỉ</li>\n"
+"<li>Một giá trị của  'no' sẽ khôngthực hiện việc xác minh vân ay hoặc chứng "
+"chỉ</li>\n"
+"<li>Một giá trị của 'fingerprint' sẽ chỉ thực hiện việc xác minh vân tay</li>"
+"\n"
+"<li>Một giá trị của 'certificate' sẽ chỉ thực hiện việc xác minh chứng "
+"chỉ</li>\n"
+"</ul>"
 
 #: views/overview.php:12
 msgid "What is Certificate Manager?"
@@ -978,6 +989,15 @@ msgid ""
 "\t\t\t<li>actpass (we will do both)</li>\n"
 "\t\t\t</ul>"
 msgstr ""
+"Cho dù chúng tôi sẵn sàng chấp nhận các kết nối, kết nối với bên kia, hoặc "
+"cả hai.\n"
+"Giá trị này sẽ được sử dụng trong SDP ((Giao thức Mô tả Phiên) khi gửi đi và "
+"sử dụng cho các bên gửi SDP đến khi bên từ xa gửi actpass\n"
+"<Ul>\n"
+"<Li> hoạt động (chúng tôi muốn kết nối với bên kia) </ li>\n"
+"<Li> thụ động (chúng tôi muốn chấp nhận chỉ các kết nối) </ li>\n"
+"<Li> actpass (chúng tôi sẽ làm cả hai) </ li>\n"
+"</ Ul>"
 
 #: views/up.php:215
 msgid ""
@@ -987,3 +1007,8 @@ msgid ""
 "below. This may be left blank, or updated at any time. They can be added in "
 "any order."
 msgstr ""
+"Nhà cung cấp chứng thực của bạn cũng yêu cầu chuỗi tin tưởng được cài đăt. "
+"Nhà cung cấp chứng thực sẽ cung cấp chuỗi này cho bạn và sẽ bao gồmmột hoặc "
+"nhiều các tệp chứng thực. Dán các nội dung của các tệp Chuỗi, nếu có vào các "
+"cửa sổ sau. Có thể để trong hoặc cập nhật bất cứ khi nào. Có thể thêm chúng "
+"khi có yêu cầu."
