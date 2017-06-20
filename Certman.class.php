@@ -418,6 +418,7 @@ class Certman implements \BMO {
 							$this->saveCertificate(null,$name,$_POST['description'],'up');
 						} catch(\Exception $e) {
 							$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error importing the certificate: %s'),$e->getMessage()));
+							break;
 						}
 						if($removeCSR) {
 							$this->removeCSR(true);
@@ -898,10 +899,10 @@ class Certman implements \BMO {
 		//https://stackoverflow.com/questions/11852476/php-removing-windows-m-character
 		//Remove Windows control characters from certificate files as Asterisk
 		//refuses to load the certifcate if it has them - Joao
-		$privateKey = str_ireplace("\x0D", "\n", $privateKey);
-		$signedCertificate = str_ireplace("\x0D", "\n", $signedCertificate);
+		$privateKey = str_ireplace("\x0D", "", $privateKey);
+		$signedCertificate = str_ireplace("\x0D", "", $signedCertificate);
 		if(!empty($certificateChain)) {
-			$certificateChain = str_ireplace("\x0D", "\n", $certificateChain);
+			$certificateChain = str_ireplace("\x0D", "", $certificateChain);
 		}
 
 		if(file_exists($location."/".$name.".key") && !is_writable($location."/".$name.".key")) {
