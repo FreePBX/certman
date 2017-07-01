@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-20 14:04-0400\n"
-"PO-Revision-Date: 2017-06-27 21:13+0200\n"
+"PO-Revision-Date: 2017-07-01 11:54+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese "
 "<http://weblate.freepbx.org/projects/freepbx/certman/vi/>\n"
@@ -560,7 +560,7 @@ msgstr "Không có chứng thực nào để nhập"
 
 #: views/up.php:173
 msgid "None"
-msgstr "None (Không có)"
+msgstr "Không có"
 
 #: views/up.php:207 views/up.php:216
 msgid "Not Shown for your security. Paste a new certificate here"
