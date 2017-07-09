@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-20 14:04-0400\n"
-"PO-Revision-Date: 2017-07-03 15:51+0200\n"
+"PO-Revision-Date: 2017-07-08 21:15+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese "
 "<http://weblate.freepbx.org/projects/freepbx/certman/vi/>\n"
@@ -510,7 +510,7 @@ msgstr "N/A ( Non Available- không khả dụng)"
 
 #: views/csr.php:24 views/up.php:26 views/view.php:23
 msgid "Name"
-msgstr "Tên"
+msgstr "tên"
 
 #: views/certgrid.php:5
 msgid "New Certificate"
