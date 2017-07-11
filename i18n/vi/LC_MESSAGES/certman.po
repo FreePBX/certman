@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-20 14:04-0400\n"
-"PO-Revision-Date: 2017-07-08 21:15+0200\n"
+"PO-Revision-Date: 2017-07-10 19:59+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese "
 "<http://weblate.freepbx.org/projects/freepbx/certman/vi/>\n"
@@ -161,23 +161,23 @@ msgstr "Quản lý chứng thực"
 
 #: certman.i18n.php:4
 msgid "Certificate Manager"
-msgstr "Bộ quản lý chứng thực"
+msgstr "Trình quản lý chứng thực"
 
 #: certman.i18n.php:8
 msgid ""
 "Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
 "WebRTC and secure traffic)"
 msgstr ""
-"Bộ quản lý chứng thực cho Asterisk. Được sử dụng cho kết nối TLS, DTLS  "
-"( think WebRTC and lưu lượng truy cập an toàn)"
+"Trình quản lý chứng thực cho Asterisk. Được sử dụng cho kết nối TLS, DTLS  ( "
+"think WebRTC and lưu lượng truy cập an toàn)"
 
 #: views/overview.php:16
 msgid ""
 "Certificate Manager manages certificates for secure calling (TLS/SRTP), "
 "secure web sessions (HTTPS/WEBRTC[WSS] and more"
 msgstr ""
-"Bộ quản lý chứng thực quản lý các chứng thực để đảm bảo an toàn cuộc goi "
-"( TLS/SRTP), đảm bảo an toàn cho các phiên truy cập we (HTTPS/WEBRTC[WSS] và "
+"Trình quản lý chứng thực quản lý các chứng thực để đảm bảo an toàn cuộc goi ("
+" TLS/SRTP), đảm bảo an toàn cho các phiên truy cập we (HTTPS/WEBRTC[WSS] và "
 "nhiều hơn thế"
 
 #: views/le.php:113 views/ss.php:85 views/up.php:97
@@ -215,7 +215,7 @@ msgid ""
 "Certificate Manager"
 msgstr ""
 "Chứng thực đã có tên \"%s\" vừa hết hạn. Vui lòng cập nhật chứng thực này "
-"trong bộ quản lý chứng thực"
+"trong trình quản lý chứng thực"
 
 #: Certman.class.php:718
 #, php-format
@@ -224,7 +224,7 @@ msgid ""
 "update this certificate in Certificate Manager"
 msgstr ""
 "Thời hạn của chứng thực \"%s\" chỉ còn dưới một tháng. Vui lòng cập nhật "
-"chứng thực này trong bộ quản lý chứng thực"
+"chứng thực này trong trình quản lý chứng thực"
 
 #: Certman.class.php:722
 #, php-format
@@ -716,7 +716,7 @@ msgstr "Đó không phải là một ID hợp lệ"
 
 #: functions.inc/hook_core.php:76
 msgid "The Certificate to use from Certificate Manager"
-msgstr "Chứng thực sử dụng từ bộ quản lý chứng thực"
+msgstr "Chứng thực sử dụng từ trình quản lý chứng thực"
 
 #: views/ss.php:147 views/up.php:134 views/view.php:59
 msgid "The Description of this certificate. Used in the module only"
@@ -975,7 +975,7 @@ msgstr ""
 
 #: views/overview.php:12
 msgid "What is Certificate Manager?"
-msgstr "Bộ quản lý chứng thực là gì?"
+msgstr "Trình quản lý chứng thực là gì?"
 
 #: functions.inc/hook_core.php:107
 msgid ""
