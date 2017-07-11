@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-20 14:04-0400\n"
-"PO-Revision-Date: 2017-07-10 22:29+0200\n"
+"PO-Revision-Date: 2017-07-11 09:14+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese "
 "<http://weblate.freepbx.org/projects/freepbx/certman/vi/>\n"
@@ -677,7 +677,7 @@ msgstr "Bang/Tỉnh/Miền"
 
 #: Certman.class.php:621
 msgid "Submit"
-msgstr "gửi đi"
+msgstr "Gửi đi"
 
 #: Certman.class.php:484
 msgid "Successfully deleted the Certificate Authority"
