@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-20 14:04-0400\n"
-"PO-Revision-Date: 2017-07-14 09:01+0200\n"
+"PO-Revision-Date: 2017-07-14 10:18+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese "
 "<http://weblate.freepbx.org/projects/freepbx/certman/vi/>\n"
@@ -605,7 +605,7 @@ msgid ""
 "manually verify inbound connectivity."
 msgstr ""
 "Tường lửa hệ thống PBX trạng thái không sử dụng vì thế nó không được xác "
-"nhận. Vui lòng xác nhận bằng tay kết nối đến."
+"nhận. Vui lòng xác nhận bằng tay kết nối vào."
 
 #: views/up.php:145
 msgid "Passphrase"
@@ -747,7 +747,7 @@ msgstr "Tên thông thường của chứng thực, thường giống như tên 
 
 #: Console/Certman.class.php:96
 msgid "The command provided is not valid"
-msgstr "Lệnh được cung cấp không hợp lệ"
+msgstr "Lệnh đã cung cấp không hợp lệ"
 
 #: views/overview.php:21
 msgid "There are three different types of certificates this module can handle:"
