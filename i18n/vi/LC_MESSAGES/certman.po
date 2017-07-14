@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-20 14:04-0400\n"
-"PO-Revision-Date: 2017-07-11 14:01+0200\n"
+"PO-Revision-Date: 2017-07-14 09:01+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese "
 "<http://weblate.freepbx.org/projects/freepbx/certman/vi/>\n"
@@ -75,7 +75,7 @@ msgstr ""
 
 #: views/certgrid.php:31
 msgid "Action"
-msgstr "Thao tác"
+msgstr "Tháo tác"
 
 #: views/ss.php:21 views/up.php:8
 msgid "Add New Certificate"
