@@ -10,14 +10,14 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-20 14:04-0400\n"
-"PO-Revision-Date: 2017-03-19 19:32+0200\n"
+"PO-Revision-Date: 2017-08-24 03:15+0200\n"
 "Last-Translator: hammer125 <auswertung@aon.at>\n"
-"Language-Team: German <http://weblate.freepbx.org/projects/freepbx/certman/"
-"de_DE/>\n"
+"Language-Team: German "
+"<http://weblate.freepbx.org/projects/freepbx/certman/de_DE/>\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2.4\n"
 
@@ -510,7 +510,7 @@ msgstr "Keine Zertifikate zum Importieren"
 
 #: views/up.php:173
 msgid "None"
-msgstr "keine"
+msgstr "Nichts"
 
 #: views/up.php:207 views/up.php:216
 msgid "Not Shown for your security. Paste a new certificate here"
