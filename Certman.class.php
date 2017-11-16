@@ -239,7 +239,8 @@ class Certman implements \BMO {
 		if(!$exists) {
 			$this->FreePBX->Cron->add(array(
 				"command" => $ampsbin."/fwconsole certificates updateall -q",
-				"hour" => rand(0,3)
+				"hour" => rand(0,3),
+				"minute" => rand(0,59),
 			));
 		}
 
