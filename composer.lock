@@ -4,21 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0fc9fcb08b1b6e23d4c23e6743954556",
     "content-hash": "307f9bf24619b53ba81365175af23b6f",
     "packages": [
         {
             "name": "analogic/lescript",
-            "version": "0.1.4",
+            "version": "0.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/analogic/lescript.git",
-                "reference": "64c39d1a54f04f6b0954d2e71cbf4bff72a02ddd"
+                "reference": "fb3c38ee5cd18e5e1ee5397ac574409b83de9edf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/analogic/lescript/zipball/64c39d1a54f04f6b0954d2e71cbf4bff72a02ddd",
-                "reference": "64c39d1a54f04f6b0954d2e71cbf4bff72a02ddd",
+                "url": "https://api.github.com/repos/analogic/lescript/zipball/fb3c38ee5cd18e5e1ee5397ac574409b83de9edf",
+                "reference": "fb3c38ee5cd18e5e1ee5397ac574409b83de9edf",
                 "shasum": ""
             },
             "require": {
@@ -53,7 +52,7 @@
                 "encryption",
                 "letsencrypt"
             ],
-            "time": "2016-08-05 13:48:16"
+            "time": "2017-11-14T10:22:51+00:00"
         }
     ],
     "packages-dev": [],

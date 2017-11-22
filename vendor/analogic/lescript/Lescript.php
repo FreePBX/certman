@@ -5,8 +5,7 @@ namespace Analogic\ACME;
 class Lescript
 {
     public $ca = 'https://acme-v01.api.letsencrypt.org';
-    // public $ca = 'https://acme-staging.api.letsencrypt.org'; // testing
-    public $license = 'https://letsencrypt.org/documents/LE-SA-v1.1.1-August-1-2016.pdf';
+    //public $ca = 'https://acme-staging.api.letsencrypt.org'; // testing
     public $countryCode = 'CZ';
     public $state = "Czech Republic";
     public $challenge = 'http-01'; // http-01 challange only
@@ -70,7 +69,7 @@ class Lescript
                 "/acme/new-authz",
                 array("resource" => "new-authz", "identifier" => array("type" => "dns", "value" => $domain))
             );
-
+            
             if(empty($response['challenges'])) {
                 throw new \RuntimeException("HTTP Challenge for $domain is not available. Whole response: ".json_encode($response));
             }
@@ -248,9 +247,17 @@ class Lescript
 
     private function postNewReg()
     {
+        $this->log('Getting last terms of service URL');
+
+        $directory = $this->client->get('/directory');
+        if (!isset($directory['meta']) || !isset($directory['meta']['terms-of-service'])) {
+            throw new \RuntimeException("No terms of service link available!");
+        }
+
+        $data = array('resource' => 'new-reg', 'agreement' => $directory['meta']['terms-of-service']);
+
         $this->log('Sending registration to letsencrypt server');
 
-        $data = array('resource' => 'new-reg', 'agreement' => $this->license);
         if(!$this->contact) {
             $data['contact'] = $this->contact;
         }
