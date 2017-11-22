@@ -574,6 +574,10 @@ class Certman implements \BMO {
 				if(file_exists($cert['files']['crt'])) {
 					$certinfo = openssl_x509_parse(file_get_contents($cert['files']['crt']));
 				}
+				//FREEPBX-15408 Whoops\Exception\ErrorException Illegal string offset 'validTo_time_t'
+				if (!array_key_exists("validTo_time_t",$certinfo)){
+					$certinfo['validTo_time_t'] = '';
+				}
 				if(!empty($cert)) {
 					switch($cert['type']) {
 						case 'up':
