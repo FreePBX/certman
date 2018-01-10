@@ -764,14 +764,12 @@ class Certman implements \BMO {
 			"/etc/pki/tls/cacert.pem",                           // OpenELEC
 			"/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem" // CentOS/RHEL 7
 		);
-		$ca = null;
 		foreach($files as $file) {
 			if(file_exists($file) && is_readable($file)) {
-				$ca = $file;
-				break;
+				return $file;
 			}
 		}
-		return $ca;
+		return null;
 	}
 
 	/**
