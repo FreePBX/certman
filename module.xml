@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>13.0.36.11</version>
+	<version>13.0.37</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -13,6 +13,7 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
+		*13.0.37* Add method to check ca bundles
 		*13.0.36.11* FREEPBX-16302, FREEPBX-15408
 		*13.0.36.10* Remove Windows carriage returns completely
 		*13.0.36.9* Fix windows carriage returns to be linux newlines
