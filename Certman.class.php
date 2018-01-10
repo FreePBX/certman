@@ -751,6 +751,30 @@ class Certman implements \BMO {
 	}
 
 	/**
+	 * Determine location of the system CA Bundle
+	 * @method getCABundle
+	 * @return string      The location of the system CA bundle
+	 */
+	public function getCABundle() {
+		//https://golang.org/src/crypto/x509/root_linux.go
+		$files = array(
+			"/etc/ssl/certs/ca-certificates.crt",                // Debian/Ubuntu/Gentoo etc.
+			"/etc/pki/tls/certs/ca-bundle.crt",                  // Fedora/RHEL 6
+			"/etc/ssl/ca-bundle.pem",                            // OpenSUSE
+			"/etc/pki/tls/cacert.pem",                           // OpenELEC
+			"/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem" // CentOS/RHEL 7
+		);
+		$ca = null;
+		foreach($files as $file) {
+			if(file_exists($file) && is_readable($file)) {
+				$ca = $file;
+				break;
+			}
+		}
+		return $ca;
+	}
+
+	/**
 	 * Update or Add Let's Encrypt
 	 * @param  string $host     The hostname (MUST BE A VALID FQDN)
 	 * @param  array $settings  Array of settings for this certificate
