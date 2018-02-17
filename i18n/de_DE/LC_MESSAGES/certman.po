@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-09 20:31-0500\n"
-"PO-Revision-Date: 2018-02-16 17:31+0200\n"
+"PO-Revision-Date: 2018-02-16 20:01+0200\n"
 "Last-Translator: Nils <Nils@heckenkamp.info>\n"
 "Language-Team: German "
 "<http://weblate.freepbx.org/projects/freepbx/certman/de_DE/>\n"
@@ -90,7 +90,7 @@ msgstr ""
 
 #: certman.i18n.php:6
 msgid "Admin"
-msgstr "Admin"
+msgstr "Administrator"
 
 #: views/up.php:206
 msgid ""
@@ -616,7 +616,7 @@ msgstr ""
 
 #: Certman.class.php:626
 msgid "Submit"
-msgstr "Bestätigen"
+msgstr "Absenden"
 
 #: Certman.class.php:485
 msgid "Successfully deleted the Certificate Authority"
