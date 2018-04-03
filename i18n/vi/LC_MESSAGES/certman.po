@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-03 16:44-0400\n"
+"POT-Creation-Date: 2018-04-03 17:00-0400\n"
 "PO-Revision-Date: 2017-08-08 16:34+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese <http://weblate.freepbx.org/projects/freepbx/"
@@ -26,7 +26,7 @@ msgstr ""
 msgid "%s already exists!"
 msgstr "%s  đã tồn tại!"
 
-#: Certman.class.php:1764
+#: Certman.class.php:1765
 #, php-format
 msgid "(%s days)"
 msgstr "(%s ngày)"
@@ -143,7 +143,7 @@ msgstr "Nhà cung cấp chứng thực"
 msgid "Certificate Authority to Reference"
 msgstr "Nhà cung cấp chứng thực để tham chiếu"
 
-#: Certman.class.php:1759
+#: Certman.class.php:1760
 msgid "Certificate Expired!"
 msgstr "Chứng thực đã hết han!"
 
@@ -898,7 +898,7 @@ msgstr "Không thể xóa tmp.cfg"
 msgid "Unable to write to %s"
 msgstr "Không thể ghi tới %s"
 
-#: Certman.class.php:1749
+#: Certman.class.php:1750
 msgid "Unknown Expiration"
 msgstr "Thời gian hết hạn không xác định"
 

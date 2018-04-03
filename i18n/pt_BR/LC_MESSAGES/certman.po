@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-03 16:44-0400\n"
+"POT-Creation-Date: 2018-04-03 17:00-0400\n"
 "PO-Revision-Date: 2017-03-23 13:47+0200\n"
 "Last-Translator: Kingvoice <suporte@kingvoice.com.br>\n"
 "Language-Team: Portuguese (Brazil) <http://weblate.freepbx.org/projects/"
@@ -26,7 +26,7 @@ msgstr ""
 msgid "%s already exists!"
 msgstr ""
 
-#: Certman.class.php:1764
+#: Certman.class.php:1765
 #, php-format
 msgid "(%s days)"
 msgstr "(%s dias)"
@@ -144,7 +144,7 @@ msgstr "Autoridade Certificadora"
 msgid "Certificate Authority to Reference"
 msgstr "Autoridade Certificadora para Referência"
 
-#: Certman.class.php:1759
+#: Certman.class.php:1760
 msgid "Certificate Expired!"
 msgstr "Certificado Expirado!"
 
@@ -902,7 +902,7 @@ msgstr "Não foi possível remover tmp.cfg"
 msgid "Unable to write to %s"
 msgstr "Não é possível gravar em %s"
 
-#: Certman.class.php:1749
+#: Certman.class.php:1750
 msgid "Unknown Expiration"
 msgstr "Expiração Desconhecida"
 
