@@ -1705,6 +1705,7 @@ class Certman implements \BMO {
 	public function ajaxHandler(){
 		switch ($_REQUEST['command']) {
 			case 'makeDefault':
+				dbug($this->getCABundle());
 				$res = $this->makeCertDefault($_POST['id']);
 				return array("status" => $res, "message" => "");
 			break;

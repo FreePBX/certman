@@ -1,7 +1,6 @@
 {
     "require": {
         "analogic/lescript": "^0.1.3",
-        "composer/ca-bundle": "^1.0@dev"
-    },
-		"minimum-stability":"dev"
+        "composer/ca-bundle": "^1.1"
+    }
 }
