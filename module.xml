@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>13.0.37.1</version>
+	<version>13.0.37.2</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -13,6 +13,7 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
+		*13.0.37.2* Ungitify ca-bundle
 		*13.0.37.1* FREEPBX-16909 Utilize Composer CA bundles
 		*13.0.37* Add method to check ca bundles
 		*13.0.36.11* FREEPBX-16302, FREEPBX-15408
