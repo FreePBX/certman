@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit1730a06aed84c4a78c15e39beebfe096
+class ComposerStaticInitabf029b4af4b59affc5127fb754830a7
 {
     public static $files = array (
         'b2b4a332d57ae98e284061ea6e9cf11d' => __DIR__ . '/..' . '/analogic/lescript/Lescript.php',
@@ -27,8 +27,8 @@ class ComposerStaticInit1730a06aed84c4a78c15e39beebfe096
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit1730a06aed84c4a78c15e39beebfe096::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit1730a06aed84c4a78c15e39beebfe096::$prefixDirsPsr4;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitabf029b4af4b59affc5127fb754830a7::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitabf029b4af4b59affc5127fb754830a7::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }
