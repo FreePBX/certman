@@ -24,11 +24,16 @@ class ComposerStaticInitabf029b4af4b59affc5127fb754830a7
         ),
     );
 
+    public static $classMap = array (
+        'Composer\\CaBundle\\CaBundle' => __DIR__ . '/..' . '/composer/ca-bundle/src/CaBundle.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitabf029b4af4b59affc5127fb754830a7::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitabf029b4af4b59affc5127fb754830a7::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitabf029b4af4b59affc5127fb754830a7::$classMap;
 
         }, null, ClassLoader::class);
     }
