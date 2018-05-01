@@ -95,6 +95,6 @@
 	<depends>
 		<phpversion>5.3.3</phpversion>
 		<module>core ge 12.0.1beta6</module>
-		<version>13.0.130</version>
+		<version>13.0.195</version>
 	</depends>
 </module>

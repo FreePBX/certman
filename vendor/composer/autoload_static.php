@@ -10,30 +10,9 @@ class ComposerStaticInitabf029b4af4b59affc5127fb754830a7
         'b2b4a332d57ae98e284061ea6e9cf11d' => __DIR__ . '/..' . '/analogic/lescript/Lescript.php',
     );
 
-    public static $prefixLengthsPsr4 = array (
-        'C' => 
-        array (
-            'Composer\\CaBundle\\' => 18,
-        ),
-    );
-
-    public static $prefixDirsPsr4 = array (
-        'Composer\\CaBundle\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/composer/ca-bundle/src',
-        ),
-    );
-
-    public static $classMap = array (
-        'Composer\\CaBundle\\CaBundle' => __DIR__ . '/..' . '/composer/ca-bundle/src/CaBundle.php',
-    );
-
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitabf029b4af4b59affc5127fb754830a7::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitabf029b4af4b59affc5127fb754830a7::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitabf029b4af4b59affc5127fb754830a7::$classMap;
 
         }, null, ClassLoader::class);
     }
