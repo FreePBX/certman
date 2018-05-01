@@ -7,6 +7,7 @@ namespace FreePBX\modules\Certman;
 class Logger { function __call($name, $arguments) { dbug(date('Y-m-d H:i:s')." [$name] ${arguments[0]}"); }}
 namespace FreePBX\modules;
 include 'vendor/autoload.php';
+use Composer\CaBundle\CaBundle;
 class Certman implements \BMO {
 	/* Asterisk Defaults */
 	private $defaults = array(
@@ -756,7 +757,7 @@ class Certman implements \BMO {
 	 * @return string      The location of the system CA bundle
 	 */
 	public function getCABundle() {
-		return \Composer\CaBundle\CaBundle::getSystemCaRootBundlePath();
+		return CaBundle::getSystemCaRootBundlePath();
 	}
 
 	/**
