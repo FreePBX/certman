@@ -98,4 +98,46 @@
 		<module>core ge 12.0.1beta6</module>
 		<version>13.0.195</version>
 	</depends>
+	<database>
+		<table name="certman_mapping">
+			<field name="id" type="string" length="20" primaryKey="true"/>
+			<field name="cid" type="integer" notnull="false"/>
+			<field name="verify" type="string" length="255" notnull="false"/>
+			<field name="setup" type="string" length="45" notnull="false"/>
+			<field name="rekey" type="integer" notnull="false"/>
+		</table>
+		<table name="certman_csrs">
+			<field name="cid" type="integer" primaryKey="true" autoincrement="true"/>
+			<field name="basename" type="string" length="190"/>
+			<key name="basename" type="unique">
+				<column name="basename"/>
+			</key>
+		</table>
+		<table name="certman_certs">
+			<field name="cid" type="integer" primaryKey="true" autoincrement="true"/>
+			<field name="caid" type="integer" notnull="false"/>
+			<field name="basename" type="string" length="190"/>
+			<field name="description" type="string" length="255" notnull="false"/>
+			<field name="type" type="string" length="2" default="ss"/>
+			<field name="default" type="boolean" default="0"/>
+			<field name="additional" type="blob" notnull="false"/>
+			<key name="basename_UNIQUE" type="unique">
+				<column name="basename"/>
+			</key>
+			<key name="basename" type="unique">
+				<column name="basename"/>
+			</key>
+		</table>
+		<table name="certman_cas">
+			<field name="uid" type="integer" primaryKey="true" autoincrement="true"/>
+			<field name="basename" type="string" length="190"/>
+			<field name="cn" type="string" length="255"/>
+			<field name="on" type="string" length="255"/>
+			<field name="passphrase" type="string" length="255" notnull="false"/>
+			<field name="salt" type="string" length="255" notnull="false"/>
+			<key name="basename" type="unique">
+				<column name="basename"/>
+			</key>
+		</table>
+	</database>
 </module>
