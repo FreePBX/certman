@@ -2,13 +2,15 @@
 // vim: set ai ts=4 sw=4 ft=php:
 //	License for all code of this FreePBX module can be found in the license file inside the module directory
 //	Copyright 2014 Schmooze Com Inc.
-//
-namespace FreePBX\modules\Certman;
-class Logger { function __call($name, $arguments) { dbug(date('Y-m-d H:i:s')." [$name] ${arguments[0]}"); }}
+//	Copyright 2018 Sangoma Technologies.
 namespace FreePBX\modules;
+
 include 'vendor/autoload.php';
 use Composer\CaBundle\CaBundle;
-class Certman implements \BMO {
+use BMO;
+use PDO;
+use Exception;
+class Certman implements BMO {
 	/* Asterisk Defaults */
 	private $defaults = array(
 		"sip" => array(
@@ -31,9 +33,9 @@ class Certman implements \BMO {
 	private $message = "";
 
 	public function __construct($freepbx = null) {
-		if ($freepbx == null)
-			throw new \Exception("Not given a FreePBX Object");
-
+		if ($freepbx == null){
+			throw new Exception("Not given a FreePBX Object");
+		}
 		$this->FreePBX = $freepbx;
 		$this->db = $freepbx->Database;
 		$this->FreePBX->PJSip = $this->FreePBX->Core->getDriver('pjsip');
@@ -66,7 +68,7 @@ class Certman implements \BMO {
 				$cid = $this->generateCertificate($caid,"default",_("Default Self-Signed certificate"));
 				$this->makeCertDefault($cid);
 				out(_("Done!"));
-			} catch(\Exception $e) {
+			} catch(Exception $e) {
 				out(sprintf(_("Failed! [%s]"),$e->getMessage()));
 				//return false;
 			}
@@ -82,7 +84,7 @@ class Certman implements \BMO {
 			foreach($certs as $cert) {
 				$this->removeCertificate($cert['cid']);
 			}
-		} catch(\Exception $e) {}
+		} catch(Exception $e) {}
 
 		$sql = "DROP TABLE certman_mapping";
 		$sth = $this->db->prepare($sql);
@@ -96,8 +98,6 @@ class Certman implements \BMO {
 		return true;
 	}
 
-	public function backup(){}
-	public function restore($backup){}
 	public function doConfigPageInit($page){
 		$request = $_REQUEST;
 		$request['certaction'] = !empty($request['certaction']) ? $request['certaction'] : "";
@@ -149,7 +149,7 @@ class Certman implements \BMO {
 
 							try {
 								$status = $this->importCertificate($name,$pkey,$_POST['signedcert'],$_POST['certchain'],$_POST['passphrase']);
-							} catch(\Exception $e) {
+							} catch(Exception $e) {
 								$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error importing the certificate: %s'),$e->getMessage()));
 								break;
 							}
@@ -172,7 +172,7 @@ class Certman implements \BMO {
 									"challengetype" => "http", // https will not work.
 									"email" => $_POST['email']
 								));
-							} catch(\Exception $e) {
+							} catch(Exception $e) {
 								$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error updating the certificate: %s'),$e->getMessage()));
 								break;
 							}
@@ -212,7 +212,7 @@ class Certman implements \BMO {
 								"email" => $_POST['email']
 							));
 							$this->saveCertificate(null,$host,$host,'le', array("C" => $_POST['C'], "ST" => $_POST['ST'], "email" => $_POST['email']));
-						} catch(\Exception $e) {
+						} catch(Exception $e) {
 							$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error updating the certificate: %s'),$e->getMessage()));
 							break 2;
 						}
@@ -244,7 +244,7 @@ class Certman implements \BMO {
 						try {
 							$status = $this->importCertificate($name,$pkey,$_POST['signedcert'],$_POST['certchain'],$_POST['passphrase']);
 							$this->saveCertificate(null,$name,$_POST['description'],'up');
-						} catch(\Exception $e) {
+						} catch(Exception $e) {
 							$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error importing the certificate: %s'),$e->getMessage()));
 							break;
 						}
@@ -273,7 +273,7 @@ class Certman implements \BMO {
 						}
 						try {
 							$this->generateCertificate($caid,$request['hostname'],$request['description']);
-						} catch(\Exception $e) {
+						} catch(Exception $e) {
 							$this->message = array('type' => 'danger', 'message' => sprintf(_('Unable to generate certificate: %s'),$e->getMessage()));
 							break;
 						}
@@ -296,7 +296,7 @@ class Certman implements \BMO {
 						try {
 							$this->PKCS->createCSR($name, $params);
 							$this->saveCSR($name);
-						} catch(\Exception $e) {
+						} catch(Exception $e) {
 							$this->message = array('type' => 'danger', 'message' => sprintf(_('Unable to create CSR: %s'),$e->getMessage()));
 							break;
 						}
@@ -401,7 +401,7 @@ class Certman implements \BMO {
 				if(file_exists($cert['files']['crt'])) {
 					$certinfo = openssl_x509_parse(file_get_contents($cert['files']['crt']));
 				}
-				//FREEPBX-15408 Whoops\Exception\ErrorException Illegal string offset 'validTo_time_t'
+				//FREEPBX-15408 WhoopsException\ErrorException Illegal string offset 'validTo_time_t'
 				if (!array_key_exists("validTo_time_t",$certinfo)){
 					$certinfo['validTo_time_t'] = '';
 				}
@@ -516,7 +516,7 @@ class Certman implements \BMO {
 							exec($a . " -rx 'dialplan reload'");
 						}
 						$update = true;
-					} catch(\Exception $e) {
+					} catch(Exception $e) {
 						$messages[] = array('type' => 'danger', 'message' => sprintf(_('There was an error updating certificate "%s": %s'),$cert['basename'],$e->getMessage()));
 						continue;
 					}
@@ -542,7 +542,7 @@ class Certman implements \BMO {
 							exec($a . " -rx 'dialplan reload'");
 						}
 						$update = true;
-					} catch(\Exception $e) {
+					} catch(Exception $e) {
 						$messages[] = array('type' => 'danger', 'message' => sprintf(_('There was an error updating certificate "%s": %s'),$cert['basename'],$e->getMessage()));
 						continue;
 					}
@@ -561,11 +561,8 @@ class Certman implements \BMO {
 		$nt = \notifications::create();
 		$notification = '';
 		foreach($messages as $m) {
-			switch($m['type']) {
-				case "warning":
-				case "danger":
-					$notification .= $m['message'] ."</br>";
-				break;
+			if('warning' == $m['type'] || 'danger' == $m['type']){
+				$notification .= $m['message'] . "</br>";
 			}
 		}
 		if(!empty($notification)) {
@@ -596,7 +593,7 @@ class Certman implements \BMO {
 	 */
 	public function updateLE($host, $settings = false, $staging = false) {
 		if (!is_array($settings)) {
-			throw new \Exception("BUG: Settings is not an array. Old code?");
+			throw new Exception("BUG: Settings is not an array. Old code?");
 		}
 
 		// Get our variables from $settings
@@ -606,7 +603,7 @@ class Certman implements \BMO {
 		$email = !empty($settings['email']) ? $settings['email'] : '';
 
 		$location = $this->PKCS->getKeysLocation();
-		$logger = new Certman\Logger();
+		$logger = new $this->FreePBX->Logger->monoLog;
 		$host = basename($host);
 
 		$needsgen = false;
@@ -631,7 +628,7 @@ class Certman implements \BMO {
 			if(!file_exists($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck)) {
 				$mkdirok = @mkdir($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck,0777);
 				if (!$mkdirok) {
-					throw new \Exception("Unable to create directory ".$this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck);
+					throw new Exception("Unable to create directory ".$this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck);
 				}
 			}
 			$token = bin2hex(openssl_random_pseudo_bytes(16));
@@ -641,10 +638,10 @@ class Certman implements \BMO {
 			$pest->curl_opts[CURLOPT_FOLLOWLOCATION] = true;
 			$thing = $pest->get('/lechecker.php',  array('host' => $host, 'path' => $pathCheck, 'token' => $token, 'type' => $challengetype));
 			if(empty($thing)) {
-				throw new \Exception("No valid response from http://mirror1.freepbx.org");
+				throw new Exception("No valid response from http://mirror1.freepbx.org");
 			}
 			if(!$thing['status']) {
-				throw new \Exception("Error '".$thing['message']."' when requesting $challengetype://$host/$pathCheck");
+				throw new Exception("Error '".$thing['message']."' when requesting $challengetype://$host/$pathCheck");
 			}
 			@unlink($this->FreePBX->Config->get("AMPWEBROOT").$pathCheck);
 		}
@@ -665,7 +662,7 @@ class Certman implements \BMO {
 		}
 
 		if(!file_exists($location."/".$host."/private.pem") || !file_exists($location."/".$host."/cert.pem")) {
-			throw new \Exception("Certificates are missing. Unable to continue");
+			throw new Exception("Certificates are missing. Unable to continue");
 		}
 
 		if(file_exists($location."/".$host)) {
@@ -730,11 +727,11 @@ class Certman implements \BMO {
 		$name = basename($name);
 
 		if(empty($privateKey)) {
-			throw new \Exception(_('No Private key to reference. Try generating a CSR first.'));
+			throw new Exception(_('No Private key to reference. Try generating a CSR first.'));
 		}
 
 		if(empty($signedCertificate)) {
-			throw new \Exception(_('No Certificate provided'));
+			throw new Exception(_('No Certificate provided'));
 		}
 
 		//https://stackoverflow.com/questions/11852476/php-removing-windows-m-character
@@ -747,15 +744,15 @@ class Certman implements \BMO {
 		}
 
 		if(file_exists($location."/".$name.".key") && !is_writable($location."/".$name.".key")) {
-			throw new \Exception(sprintf(_('Unable to write to %s'),$location."/".$name.".key"));
+			throw new Exception(sprintf(_('Unable to write to %s'),$location."/".$name.".key"));
 		}
 
 		if(file_exists($location."/".$name.".crt") && !is_writable($location."/".$name.".crt")) {
-			throw new \Exception(sprintf(_('Unable to write to %s'),$location."/".$name.".crt"));
+			throw new Exception(sprintf(_('Unable to write to %s'),$location."/".$name.".crt"));
 		}
 
 		if(file_exists($location."/".$name.".pem") && !is_writable($location."/".$name.".pem")) {
-			throw new \Exception(sprintf(_('Unable to write to %s'),$location."/".$name.".pem"));
+			throw new Exception(sprintf(_('Unable to write to %s'),$location."/".$name.".pem"));
 		}
 
 		if(empty($passphrase)) {
@@ -764,11 +761,11 @@ class Certman implements \BMO {
 			$keyTest = openssl_pkey_get_private($privateKey,$passphrase);
 		}
 		if($keyTest === false) {
-			throw new \Exception(_('Unable to read key. Is it password protected?'));
+			throw new Exception(_('Unable to read key. Is it password protected?'));
 		}
 		$certTest = openssl_x509_read($signedCertificate);
 		if(!openssl_x509_check_private_key($certTest, $keyTest)) {
-			throw new \Exception(_('Key does not match certificate'));
+			throw new Exception(_('Key does not match certificate'));
 		}
 		file_put_contents($location."/".$name.".key", $privateKey);
 
@@ -783,7 +780,7 @@ class Certman implements \BMO {
 			//Now test again without the password to make sure this all works correctly
 			$keyTest = openssl_pkey_get_private($privateKey);
 			if(!openssl_x509_check_private_key($certTest, $keyTest)) {
-				throw new \Exception(_('Key does not match certificate after password removal'));
+				throw new Exception(_('Key does not match certificate after password removal'));
 			}
 		}
 
@@ -819,23 +816,21 @@ class Certman implements \BMO {
 			if(empty($o) || empty($cert['files']['crt']) || empty($cert['files']['key'])) {
 				continue;
 			}
-			switch($o['tech']) {
-				case 'sip':
-					$core_conf->addSipAdditional($device['id'],'dtlsenable','yes');
-					$core_conf->addSipAdditional($device['id'],'dtlsverify',$device['verify']);
-					$core_conf->addSipAdditional($device['id'],'dtlscertfile',$cert['files']['crt']);
-					$core_conf->addSipAdditional($device['id'],'dtlsprivatekey',$cert['files']['key']);
-					$core_conf->addSipAdditional($device['id'],'dtlssetup',$device['setup']);
-					$core_conf->addSipAdditional($device['id'],'dtlsrekey',$device['rekey']);
-				break;
-				case 'pjsip':
-					$this->FreePBX->PJSip->addEndpoint($device['id'], 'media_encryption', 'dtls');
-					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_verify', $device['verify']);
-					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_cert_file', $cert['files']['crt']);
-					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_private_key', $cert['files']['key']);
-					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_setup', $device['setup']);
-					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_rekey', $device['rekey']);
-				break;
+			if('sip' == $o['tech']){
+				$core_conf->addSipAdditional($device['id'], 'dtlsenable', 'yes');
+				$core_conf->addSipAdditional($device['id'], 'dtlsverify', $device['verify']);
+				$core_conf->addSipAdditional($device['id'], 'dtlscertfile', $cert['files']['crt']);
+				$core_conf->addSipAdditional($device['id'], 'dtlsprivatekey', $cert['files']['key']);
+				$core_conf->addSipAdditional($device['id'], 'dtlssetup', $device['setup']);
+				$core_conf->addSipAdditional($device['id'], 'dtlsrekey', $device['rekey']);
+			}
+			if('pjsip'){
+				$this->FreePBX->PJSip->addEndpoint($device['id'], 'media_encryption', 'dtls');
+				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_verify', $device['verify']);
+				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_cert_file', $cert['files']['crt']);
+				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_private_key', $cert['files']['key']);
+				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_setup', $device['setup']);
+				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_rekey', $device['rekey']);
 			}
 		}
 	}
@@ -847,7 +842,7 @@ class Certman implements \BMO {
 		$sql = "SELECT * FROM certman_mapping";
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
-		return $sth->fetchAll(\PDO::FETCH_ASSOC);
+		return $sth->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 	/**
@@ -861,7 +856,7 @@ class Certman implements \BMO {
 		$sql = "SELECT * FROM certman_mapping WHERE id = ?";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($device));
-		$data = $sth->fetch(\PDO::FETCH_ASSOC);
+		$data = $sth->fetch(PDO::FETCH_ASSOC);
 		if(!empty($data)) {
 			$data['enable'] = 'yes';
 		} else {
@@ -884,7 +879,7 @@ class Certman implements \BMO {
 		$sql = "SELECT * FROM certman_mapping WHERE id = ?";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($device));
-		$data = $sth->fetch(\PDO::FETCH_ASSOC);
+		$data = $sth->fetch(PDO::FETCH_ASSOC);
 		if(!empty($data)) {
 			if(!empty($data['cid'])) {
 				$cert = $this->getCertificateDetails($data['cid']);
@@ -964,7 +959,7 @@ class Certman implements \BMO {
 		$sql = "SELECT * FROM certman_cas";
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
-		return $sth->fetchAll(\PDO::FETCH_ASSOC);
+		return $sth->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 	/**
@@ -975,13 +970,13 @@ class Certman implements \BMO {
 	 */
 	public function generateCA($basename, $commonname, $orgname) {
 		if(empty($basename)) {
-			throw new \Exception("Basename can not be empty!");
+			throw new Exception("Basename can not be empty!");
 		}
 		if(empty($commonname)) {
-			throw new \Exception("Commonname can not be empty!");
+			throw new Exception("Commonname can not be empty!");
 		}
 		if(empty($orgname)) {
-			throw new \Exception("Organization can not be empty!");
+			throw new Exception("Organization can not be empty!");
 		}
 		$this->generateConfig($basename,$commonname,$orgname);
 		$this->PKCS->createCA($basename);
@@ -1031,7 +1026,7 @@ class Certman implements \BMO {
 		$sql = "SELECT * from certman_cas WHERE uid = ?";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($caid));
-		$data = $sth->fetch(\PDO::FETCH_ASSOC);
+		$data = $sth->fetch(PDO::FETCH_ASSOC);
 		if(!empty($data)) {
 			$location = $this->PKCS->getKeysLocation();
 			$files = array(".key" => "key",".crt" => "crt",".cfg" => "cfg");
@@ -1054,7 +1049,7 @@ class Certman implements \BMO {
 		$sql = "SELECT * from certman_csrs WHERE cid = ?";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($csrid));
-		$data = $sth->fetch(\PDO::FETCH_ASSOC);
+		$data = $sth->fetch(PDO::FETCH_ASSOC);
 		if(!empty($data)) {
 			$location = $this->PKCS->getKeysLocation();
 			$files = array(".csr" => "csr",".csr-config" => "csr-config",".key" => "key");
@@ -1076,7 +1071,7 @@ class Certman implements \BMO {
 	 */
 	public function generateCertificate($caid,$base,$description) {
 		if($this->checkCertificateName($base)) {
-			throw new \Exception(sprintf(_("%s already exists!"),$base));
+			throw new Exception(sprintf(_("%s already exists!"),$base));
 		}
 		$ca = $this->getCADetails($caid);
 		$passphrase = $ca['passphrase'];
@@ -1094,7 +1089,7 @@ class Certman implements \BMO {
 	 */
 	public function saveCertificate($caid=null,$base,$description,$type='ss',$additional=array()) {
 		if($this->checkCertificateName($base)) {
-			throw new \Exception(sprintf(_("%s already exists!"),$base));
+			throw new Exception(sprintf(_("%s already exists!"),$base));
 		}
 		if (!is_array($additional)) {
 			$additional = array();
@@ -1113,7 +1108,7 @@ class Certman implements \BMO {
 		$sql = "SELECT * FROM certman_certs";
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
-		return $sth->fetchAll(\PDO::FETCH_ASSOC);
+		return $sth->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 	/**
@@ -1123,14 +1118,14 @@ class Certman implements \BMO {
 		$sql = "SELECT * FROM certman_csrs";
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
-		return $sth->fetchAll(\PDO::FETCH_ASSOC);
+		return $sth->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 	public function getCertificateDetailsByBasename($basename) {
 		$sql = "SELECT * from certman_certs WHERE basename = ?";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($basename));
-		$data = $sth->fetch(\PDO::FETCH_ASSOC);
+		$data = $sth->fetch(PDO::FETCH_ASSOC);
 		if(!empty($data)) {
 			$default = !empty($data['default']) ? true : false;
 			$data = $this->getAdditionalCertDetails($data, $default);
@@ -1146,7 +1141,7 @@ class Certman implements \BMO {
 		$sql = "SELECT * from certman_certs WHERE cid = ?";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($cid));
-		$data = $sth->fetch(\PDO::FETCH_ASSOC);
+		$data = $sth->fetch(PDO::FETCH_ASSOC);
 		if(!empty($data)) {
 			$default = !empty($data['default']) ? true : false;
 			$data = $this->getAdditionalCertDetails($data, $default);
@@ -1163,7 +1158,7 @@ class Certman implements \BMO {
 		$sql = "SELECT * FROM certman_certs WHERE basename = ?";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($name));
-		$data = $sth->fetch(\PDO::FETCH_ASSOC);
+		$data = $sth->fetch(PDO::FETCH_ASSOC);
 		return !empty($data);
 	}
 
@@ -1176,7 +1171,7 @@ class Certman implements \BMO {
 		$sql = "SELECT * FROM certman_csrs WHERE basename = ?";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($name));
-		$data = $sth->fetch(\PDO::FETCH_ASSOC);
+		$data = $sth->fetch(PDO::FETCH_ASSOC);
 		return !empty($data);
 	}
 
@@ -1192,7 +1187,7 @@ class Certman implements \BMO {
 		foreach($cert['files'] as $file) {
 			if(file_exists($file)) {
 				if(!unlink($file)) {
-					throw new \Exception(sprintf(_('Unable to remove %s'),$file));
+					throw new Exception(sprintf(_('Unable to remove %s'),$file));
 				}
 			}
 		}
@@ -1263,7 +1258,7 @@ class Certman implements \BMO {
 					if(!$this->checkCertificateName($name)) {
 						try {
 							$status = $this->importCertificate($name,$key['raw'],file_get_contents($file));
-						} catch(\Exception $e) {
+						} catch(Exception $e) {
 							$processed[] = array(
 								"status" => false,
 								"error" => $e->getMessage(),
@@ -1290,22 +1285,22 @@ class Certman implements \BMO {
 		$location = $this->PKCS->getKeysLocation();
 		if(file_exists($location . "/ca.key")) {
 			if(!unlink($location . "/ca.key")) {
-				throw new \Exception(_('Unable to remove ca.key'));
+				throw new Exception(_('Unable to remove ca.key'));
 			}
 		}
 		if(file_exists($location . "/ca.crt")) {
 			if(!unlink($location . "/ca.crt")) {
-				throw new \Exception(_('Unable to remove ca.crt'));
+				throw new Exception(_('Unable to remove ca.crt'));
 			}
 		}
 		if(file_exists($location . "/ca.cfg")) {
 			if(!unlink($location . "/ca.cfg")) {
-				throw new \Exception(_('Unable to remove ca.cfg'));
+				throw new Exception(_('Unable to remove ca.cfg'));
 			}
 		}
 		if(file_exists($location . "/tmp.cfg")) {
 			if(!unlink($location . "/tmp.cfg")) {
-				throw new \Exception(_('Unable to remove tmp.cfg'));
+				throw new Exception(_('Unable to remove tmp.cfg'));
 			}
 		}
 		$sql = "TRUNCATE certman_cas";
@@ -1326,7 +1321,7 @@ class Certman implements \BMO {
 		try {
 			$csrs = $this->getAllManagedCSRs();
 			$loc = $this->PKCS->getKeysLocation();
-		} catch(\Exception $e) {
+		} catch(Exception $e) {
 			return false;
 		}
 		$files[] = $loc ."/".$csrs[0]['basename'].".csr";
@@ -1357,11 +1352,11 @@ class Certman implements \BMO {
 		}
 		$sql = "UPDATE certman_certs SET description = ?, additional = ? WHERE cid = ?";
 		$sth = $this->db->prepare($sql);
-		$res = $sth->execute(array($description,json_encode($additional),$oldDetails['cid']));
+		$sth->execute(array($description,json_encode($additional),$oldDetails['cid']));
 
 		$newDetails = $this->getCertificateDetails($oldDetails['cid']);
 		if(empty($newDetails)) {
-			throw new \Exception("Could not find updated certificates");
+			throw new Exception("Could not find updated certificates");
 		}
 		if(is_array($newDetails['files']) && posix_geteuid() === 0) {
 			$user = $this->FreePBX->Config->get('AMPASTERISKWEBUSER');
@@ -1414,7 +1409,7 @@ class Certman implements \BMO {
 		}
 
 		if(empty($cert['files']['crt']) || empty($cert['files']['key'])) {
-			throw new \Exception("Unable to make certficate default. Certificates are missing");
+			throw new Exception("Unable to make certficate default. Certificates are missing");
 		}
 
 		$sslfiles = array("pem" => "certificate.pem", "ca-crt" => "ca-bundle.crt", "crt" => "webserver.crt", "key" => "webserver.key");
@@ -1450,7 +1445,7 @@ class Certman implements \BMO {
 		$sql = "SELECT * from certman_certs WHERE `default` = 1";
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
-		$data = $sth->fetch(\PDO::FETCH_ASSOC);
+		$data = $sth->fetch(PDO::FETCH_ASSOC);
 		if(!empty($data)) {
 			$data = $this->getAdditionalCertDetails($data, true);
 		} else {
@@ -1475,7 +1470,7 @@ class Certman implements \BMO {
 			$file = $location.'/'.$details['basename'].$f;
 			if(file_exists($file)) {
 				if(!is_readable($file)) {
-					throw new \Exception(sprintf(_("Certificate %s is not readable! Can not continue!"),$file));
+					throw new Exception(sprintf(_("Certificate %s is not readable! Can not continue!"),$file));
 				}
 				$details['files'][$type] = $file;
 				if($type == 'crt') {
@@ -1490,7 +1485,7 @@ class Certman implements \BMO {
 				$file = $location.'/integration/webserver'.$f;
 				if(file_exists($file)) {
 					if(!is_readable($file)) {
-						throw new \Exception(sprintf(_("Certificate %s is not readable! Can not continue!"),$file));
+						throw new Exception(sprintf(_("Certificate %s is not readable! Can not continue!"),$file));
 					}
 					$details['integration']['files'][$type] = $file;
 					$details['integration']['hashes'][$type] = sha1_file($file);
@@ -1499,7 +1494,7 @@ class Certman implements \BMO {
 			$file = $location.'/integration/certificate.pem';
 			if(file_exists($file)) {
 				if(!is_readable($file)) {
-					throw new \Exception(sprintf(_("Certificate %s is not readable! Can not continue!"),$file));
+					throw new Exception(sprintf(_("Certificate %s is not readable! Can not continue!"),$file));
 				}
 				$details['integration']['files']['pem'] = $file;
 				$details['integration']['hashes']['pem'] = sha1_file($file);
@@ -1530,18 +1525,12 @@ class Certman implements \BMO {
 		return false;
 	}
 	public function ajaxHandler(){
-		switch ($_REQUEST['command']) {
-			case 'makeDefault':
-				$res = $this->makeCertDefault($_POST['id']);
-				return array("status" => $res, "message" => "");
-			break;
-			case 'getJSON':
-				switch ($_REQUEST['jdata']) {
-					case 'grid':
-						return $this->getAllManagedCertificates();
-					break;
-				}
-			break;
+		if('makeDefault' == $_REQUEST['command']){
+			$res = $this->makeCertDefault($_POST['id']);
+			return array("status" => $res, "message" => "");
+		}
+		if('getJSON' == $_REQUEST['command'] && 'grid' == $_REQUEST['jdata']){
+			return $this->getAllManagedCertificates();
 		}
 		return false;
 	}
