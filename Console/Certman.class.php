@@ -129,7 +129,7 @@ class Certman extends Command {
 			$list = $certman->importLocalCertificates();
 			if(empty($list)) {
 				$loc = $pkcs->getKeysLocation();
-				$output->writeln(_("<info>".sprintf(_("No Certificates to import. Try placing a certificate (<name>.crt) and its key (<name>.crt) into %s"),$loc)."</info>"));
+				$output->writeln(_("<info>".sprintf(_("No Certificates to import. Try placing a certificate (<name>.crt) and its key (<name>.key) into %s"),$loc)."</info>"));
 				exit(4);
 			}
 			$err = false;
