@@ -1272,15 +1272,15 @@ class Certman implements \BMO {
 					}
 					$success = false;
 					if($this->checkCertificateName($name)) {
-                        $oldDetails = $this->getCertificateDetailsByBasename($name);
-                        if (!empty($oldDetails) && $oldDetails['type'] == 'up') {
-                            $this->updateCertificate($oldDetails,_("Imported from file system"));
-                            $success = true;
-                        }
-                    } else {
-                        $this->saveCertificate(null,$name,_("Imported from file system"),'up');
-                        $success = true;
-                    }
+						$oldDetails = $this->getCertificateDetailsByBasename($name);
+						if (!empty($oldDetails) && $oldDetails['type'] == 'up') {
+							$this->updateCertificate($oldDetails,_("Imported from file system"));
+							$success = true;
+						}
+					} else {
+						$this->saveCertificate(null,$name,_("Imported from file system"),'up');
+						$success = true;
+					}
 					if ($success) {
 						$processed[] = array(
 							"status" => true,
