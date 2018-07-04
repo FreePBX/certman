@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>13.0.37</version>
+	<version>13.0.39</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -13,6 +13,14 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
+		*13.0.39* FREEPBX-17633
+		*13.0.38* Move database definitions to xml, ability to generate default cert from cli
+		*13.0.37.7* Remove ca-bundle
+		*13.0.37.6* Reorganize uses
+		*13.0.37.5* Use new autoloader
+		*13.0.37.4* Force optimized autoloaders
+		*13.0.37.2* Ungitify ca-bundle
+		*13.0.37.1* FREEPBX-16909 Utilize Composer CA bundles
 		*13.0.37* Add method to check ca bundles
 		*13.0.36.11* FREEPBX-16302, FREEPBX-15408
 		*13.0.36.10* Remove Windows carriage returns completely
@@ -90,6 +98,48 @@
 	<depends>
 		<phpversion>5.3.3</phpversion>
 		<module>core ge 12.0.1beta6</module>
-		<version>13.0.130</version>
+		<version>13.0.195</version>
 	</depends>
+	<database>
+		<table name="certman_mapping">
+			<field name="id" type="string" length="20" primaryKey="true"/>
+			<field name="cid" type="integer" notnull="false"/>
+			<field name="verify" type="string" length="255" notnull="false"/>
+			<field name="setup" type="string" length="45" notnull="false"/>
+			<field name="rekey" type="integer" notnull="false"/>
+		</table>
+		<table name="certman_csrs">
+			<field name="cid" type="integer" primaryKey="true" autoincrement="true"/>
+			<field name="basename" type="string" length="190"/>
+			<key name="basename" type="unique">
+				<column name="basename"/>
+			</key>
+		</table>
+		<table name="certman_certs">
+			<field name="cid" type="integer" primaryKey="true" autoincrement="true"/>
+			<field name="caid" type="integer" notnull="false"/>
+			<field name="basename" type="string" length="190"/>
+			<field name="description" type="string" length="255" notnull="false"/>
+			<field name="type" type="string" length="2" default="ss"/>
+			<field name="default" type="boolean" default="0"/>
+			<field name="additional" type="blob" notnull="false"/>
+			<key name="basename_UNIQUE" type="unique">
+				<column name="basename"/>
+			</key>
+			<key name="basename" type="unique">
+				<column name="basename"/>
+			</key>
+		</table>
+		<table name="certman_cas">
+			<field name="uid" type="integer" primaryKey="true" autoincrement="true"/>
+			<field name="basename" type="string" length="190"/>
+			<field name="cn" type="string" length="255"/>
+			<field name="on" type="string" length="255"/>
+			<field name="passphrase" type="string" length="255" notnull="false"/>
+			<field name="salt" type="string" length="255" notnull="false"/>
+			<key name="basename" type="unique">
+				<column name="basename"/>
+			</key>
+		</table>
+	</database>
 </module>

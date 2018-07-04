@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit1730a06aed84c4a78c15e39beebfe096
+class ComposerStaticInitabf029b4af4b59affc5127fb754830a7
 {
     public static $files = array (
         'b2b4a332d57ae98e284061ea6e9cf11d' => __DIR__ . '/..' . '/analogic/lescript/Lescript.php',

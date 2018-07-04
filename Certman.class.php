@@ -7,6 +7,7 @@ namespace FreePBX\modules\Certman;
 class Logger { function __call($name, $arguments) { dbug(date('Y-m-d H:i:s')." [$name] ${arguments[0]}"); }}
 namespace FreePBX\modules;
 include 'vendor/autoload.php';
+use Composer\CaBundle\CaBundle;
 class Certman implements \BMO {
 	/* Asterisk Defaults */
 	private $defaults = array(
@@ -44,153 +45,6 @@ class Certman implements \BMO {
 	 * Used to setup the database
 	 */
 	public function install() {
-		$table = $this->FreePBX->Database->migrate("certman_cas");
-		$cols = array(
-			"uid" => array(
-				"type" => "integer",
-				"primaryKey" => true,
-				"autoincrement" => true
-			),
-			"basename" => array(
-				"type" => "string",
-				"length" => 190,
-				"notnull" => true,
-				"customSchemaOptions" => array(
-					"unique" => true
-				)
-			),
-			"cn" => array(
-				"type" => "string",
-				"length" => 255,
-				"notnull" => true,
-			),
-			"on" => array(
-				"type" => "string",
-				"length" => 255,
-				"notnull" => true,
-			),
-			"passphrase" => array(
-				"type" => "string",
-				"length" => 255,
-				"notnull" => false,
-			),
-			"salt" => array(
-				"type" => "string",
-				"length" => 255,
-				"notnull" => false,
-			),
-		);
-		$table->modify($cols);
-		unset($table);
-
-		$table = $this->FreePBX->Database->migrate("certman_certs");
-		$cols = array(
-			"cid" => array(
-				"type" => "integer",
-				"primaryKey" => true,
-				"autoincrement" => true
-			),
-			"caid" => array(
-				"type" => "integer",
-				"notnull" => false,
-			),
-			"basename" => array(
-				"type" => "string",
-				"length" => 190,
-				"notnull" => true,
-				"customSchemaOptions" => array(
-					"unique" => true
-				)
-			),
-			"description" => array(
-				"type" => "string",
-				"length" => 255,
-				"notnull" => false,
-			),
-			"type" => array(
-				"type" => "string",
-				"length" => 2,
-				"notnull" => true,
-				"default" => 'ss'
-			),
-			"default" => array(
-				"type" => "boolean",
-				"notnull" => true,
-				"default" => 0
-			),
-			"additional" => array(
-				"type" => "blob",
-				"notnull" => false,
-			),
-		);
-		$indexes = array(
-			"basename_UNIQUE" => array(
-				"type" => "unique",
-				"cols" => array(
-					"basename"
-				)
-			)
-		);
-		$table->modify($cols,$indexes);
-		unset($table);
-
-		$table = $this->FreePBX->Database->migrate("certman_csrs");
-		$cols = array(
-			"cid" => array(
-				"type" => "integer",
-				"primaryKey" => true,
-				"autoincrement" => true
-			),
-			"basename" => array(
-				"type" => "string",
-				"length" => 190,
-				"notnull" => true,
-				"customSchemaOptions" => array(
-					"unique" => true
-				)
-			)
-		);
-		$indexes = array(
-			"basename_UNIQUE" => array(
-				"type" => "unique",
-				"cols" => array(
-					"basename"
-				)
-			)
-		);
-		$table->modify($cols);
-		unset($table);
-
-		$table = $this->FreePBX->Database->migrate("certman_mapping");
-		$cols = array(
-			"id" => array(
-				"type" => "string",
-				"length" => 20,
-				"primaryKey" => true,
-				"notnull" => true
-			),
-			"cid" => array(
-				"type" => "integer",
-				"notnull" => false
-			),
-			"verify" => array(
-				"type" => "string",
-				"length" => 255,
-				"notnull" => false
-			),
-			"setup" => array(
-				"type" => "string",
-				"length" => 45,
-				"notnull" => false
-			),
-			"rekey" => array(
-				"type" => "integer",
-				"notnull" => false
-			),
-		);
-		$table->modify($cols);
-		unset($table);
-
 		$certs = $this->getAllManagedCertificates();
 		if(empty($certs)) {
 			out(_("No Certificates exist"));
@@ -217,33 +71,6 @@ class Certman implements \BMO {
 				//return false;
 			}
 		}
-
-
-		$exists = false;
-		$ampsbin = $this->FreePBX->Config->get("AMPSBIN");
-		foreach($this->FreePBX->Cron->getAll() as $cron) {
-			$str = str_replace("/", "\/", $ampsbin."/fwconsole certificates updateall -q");
-			if(preg_match("/fwconsole certificates updateall -q$/",$cron)) {
-				if(!preg_match("/".$str."$/i",$cron)) {
-					$this->FreePBX->Cron->remove($cron);
-				}
-			}
-			if(preg_match("/".$str."/i",$cron,$matches)) {
-				if($exists) {
-					//remove multiple entries (if any)
-					$this->FreePBX->Cron->remove($cron);
-				}
-				$exists = true;
-			}
-		}
-		if(!$exists) {
-			$this->FreePBX->Cron->add(array(
-				"command" => $ampsbin."/fwconsole certificates updateall -q",
-				"hour" => rand(0,3),
-				"minute" => rand(0,59),
-			));
-		}
-
 		return true;
 	}
 
@@ -756,20 +583,7 @@ class Certman implements \BMO {
 	 * @return string      The location of the system CA bundle
 	 */
 	public function getCABundle() {
-		//https://golang.org/src/crypto/x509/root_linux.go
-		$files = array(
-			"/etc/ssl/certs/ca-certificates.crt",                // Debian/Ubuntu/Gentoo etc.
-			"/etc/pki/tls/certs/ca-bundle.crt",                  // Fedora/RHEL 6
-			"/etc/ssl/ca-bundle.pem",                            // OpenSUSE
-			"/etc/pki/tls/cacert.pem",                           // OpenELEC
-			"/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem" // CentOS/RHEL 7
-		);
-		foreach($files as $file) {
-			if(file_exists($file) && is_readable($file)) {
-				return $file;
-			}
-		}
-		return null;
+		return CaBundle::getSystemCaRootBundlePath();
 	}
 
 	/**
@@ -1399,7 +1213,7 @@ class Certman implements \BMO {
 		$processed = array();
 		foreach(glob($location."/*.key") as $file) {
 			$name = basename($file,".key");
-			if(in_array(basename($file),$cas) || $this->checkCertificateName($name)) {
+			if(in_array(basename($file),$cas)) {
 				continue;
 			}
 			$raw = file_get_contents($file);
@@ -1446,18 +1260,28 @@ class Certman implements \BMO {
 			foreach($keys as $key) {
 				if (openssl_x509_check_private_key($info, $key['res'])) {
 					$name = basename($file,".crt");
-					if(!$this->checkCertificateName($name)) {
-						try {
-							$status = $this->importCertificate($name,$key['raw'],file_get_contents($file));
-						} catch(\Exception $e) {
-							$processed[] = array(
-								"status" => false,
-								"error" => $e->getMessage(),
-								"file" => $file
-							);
-							continue;
+					try {
+						$status = $this->importCertificate($name,$key['raw'],file_get_contents($file));
+					} catch(\Exception $e) {
+						$processed[] = array(
+							"status" => false,
+							"error" => $e->getMessage(),
+							"file" => $file
+						);
+						continue;
+					}
+					$success = false;
+					if($this->checkCertificateName($name)) {
+						$oldDetails = $this->getCertificateDetailsByBasename($name);
+						if (!empty($oldDetails) && $oldDetails['type'] == 'up') {
+							$this->updateCertificate($oldDetails,_("Imported from file system"));
+							$success = true;
 						}
+					} else {
 						$this->saveCertificate(null,$name,_("Imported from file system"),'up');
+						$success = true;
+					}
+					if ($success) {
 						$processed[] = array(
 							"status" => true,
 							"file" => $file
