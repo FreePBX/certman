@@ -8,7 +8,7 @@ class Backup Extends Base\BackupBase{
   public function runBackup($id,$transaction){
     $this->certman = $this->FreePBX->Certman;
 
-    $this->buildDirs()
+    $this->buildFileStructure()
       ->addDirectories($this->dirs);
     $this->addDependency('core');
     $this->addConfigs($this->buildConfigs());
