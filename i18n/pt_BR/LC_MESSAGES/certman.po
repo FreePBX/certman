@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-30 19:09-0400\n"
+"POT-Creation-Date: 2018-07-10 19:59-0400\n"
 "PO-Revision-Date: 2017-03-23 13:47+0200\n"
 "Last-Translator: Kingvoice <suporte@kingvoice.com.br>\n"
 "Language-Team: Portuguese (Brazil) <http://weblate.freepbx.org/projects/"
@@ -31,7 +31,7 @@ msgstr ""
 msgid "%s is not supported at this time"
 msgstr ""
 
-#: Certman.class.php:1591
+#: Certman.class.php:1601
 #, php-format
 msgid "(%s days)"
 msgstr "(%s dias)"
@@ -131,7 +131,7 @@ msgstr "Referência CSR"
 msgid "Certificate"
 msgstr "Certificado"
 
-#: Certman.class.php:1478 Certman.class.php:1493 Certman.class.php:1502
+#: Certman.class.php:1488 Certman.class.php:1503 Certman.class.php:1512
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr "O certificado %s não é legível! Não é possível continuar!"
@@ -144,7 +144,7 @@ msgstr "Autoridade Certificadora"
 msgid "Certificate Authority to Reference"
 msgstr "Autoridade Certificadora para Referência"
 
-#: Certman.class.php:1586
+#: Certman.class.php:1596
 msgid "Certificate Expired!"
 msgstr "Certificado Expirado!"
 
@@ -441,7 +441,7 @@ msgstr "Importar Localmente"
 msgid "Import any unmanaged certificates in %s"
 msgstr ""
 
-#: Certman.class.php:1274
+#: Certman.class.php:1277 Certman.class.php:1281
 msgid "Imported from file system"
 msgstr "Importado do sistema de arquivos"
 
@@ -565,10 +565,8 @@ msgstr "Não existem Certificados"
 #, php-format
 msgid ""
 "No Certificates to import. Try placing a certificate (<name>.crt) and its "
-"key (<name>.crt) into %s"
+"key (<name>.key) into %s"
 msgstr ""
-"Nenhum Certificado a ser importado. Tente colocar um certificado (<nome>."
-"crt) e sua chave (<nome>.crt) em %s"
 
 #: Certman.class.php:144
 msgid "No Private key to reference."
@@ -899,15 +897,15 @@ msgstr "Não é possível ler a chave. É protegida por senha?"
 msgid "Unable to remove %s"
 msgstr "Não foi possível remover %s"
 
-#: Certman.class.php:1303
+#: Certman.class.php:1313
 msgid "Unable to remove ca.cfg"
 msgstr "Não foi possível remover ca.cfg"
 
-#: Certman.class.php:1298
+#: Certman.class.php:1308
 msgid "Unable to remove ca.crt"
 msgstr "Não é possível remover ca.crt"
 
-#: Certman.class.php:1293
+#: Certman.class.php:1303
 msgid "Unable to remove ca.key"
 msgstr "Não é possível remover ca.key"
 
@@ -919,7 +917,7 @@ msgstr "Não é possível remover a Autoridade Certificadora"
 msgid "Unable to remove the Certificate Signing Request"
 msgstr "Não é possível remover a Solicitação de Assinatura de Certificado"
 
-#: Certman.class.php:1308
+#: Certman.class.php:1318
 msgid "Unable to remove tmp.cfg"
 msgstr "Não foi possível remover tmp.cfg"
 
@@ -928,7 +926,7 @@ msgstr "Não foi possível remover tmp.cfg"
 msgid "Unable to write to %s"
 msgstr "Não é possível gravar em %s"
 
-#: Certman.class.php:1576
+#: Certman.class.php:1586
 msgid "Unknown Expiration"
 msgstr "Expiração Desconhecida"
 
@@ -1046,6 +1044,13 @@ msgstr ""
 "vários arquivos de certificado. Cole o conteúdo de todos os arquivos da "
 "cadeia, se houver, no campo abaixo. Isso pode ser deixado em branco ou "
 "atualizado a qualquer momento. Eles podem ser adicionados em qualquer ordem."
+
+#~ msgid ""
+#~ "No Certificates to import. Try placing a certificate (<name>.crt) and its "
+#~ "key (<name>.crt) into %s"
+#~ msgstr ""
+#~ "Nenhum Certificado a ser importado. Tente colocar um certificado (<nome>."
+#~ "crt) e sua chave (<nome>.crt) em %s"
 
 #~ msgid "<error>"
 #~ msgstr "<error>"

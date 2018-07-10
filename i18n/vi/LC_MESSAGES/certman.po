@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-30 19:09-0400\n"
+"POT-Creation-Date: 2018-07-10 19:59-0400\n"
 "PO-Revision-Date: 2017-08-08 16:34+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese <http://weblate.freepbx.org/projects/freepbx/"
@@ -31,7 +31,7 @@ msgstr "%s  đã tồn tại!"
 msgid "%s is not supported at this time"
 msgstr ""
 
-#: Certman.class.php:1591
+#: Certman.class.php:1601
 #, php-format
 msgid "(%s days)"
 msgstr "(%s ngày)"
@@ -130,7 +130,7 @@ msgstr "Tham chiếu CSR ( yêu cầu ký chứng chỉ)"
 msgid "Certificate"
 msgstr "Chứng thực"
 
-#: Certman.class.php:1478 Certman.class.php:1493 Certman.class.php:1502
+#: Certman.class.php:1488 Certman.class.php:1503 Certman.class.php:1512
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr "Chứng thực %s không thể đọc được! Không thể tiếp tục!"
@@ -143,7 +143,7 @@ msgstr "Nhà cung cấp chứng thực"
 msgid "Certificate Authority to Reference"
 msgstr "Nhà cung cấp chứng thực để tham chiếu"
 
-#: Certman.class.php:1586
+#: Certman.class.php:1596
 msgid "Certificate Expired!"
 msgstr "Chứng thực đã hết han!"
 
@@ -440,7 +440,7 @@ msgstr "Nhập tại chỗ"
 msgid "Import any unmanaged certificates in %s"
 msgstr ""
 
-#: Certman.class.php:1274
+#: Certman.class.php:1277 Certman.class.php:1281
 msgid "Imported from file system"
 msgstr "Đã nhập từ hệ thống tệp"
 
@@ -566,10 +566,8 @@ msgstr "Không có chứng thực nào tồn tại"
 #, php-format
 msgid ""
 "No Certificates to import. Try placing a certificate (<name>.crt) and its "
-"key (<name>.crt) into %s"
+"key (<name>.key) into %s"
 msgstr ""
-"Không có chứng thực nào để nhập. Thử đặt một chứng thực (<name>.crt) và khóa "
-"của nó (<name>.crt) vào %s"
 
 #: Certman.class.php:144
 msgid "No Private key to reference."
@@ -895,15 +893,15 @@ msgstr "Không thể đọc khóa. Nó có được bảo vệ bằng mật kh�
 msgid "Unable to remove %s"
 msgstr "Không thể xóa %s"
 
-#: Certman.class.php:1303
+#: Certman.class.php:1313
 msgid "Unable to remove ca.cfg"
 msgstr "Không thể xóa  ca.cfg"
 
-#: Certman.class.php:1298
+#: Certman.class.php:1308
 msgid "Unable to remove ca.crt"
 msgstr "Không thể xóa  ca.crt"
 
-#: Certman.class.php:1293
+#: Certman.class.php:1303
 msgid "Unable to remove ca.key"
 msgstr "Không thể xóa ca.key"
 
@@ -915,7 +913,7 @@ msgstr "Không thể xóa nhà cung cấp chứng thực"
 msgid "Unable to remove the Certificate Signing Request"
 msgstr "Không thể xóa Yêu cầu ký chứng thực"
 
-#: Certman.class.php:1308
+#: Certman.class.php:1318
 msgid "Unable to remove tmp.cfg"
 msgstr "Không thể xóa tmp.cfg"
 
@@ -924,7 +922,7 @@ msgstr "Không thể xóa tmp.cfg"
 msgid "Unable to write to %s"
 msgstr "Không thể ghi tới %s"
 
-#: Certman.class.php:1576
+#: Certman.class.php:1586
 msgid "Unknown Expiration"
 msgstr "Thời gian hết hạn không xác định"
 
@@ -1042,6 +1040,13 @@ msgstr ""
 "nhiều các tệp chứng thực. Dán các nội dung của các tệp Chuỗi, nếu có vào các "
 "cửa sổ sau. Có thể để trong hoặc cập nhật bất cứ khi nào. Có thể thêm chúng "
 "khi có yêu cầu."
+
+#~ msgid ""
+#~ "No Certificates to import. Try placing a certificate (<name>.crt) and its "
+#~ "key (<name>.crt) into %s"
+#~ msgstr ""
+#~ "Không có chứng thực nào để nhập. Thử đặt một chứng thực (<name>.crt) và "
+#~ "khóa của nó (<name>.crt) vào %s"
 
 #~ msgid "<error>"
 #~ msgstr "<lỗi>"
