@@ -71,6 +71,16 @@ class Certman implements \BMO {
 				//return false;
 			}
 		}
+
+		// Unpackage and install bundled acme.sh
+		$cmd = "tar zxf ".__DIR__."/acme.sh-bundled.tar.gz && cd acme.sh && ./acme.sh --install && cd .. && rm -rf acme.sh";
+		// If we're root (we shoudln't be, but it can happen), run as the AMPASTERISKUSER
+		// $amp_conf['AMPASTERISKUSER']
+		if (posix_getuid() == 0) {
+			$user = \FreePBX::Config()->get("AMPASTERISKUSER");
+			$cmd = "runuser $user -s /bin/bash -c \"$cmd\"";
+		}
+		system($cmd);
 		return true;
 	}
 
