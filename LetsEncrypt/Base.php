@@ -72,5 +72,28 @@ class Base {
 		}
 		return $this->run("--updateaccount --accountemail '$newemail'");
 	}
+
+	public function installCertificate($certname) {
+		$location = \FreePBX::PKCS()->getKeysLocation();
+		$key   = "--key-file $location/$certname.key ";
+		$cert  = "--cert-file $location/$certname.crt ";
+		$chain = "--fullchain-file $location/$certname-ca-bundle.crt ";
+		$cmd   = "--install-cert -d $certname $key $cert $chain";
+
+		// We can't really do anything if this fails, I guess?
+		$this->run($cmd);
+
+		// Create complete pem for Nodejs/nginx etc
+            	$key = file_get_contents("$location/$certname.key");
+            	$cert = file_get_contents("$location/$certname.crt");
+            	$chain = file_get_contents("$location/$certname-ca-bundle.crt");
+
+            	file_put_contents($location."/".$certname.".pem",$key."\n".$cert."\n".$chain."\n");
+            	chmod("$location/$certname.crt",0600);
+            	chmod("$location/$certname.key",0600);
+            	chmod("$location/$certname.pem",0600);
+		chmod("$location/$certname-ca-bundle.crt",0600);
+	}
+
 }
 
