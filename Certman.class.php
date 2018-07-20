@@ -8,7 +8,7 @@ class Logger { function __call($name, $arguments) { dbug(date('Y-m-d H:i:s')." [
 namespace FreePBX\modules;
 include 'vendor/autoload.php';
 use Composer\CaBundle\CaBundle;
-class Certman implements \BMO {
+class Certman extends \FreePBX_Helpers implements \BMO {
 	/* Asterisk Defaults */
 	private $defaults = array(
 		"sip" => array(
