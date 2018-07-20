@@ -1,0 +1,10 @@
+#!/usr/bin/env php
+<?php
+
+// Called when a cert is issued or renewed.
+// This should generate the .pem for nodejs/nginx etc
+
+echo "Hi from cert-issue.\n";
+var_dump($argv);
+
+

@@ -4,6 +4,8 @@ namespace FreePBX\modules\Certman\LetsEncrypt;
 
 Class Webroot Extends Base Implements Acmesh {
 
+	// public $staging = false;
+
 	public function getRawName() {
 		return "webroot";
 	}
@@ -20,10 +22,11 @@ Class Webroot Extends Base Implements Acmesh {
 
 	public function issueCert($cert, $force = false) {
 		$vals = $this->loadOptions();
+		$hook  = "--post-hook '".__DIR__."/cert-issue \\\$domain' ";
 		if ($force) {
-			$cmd = "--issue --force -d $cert -w ".$vals['webroot'];
+			$cmd = "--issue --force -d $cert $hook -w ".$vals['webroot'];
 		} else {
-			$cmd = "--issue -d $cert -w ".$vals['webroot'];
+			$cmd = "--issue -d $cert $hook -w ".$vals['webroot'];
 		}
 		return $this->run($cmd);
 	}

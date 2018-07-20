@@ -73,16 +73,23 @@ class Base {
 		return $this->run("--updateaccount --accountemail '$newemail'");
 	}
 
-	public function installCertificate($certname) {
+	// Note - this ONLY EVER NEEDS TO BE RUN ONCE. This configures
+	// acme.sh with where to put the output, and what files to run,
+	// after the cert has been renewed successfully. install-cert should
+	// then restart httpd etc.
+	public function activateCertificate($certname) {
 		$location = \FreePBX::PKCS()->getKeysLocation();
 		$key   = "--key-file $location/$certname.key ";
 		$cert  = "--cert-file $location/$certname.crt ";
 		$chain = "--fullchain-file $location/$certname-ca-bundle.crt ";
-		$cmd   = "--install-cert -d $certname $key $cert $chain";
+		$hook  = "--reloadcmd '".__DIR__."/cert-install \\\$domain' ";
+		$cmd   = "--install-cert -d $certname $hook $key $cert $chain";
 
 		// We can't really do anything if this fails, I guess?
-		$this->run($cmd);
+		var_dump($this->run($cmd));
 
+		// This needs to be moved to install-cert
+		//
 		// Create complete pem for Nodejs/nginx etc
             	$key = file_get_contents("$location/$certname.key");
             	$cert = file_get_contents("$location/$certname.crt");
