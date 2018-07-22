@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+
+// This script is run after an attempt to renew a certificate has finished,
+// regardless of wether it was successful or not.
+//
+// This is unused in FreePBX, but may be used by third party developers
+//
+//
+
+$dest = "/etc/cert-post-hook";
+
+if (!file_exists($dest)) {
+	exit;
+}
+
+if (fileowner($dest) == 0 && is_executable($dest)) {
+	system($dest);
+}
+
+

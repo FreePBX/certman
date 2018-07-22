@@ -1,0 +1,59 @@
+#!/usr/bin/env php
+<?php
+
+// This runs AFTER the cert has been successfully issued
+//
+// Create complete pem for Nodejs/nginx etc
+
+if (!isset($argv[1])) {
+	print "No location provided?\n";
+	exit(-1);
+}
+
+if (!isset($argv[2])) {
+	print "No certificate name provided?\n";
+	exit(-1);
+}
+
+// Location should ALWAYS be /etc/asterisk/keys - so much so
+// that if we're told something else, ignore it. If you think
+// this is wrong, open a ticket on issues.freepbx.org
+//
+$location = $argv[1];
+if ($location !== "/etc/asterisk/keys") {
+	print "WARNING::: Location is NOT /etc/asterisk/keys, ignoring!\n";
+	$location = "/etc/asterisk/keys";
+}
+
+// Check certname for sanity
+$cert = $argv[2];
+// Make sure the certificate name is sane
+if (preg_match("/[^a-zA-Z1-9\-\.]/", $cert)) {
+	print "Cert $cert has invalid chars\n";
+	exit(-1);
+}
+
+// Now build our pem
+$key = file_get_contents("$location/$cert.key");
+$cert = file_get_contents("$location/$cert.crt");
+$chain = file_get_contents("$location/$cert-ca-bundle.crt");
+file_put_contents("$location/$cert.pem",$key."\n".$cert."\n".$chain."\n");
+
+// And ensure our permissions are sane
+chmod("$location/$certname.crt",0600);
+chmod("$location/$certname.key",0600);
+chmod("$location/$certname.pem",0600);
+chmod("$location/$certname-ca-bundle.crt",0600);
+
+// Do we have an external hook to run, too?
+$dest = "/etc/cert-install-hook";
+
+if (!file_exists($dest)) {
+	exit;
+}
+
+if (fileowner($dest) == 0 && is_executable($dest)) {
+	system($dest);
+}
+
+

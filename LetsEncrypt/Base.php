@@ -82,24 +82,11 @@ class Base {
 		$key   = "--key-file $location/$certname.key ";
 		$cert  = "--cert-file $location/$certname.crt ";
 		$chain = "--fullchain-file $location/$certname-ca-bundle.crt ";
-		$hook  = "--reloadcmd '".__DIR__."/cert-install \\\$domain' ";
+		$hook  = "--reloadcmd '".__DIR__."/cert-install-hook $location \\\$domain' ";
 		$cmd   = "--install-cert -d $certname $hook $key $cert $chain";
 
 		// We can't really do anything if this fails, I guess?
-		var_dump($this->run($cmd));
-
-		// This needs to be moved to install-cert
-		//
-		// Create complete pem for Nodejs/nginx etc
-            	$key = file_get_contents("$location/$certname.key");
-            	$cert = file_get_contents("$location/$certname.crt");
-            	$chain = file_get_contents("$location/$certname-ca-bundle.crt");
-
-            	file_put_contents($location."/".$certname.".pem",$key."\n".$cert."\n".$chain."\n");
-            	chmod("$location/$certname.crt",0600);
-            	chmod("$location/$certname.key",0600);
-            	chmod("$location/$certname.pem",0600);
-		chmod("$location/$certname-ca-bundle.crt",0600);
+		$this->run($cmd);
 	}
 
 }

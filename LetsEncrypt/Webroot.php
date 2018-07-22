@@ -22,11 +22,11 @@ Class Webroot Extends Base Implements Acmesh {
 
 	public function issueCert($cert, $force = false) {
 		$vals = $this->loadOptions();
-		$hook  = "--post-hook '".__DIR__."/cert-issue \\\$domain' ";
+		$hooks = "--pre-hook '".__DIR__."/cert-pre-hook \\\$domain' --post-hook '".__DIR__."/cert-post-hook \\\$domain' ";
 		if ($force) {
-			$cmd = "--issue --force -d $cert $hook -w ".$vals['webroot'];
+			$cmd = "--issue --force -d $cert $hooks -w ".$vals['webroot'];
 		} else {
-			$cmd = "--issue -d $cert $hook -w ".$vals['webroot'];
+			$cmd = "--issue -d $cert $hooks -w ".$vals['webroot'];
 		}
 		return $this->run($cmd);
 	}

@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php
+
+// Do we have an external hook to run, too?
+$dest = "/etc/cert-pre-hook";
+
+if (!file_exists($dest)) {
+	exit;
+}
+
+if (fileowner($dest) == 0 && is_executable($dest)) {
+	system($dest);
+}
+
