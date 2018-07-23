@@ -2,7 +2,7 @@
 
 namespace FreePBX\modules\Certman\LetsEncrypt;
 
-Class Webroot Extends Base Implements Acmesh {
+Class Webroot Extends Base {
 
 	// public $staging = false;
 

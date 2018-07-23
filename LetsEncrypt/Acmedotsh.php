@@ -2,13 +2,13 @@
 
 namespace FreePBX\modules\Certman\LetsEncrypt;
 
-Interface Acmesh {
+Interface Acmedotsh {
 
 	public function getRawName();
 	public function getOptions();
 
-	public function issueCert($domain);
-	public function renewCert($domain);
+	public function issueCert($domain, $force);
+	public function renewCert($domain, $force);
 }
 
 

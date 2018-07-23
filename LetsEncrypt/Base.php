@@ -2,7 +2,7 @@
 
 namespace FreePBX\modules\Certman\LetsEncrypt;
 
-class Base {
+Abstract Class Base Implements Acmedotsh {
 
 	public $staging = true;
 
