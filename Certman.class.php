@@ -1208,7 +1208,7 @@ class Certman implements BMO {
 		$processed = array();
 		foreach(glob($location."/*.key") as $file) {
 			$name = basename($file,".key");
-			if(in_array(basename($file),$cas) || $this->checkCertificateName($name)) {
+			if(in_array(basename($file),$cas)) {
 				continue;
 			}
 			$raw = file_get_contents($file);
@@ -1255,18 +1255,28 @@ class Certman implements BMO {
 			foreach($keys as $key) {
 				if (openssl_x509_check_private_key($info, $key['res'])) {
 					$name = basename($file,".crt");
-					if(!$this->checkCertificateName($name)) {
-						try {
-							$status = $this->importCertificate($name,$key['raw'],file_get_contents($file));
-						} catch(Exception $e) {
-							$processed[] = array(
-								"status" => false,
-								"error" => $e->getMessage(),
-								"file" => $file
-							);
-							continue;
+					try {
+						$status = $this->importCertificate($name,$key['raw'],file_get_contents($file));
+					} catch(\Exception $e) {
+						$processed[] = array(
+							"status" => false,
+							"error" => $e->getMessage(),
+							"file" => $file
+						);
+						continue;
+					}
+					$success = false;
+					if($this->checkCertificateName($name)) {
+						$oldDetails = $this->getCertificateDetailsByBasename($name);
+						if (!empty($oldDetails) && $oldDetails['type'] == 'up') {
+							$this->updateCertificate($oldDetails,_("Imported from file system"));
+							$success = true;
 						}
+					} else {
 						$this->saveCertificate(null,$name,_("Imported from file system"),'up');
+						$success = true;
+					}
+					if ($success) {
 						$processed[] = array(
 							"status" => true,
 							"file" => $file
