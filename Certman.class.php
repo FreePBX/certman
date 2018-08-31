@@ -603,7 +603,7 @@ class Certman implements BMO {
 		$email = !empty($settings['email']) ? $settings['email'] : '';
 
 		$location = $this->PKCS->getKeysLocation();
-		$logger = new $this->FreePBX->Logger->monoLog;
+		$logger = $this->FreePBX->Logger->monoLog;
 		$host = basename($host);
 
 		$needsgen = false;
