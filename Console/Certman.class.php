@@ -11,7 +11,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 // Tables
-use Symfony\Component\Console\Helper\TableHelper;
+use Symfony\Component\Console\Helper\Table;
 // Process
 use Symfony\Component\Process\Process;
 
@@ -118,7 +118,7 @@ class Certman extends Command {
 				$default = !empty($c['default']) ? 'X' : '';
 				$rows[] = array($key, $c['basename'], $c['description'], $type, $default);
 			}
-			$table = $this->getHelper('table');
+			$table = new Table($output);
 			$table->setHeaders(array("ID", _("Base Name"),_("Description"), _("Type"), _("Default")));
 			$table->setRows($rows);
 			$table->render($output);
