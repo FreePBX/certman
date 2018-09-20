@@ -1,13 +1,13 @@
 <?php
 // vim: set ai ts=4 sw=4 ft=php:
-//	License for all code of this FreePBX module can be found in the license file inside the module directory
-//	Copyright 2014 Schmooze Com Inc.
 //
-namespace FreePBX\modules\Certman;
-class Logger { function __call($name, $arguments) { dbug(date('Y-m-d H:i:s')." [$name] ${arguments[0]}"); }}
+//	License for all code of this FreePBX module can be found in the license file inside the module directory
+//	Copyright 2018 Sangoma Technologies
+//
 namespace FreePBX\modules;
-include 'vendor/autoload.php';
+
 use Composer\CaBundle\CaBundle;
+
 class Certman extends \FreePBX_Helpers implements \BMO {
 	/* Asterisk Defaults */
 	private $defaults = array(
@@ -72,10 +72,11 @@ class Certman extends \FreePBX_Helpers implements \BMO {
 			}
 		}
 
-		// Unpackage and install bundled acme.sh
+		// Unpackage and install bundled acme.sh. This is extracted every time, to ensure that
+		// it's always up to date and not corrupt.
 		$cmd = "tar zxf ".__DIR__."/acme.sh-bundled.tar.gz && cd acme.sh && ./acme.sh --install && cd .. && rm -rf acme.sh";
-		// If we're root (we shoudln't be, but it can happen), run as the AMPASTERISKUSER
-		// $amp_conf['AMPASTERISKUSER']
+
+		// If we're root (we shouldn't be, but it can happen), run as the AMPASTERISKUSER
 		if (posix_getuid() == 0) {
 			$user = \FreePBX::Config()->get("AMPASTERISKUSER");
 			$cmd = "runuser $user -s /bin/bash -c \"$cmd\"";
