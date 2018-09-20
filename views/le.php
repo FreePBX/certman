@@ -5,23 +5,21 @@ if(!empty($message)) {
 }
 
 $fwapi = \FreePBX::Certman()->getFirewallAPI();
-$letext = sprintf(_("LetsEncrypt requires the following hosts to be permitted for inbound http access:<br /> <tt>%s</tt>"), join(", ", $fwapi->getRequiredHosts()));
+$letext = _("LetsEncrypt HTTP Challenge require that port 80 has unfiltered access from the entire internet.");
 
 // Is firewall enabled and available?
 if ($fwapi->isAvailable()) {
 	// Are our hosts already set up?
-	if (!$fwapi->hostsConfigured()) {
+	if (!$fwapi->portIsOpen()) {
 		// They're not. Add a warning and a button
 		$alert = "<form class='fpbx-submit' name='frm_fixfirewall' id='updatefw' method='post'>";
 		$alert .= "<div class='alert alert-warning'><h3>"._("Firewall Warning")."</h3>";
 		$alert .= "<p class='col-sm-12'>$letext</p>"; // Adding col-sm-12 fixes the padding in the alert
-		$alert .= "<div class='clearfix'><p class='col-sm-9'>"._("These hosts <strong>are not configured in the System Firewall</strong>. LetsEncrypt will not be able to validate this host, and certificate issueance will fail. To automatically add these hosts, please click on the 'Update Firewall' button.")."</p>";
-		$alert .= "<p class='col-sm-3'><button class='btn btn-default pull-right' type='submit' name='updatefw' value='updatefw'>"._("Update Firewall")."</button></p></div>";
 		$alert .= "</div></form>";
 	} else {
 		$alert = "<div class='alert alert-success'><h3>"._("Firewall Validated")."</h3>";
 		$alert .= "<p>$letext</p>";
-		$alert .= "<p>"._("These entries are correctly set up in the Firewall module. However, it's possible that other external firewalls may block access. If you are having problems validating your certificate, this could be the issue.")."</p>";
+		$alert .= "<p>"._("The Firewall module believes that this port is open to the world. However, it's possible that other external firewalls may block access. If you are having problems validating your certificate, this could be the issue, and you may need to use DNS Validation.")."</p>";
 		$alert .= "</div>";
 	}
 } else {
@@ -62,7 +60,7 @@ if ($fwapi->isAvailable()) {
 										</div>
 									</div>
 									<div class="col-md-12">
-										<span id="host-help" class="help-block fpbx-help-block" style=""><?php echo _("This must be the hostname you are requesting a certificate for. LetsEncrypt will validate that the hostname resolves to this machine, and attempt to connect to it.")?></span>
+										<span id="host-help" class="help-block fpbx-help-block" style=""><?php echo _("This must be the hostname you are requesting a certificate for.")?></span>
 									</div>
 								</div>
 							</div>
@@ -130,14 +128,30 @@ if ($fwapi->isAvailable()) {
 									<div class="form-group form-horizontal">
 										<div class="col-md-3">
 											<label class="control-label" for="challengetype"><?php echo _("Challenge Over")?></label>
-											<i class="fa fa-question-circle fpbx-help-icon" data-for="challengetype"></i>
 										</div>
 										<div class="col-md-9">
-											<span class="form-control" disabled><strong>HTTP <?php echo _("(Port 80)"); ?></strong></span>
+<?php
+$method = "webroot";
+
+// List of DNS API providers:
+//
+// https://github.com/Neilpang/acme.sh/blob/master/dnsapi/README.md
+//
+$methods = [ "webroot" => _("HTTP via Port 80"), "aws" => _("AWS Route53 DNS") ];
+?>
+<select class="form-control" id="method" name="method"> 
+<?php
+foreach ($methods as $m => $txt) {
+	if ($m === $method) {
+		$selected = "selected";
+	} else {
+		$selected = "";
+	}
+	print "<option value='$m' $selected>$txt</option>\n";
+}
+?>
+</select>
 										</div>
-									</div>
-									<div class="col-md-12">
-										<span id="challengetype-help" class="help-block fpbx-help-block"><?php echo _("LetsEncrypt only supports hostname validation via HTTP on port 80.")?></span>
 									</div>
 								</div>
 							</div>
