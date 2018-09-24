@@ -132,82 +132,78 @@ class Certman extends \FreePBX_Helpers implements \BMO {
 				}
 			break;
 			case "edit":
+
+				// We can't edit a certid that doesn't exist.
+				$cert = $this->getCertificateDetails($_POST['cid']);
+				if (empty($cert)) {
+					$this->message = array('type' => 'danger', 'message' => _('Certificate is invalid'));
+					break;
+				}
+
 				switch($request['type']) {
 					case "up":
-						$cert = $this->getCertificateDetails($_POST['cid']);
-						if(!empty($cert)) {
-							$name = $cert['basename'];
-							$removeCSR = false;
-							if(empty($_POST['privatekey']) && !empty($_POST['csrref'])) {
-								$csr = $this->getCSRDetails($_POST['csrref']);
-								if(empty($csr['files']['key'])) {
-									//corruption
-									$this->removeCSR();
-									$this->message = array('type' => 'danger', 'message' => _('No Private key to reference. Try generating a CSR first.'));
-									break 2;
-								}
-								$pkey = file_get_contents($csr['files']['key']);
-								$removeCSR = true;
-							} elseif(!empty($_POST['privatekey'])) {
-								$pkey = $_POST['privatekey'];
-							} else {
-								if(empty($cert['files']['key'])) {
-									$this->message = array('type' => 'danger', 'message' => _('No Private key to reference.'));
-									break 2;
-								}
-								$pkey = file_get_contents($cert['files']['key']);
+						$name = $cert['basename'];
+						$removeCSR = false;
+						if(empty($_POST['privatekey']) && !empty($_POST['csrref'])) {
+							$csr = $this->getCSRDetails($_POST['csrref']);
+							if(empty($csr['files']['key'])) {
+								//corruption
+								$this->removeCSR();
+								$this->message = array('type' => 'danger', 'message' => _('No Private key to reference. Try generating a CSR first.'));
+								break 2;
 							}
-
-							try {
-								$status = $this->importCertificate($name,$pkey,$_POST['signedcert'],$_POST['certchain'],$_POST['passphrase']);
-							} catch(\Exception $e) {
-								$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error importing the certificate: %s'),$e->getMessage()));
-								break;
+							$pkey = file_get_contents($csr['files']['key']);
+							$removeCSR = true;
+						} elseif(!empty($_POST['privatekey'])) {
+							$pkey = $_POST['privatekey'];
+						} else {
+							if(empty($cert['files']['key'])) {
+								$this->message = array('type' => 'danger', 'message' => _('No Private key to reference.'));
+								break 2;
 							}
-
-							$this->updateCertificate($cert,$_POST['description']);
-							if($removeCSR) {
-								$this->removeCSR(true);
-							}
-							needreload();
-							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
+							$pkey = file_get_contents($cert['files']['key']);
 						}
+
+						try {
+							$status = $this->importCertificate($name,$pkey,$_POST['signedcert'],$_POST['certchain'],$_POST['passphrase']);
+						} catch(\Exception $e) {
+							$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error importing the certificate: %s'),$e->getMessage()));
+							break;
+						}
+
+						$this->updateCertificate($cert,$_POST['description']);
+						if($removeCSR) {
+							$this->removeCSR(true);
+						}
+						needreload();
+						$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
+					}
 					break;
 					case "le":
-						$cert = $this->getCertificateDetails($_POST['cid']);
-						if(!empty($cert)) {
-							try {
-								$this->updateLE($cert['basename'], array(
-									"countryCode" => $_POST['C'],
-									"state" => $_POST['ST'],
-									"challengetype" => $_POST['method'],
-									"email" => $_POST['email']
-								));
-							} catch(\Exception $e) {
-								$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error updating the certificate: %s'),$e->getMessage()));
-								break;
-							}
-							$this->updateCertificate($cert,$_POST['C'], array(
-								"C" => $_POST['C'],
-								"ST" => $_POST['ST'],
-								'challengetype' => $_POST['method'],
-								'email' => $_POST['email']
+						try {
+							$this->updateLE($cert['basename'], array(
+								"countryCode" => $_POST['C'],
+								"state" => $_POST['ST'],
+								"challengetype" => $_POST['method'],
+								"email" => $_POST['email']
 							));
-							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
-							needreload();
-						} else {
-							$this->message = array('type' => 'danger', 'message' => _('Certificate is invalid'));
+						} catch(\Exception $e) {
+							$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error updating the certificate: %s'),$e->getMessage()));
+							break;
 						}
+						$this->updateCertificate($cert,$_POST['C'], array(
+							"C" => $_POST['C'],
+							"ST" => $_POST['ST'],
+							'challengetype' => $_POST['method'],
+							'email' => $_POST['email']
+						));
+						$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
+						needreload();
 					break;
 					case "ss":
-						$cert = $this->getCertificateDetails($_POST['cid']);
-						if(!empty($cert)) {
-							$this->updateCertificate($cert,$_POST['description']);
-							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
-							needreload();
-						} else {
-							$this->message = array('type' => 'danger', 'message' => _('Certificate is invalid'));
-						}
+						$this->updateCertificate($cert,$_POST['description']);
+						$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
+						needreload();
 					break;
 				}
 			break;
