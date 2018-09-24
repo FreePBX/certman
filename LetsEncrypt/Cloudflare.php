@@ -2,28 +2,28 @@
 
 namespace FreePBX\modules\Certman\LetsEncrypt;
 
-Class Aws Extends Base {
+Class Cloudflare Extends Base {
 
-	public $weblink = "https://github.com/Neilpang/acme.sh/wiki/How-to-use-Amazon-Route53-API";
+	public $weblink = "https://github.com/Neilpang/acme.sh/blob/master/dnsapi/README.md";
 
 	// public $staging = false;
 
 	public function getRawName() {
-		return "aws";
+		return "cloudflare";
 	}
 
 	public function getOptions() {
 		return [
-			"aws-key" => [ 
-				"text" => _("AWS Key"), 
+			"cf-key" => [ 
+				"text" => _("Cloudflare Key"), 
 				"default" => "",
-				"placeholder" => _("AWS Key - Like ABCDABCDEFGHIJKLMNOP"),
+				"placeholder" => _("CF Key - Like 0123456789abcdef0123456789abcdef01234"),
 				"changeable" => true,
 			],
-			"aws-secret" => [ 
-				"text" => _("AWS Secret"), 
+			"cf-email" => [ 
+				"text" => _("CloudFlare Email"), 
 				"default" => "",
-				"placeholder" => _("AWS Secret - About 30 random chars"),
+				"placeholder" => _("Email address linked to API key"),
 				"changeable" => true,
 			],
 		];

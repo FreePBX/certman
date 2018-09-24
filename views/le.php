@@ -136,7 +136,7 @@ $method = "webroot";
 //
 // https://github.com/Neilpang/acme.sh/blob/master/dnsapi/README.md
 //
-$methods = [ "webroot" => _("HTTP via Port 80"), "aws" => _("AWS Route53 DNS") ];
+$methods = [ "webroot" => _("HTTP via Port 80"), "aws" => _("AWS Route53 DNS"), "cloudflare" => _("CloudFlare DNS API") ];
 ?>
 <select class="form-control" id="method" name="method"> 
 <?php
@@ -165,25 +165,46 @@ foreach (array_keys($methods) as $m) {
 	$le = new $classname;
 	$opts = $le->getOptions();
 	$rawname = $le->getRawName();
+	$current = \FreePBX::Certman()->getAll("le-$rawname");
+	if ($method !== $m) {
+		$hidden = "style='display: none'";
+	} else {
+		$hidden = "";
+	}
 	foreach ($opts as $o => $vals) {
-		if ($method !== $m) {
-			$hidden = "style='display: none'";
+		if (!empty($vals['default'])) {
+			$default = $vals['default'];
 		} else {
-			$hidden = "";
+			$default = "";
 		}
 		if (empty($vals['changeable'])) {
 			$disabled = "disabled";
 			$value = $vals['default'];
 		} else {
 			$disabled = "";
-			$value = "";
+			if (!empty($current[$o])) {
+				$value = $current[$o];
+			} else {
+				$value = "";
+			}
 		}
+		if (!empty($vals['placeholder'])) {
+			$default = $vals['placeholder'];
+		}
+		$value = htmlentities($value, \ENT_QUOTES, 'UTF-8');
+		$default = htmlentities($default, \ENT_QUOTES, 'UTF-8');
 		print "<div class='row letsencrypt le-$rawname' $hidden><div class='form-group form-horizontal'><div class='col-md-3'>";
 		print "<label class='control-label' for='${m}-${o}'>".$vals['text']."</label></div>";
 		print "<div class='col-md-9'>";
-		print "<input type='text' class='form-control' id='${m}-${o}' name='${m}-${o}' $disabled value='$value'>";
+		print "<input type='text' class='form-control blankok' id='${m}-${o}' name='${m}-${o}' $disabled placeholder='$default' value='$value'>";
 		print "</div>";
 		print "</div></div>";
+	}
+	if (!empty($le->weblink)) {
+		print "<div class='row letsencrypt le-$rawname' $hidden><div class='form-group form-horizontal'><div class='col-md-3'> &nbsp; </div>";
+		print "<div class='col-md-9'>";
+		printf(_("Please visit <a href='%s' target='_new'>this page</a> for information or help with using this Validation Method."), $le->weblink);
+		print "</div></div></div>";
 	}
 }
 ?>

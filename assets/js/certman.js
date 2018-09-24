@@ -111,8 +111,8 @@ $(function() {
 
 		var stop = false,
 				type = $("#certtype").val();
-		$("form[name=frm_certman] input[type=\"text\"]").each( function(i, v) {
-			if($(this).attr("name") == "ST" || $(this).attr("name") == "L" || $(this).attr("name") == "OU") {
+		$("form[name=frm_certman] input[type=text]").each( function(i, v) {
+			if($(this).attr("name") == "ST" || $(this).attr("name") == "L" || $(this).attr("name") == "OU" || $(this).hasClass('blankok')) {
 				return true;
 			}
 			if ($(this).val() === "") {

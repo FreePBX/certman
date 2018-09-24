@@ -177,26 +177,15 @@ class Certman extends \FreePBX_Helpers implements \BMO {
 						}
 						needreload();
 						$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
-					}
 					break;
 					case "le":
-						try {
-							$this->updateLE($cert['basename'], array(
-								"countryCode" => $_POST['C'],
-								"state" => $_POST['ST'],
-								"challengetype" => $_POST['method'],
-								"email" => $_POST['email']
-							));
-						} catch(\Exception $e) {
-							$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error updating the certificate: %s'),$e->getMessage()));
-							break;
-						}
+						$settings = $this->parseLeVars($_REQUEST);
+						$this->updateLE($cert['basename'], $settings);
 						$this->updateCertificate($cert,$_POST['C'], array(
-							"C" => $_POST['C'],
-							"ST" => $_POST['ST'],
 							'challengetype' => $_POST['method'],
 							'email' => $_POST['email']
 						));
+						$this->updateAcmeShSettings($cert['basename'], $settings);
 						$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
 						needreload();
 					break;
@@ -211,18 +200,10 @@ class Certman extends \FreePBX_Helpers implements \BMO {
 				switch($request['type']) {
 					case "le":
 						$host = basename($_POST['host']);
-						try{
-							$this->updateLE($host, array(
-								"countryCode" => $_POST['C'],
-								"state" => $_POST['ST'],
-								"challengetype" => $_POST['method'],
-								"email" => $_POST['email']
-							));
-							$this->saveCertificate(null,$host,$host,'le', array("C" => $_POST['C'], "ST" => $_POST['ST'], "email" => $_POST['email']));
-						} catch(\Exception $e) {
-							$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error updating the certificate: %s'),$e->getMessage()));
-							break 2;
-						}
+						$settings = $this->parseLeVars($_REQUEST);
+						$this->updateLE($host, $settings);
+						$this->saveCertificate(null,$host,$host,'le', array("email" => $_POST['email']));
+						$this->updateAcmeShSettings($host, $settings);
 						$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
 					break;
 					case "up":
@@ -496,12 +477,16 @@ class Certman extends \FreePBX_Helpers implements \BMO {
 				continue;
 			}
 			$validTo = $cert['info']['crt']['validTo_time_t'];
-			$renewafter = $validTo-(86400*30);
+
+			// Certificates should be renewed 28 days before they expire. LetsEncrypt (acme.sh) does this 30 days before
+			// they expire, so this should never need to be called.
+			$renewafter = $validTo-(86400*28);
 			$update = false;
 
 			// Has this certificate expired?
 			if(time() > $validTo) {
 				if($cert['type'] == 'le') {
+					throw new \Exception("This should never happen, acme.sh should auto-update, but we need to warn to restart asterisk etc.");
 					try {
 
 						// This will probably fail if they're using http_S_ with an expired
@@ -534,6 +519,7 @@ class Certman extends \FreePBX_Helpers implements \BMO {
 			} elseif (time() > $renewafter) {
 				// It hasn't expired, but it should be renewed.
 				if($cert['type'] == 'le') {
+					throw new \Exception("This should never happen, acme.sh should auto-update, but we need to warn to restart asterisk etc.");
 					try {
 						$this->updateLE($cert['info']['crt']['subject']['CN'], array(
 							"countryCode" => $cert['additional']['C'],
@@ -606,15 +592,8 @@ class Certman extends \FreePBX_Helpers implements \BMO {
 			throw new \Exception("BUG: Settings is not an array. Old code?");
 		}
 
-		// Get our variables from $settings
-		$countryCode = !empty($settings['countryCode']) ? $settings['countryCode'] : 'CA';
-		$state = !empty($settings['state']) ? $settings['state'] : 'Ontario';
-		$challengetype = !empty($settings['method']) ? $settings['method'] : "webroot";
-		$email = !empty($settings['email']) ? $settings['email'] : '';
-		$force = !empty($settings['force']) ? $settings['force'] : false;
-
 		$location = $this->PKCS->getKeysLocation();
-		$logger = new Certman\Logger();
+		// Ensure we don't accidentally let '../..' into our hostname
 		$host = basename($host);
 
 		$needsgen = false;
@@ -624,27 +603,44 @@ class Certman extends \FreePBX_Helpers implements \BMO {
 			// We don't have a cert, so we need to request one.
 			$needsgen = true;
 		} else {
-			// We DO have a certificate.
-			$certdata = openssl_x509_parse(file_get_contents($certfile));
-			// If it expires in less than a month, we want to renew it.
-			$renewafter = $certdata['validTo_time_t']-(86400*30);
-			if (time() > $renewafter) {
-				// Less than a month left, we need to renew.
-				$needsrenew = true;
+			// We DO have a certificate file
+			$certdata = @openssl_x509_parse(file_get_contents($certfile));
+
+			// If we couldn't parse it, it's corrupt.
+			if (empty($certdata['validTo_time_t'])) {
+				$needsgen = true;
+			} else {
+				// If it expires in less than a month, we want to renew it.
+				$renewafter = $certdata['validTo_time_t']-(86400*30);
+				if (time() > $renewafter) {
+					$needsrenew = true;
+				}
 			}
 		}
 
-		$classname = 'FreePBX\\modules\\Certman\\LetsEncrypt\\'.ucfirst($challengetype);
-		if (!class_exists($classname)) {
-			throw new \Exception("Can't create LE handler $classname - This is a bug.");
+		$method = $settings['method'];
+		if (isset($settings['force'])) {
+			$force = $settings['force'];
+		} else {
+			$force = false;
+		}
+
+		// It's unusual we'll be given a $settings WITHOUT a leobj, but make one if we
+		// weren't given one.
+		if (!isset($settings['__leobj__'])) {
+			$classname = 'FreePBX\\modules\\Certman\\LetsEncrypt\\'.ucfirst($method);
+			if (!class_exists($classname)) {
+				throw new \Exception("Can't create LE handler $classname - This is a bug.");
+			}
+			$le = new $classname;
+		} else {
+			$le = $settings['__leobj__'];
 		}
 
 
 		if ($needsgen || $force === "generate") {
-			$le = new $classname;
 			$le->issueCert($host, $force);
 		} elseif ($needsrenew || $force === "renew") {
-			$le = new $classname;
 			$le->renewCert($host, $force);
 		}
 
@@ -1541,6 +1537,70 @@ class Certman extends \FreePBX_Helpers implements \BMO {
 			break;
 		}
 		return false;
+	}
+
+
+	/**
+	 * Parse LetsEncrypt variables from $_REQUEST
+	 *
+	 * @param array $_REQUEST from a POST
+	 * @param bool $returnobj return the LetsEncrypt object that matches the request
+	 *
+	 * @return array Settings to be used with updateLE
+	 */
+
+	public function parseLeVars($req, $returnobj = true) {
+		// First, make sure that we have 'type' => 'le', otherwise something
+		// is going wrong with our code.
+		if (!is_array($req) || empty($req['type']) || $req['type'] !== 'le') {
+			throw new \Exception("Bug - LetsEncrypt Request not received - ".json_encode($req));
+		}
+
+		if (empty($req['method'])) {
+			// Page was submitted incorrectly, or there's a bug. Default to 'webroot'
+			$method = "webroot";
+		} else {
+			$method = $req['method'];
+		}
+
+		$classname = 'FreePBX\\modules\\Certman\\LetsEncrypt\\'.ucfirst($method);
+		if (!class_exists($classname)) {
+			throw new \Exception("Can't create LE handler $classname - This is a bug.");
+		}
+
+		$le = new $classname;
+		$opts = $le->getOptions();
+		$retarr = [ "method" => $method ];
+		foreach (array_keys($opts) as $o) {
+			if (!isset($req[$method."-".$o])) {
+				$retarr[$o] = "";
+			} else {
+				$retarr[$o] = $req[$method."-".$o];
+			}
+		}
+
+		if ($returnobj) {
+			$retarr["__leobj__"] = $le;
+		}
+
+		return $retarr;
+	}
+
+	public function getAcmeShSettings($hostname) {
+		$method = $this->getConfig("method", "lehost-$hostname");
+		if (!$method) {
+			$this->setConfig("method", "webroot", "lehost-$hostname");
+		}
+
+		return $this->getAll("lehost-$hostname");
+	}
+
+	public function updateAcmeShSettings($hostname, $settings) {
+
+		// Remove the LE Object if it was provided.
+		unset($settings['__leobj__']);
+
+		$this->setMultiConfig($settings, "lehost-$hostname");
 	}
 
 	/**
