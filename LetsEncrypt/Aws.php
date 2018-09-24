@@ -2,20 +2,25 @@
 
 namespace FreePBX\modules\Certman\LetsEncrypt;
 
-Class Webroot Extends Base {
+Class Aws Extends Base {
 
 	// public $staging = false;
 
 	public function getRawName() {
-		return "webroot";
+		return "aws";
 	}
 
 	public function getOptions() {
 		return [
-			"webroot" => [ 
-				"text" => _("Webroot - Automatically Detected"), 
+			"aws-key" => [ 
+				"text" => _("AWS Key"), 
 				"default" => \FreePBX::Config()->get("AMPWEBROOT"),
-				"changeable" => false
+				"changeable" => true,
+			],
+			"aws-secret" => [ 
+				"text" => _("AWS Secret"), 
+				"default" => \FreePBX::Config()->get("AMPWEBROOT"),
+				"changeable" => true,
 			],
 		];
 	}

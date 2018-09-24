@@ -180,7 +180,7 @@ class Certman extends \FreePBX_Helpers implements \BMO {
 								$this->updateLE($cert['basename'], array(
 									"countryCode" => $_POST['C'],
 									"state" => $_POST['ST'],
-									"challengetype" => "http", // https will not work.
+									"challengetype" => $_POST['method'],
 									"email" => $_POST['email']
 								));
 							} catch(\Exception $e) {
@@ -190,7 +190,7 @@ class Certman extends \FreePBX_Helpers implements \BMO {
 							$this->updateCertificate($cert,$_POST['C'], array(
 								"C" => $_POST['C'],
 								"ST" => $_POST['ST'],
-								'challengetype' => "http", // https will not work
+								'challengetype' => $_POST['method'],
 								'email' => $_POST['email']
 							));
 							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
@@ -219,7 +219,7 @@ class Certman extends \FreePBX_Helpers implements \BMO {
 							$this->updateLE($host, array(
 								"countryCode" => $_POST['C'],
 								"state" => $_POST['ST'],
-								"challengetype" => "http", // https will not work
+								"challengetype" => $_POST['method'],
 								"email" => $_POST['email']
 							));
 							$this->saveCertificate(null,$host,$host,'le', array("C" => $_POST['C'], "ST" => $_POST['ST'], "email" => $_POST['email']));
@@ -513,7 +513,7 @@ class Certman extends \FreePBX_Helpers implements \BMO {
 						$this->updateLE($cert['info']['crt']['subject']['CN'], array(
 							"countryCode" => $cert['additional']['C'],
 							"state" => $cert['additional']['ST'],
-							"challengetype" => "http", // https will not work
+							"challengetype" => $cert['method'],
 							"email" => $cert['additional']['email']
 						));
 
@@ -542,7 +542,7 @@ class Certman extends \FreePBX_Helpers implements \BMO {
 						$this->updateLE($cert['info']['crt']['subject']['CN'], array(
 							"countryCode" => $cert['additional']['C'],
 							"state" => $cert['additional']['ST'],
-							"challengetype" => "http", // https will not work
+							"challengetype" => $cert['method'],
 							"email" => $cert['additional']['email']
 						));
 						$messages[] = array('type' => 'success', 'message' => sprintf(_('Successfully updated certificate named "%s"'),$cert['basename']));
@@ -613,14 +613,16 @@ class Certman extends \FreePBX_Helpers implements \BMO {
 		// Get our variables from $settings
 		$countryCode = !empty($settings['countryCode']) ? $settings['countryCode'] : 'CA';
 		$state = !empty($settings['state']) ? $settings['state'] : 'Ontario';
-		$challengetype = "http"; // Always http
+		$challengetype = !empty($settings['method']) ? $settings['method'] : "webroot";
 		$email = !empty($settings['email']) ? $settings['email'] : '';
+		$force = !empty($settings['force']) ? $settings['force'] : false;
 
 		$location = $this->PKCS->getKeysLocation();
 		$logger = new Certman\Logger();
 		$host = basename($host);
 
 		$needsgen = false;
+		$needsrenew = false;
 		$certfile = $location."/".$host."/cert.pem";
 		if (!file_exists($certfile)) {
 			// We don't have a cert, so we need to request one.
@@ -632,48 +634,26 @@ class Certman extends \FreePBX_Helpers implements \BMO {
 			$renewafter = $certdata['validTo_time_t']-(86400*30);
 			if (time() > $renewafter) {
 				// Less than a month left, we need to renew.
-				$needsgen = true;
+				$needsrenew = true;
 			}
 		}
 
-		//check freepbx.org first
-		if($needsgen) {
-			$basePathCheck = "/.freepbx-known";
-			if(!file_exists($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck)) {
-				$mkdirok = @mkdir($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck,0777);
-				if (!$mkdirok) {
-					throw new \Exception("Unable to create directory ".$this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck);
-				}
-			}
-			$token = bin2hex(openssl_random_pseudo_bytes(16));
-			$pathCheck = $basePathCheck."/".$token;
-			file_put_contents($this->FreePBX->Config->get("AMPWEBROOT").$pathCheck,$token);
-			$pest = new \PestJSON('http://mirror1.freepbx.org');
-			$pest->curl_opts[CURLOPT_FOLLOWLOCATION] = true;
-			$thing = $pest->get('/lechecker.php',  array('host' => $host, 'path' => $pathCheck, 'token' => $token, 'type' => $challengetype));
-			if(empty($thing)) {
-				throw new \Exception("No valid response from http://mirror1.freepbx.org");
-			}
-			if(!$thing['status']) {
-				throw new \Exception("Error '".$thing['message']."' when requesting $challengetype://$host/$pathCheck");
-			}
-			@unlink($this->FreePBX->Config->get("AMPWEBROOT").$pathCheck);
+		$classname = 'FreePBX\\modules\\Certman\\LetsEncrypt\\'.ucfirst($challengetype);
+		if (!class_exists($classname)) {
+			throw new \Exception("Can't create LE handler $classname - This is a bug.");
 		}
 
-		//Now check let's encrypt
-		if($needsgen) {
-			$le = new \Analogic\ACME\Lescript($location, $this->FreePBX->Config->get("AMPWEBROOT"), $logger);
-			if($staging) {
-				$le->ca = 'https://acme-staging.api.letsencrypt.org';
-			}
-			$le->countryCode = $countryCode;
-			$le->state = $state;
-			$le->initAccount();
-			if (!empty($email)) {
-				$le->contact = array($email);
-			}
-			$le->signDomains(array($host));
+
+		if ($needsgen || $force === "generate") {
+			$le = new $classname;
+			$le->issueCert($host, $force);
+		} elseif ($needsrenew || $force === "renew") {
+			$le = new $classname;
+			$le->renewCert($host, $force);
 		}
+
+		return;
+		// ^^ Skip below, is this still needed?
 
 		if(!file_exists($location."/".$host."/private.pem") || !file_exists($location."/".$host."/cert.pem")) {
 			throw new \Exception("Certificates are missing. Unable to continue");

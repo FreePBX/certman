@@ -1,4 +1,3 @@
-<script type='text/javascript' src='modules/certman/assets/js/views/regions.js?123'></script>
 <?php
 if(!empty($message)) {
 	$messagehtml = '<div class="alert alert-' . $message['type'] .'">'. $message['message'] . '</div>';
@@ -127,7 +126,7 @@ if ($fwapi->isAvailable()) {
 								<div class="row">
 									<div class="form-group form-horizontal">
 										<div class="col-md-3">
-											<label class="control-label" for="challengetype"><?php echo _("Challenge Over")?></label>
+											<label class="control-label" for="challengetype"><?php echo _("Validate Using")?></label>
 										</div>
 										<div class="col-md-9">
 <?php
@@ -156,33 +155,38 @@ foreach ($methods as $m => $txt) {
 								</div>
 							</div>
 							<!-- END Challenge Method -->
-							<div class="element-container">
-								<div class="row">
-									<div class="form-group form-horizontal">
-										<div class="col-md-3">
-											<label class="control-label" for="C"><?php echo _("Country")?></label>
-										</div>
-										<div class="col-md-9">
-<?php 
-$country = !empty($cert['additional']['C']) ? $cert['additional']['C'] : "CA"; 
-$state = !empty($cert['additional']['ST']) ? $cert['additional']['ST'] : "Ontario";
+							<div class='element-container'>
+<?php
+foreach (array_keys($methods) as $m) {
+	$classname = 'FreePBX\\modules\\Certman\\LetsEncrypt\\'.ucfirst($m);
+	if (!class_exists($classname)) {
+		throw new \Exception("Can't create LE handler $classname - This is a bug in Certman.");
+	}
+	$le = new $classname;
+	$opts = $le->getOptions();
+	$rawname = $le->getRawName();
+	foreach ($opts as $o => $vals) {
+		if ($method !== $m) {
+			$hidden = "style='display: none'";
+		} else {
+			$hidden = "";
+		}
+		if (empty($vals['changeable'])) {
+			$disabled = "disabled";
+			$value = $vals['default'];
+		} else {
+			$disabled = "";
+			$value = "";
+		}
+		print "<div class='row letsencrypt le-$rawname' $hidden><div class='form-group form-horizontal'><div class='col-md-3'>";
+		print "<label class='control-label' for='${m}-${o}'>".$vals['text']."</label></div>";
+		print "<div class='col-md-9'>";
+		print "<input type='text' class='form-control' id='${m}-${o}' name='${m}-${o}' $disabled value='$value'>";
+		print "</div>";
+		print "</div></div>";
+	}
+}
 ?>
-											<select class="form-control" id="C" name="C" data-current="<?php echo $country; ?>" disabled> </select>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="element-container">
-								<div class="row">
-									<div class="form-group form-horizontal">
-										<div class="col-md-3">
-											<label class="control-label" for="st"><?php echo _("State/Province/Region")?></label>
-										</div>
-										<div class="col-md-9">
-											<select class="form-control" id="ST" name="ST" data-current="<?php echo $state; ?>"> </select>
-										</div>
-									</div>
-								</div>
 							</div>
 						</form>
 					</div>
@@ -191,3 +195,24 @@ $state = !empty($cert['additional']['ST']) ? $cert['additional']['ST'] : "Ontari
 		</div>
 	</div>
 </div>
+
+
+<script>
+
+function showSettings(modname) {
+        $(".row.letsencrypt").hide();
+        $(".row.letsencrypt.le-"+modname).show();
+}
+
+$(function() {
+	// Whenever the 'Validate Using' select is changed, display the values for that
+	// option.
+	$("#method").on('change', function(e) {
+		showSettings($(e.target).val());
+	});
+});
+
+
+</script>
+
+

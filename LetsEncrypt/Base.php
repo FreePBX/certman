@@ -88,6 +88,5 @@ Abstract Class Base Implements Acmedotsh {
 		// We can't really do anything if this fails, I guess?
 		$this->run($cmd);
 	}
-
 }
 
