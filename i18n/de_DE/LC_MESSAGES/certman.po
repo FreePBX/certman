@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-19 18:01-0400\n"
-"PO-Revision-Date: 2018-10-09 23:00+0000\n"
+"PO-Revision-Date: 2018-10-15 20:00+0000\n"
 "Last-Translator: Bastian Mertgen <b.mertgen@bastian-mertgen.de>\n"
 "Language-Team: German <http://*/projects/freepbx/certman/de/>\n"
 "Language: de_DE\n"
@@ -362,7 +362,7 @@ msgstr "Fehlgeschlagen! [%s]"
 
 #: views/le.php:22
 msgid "Firewall Validated"
-msgstr ""
+msgstr "Firewall validiert"
 
 #: views/le.php:16 views/le.php:28
 msgid "Firewall Warning"
