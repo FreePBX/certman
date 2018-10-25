@@ -43,6 +43,15 @@ class Certman implements BMO {
 		$this->PKCS->timeout = 240; //because of piiiiiis
 	}
 
+	public function setDatabase($pdo){
+		$this->db = $pdo;
+		return $this;
+	}
+
+	public function resetDatabase(){
+		$this->db = $this->FreePBX->Database;
+	}
+
 	/**
 	 * Used to setup the database
 	 */
