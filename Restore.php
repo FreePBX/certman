@@ -33,10 +33,10 @@ class Restore Extends Base\RestoreBase{
 		$cm = $this->FreePBX->Certman;
 		$cm->setDatabase($pdo);
 		$configs = [
-			'managedCerts' => $this->certman->getAllManagedCertificates(),
-			'managedCSRs' => $this->certman->getAllManagedCSRs(),
-			'dtlsOptions' => $this->certman->getAllDTLSOptions(),
-			'keyDir' => $this->certman->PKCS->getKeysLocation()
+			'managedCerts' => $cm->getAllManagedCertificates(),
+			'managedCSRs' => $cm->getAllManagedCSRs(),
+			'dtlsOptions' => $cm->getAllDTLSOptions(),
+			'keyDir' => $cm->PKCS->getKeysLocation()
 		];
 		$cm->resetDatabase();
 		$this->processConfigs($configs);
