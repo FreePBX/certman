@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>15.0.6</version>
+	<version>15.0.7</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -13,10 +13,11 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
-		*15.0.6* Fixing problems in Backup 15 
+		*15.0.7* Fix more backup issues in 15
+		*15.0.6* Fixing problems in Backup 15
 		*15.0.5* Add backup / restore
-		*15.0.4* FREEPBX-18181 fwconsole ce --list fails with undefined helper 
-		*15.0.3* FREEPBX-18110 do not try to create new log class 
+		*15.0.4* FREEPBX-18181 fwconsole ce --list fails with undefined helper
+		*15.0.3* FREEPBX-18110 do not try to create new log class
 		*15.0.2* Packaging of ver 15.0.2
 		*15.0.1* Fork from 14.0.2.1, Add Backup;
 	</changelog>

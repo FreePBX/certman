@@ -4,22 +4,21 @@ use FreePBX\modules\Backup as Base;
 class Restore Extends Base\RestoreBase{
 	public function runRestore($jobid){
 		$configs = $this->getConfigs();
-		$configs = reset($configs);
 		$files = $this->getFiles();
 		$dirs = $this->getDirs();
 		$this->certman = $this->FreePBX->Certman;
 		$keyDir = $this->certman->PKCS->getKeysLocation();
 		$originalKeyDir = $configs['keyDir'];
 		foreach ($dirs as $dir) {
-			$dir = str_Replace($originalKeyDir,$keyDir,$dir);
+			$dir = str_Replace($originalKeyDir,$keyDir,$dir->getPathTo());
 			@mkdir($dir,0755,true);
 		}
 		foreach ($files as $file) {
-			$backupFilename = $file['pathto'] . '/' . $file['filename'];
-			$dir = str_Replace($originalKeyDir, $keyDir, $file['pathto']);
-			$newFilename = $dir . '/' . $file['filename'];
+			$backupFilename = $file->getPathTo() . '/' . $file->getFilename();
+			$dir = str_Replace($originalKeyDir, $keyDir, $file->getPathTo());
+			$newFilename = $dir . '/' . $file->getFilename();
 			if (file_exists($this->tmpdir.'/files/'.$backupFilename)) {
-			 copy($this->tmpdir . '/files/' . $file['pathto'] . '/' . $file['filename'], $newFilename);
+			 copy($this->tmpdir . '/files/' . $file->getPathTo() . '/' . $file->getFilename(), $newFilename);
 			}
 		}
 		$this->processConfigs($configs);
