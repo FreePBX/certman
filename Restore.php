@@ -24,30 +24,6 @@ class Restore Extends Base\RestoreBase{
 		$this->processConfigs($configs);
 	}
 
-	public function processLegacy($pdo, $data, $tables, $unknownTables, $tmpfiledir){
-		$tables = array_flip($tables + $unknownTables);
-		if (!isset($tables['certman_mapping'])) {
-			return $this;
-		}
-		$cm = $this->FreePBX->Certman;
-		$cm->setDatabase($pdo);
-		$configs = [
-			'managedCerts' => $cm->getAllManagedCertificates(),
-			'managedCSRs' => $cm->getAllManagedCSRs(),
-			'dtlsOptions' => $cm->getAllDTLSOptions(),
-			'keyDir' => $cm->PKCS->getKeysLocation()
-		];
-		$cm->resetDatabase();
-		$this->processConfigs($configs);
-		foreach (new \DirectoryIterator($tmpfiledir.$configs['keyDir']) as $fileInfo) {
-			if ($fileInfo->isDot()){
-        continue;
-      }
-			@copy($fileInfo->getPathname(), $configs['keyDir'].'/'.$fileInfo->getFilename());
-		}
-		return $this;
-	}
-
 	public function processConfigs($configs){
 		$this->certman = $this->FreePBX->Certman;
 		foreach ($configs['managedCerts'] as $cert) {
