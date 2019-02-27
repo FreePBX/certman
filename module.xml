@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>15.0.8</version>
+	<version>15.0.9</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -13,6 +13,7 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
+		*15.0.9* FREEI-405 whoops error issue fix 
 		*15.0.8* fixing legacy restore 
 		*15.0.7* Fix more backup issues in 15
 		*15.0.6* Fixing problems in Backup 15
