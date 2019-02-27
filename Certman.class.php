@@ -397,7 +397,7 @@ class Certman implements \BMO {
 					$api->addMissingHosts();
 				}
 				$cert = $this->getCertificateDetails($request['id']);
-				$certinfo = '';
+				$certinfo = array();
 				if(file_exists($cert['files']['crt'])) {
 					$certinfo = openssl_x509_parse(file_get_contents($cert['files']['crt']));
 				}
