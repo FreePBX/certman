@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-26 18:49-0400\n"
+"POT-Creation-Date: 2019-03-04 19:49-0500\n"
 "PO-Revision-Date: 2017-03-23 13:47+0200\n"
 "Last-Translator: Kingvoice <suporte@kingvoice.com.br>\n"
 "Language-Team: Portuguese (Brazil) <http://weblate.freepbx.org/projects/"
@@ -31,7 +31,7 @@ msgstr ""
 msgid "%s is not supported at this time"
 msgstr ""
 
-#: Certman.class.php:1599
+#: Certman.class.php:1603
 #, php-format
 msgid "(%s days)"
 msgstr "(%s dias)"
@@ -131,7 +131,7 @@ msgstr "Referência CSR"
 msgid "Certificate"
 msgstr "Certificado"
 
-#: Certman.class.php:1492 Certman.class.php:1507 Certman.class.php:1516
+#: Certman.class.php:1496 Certman.class.php:1511 Certman.class.php:1520
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr "O certificado %s não é legível! Não é possível continuar!"
@@ -144,7 +144,7 @@ msgstr "Autoridade Certificadora"
 msgid "Certificate Authority to Reference"
 msgstr "Autoridade Certificadora para Referência"
 
-#: Certman.class.php:1594
+#: Certman.class.php:1598
 msgid "Certificate Expired!"
 msgstr "Certificado Expirado!"
 
@@ -926,7 +926,7 @@ msgstr "Não foi possível remover tmp.cfg"
 msgid "Unable to write to %s"
 msgstr "Não é possível gravar em %s"
 
-#: Certman.class.php:1584
+#: Certman.class.php:1588
 msgid "Unknown Expiration"
 msgstr "Expiração Desconhecida"
 

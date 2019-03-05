@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-27 15:57+0530\n"
+"POT-Creation-Date: 2019-03-04 19:49-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr ""
 msgid "%s is not supported at this time"
 msgstr ""
 
-#: Certman.class.php:1599
+#: Certman.class.php:1603
 #, php-format
 msgid "(%s days)"
 msgstr ""
@@ -119,9 +119,9 @@ msgstr ""
 msgid "Certificate"
 msgstr ""
 
-#: Certman.class.php:1492
-#: Certman.class.php:1507
-#: Certman.class.php:1516
+#: Certman.class.php:1496
+#: Certman.class.php:1511
+#: Certman.class.php:1520
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr ""
@@ -134,7 +134,7 @@ msgstr ""
 msgid "Certificate Authority to Reference"
 msgstr ""
 
-#: Certman.class.php:1594
+#: Certman.class.php:1598
 msgid "Certificate Expired!"
 msgstr ""
 
@@ -902,7 +902,7 @@ msgstr ""
 msgid "Unable to write to %s"
 msgstr ""
 
-#: Certman.class.php:1584
+#: Certman.class.php:1588
 msgid "Unknown Expiration"
 msgstr ""
 

@@ -1423,8 +1423,10 @@ class Certman implements BMO {
 		$location = $this->PKCS->getKeysLocation();
 		if(!file_exists($location.'/integration')) {
 			mkdir($location.'/integration',0777,true);
-			chown($location."/integration",$user);
-			chgrp($location."/integration",$group);
+			if(posix_geteuid() === 0) {
+				chown($location."/integration",$user);
+				chgrp($location."/integration",$group);
+			}
 		}
 
 		if(empty($cert['files']['crt']) || empty($cert['files']['key'])) {
@@ -1440,8 +1442,10 @@ class Certman implements BMO {
 				copy($cert['files'][$key],$location."/integration/$f");
 				$cert['integration']['files'][$key] = $location."/integration/$f";
 				chmod($location."/integration/$f",0600);
-				chown($location."/integration/$f",$user);
-				chgrp($location."/integration/$f",$group);
+				if(posix_geteuid() === 0) {
+					chown($location."/integration/$f",$user);
+					chgrp($location."/integration/$f",$group);
+				}
 			}
 		}
 
