@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-19 18:01-0400\n"
-"PO-Revision-Date: 2018-10-19 13:00+0000\n"
-"Last-Translator: Bastian Mertgen <b.mertgen@bastian-mertgen.de>\n"
+"PO-Revision-Date: 2019-04-06 08:00+0000\n"
+"Last-Translator: florian alberts <alberts@ar-systems.de>\n"
 "Language-Team: German <http://*/projects/freepbx/certman/de/>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -140,7 +140,7 @@ msgstr "Zertifizierungsstelle"
 
 #: views/ss.php:171
 msgid "Certificate Authority to Reference"
-msgstr ""
+msgstr "Referenzierte Zertifizierungsstelle"
 
 #: Certman.class.php:1596
 msgid "Certificate Expired!"
@@ -245,7 +245,7 @@ msgstr "Zertifikate existieren bereits, Sie müssen kein weiteres mehr erzeugen"
 
 #: views/le.php:132
 msgid "Challenge Over"
-msgstr ""
+msgstr "Anfrage beendet"
 
 #: Console/Certman.class.php:28
 msgid "Check and Update all Certificates"
@@ -281,7 +281,7 @@ msgstr "DNS-Name oder IP-Adresse"
 
 #: functions.inc/hook_core.php:120
 msgid "DTLS Rekey Interval"
-msgstr ""
+msgstr "DTLS Schlüsselverfallsintervall"
 
 #: functions.inc/hook_core.php:106
 msgid "DTLS Setup"
@@ -375,6 +375,9 @@ msgid ""
 "From this interface you can generate a Certificate Signing Request (CSR) "
 "which you can then use to issue a certificate to use for this server"
 msgstr ""
+"Von dieser Schnittstelle können Sie eine Zertifizierungsunterschriftsanfrage "
+"(CSR) erstellen, die Sie dann für die Erstellung eines Zertifikats für "
+"diesen Server verwenden können"
 
 #: Certman.class.php:464 views/certgrid.php:14
 msgid "Generate CSR"
@@ -413,10 +416,12 @@ msgid ""
 "Hover over the 'Default' column and click to make a certificate the system "
 "default"
 msgstr ""
+"Führen Sie die Maus über die Spalte \"Default\" und klicken Sie, um das "
+"Zertifikat als Systemstandard zu setzen"
 
 #: views/ss.php:74 views/up.php:64
 msgid "How long the certificate is valid until"
-msgstr ""
+msgstr "Wie lange das Zertifikat gültig bleibt / Gültig bis"
 
 #: views/ca.php:7
 msgid "I Know what I am doing"
@@ -449,6 +454,9 @@ msgid ""
 "Interval at which to renegotiate the TLS session and rekey the SRTP session. "
 "If this is not set or the value provided is 0 rekeying will be disabled"
 msgstr ""
+"Intervall für die Neuaushandlung der TLS Session und Neuaushandlung der SRTP "
+"Session. Wenn nicht gesetzt oder der Wert 0 eingetragen ist, werden die "
+"Session Keys nicht erneuert"
 
 #: Certman.class.php:328
 msgid "Invalid Certificate"
@@ -482,6 +490,9 @@ msgid ""
 "when required (Approximately every 2 months). Do not install your own "
 "certificate updaters!"
 msgstr ""
+"Let's Encrypt  Zertifikate werden <strong> automatisch </strong> erneuert %s "
+"wenn benötigt (ungefähr alle zwei Monate). Bitte keine eigenen "
+"Updatemechanismen installieren"
 
 #: views/overview.php:23
 msgid "Let's Encrypt:"
@@ -489,7 +500,7 @@ msgstr "Let's Encrypt:"
 
 #: views/le.php:140
 msgid "LetsEncrypt only supports hostname validation via HTTP on port 80."
-msgstr ""
+msgstr "Let's Encrypt unterstützt nur Port 80 für die Validierung."
 
 #: views/le.php:8
 #, php-format
@@ -497,6 +508,8 @@ msgid ""
 "LetsEncrypt requires the following hosts to be permitted for inbound http "
 "access:<br /> <tt>%s</tt>"
 msgstr ""
+"Let's Encrypt  setzt bei den folgenden Maschinen voraus, dass sie eingehende "
+"Verbindungen auf Port 80 annehmen können:<br /><tt>%s</tt>"
 
 #: Console/Certman.class.php:27
 msgid "List Certificates"
@@ -511,6 +524,12 @@ msgid ""
 "standard set of the certificate and it's key into %s for use by other "
 "applications"
 msgstr ""
+"Ein Zertifikat zum Standard zu erheben ändert nur die Zertifikatseinstellung "
+"in den erweiterten Einstellungen. Es wird zur Standardeinstellung in den "
+"erweiterten Einstellungen bei allen Einstellungen, die ein Zertifikat "
+"erfordern. Es wird außerdem eine Standardeinstellung des Zertifikats und des "
+"dazugehörigen Schlüssels auf %s für den Gebrauch in anderen Anwendungen "
+"festlegen"
 
 #: views/ss.php:66
 msgid "N/A"
@@ -555,12 +574,13 @@ msgstr ""
 
 #: Certman.class.php:144
 msgid "No Private key to reference."
-msgstr ""
+msgstr "kein Verweis auf privaten Referenzschlüssel."
 
 #: Certman.class.php:135 Certman.class.php:233 Certman.class.php:241
 #: Certman.class.php:733
 msgid "No Private key to reference. Try generating a CSR first."
 msgstr ""
+"Kein Verweis auf privaten Referenzschlüssel. Generieren Sie zuerst einen CSR."
 
 #: Certman.class.php:120
 msgid "No certificates to import"
@@ -604,6 +624,8 @@ msgid ""
 "Organizational Unit. This can be a doing business as (DBA) name, or the name "
 "of a department within the business. This may be left blank."
 msgstr ""
+"Unternehmenseinheit. Kann Firmierung oder der Name der Abteilung im "
+"Unternehmen sein. Kann leer gelassen werden."
 
 #: views/le.php:73
 msgid "Owners Email"
@@ -635,7 +657,7 @@ msgstr "Privater Schlüssel"
 
 #: views/ca.php:77
 msgid "Private Key File to use for this CA"
-msgstr ""
+msgstr "Privater Schlüssel (Datei), der für die Unterschrift verwendet wird"
 
 #: Certman.class.php:448
 msgid "Reset"
@@ -644,6 +666,8 @@ msgstr "Zurücksetzen"
 #: views/ca.php:50
 msgid "Select this for additional fields used to upload your own certificate."
 msgstr ""
+"Wählen, wenn Sie zusätzliche Felder beim Hochladen Ihres eigenen Zertifikats "
+"benutzen möchten."
 
 #: Console/Certman.class.php:109 views/certgrid.php:42
 msgid "Self Signed"
@@ -655,7 +679,7 @@ msgstr "Selbst-Signiert:"
 
 #: Console/Certman.class.php:32
 msgid "Set certificate default by id"
-msgstr ""
+msgstr "Wähle Standardzertifikat nach id"
 
 #: Certman.class.php:572
 msgid "Some Certificates are expiring or have expired"
@@ -667,12 +691,17 @@ msgid ""
 "ensure all services have the correctly update certificate by restarting PBX "
 "services"
 msgstr ""
+"Manche SSL/TLS Zertifikate wurden automatisch erneuert. Vergewissern Sie "
+"sich, dass alle Dienste das richtige, upgedatete Zertifikat verwenden in dem "
+"Sie die Dienste der Telefonanlage neu starten"
 
 #: views/csr.php:140
 msgid ""
 "State or province such as \"Queensland\" or \"Wisconsin\" or \"Ontario.\" Do "
 "not abbreviate. Enter the full name."
 msgstr ""
+"Bundesland oder Region wie z.B. \"Hessen\", \"Niedersachsen\" oder \""
+"Steiermark\".  Nicht abkürzen sondern den vollen Namen eingeben."
 
 #: views/csr.php:128
 msgid "State/Province"
@@ -680,7 +709,7 @@ msgstr "Bundesstaat / Provinz"
 
 #: views/le.php:165
 msgid "State/Province/Region"
-msgstr ""
+msgstr "Land/Region/Bundesland"
 
 #: Certman.class.php:453
 msgid "Submit"
@@ -697,25 +726,25 @@ msgstr "Die Zertifikatsignierungsanforderung wurde erfolgreich gelöscht"
 #: Console/Certman.class.php:138
 #, php-format
 msgid "Successfully imported %s"
-msgstr ""
+msgstr "Erfolgreich %s importiert"
 
 #: Certman.class.php:117
 msgid "Successfully imported certificates"
-msgstr ""
+msgstr "Zertifikate erfolgreich importiert"
 
 #: Console/Certman.class.php:158
 #, php-format
 msgid "Successfully set '%s' as the default certificate"
-msgstr ""
+msgstr "Erfolgreich %s als Standardzertifikat gesetzt"
 
 #: Certman.class.php:510 Certman.class.php:537
 #, php-format
 msgid "Successfully updated certificate named \"%s\""
-msgstr ""
+msgstr "Erfolgreich das Zertifikat mit dem Namen \"%s\" erneuert"
 
 #: views/ss.php:97 views/up.php:109
 msgid "TThe certificate policies"
-msgstr ""
+msgstr "Die Zertifikatsrichtlinien"
 
 #: Console/Certman.class.php:154
 msgid "That is not a valid ID"
@@ -727,7 +756,7 @@ msgstr "Das zu verwendende Zertifikat des Zertifikatmanagers"
 
 #: views/ss.php:147 views/up.php:134 views/view.php:59
 msgid "The Description of this certificate. Used in the module only"
-msgstr ""
+msgstr "Beschreibung des Zertifikats. Wird nur in diesem Modul verwendet"
 
 #: views/ss.php:194
 msgid "The Organization Name"
@@ -739,6 +768,9 @@ msgid ""
 "key and the certificate. They will be stored unpassworded on the system to "
 "prevent service disruptions."
 msgstr ""
+"Das Passwort des privaten Schlüssels. Wird für die Entschlüsselung des "
+"privaten Schlüssels verwendet. Wird im Klartext gespeichert um "
+"Dienstausfälle zu verhindern."
 
 #: views/csr.php:36 views/up.php:42 views/view.php:35
 msgid ""
