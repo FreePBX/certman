@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-19 18:01-0400\n"
-"PO-Revision-Date: 2019-04-06 08:00+0000\n"
+"PO-Revision-Date: 2019-04-08 15:46+0000\n"
 "Last-Translator: florian alberts <alberts@ar-systems.de>\n"
 "Language-Team: German <http://*/projects/freepbx/certman/de/>\n"
 "Language: de_DE\n"
@@ -776,14 +776,15 @@ msgstr ""
 msgid ""
 "The base name of the certificate, Can only contain alphanumeric characters"
 msgstr ""
+"Der Dateiname des Zertifikats, darf nur alphanumerische Zeichen beinhalten"
 
 #: views/ss.php:52 views/up.php:86
 msgid "The certificate common name, usually the same as the host name"
-msgstr ""
+msgstr "Der Name des Zertifikats, für gewöhnlich identisch mit dem Rechnernamen"
 
 #: views/overview.php:21
 msgid "There are three different types of certificates this module can handle:"
-msgstr ""
+msgstr "Dieses Modul kann drei verschiedene Zertifikatstypen verwalten:"
 
 #: Console/Certman.class.php:141
 #, php-format
@@ -810,6 +811,8 @@ msgstr "Beim Aktualisieren des Zertifikats ist ein Fehler aufgetreten: %s"
 #, php-format
 msgid "There were no files left for certificate \"%s\" so it was removed"
 msgstr ""
+"Für das Zertifikat %s wurden keine Daten hinterlegt, deswegen wurde es "
+"entfernt"
 
 #: views/le.php:24
 msgid ""
@@ -817,6 +820,10 @@ msgid ""
 "possible that other external firewalls may block access. If you are having "
 "problems validating your certificate, this could be the issue."
 msgstr ""
+"Diese Einträge sind dem Regelwerk der Firewall auf der Telefonanlage korrekt "
+"hinzugefügt worden. Es kann aber sein, dass weitere Firewalls auf der Route "
+"existieren. Das ist eine mögliche Ursache, wenn Sie Probleme mit der "
+"Zertifikatsvalidierung haben."
 
 #: views/le.php:18
 msgid ""
@@ -825,12 +832,18 @@ msgid ""
 "issueance will fail. To automatically add these hosts, please click on the "
 "'Update Firewall' button."
 msgstr ""
+"Diese Rechner <strong> sind nicht auf der Firewall eingerichtet </strong>.  "
+"LetsEncrypt wird diesen Rechner nicht validieren können, die Erstellung "
+"eines Zertifikats wird nicht funktionieren. Um Rechner automatisch "
+"hinzuzufügen, drücken Sie bitte auf den Knopf \"Update Firewall\"."
 
 #: views/le.php:81
 msgid ""
 "This email address is given to Let's Encrypt. It may be used by them if the "
 "certificate is approaching expiration and it has not been renewed."
 msgstr ""
+"Die für Let's Encrypt verwendete Email- Adresse. Wird von Let´s Encrypt "
+"verwendet, um vor dem Ablauf der Gültigkeit des Zertifikats zu warnen."
 
 #: views/csr.php:28 views/up.php:31
 msgid "This field cannot be blank and must be alphanumeric"
@@ -842,6 +855,9 @@ msgid ""
 "will validate that the hostname resolves to this machine, and attempt to "
 "connect to it."
 msgstr ""
+"Das muß der Rechnername des anfragenden Rechners für das Zertifikat sein. "
+"Let´s Encrypt wird die Namensauflösung durch einen Verbindungsaufbau "
+"validieren."
 
 #: views/overview.php:20
 #, php-format
@@ -849,14 +865,18 @@ msgid ""
 "To manually import certificate files place them into %s and make sure they "
 "have the same basename, EG: %s"
 msgstr ""
+"Um ein Zertifikat manuell hinzuzufügen, hinterlegen Sie es hier %s und "
+"stellen Sie sicher, dass der gleiche Dateiname verwendet wird, EG: %s"
 
 #: views/up.php:212
 msgid "Trusted Chain"
-msgstr ""
+msgstr "Vertrauenswürdige Aussteller"
 
 #: views/csr.php:118
 msgid "Two letter country code, such as \"US\", \"CA\", or \"AU\"."
 msgstr ""
+"Zweistellige (internationale) Kurzbezeichnung des Landes, z.B. \"DE\", \"CH\""
+" oder \"AT\"."
 
 #: Console/Certman.class.php:122 views/certgrid.php:29
 msgid "Type"
@@ -866,61 +886,62 @@ msgstr "Typ"
 #, php-format
 msgid "Unable to create CSR: %s"
 msgstr ""
+"Es war unmöglich einen Zertifikatsunterschriftenantrag (CSR) zu erstellen: %s"
 
 #: Certman.class.php:269
 msgid "Unable to find Certificate Authority"
-msgstr ""
+msgstr "Keine gültigen Zertifikatsaussteller gefunden"
 
 #: Certman.class.php:262
 msgid "Unable to generate Certificate Authority"
-msgstr ""
+msgstr "Es war unmöglich, eine Zertifizierungsstelle zu erzeugen"
 
 #: Certman.class.php:277
 #, php-format
 msgid "Unable to generate certificate: %s"
-msgstr ""
+msgstr "Erstellen des Zertifikats fehlgeschlagen: %s"
 
 #: Certman.class.php:767
 msgid "Unable to read key. Is it password protected?"
-msgstr ""
+msgstr "Schlüssel nicht lesbar. Ist der Schlüssel passwortgeschützt?"
 
 #: Certman.class.php:1195
 #, php-format
 msgid "Unable to remove %s"
-msgstr ""
+msgstr "%s konnte nicht entfernt werden"
 
 #: Certman.class.php:1313
 msgid "Unable to remove ca.cfg"
-msgstr ""
+msgstr "Kann ca.cfg nicht löschen"
 
 #: Certman.class.php:1308
 msgid "Unable to remove ca.crt"
-msgstr ""
+msgstr "Kann ca.crt nicht entfernen"
 
 #: Certman.class.php:1303
 msgid "Unable to remove ca.key"
-msgstr ""
+msgstr "Kann ca.key nicht entfernen"
 
 #: Certman.class.php:314
 msgid "Unable to remove the Certificate Authority"
-msgstr ""
+msgstr "Kann Zertifizierungsstelle nicht entfernen"
 
 #: Certman.class.php:322
 msgid "Unable to remove the Certificate Signing Request"
-msgstr ""
+msgstr "Kann die Zertifikatunterschriftsanfrage (CSR) nicht löschen"
 
 #: Certman.class.php:1318
 msgid "Unable to remove tmp.cfg"
-msgstr ""
+msgstr "Kann tmp.cfg nicht entfernen"
 
 #: Certman.class.php:750 Certman.class.php:754 Certman.class.php:758
 #, php-format
 msgid "Unable to write to %s"
-msgstr ""
+msgstr "Konnte nicht nach %s schreiben"
 
 #: Certman.class.php:1586
 msgid "Unknown Expiration"
-msgstr ""
+msgstr "Ablaufdatum unbekannt"
 
 #: Certman.class.php:458
 msgid "Update Certificate"
@@ -945,11 +966,11 @@ msgstr "Zertifikat aktualisiert"
 
 #: views/ca.php:42
 msgid "Upload CA"
-msgstr ""
+msgstr "Lade Zertifizierungsstelle"
 
 #: views/certgrid.php:9 assets/js/certman.js:52
 msgid "Upload Certificate"
-msgstr ""
+msgstr "Lade Zertifikat"
 
 #: Console/Certman.class.php:115 views/certgrid.php:45
 msgid "Uploaded"
@@ -961,7 +982,7 @@ msgstr "Hochgeladen:"
 
 #: Console/Certman.class.php:46
 msgid "Use --import instead"
-msgstr ""
+msgstr "Benutze stattdessen \"--import\""
 
 #: functions.inc/hook_core.php:75
 msgid "Use Certificate"
@@ -969,7 +990,7 @@ msgstr "Zertifikat verwenden"
 
 #: views/le.php:90 views/ss.php:62 views/up.php:54
 msgid "Valid Until"
-msgstr ""
+msgstr "Gültig bis"
 
 #: functions.inc/hook_core.php:89
 msgid ""
@@ -985,6 +1006,16 @@ msgid ""
 "verification</li>\n"
 "\t\t\t</ul>"
 msgstr ""
+"Stellen Sie sicher, dass bereitgestelltes Zertifikat und Fingerabdruck "
+"gültig sind\n"
+"\t\t\t<ul>\n"
+"\t\t\t<li>'Ja' bedeutet, dass sowohl Zertifikat als auch Fingerabdruck "
+"geprüft werden</li>\n"
+"\t\t\t<li>'Nein' bedeutet, dass weder Zertifikat noch Fingerabdruck geprüft "
+"werden</li>\n"
+"\t\t\t<li>'Fingerabdruck' prüft nur den Fingerabdruck</li>\n"
+"\t\t\t<li>'Zertifikat' prüft nur das Zertifikat</li>\n"
+"\t\t\t</ul>"
 
 #: views/overview.php:12
 msgid "What is Certificate Manager?"
@@ -1002,6 +1033,16 @@ msgid ""
 "\t\t\t<li>actpass (we will do both)</li>\n"
 "\t\t\t</ul>"
 msgstr ""
+"Ob wir bereit sind, Verbindungen zu akzeptieren, uns zu anderen Teilnehmern "
+"verbinden können oder beides.\n"
+"\t\tDieser Wert wird in den ausgehenden SDP Paketen eingetragen, wenn es "
+"angeboten wird; bei eingehenden SDP Paketen für den Fall, dass die "
+"Gegenstelle 'actpass' sendet\n"
+"\t\t<ul>\n"
+"\t\t\t<li>aktiv (wenn wir anrufen)</li>\n"
+"\t\t\t<li>passiv (wenn nur für eingehende Anrufe gewünscht)</li>\n"
+"\t\t\t<li>actpass (ein- und ausgehende Verbindungen</li>\n"
+"\t\t\t</ul>"
 
 #: views/up.php:215
 msgid ""
@@ -1011,6 +1052,12 @@ msgid ""
 "below. This may be left blank, or updated at any time. They can be added in "
 "any order."
 msgstr ""
+"Ihre Zertifikatsautorität könnte die Existenz einer vertrauenswürdigen Kette "
+"erfordern. Wird von der Zertifikatsautorität bereitgestellt und besteht aus "
+"mindestens einem Zertifikat.   Fügen Sie alle zugehörigen Inhalte aller "
+"vertrauenswürdigen Ketten, falls existent, in das Feld unter diesem Text. "
+"Kann man leer lassen oder irgendwann nachtragen. Die Reihenfolge spielt "
+"dabei keine Rolle."
 
 #~ msgid "<error>"
 #~ msgstr "<Fehler>"
