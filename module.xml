@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>15.0.10</version>
+	<version>15.0.11</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -13,9 +13,10 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
-		*15.0.10* Fix issue with chgrp 
-		*15.0.9* FREEI-405 whoops error issue fix 
-		*15.0.8* fixing legacy restore 
+		*15.0.11* Use lazy loading console commands
+		*15.0.10* Fix issue with chgrp
+		*15.0.9* FREEI-405 whoops error issue fix
+		*15.0.8* fixing legacy restore
 		*15.0.7* Fix more backup issues in 15
 		*15.0.6* Fixing problems in Backup 15
 		*15.0.5* Add backup / restore
@@ -80,4 +81,10 @@
 		<module>core ge 12.0.1beta6</module>
 		<version>14.0.3</version>
 	</depends>
+	<console>
+		<command>
+			<name>certificates</name>
+			<class>Certman</class>
+		</command>
+	</console>
 </module>
