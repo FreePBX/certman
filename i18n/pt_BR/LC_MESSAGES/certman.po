@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-04 19:49-0500\n"
+"POT-Creation-Date: 2019-09-09 15:17+0530\n"
 "PO-Revision-Date: 2017-03-23 13:47+0200\n"
 "Last-Translator: Kingvoice <suporte@kingvoice.com.br>\n"
 "Language-Team: Portuguese (Brazil) <http://weblate.freepbx.org/projects/"
@@ -476,6 +476,10 @@ msgstr "Chave está vazia"
 #: Certman.class.php:1237
 msgid "Key is password protected or malformed"
 msgstr "A chave é protegida por senha ou está malformada"
+
+#: Restore.php:47
+msgid "Legacy Restore for Certificate Management module is not supported "
+msgstr ""
 
 #: Console/Certman.class.php:112
 msgid "Let's Encrypt"

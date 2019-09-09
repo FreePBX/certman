@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-09 13:42-0400\n"
+"POT-Creation-Date: 2019-09-09 15:17+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -470,6 +470,10 @@ msgstr ""
 
 #: Certman.class.php:1237
 msgid "Key is password protected or malformed"
+msgstr ""
+
+#: Restore.php:47
+msgid "Legacy Restore for Certificate Management module is not supported "
 msgstr ""
 
 #: Console/Certman.class.php:112

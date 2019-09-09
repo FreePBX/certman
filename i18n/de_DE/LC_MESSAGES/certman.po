@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-09 13:42-0400\n"
+"POT-Creation-Date: 2019-09-09 15:17+0530\n"
 "PO-Revision-Date: 2019-04-09 01:00+0000\n"
 "Last-Translator: florian alberts <alberts@ar-systems.de>\n"
 "Language-Team: German <http://*/projects/freepbx/certman/de/>\n"
@@ -478,6 +478,10 @@ msgstr "Schlüssel ist leer"
 #: Certman.class.php:1237
 msgid "Key is password protected or malformed"
 msgstr "Schlüssel ist passwortgeschützt oder fehlerhaft"
+
+#: Restore.php:47
+msgid "Legacy Restore for Certificate Management module is not supported "
+msgstr ""
 
 #: Console/Certman.class.php:112
 msgid "Let's Encrypt"
