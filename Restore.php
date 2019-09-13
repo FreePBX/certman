@@ -44,7 +44,7 @@ class Restore Extends Base\RestoreBase{
 	}
 
 	public function processLegacy($pdo, $data, $tables, $unknownTables) {
-		$this->log(_("Legacy Restore for Certificate Management module is not supported "));
+		$this->log(_("Legacy Restore for Certificate Management module is not supported "),'WARNING');
 	}
 
 }
