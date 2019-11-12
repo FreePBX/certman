@@ -1,28 +1,29 @@
 [
     {
         "name": "analogic/lescript",
-        "version": "0.1.6",
-        "version_normalized": "0.1.6.0",
+        "version": "0.2.4",
+        "version_normalized": "0.2.4.0",
         "source": {
             "type": "git",
             "url": "https://github.com/analogic/lescript.git",
-            "reference": "fb3c38ee5cd18e5e1ee5397ac574409b83de9edf"
+            "reference": "b826ce0196012b44bf62d263367a1b905f494bda"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/analogic/lescript/zipball/fb3c38ee5cd18e5e1ee5397ac574409b83de9edf",
-            "reference": "fb3c38ee5cd18e5e1ee5397ac574409b83de9edf",
+            "url": "https://api.github.com/repos/analogic/lescript/zipball/b826ce0196012b44bf62d263367a1b905f494bda",
+            "reference": "b826ce0196012b44bf62d263367a1b905f494bda",
             "shasum": ""
         },
         "require": {
             "ext-curl": "*",
+            "ext-json": "*",
             "ext-openssl": "*",
             "php": ">=5.3"
         },
         "require-dev": {
             "psr/log": "^1"
         },
-        "time": "2017-11-14T10:22:51+00:00",
+        "time": "2019-10-01T10:15:49+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
