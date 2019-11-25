@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>15.0.15</version>
+	<version>15.0.16</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -13,6 +13,7 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
+		*15.0.16* FREEI-713 Add: Validity period of the certificate (in days) in Advanced Settings 
 		*15.0.15* FREEPBX-20719 Let's Encrypt ACMEv1 no longer working as of NOV 8 2019 - Breaking LE Cert Creation and Renewal 
 		*15.0.14* FREEPBX-20493 Legacy restore message to show in Warning 
 		*15.0.13* Related to FREEPBX-20414: removed $jobid from runRestore() 
