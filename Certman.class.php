@@ -825,7 +825,7 @@ class Certman implements BMO {
 			if(empty($o) || empty($cert['files']['crt']) || empty($cert['files']['key'])) {
 				continue;
 			}
-			if('sip' == $o['tech']){
+			if($o['tech'] === 'sip') {
 				$core_conf->addSipAdditional($device['id'], 'dtlsenable', 'yes');
 				$core_conf->addSipAdditional($device['id'], 'dtlsverify', $device['verify']);
 				$core_conf->addSipAdditional($device['id'], 'dtlscertfile', $cert['files']['crt']);
@@ -833,7 +833,7 @@ class Certman implements BMO {
 				$core_conf->addSipAdditional($device['id'], 'dtlssetup', $device['setup']);
 				$core_conf->addSipAdditional($device['id'], 'dtlsrekey', $device['rekey']);
 			}
-			if('pjsip'){
+			if($o['tech'] === 'pjsip') {
 				$this->FreePBX->PJSip->addEndpoint($device['id'], 'media_encryption', 'dtls');
 				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_verify', $device['verify']);
 				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_cert_file', $cert['files']['crt']);
