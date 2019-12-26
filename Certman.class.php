@@ -819,23 +819,21 @@ class Certman implements \BMO {
 			if(empty($o) || empty($cert['files']['crt']) || empty($cert['files']['key'])) {
 				continue;
 			}
-			switch($o['tech']) {
-				case 'sip':
-					$core_conf->addSipAdditional($device['id'],'dtlsenable','yes');
-					$core_conf->addSipAdditional($device['id'],'dtlsverify',$device['verify']);
-					$core_conf->addSipAdditional($device['id'],'dtlscertfile',$cert['files']['crt']);
-					$core_conf->addSipAdditional($device['id'],'dtlsprivatekey',$cert['files']['key']);
-					$core_conf->addSipAdditional($device['id'],'dtlssetup',$device['setup']);
-					$core_conf->addSipAdditional($device['id'],'dtlsrekey',$device['rekey']);
-				break;
-				case 'pjsip':
-					$this->FreePBX->PJSip->addEndpoint($device['id'], 'media_encryption', 'dtls');
-					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_verify', $device['verify']);
-					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_cert_file', $cert['files']['crt']);
-					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_private_key', $cert['files']['key']);
-					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_setup', $device['setup']);
-					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_rekey', $device['rekey']);
-				break;
+			if($o['tech'] === 'sip') {
+				$core_conf->addSipAdditional($device['id'], 'dtlsenable', 'yes');
+				$core_conf->addSipAdditional($device['id'], 'dtlsverify', $device['verify']);
+				$core_conf->addSipAdditional($device['id'], 'dtlscertfile', $cert['files']['crt']);
+				$core_conf->addSipAdditional($device['id'], 'dtlsprivatekey', $cert['files']['key']);
+				$core_conf->addSipAdditional($device['id'], 'dtlssetup', $device['setup']);
+				$core_conf->addSipAdditional($device['id'], 'dtlsrekey', $device['rekey']);
+			}
+			if($o['tech'] === 'pjsip') {
+				$this->FreePBX->PJSip->addEndpoint($device['id'], 'media_encryption', 'dtls');
+				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_verify', $device['verify']);
+				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_cert_file', $cert['files']['crt']);
+				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_private_key', $cert['files']['key']);
+				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_setup', $device['setup']);
+				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_rekey', $device['rekey']);
 			}
 		}
 	}
