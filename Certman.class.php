@@ -836,10 +836,16 @@ class Certman implements BMO {
 			if($o['tech'] === 'pjsip') {
 				$this->FreePBX->PJSip->addEndpoint($device['id'], 'media_encryption', 'dtls');
 				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_verify', $device['verify']);
-				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_cert_file', $cert['files']['crt']);
-				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_private_key', $cert['files']['key']);
 				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_setup', $device['setup']);
 				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_rekey', $device['rekey']);
+
+				if ((integer)$device['auto_generate_cert'] === 1) {
+					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_auto_generate_cert', 'yes');
+					continue;
+				}
+
+				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_cert_file', $cert['files']['crt']);
+				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_private_key', $cert['files']['key']);
 			}
 		}
 	}
@@ -874,7 +880,8 @@ class Certman implements BMO {
 				"verify" => "fingerprint",
 				"cid" => "",
 				"setup" => "actpass",
-				"rekey" => "0"
+				"rekey" => "0",
+				"auto_generate_cert" => "0"
 			);
 		}
 		return $data;
@@ -905,10 +912,32 @@ class Certman implements BMO {
 	 * @param {int} $device The Device/Extension Number
 	 * @param {array} $data	 An array of defined options
 	 */
-	public function addDTLSOptions($device,$data) {
-		$sql = "REPLACE INTO certman_mapping (id, cid, verify, setup, rekey) VALUES (?, ?, ?, ?, ?)";
+	public function addDTLSOptions($device, $data) {
+		$autoGenerateCert = !empty($data['auto_generate_cert']) 
+			? $data['auto_generate_cert'] : false;
+
+		$asteriskVersion = $this->FreePBX->Config->get('ASTVERSION');
+		if ($autoGenerateCert && version_compare($asteriskVersion, '15.2', 'le')) {
+			throw new \Exception('Autogenerate certificate option not available');
+		}
+
+		$sql = "REPLACE INTO certman_mapping (
+			id,
+			cid,
+			verify,
+			setup,
+			rekey,
+			auto_generate_cert
+		) VALUES (?, ?, ?, ?, ?, ?)";
 		$sth = $this->db->prepare($sql);
-		$sth->execute(array($device,$data['certificate'],$data['verify'],$data['setup'],$data['rekey']));
+		$sth->execute(array(
+			$device,
+			$data['certificate'],
+			$data['verify'],
+			$data['setup'],
+			$data['rekey'],
+			$autoGenerateCert
+		));
 	}
 
 	/**
