@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-01 06:58+0000\n"
+"POT-Creation-Date: 2020-01-09 16:59+0530\n"
 "PO-Revision-Date: 2019-04-09 01:00+0000\n"
 "Last-Translator: florian alberts <alberts@ar-systems.de>\n"
 "Language-Team: German <http://*/projects/freepbx/certman/de/>\n"
@@ -125,6 +125,10 @@ msgstr "Basisname"
 msgid "CSR Reference"
 msgstr "CSR-Referenz"
 
+#: Restore.php:55
+msgid "Cerificate files are not found on Legacy backup !"
+msgstr ""
+
 #: views/ca.php:89 views/certgrid.php:27 views/rnav.php:7 views/up.php:203
 msgid "Certificate"
 msgstr "Zertifikat"
@@ -158,7 +162,7 @@ msgstr "Zertifikatsliste"
 msgid "Certificate Management"
 msgstr "Zertifikatverwaltung"
 
-#: certman.i18n.php:4 certman.i18n.php:14
+#: certman.i18n.php:4
 msgid "Certificate Manager"
 msgstr "Zertifikatmanager"
 
@@ -250,6 +254,10 @@ msgstr "Anfrage beendet"
 #: Console/Certman.class.php:28
 msgid "Check and Update all Certificates"
 msgstr "Alle Zertifikate prüfen und aktualisieren"
+
+#: Restore.php:53
+msgid "Checking Certificate files on backup /etc/asterisk/keys"
+msgstr ""
 
 #: views/csr.php:162
 msgid ""
@@ -478,10 +486,6 @@ msgstr "Schlüssel ist leer"
 #: Certman.class.php:1237
 msgid "Key is password protected or malformed"
 msgstr "Schlüssel ist passwortgeschützt oder fehlerhaft"
-
-#: Restore.php:47
-msgid "Legacy Restore for Certificate Management module is not supported "
-msgstr ""
 
 #: Console/Certman.class.php:112
 msgid "Let's Encrypt"
@@ -996,10 +1000,6 @@ msgstr "Zertifikat verwenden"
 msgid "Valid Until"
 msgstr "Gültig bis"
 
-#: certman.i18n.php:12
-msgid "Validity period of the certificate (in days)"
-msgstr ""
-
 #: functions.inc/hook_core.php:89
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
@@ -1051,10 +1051,6 @@ msgstr ""
 "\t\t\t<li>passiv (wenn nur für eingehende Anrufe gewünscht)</li>\n"
 "\t\t\t<li>actpass (ein- und ausgehende Verbindungen</li>\n"
 "\t\t\t</ul>"
-
-#: certman.i18n.php:16
-msgid "You can change the number of days the certificate is valid."
-msgstr ""
 
 #: views/up.php:215
 msgid ""

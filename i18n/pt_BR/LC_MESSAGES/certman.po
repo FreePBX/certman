@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-01 06:58+0000\n"
+"POT-Creation-Date: 2020-01-09 16:59+0530\n"
 "PO-Revision-Date: 2017-03-23 13:47+0200\n"
 "Last-Translator: Kingvoice <suporte@kingvoice.com.br>\n"
 "Language-Team: Portuguese (Brazil) <http://weblate.freepbx.org/projects/"
@@ -127,6 +127,10 @@ msgstr "Nome da Base"
 msgid "CSR Reference"
 msgstr "Referência CSR"
 
+#: Restore.php:55
+msgid "Cerificate files are not found on Legacy backup !"
+msgstr ""
+
 #: views/ca.php:89 views/certgrid.php:27 views/rnav.php:7 views/up.php:203
 msgid "Certificate"
 msgstr "Certificado"
@@ -160,7 +164,7 @@ msgstr "Lista de Certificados"
 msgid "Certificate Management"
 msgstr "Gerenciamento de Certificados"
 
-#: certman.i18n.php:4 certman.i18n.php:14
+#: certman.i18n.php:4
 msgid "Certificate Manager"
 msgstr "Gerenciador de Certificado"
 
@@ -250,6 +254,10 @@ msgstr "Fim do Desafio"
 
 #: Console/Certman.class.php:28
 msgid "Check and Update all Certificates"
+msgstr ""
+
+#: Restore.php:53
+msgid "Checking Certificate files on backup /etc/asterisk/keys"
 msgstr ""
 
 #: views/csr.php:162
@@ -476,10 +484,6 @@ msgstr "Chave está vazia"
 #: Certman.class.php:1237
 msgid "Key is password protected or malformed"
 msgstr "A chave é protegida por senha ou está malformada"
-
-#: Restore.php:47
-msgid "Legacy Restore for Certificate Management module is not supported "
-msgstr ""
 
 #: Console/Certman.class.php:112
 msgid "Let's Encrypt"
@@ -983,10 +987,6 @@ msgstr "Usar Certificado"
 msgid "Valid Until"
 msgstr "Válido Até"
 
-#: certman.i18n.php:12
-msgid "Validity period of the certificate (in days)"
-msgstr ""
-
 #: functions.inc/hook_core.php:89
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
@@ -1038,10 +1038,6 @@ msgstr ""
 "\t\t\t<li>passivo (somente aceitar conexões)</li>\n"
 "\t\t\t<li>ativo-passivo(conectar e receber conecções)</li>\n"
 "\t\t\t</ul>"
-
-#: certman.i18n.php:16
-msgid "You can change the number of days the certificate is valid."
-msgstr ""
 
 #: views/up.php:215
 msgid ""
