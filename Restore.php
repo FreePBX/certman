@@ -1,6 +1,9 @@
 <?php
 namespace FreePBX\modules\Certman;
 use FreePBX\modules\Backup as Base;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Finder\Finder;
 class Restore Extends Base\RestoreBase{
 	public function runRestore(){
 		$configs = $this->getConfigs();
@@ -44,7 +47,22 @@ class Restore Extends Base\RestoreBase{
 	}
 
 	public function processLegacy($pdo, $data, $tables, $unknownTables) {
-		$this->log(_("Legacy Restore for Certificate Management module is not supported "),'WARNING');
+		$this->restoreLegacyAll($pdo);
+		$this->certman = $this->FreePBX->Certman;
+		$keyDir = $this->certman->PKCS->getKeysLocation();
+		$this->log(_("Checking Certificate files on backup /etc/asterisk/keys"));
+		if(!file_exists($this->tmpdir.'/etc/asterisk/keys')) {
+			$this->log(_("Cerificate files are not found on Legacy backup !"));
+			return;
+		}
+		$finder = new Finder();
+		$fileSystem = new Filesystem();
+		foreach ($finder->in($this->tmpdir.'/etc/asterisk/keys') as $item) {
+			if($item->isDir()) {
+				$fileSystem->mkdir($keyDir.'/'.$item->getRelativePathname());
+				continue;
+			}
+			$fileSystem->copy($item->getPathname(), $keyDir.'/'.$item->getRelativePathname(), true);
+		}
 	}
-
 }
