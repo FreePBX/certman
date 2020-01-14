@@ -108,6 +108,7 @@
 			<field name="verify" type="string" length="255" notnull="false"/>
 			<field name="setup" type="string" length="45" notnull="false"/>
 			<field name="rekey" type="integer" notnull="false"/>
+			<field name="auto_generate_cert" type="boolean" default="0"/>
 		</table>
 		<table name="certman_csrs">
 			<field name="cid" type="integer" primaryKey="true" autoincrement="true"/>

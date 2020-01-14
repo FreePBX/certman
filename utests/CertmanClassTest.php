@@ -169,9 +169,12 @@ class CertmanClassTest extends \PHPUnit_Framework_TestCase
 			->disableOriginalClone()
 			->disableArgumentCloning()
 			->disallowMockingUnknownTypes()
+			->setMethods(array('get', 'get_conf_setting'))
 			->getMock();
 		$stubConfig->method('get')
 			->willReturn('15.2.0');
+		$stubConfig->method('get_conf_setting')
+			->willReturn('chan_pjsip');
 		self::$freepbx->Config = $stubConfig;
 
 		$settings = \FreePBX::Core()->generateDefaultDeviceSettings(
@@ -290,9 +293,12 @@ class CertmanClassTest extends \PHPUnit_Framework_TestCase
 			->disableOriginalClone()
 			->disableArgumentCloning()
 			->disallowMockingUnknownTypes()
+			->setMethods(array('get', 'get_conf_setting'))
 			->getMock();
 		$stubConfig->method('get')
 			->willReturn('15.1.0');
+		$stubConfig->method('get_conf_setting')
+			->willReturn('chan_pjsip');
 		self::$freepbx->Config = $stubConfig;
 
 		$settings = \FreePBX::Core()->generateDefaultDeviceSettings(
@@ -412,6 +418,7 @@ class CertmanClassTest extends \PHPUnit_Framework_TestCase
 			->disableOriginalClone()
 			->disableArgumentCloning()
 			->disallowMockingUnknownTypes()
+			->setMethods(array('get'))
 			->getMock();
 		$stubConfig->method('get')
 			->willReturn('15.1.0');
@@ -450,6 +457,7 @@ class CertmanClassTest extends \PHPUnit_Framework_TestCase
 			->disableOriginalClone()
 			->disableArgumentCloning()
 			->disallowMockingUnknownTypes()
+			->setMethods(array('get'))
 			->getMock();
 		$stubConfig->method('get')
 			->willReturn('15.1.0');
@@ -464,6 +472,7 @@ class CertmanClassTest extends \PHPUnit_Framework_TestCase
 			->disableOriginalClone()
 			->disableArgumentCloning()
 			->disallowMockingUnknownTypes()
+			->setMethods(array('get'))
 			->getMock();
 		$stubConfig->method('get')
 			->willReturn('15.2.1');
