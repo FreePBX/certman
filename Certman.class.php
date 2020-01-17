@@ -1217,6 +1217,10 @@ class Certman implements BMO {
 		$processed = array();
 		foreach(glob($location."/*.key") as $file) {
 			$name = basename($file,".key");
+			//API key from api module should ignore
+			if($name == 'api_oauth' ||  $name == 'api_oauth_public') {
+				continue;
+			}
 			if(in_array(basename($file),$cas)) {
 				continue;
 			}
