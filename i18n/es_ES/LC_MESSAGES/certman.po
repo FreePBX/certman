@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-09 16:59+0530\n"
+"POT-Creation-Date: 2020-01-17 17:25+0530\n"
 "PO-Revision-Date: 2016-12-11 12:44+0200\n"
 "Last-Translator: Ernesto <ecasas@sangoma.com>\n"
 "Language-Team: Spanish <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -31,7 +31,7 @@ msgstr ""
 msgid "%s is not supported at this time"
 msgstr ""
 
-#: Certman.class.php:1603
+#: Certman.class.php:1607
 #, php-format
 msgid "(%s days)"
 msgstr ""
@@ -100,10 +100,6 @@ msgstr ""
 "registrarse para un certificado GRATIS desde el  proyecto Let's Encrypt. Más "
 "información %s"
 
-#: certman.i18n.php:6
-msgid "Admin"
-msgstr "Administ"
-
 #: views/up.php:206
 msgid ""
 "After you have submitted a CSR to a CA, they will sign it, after validation, "
@@ -137,7 +133,7 @@ msgstr ""
 msgid "Certificate"
 msgstr "Certificado"
 
-#: Certman.class.php:1496 Certman.class.php:1511 Certman.class.php:1520
+#: Certman.class.php:1500 Certman.class.php:1515 Certman.class.php:1524
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr "Certificado %s no puede leerse! No se puede continuar!"
@@ -150,7 +146,7 @@ msgstr "Autoridad Certificadora"
 msgid "Certificate Authority to Reference"
 msgstr "Autoridad Certificadora a Referenciar"
 
-#: Certman.class.php:1598
+#: Certman.class.php:1602
 msgid "Certificate Expired!"
 msgstr ""
 
@@ -162,21 +158,9 @@ msgstr ""
 msgid "Certificate List"
 msgstr "Lista de certificados"
 
-#: Console/Certman.class.php:25 certman.i18n.php:10 views/overview.php:7
+#: Console/Certman.class.php:25 views/overview.php:7
 msgid "Certificate Management"
 msgstr "Gestión Certificado"
-
-#: certman.i18n.php:4
-msgid "Certificate Manager"
-msgstr "Administrador de certificados"
-
-#: certman.i18n.php:8
-msgid ""
-"Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
-"WebRTC and secure traffic)"
-msgstr ""
-"Gestor de Certificado para Asterisk. Usado para TLS, conexión DTLS (piense "
-"en WebRTC y trafico seguro)"
 
 #: views/overview.php:16
 msgid ""
@@ -206,7 +190,7 @@ msgstr ""
 msgid "Certificate Type"
 msgstr ""
 
-#: Certman.class.php:1258
+#: Certman.class.php:1262
 msgid "Certificate is empty"
 msgstr "Certificado esta vacío"
 
@@ -450,7 +434,7 @@ msgstr "Importar Localmente"
 msgid "Import any unmanaged certificates in %s"
 msgstr ""
 
-#: Certman.class.php:1281 Certman.class.php:1285
+#: Certman.class.php:1285 Certman.class.php:1289
 msgid "Imported from file system"
 msgstr "Importado del sistema de archivos"
 
@@ -479,11 +463,11 @@ msgstr "Llave no coincide con el certificado"
 msgid "Key does not match certificate after password removal"
 msgstr "Llave no coincide con el certificado luego de remover la contraseña"
 
-#: Certman.class.php:1227
+#: Certman.class.php:1231
 msgid "Key is empty"
 msgstr "Llave esta vacía"
 
-#: Certman.class.php:1237
+#: Certman.class.php:1241
 msgid "Key is password protected or malformed"
 msgstr "La llave esta protegida por Contraseña o esta mal-formada"
 
@@ -897,15 +881,15 @@ msgstr "Incapaz de leer llave. Esta protegida por contraseña?"
 msgid "Unable to remove %s"
 msgstr "No se puede eliminar %s"
 
-#: Certman.class.php:1317
+#: Certman.class.php:1321
 msgid "Unable to remove ca.cfg"
 msgstr "No se puede eliminar ca.cfg"
 
-#: Certman.class.php:1312
+#: Certman.class.php:1316
 msgid "Unable to remove ca.crt"
 msgstr "Incapaz de remover ca.crt"
 
-#: Certman.class.php:1307
+#: Certman.class.php:1311
 msgid "Unable to remove ca.key"
 msgstr "Incapaz de remover ca.key"
 
@@ -917,7 +901,7 @@ msgstr "Incapaz de remover Certificado de Autoridad"
 msgid "Unable to remove the Certificate Signing Request"
 msgstr "Incapaz de remover la Solicitud de Firma de Certificado"
 
-#: Certman.class.php:1322
+#: Certman.class.php:1326
 msgid "Unable to remove tmp.cfg"
 msgstr "No se puede eliminar tmp.cfg"
 
@@ -926,7 +910,7 @@ msgstr "No se puede eliminar tmp.cfg"
 msgid "Unable to write to %s"
 msgstr "Incapaz de escribir en %s"
 
-#: Certman.class.php:1588
+#: Certman.class.php:1592
 msgid "Unknown Expiration"
 msgstr ""
 
@@ -1045,6 +1029,19 @@ msgstr ""
 "archivos de certificados. Pegar el contenido de todos los archivos de la "
 "cadena, en su caso, en la casilla inferior. Esto puede dejarse en blanco, o "
 "actualizar en cualquier momento. Se pueden añadir en cualquier orden."
+
+#~ msgid "Admin"
+#~ msgstr "Administ"
+
+#~ msgid "Certificate Manager"
+#~ msgstr "Administrador de certificados"
+
+#~ msgid ""
+#~ "Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
+#~ "WebRTC and secure traffic)"
+#~ msgstr ""
+#~ "Gestor de Certificado para Asterisk. Usado para TLS, conexión DTLS "
+#~ "(piense en WebRTC y trafico seguro)"
 
 #~ msgid ""
 #~ "No Certificates to import. Try placing a certificate (<name>.crt) and its "

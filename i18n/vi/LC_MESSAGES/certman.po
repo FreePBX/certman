@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-09 16:59+0530\n"
+"POT-Creation-Date: 2020-01-17 17:25+0530\n"
 "PO-Revision-Date: 2017-08-08 16:34+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese <http://weblate.freepbx.org/projects/freepbx/"
@@ -31,7 +31,7 @@ msgstr "%s  đã tồn tại!"
 msgid "%s is not supported at this time"
 msgstr ""
 
-#: Certman.class.php:1603
+#: Certman.class.php:1607
 #, php-format
 msgid "(%s days)"
 msgstr "(%s ngày)"
@@ -99,10 +99,6 @@ msgstr ""
 "Thêm vào đó, nếu bạn đã mở truy nhập internet đến thế giới bên ngoài bạn có "
 "thể đăng ký một chứng thực miễn phí từ dự án Let's Encrypt. Tìm hiểu thêm %s"
 
-#: certman.i18n.php:6
-msgid "Admin"
-msgstr "Quản trị viên"
-
 #: views/up.php:206
 msgid ""
 "After you have submitted a CSR to a CA, they will sign it, after validation, "
@@ -134,7 +130,7 @@ msgstr ""
 msgid "Certificate"
 msgstr "Chứng thực"
 
-#: Certman.class.php:1496 Certman.class.php:1511 Certman.class.php:1520
+#: Certman.class.php:1500 Certman.class.php:1515 Certman.class.php:1524
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr "Chứng thực %s không thể đọc được! Không thể tiếp tục!"
@@ -147,7 +143,7 @@ msgstr "Nhà cung cấp chứng thực"
 msgid "Certificate Authority to Reference"
 msgstr "Nhà cung cấp chứng thực để tham chiếu"
 
-#: Certman.class.php:1598
+#: Certman.class.php:1602
 msgid "Certificate Expired!"
 msgstr "Chứng thực đã hết han!"
 
@@ -159,21 +155,9 @@ msgstr "Tên Host của chứng thực"
 msgid "Certificate List"
 msgstr "Danh sách chứng thực"
 
-#: Console/Certman.class.php:25 certman.i18n.php:10 views/overview.php:7
+#: Console/Certman.class.php:25 views/overview.php:7
 msgid "Certificate Management"
 msgstr "Quản lý chứng thực"
-
-#: certman.i18n.php:4
-msgid "Certificate Manager"
-msgstr "Trình quản lý chứng thực"
-
-#: certman.i18n.php:8
-msgid ""
-"Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
-"WebRTC and secure traffic)"
-msgstr ""
-"Trình quản lý chứng thực cho Asterisk. Được sử dụng cho kết nối TLS, DTLS  "
-"( think WebRTC and lưu lượng truy cập an toàn)"
 
 #: views/overview.php:16
 msgid ""
@@ -204,7 +188,7 @@ msgstr ""
 msgid "Certificate Type"
 msgstr ""
 
-#: Certman.class.php:1258
+#: Certman.class.php:1262
 msgid "Certificate is empty"
 msgstr "Chứng thực trống"
 
@@ -448,7 +432,7 @@ msgstr "Nhập tại chỗ"
 msgid "Import any unmanaged certificates in %s"
 msgstr ""
 
-#: Certman.class.php:1281 Certman.class.php:1285
+#: Certman.class.php:1285 Certman.class.php:1289
 msgid "Imported from file system"
 msgstr "Đã nhập từ hệ thống tệp"
 
@@ -477,11 +461,11 @@ msgstr "Khóa không khớp với chứng thực"
 msgid "Key does not match certificate after password removal"
 msgstr "Khóa không khớp với chứng thực sau khi xóa mật khẩu"
 
-#: Certman.class.php:1227
+#: Certman.class.php:1231
 msgid "Key is empty"
 msgstr "Khóa trống"
 
-#: Certman.class.php:1237
+#: Certman.class.php:1241
 msgid "Key is password protected or malformed"
 msgstr "Khóa được bảo vệ bằng mật khẩu hoặc bị sai khóa"
 
@@ -901,15 +885,15 @@ msgstr "Không thể đọc khóa. Nó có được bảo vệ bằng mật kh�
 msgid "Unable to remove %s"
 msgstr "Không thể xóa %s"
 
-#: Certman.class.php:1317
+#: Certman.class.php:1321
 msgid "Unable to remove ca.cfg"
 msgstr "Không thể xóa  ca.cfg"
 
-#: Certman.class.php:1312
+#: Certman.class.php:1316
 msgid "Unable to remove ca.crt"
 msgstr "Không thể xóa  ca.crt"
 
-#: Certman.class.php:1307
+#: Certman.class.php:1311
 msgid "Unable to remove ca.key"
 msgstr "Không thể xóa ca.key"
 
@@ -921,7 +905,7 @@ msgstr "Không thể xóa nhà cung cấp chứng thực"
 msgid "Unable to remove the Certificate Signing Request"
 msgstr "Không thể xóa Yêu cầu ký chứng thực"
 
-#: Certman.class.php:1322
+#: Certman.class.php:1326
 msgid "Unable to remove tmp.cfg"
 msgstr "Không thể xóa tmp.cfg"
 
@@ -930,7 +914,7 @@ msgstr "Không thể xóa tmp.cfg"
 msgid "Unable to write to %s"
 msgstr "Không thể ghi tới %s"
 
-#: Certman.class.php:1588
+#: Certman.class.php:1592
 msgid "Unknown Expiration"
 msgstr "Thời gian hết hạn không xác định"
 
@@ -1048,6 +1032,19 @@ msgstr ""
 "nhiều các tệp chứng thực. Dán các nội dung của các tệp Chuỗi, nếu có vào các "
 "cửa sổ sau. Có thể để trong hoặc cập nhật bất cứ khi nào. Có thể thêm chúng "
 "khi có yêu cầu."
+
+#~ msgid "Admin"
+#~ msgstr "Quản trị viên"
+
+#~ msgid "Certificate Manager"
+#~ msgstr "Trình quản lý chứng thực"
+
+#~ msgid ""
+#~ "Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
+#~ "WebRTC and secure traffic)"
+#~ msgstr ""
+#~ "Trình quản lý chứng thực cho Asterisk. Được sử dụng cho kết nối TLS, "
+#~ "DTLS  ( think WebRTC and lưu lượng truy cập an toàn)"
 
 #~ msgid ""
 #~ "No Certificates to import. Try placing a certificate (<name>.crt) and its "

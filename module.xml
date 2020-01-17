@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>15.0.18</version>
+	<version>15.0.19</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -13,6 +13,7 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
+		*15.0.19* FREEPBX-20882 Error on Import Locally 
 		*15.0.18* FREEI-974 certificates not included in freepbx 15 legacy restore 
 		*15.0.17* FREEI-1044-unit-tests-and-stuff: Unit tests for DTLS support
 		*15.0.16* FREEI-713 Add: Validity period of the certificate (in days) in Advanced Settings 
