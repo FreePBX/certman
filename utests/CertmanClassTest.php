@@ -18,21 +18,7 @@ class CertmanClassTest extends \PHPUnit_Framework_TestCase
 		self::$app = self::$freepbx->Certman;
 	}
 
-	public static function tearDownAfterClass()
-	{
-		while (!empty(self::$extensions)) {
-			$exten = array_pop(self::$extensions);
-			\FreePBX::Core()->delUser($exten);
-			\FreePBX::Core()->delDevice($exten);
-		}
-
-		while (!empty(self::$userIds)) {
-			$userId = array_pop(self::$userIds);
-			self::$freepbx->userman->deleteUserByID($userId);
-		}
-	}
-
-	public function testCertman_doDialplanHook_whenAddingPJSipExension_shouldSetupPJSipConfig() {
+	public function testCertman_doDialplanHook_whenAddingPJSipExtension_shouldSetupPJSipConfig() {
 		$fname = self::$faker->firstName;
 		$lname = self::$faker->lastName;
 		$testExtension = array(
@@ -92,7 +78,7 @@ class CertmanClassTest extends \PHPUnit_Framework_TestCase
 		$this->assertTrue(in_array('dtls_rekey=0', $config['pjsip.endpoint.conf'][$testExtension['extension']]));
 	}
 
-	public function testCertman_doDialplanHook_whenNotAddingPJSipExension_shouldNotSetupPJSipConfig() {
+	public function testCertman_doDialplanHook_whenNotAddingPJSipExtension_shouldNotSetupPJSipConfig() {
 		$fname = self::$faker->firstName;
 		$lname = self::$faker->lastName;
 		$testExtension = array(
@@ -147,7 +133,7 @@ class CertmanClassTest extends \PHPUnit_Framework_TestCase
 		], $filteredConfig);
 	}
 
-	public function testCertman_doDialplanHook_whenAddingPJSipExension_withAutoGenerateCertEnabled_shouldSetupDtlsConfigWithoutCerts() {
+	public function testCertman_doDialplanHook_whenAddingPJSipExtension_withAutoGenerateCertEnabled_shouldSetupDtlsConfigWithoutCerts() {
 		$fname = self::$faker->firstName;
 		$lname = self::$faker->lastName;
 		$testExtension = array(
@@ -215,7 +201,7 @@ class CertmanClassTest extends \PHPUnit_Framework_TestCase
 		$this->assertFalse(in_array("dtls_private_key={$defaultCertificate['files']['key']}", $config['pjsip.endpoint.conf'][$testExtension['extension']]));
 	}
 
-	public function testCertman_doDialplanHook_whenAddingPJSipExension_withAutoGenerateCertDisabled_shouldSetupDtlsConfigWithCerts() {
+	public function testCertman_doDialplanHook_whenAddingPJSipExtension_withAutoGenerateCertDisabled_shouldSetupDtlsConfigWithCerts() {
 		$fname = self::$faker->firstName;
 		$lname = self::$faker->lastName;
 		$testExtension = array(
@@ -271,7 +257,7 @@ class CertmanClassTest extends \PHPUnit_Framework_TestCase
 		$this->assertTrue(in_array("dtls_private_key={$defaultCertificate['files']['key']}", $config['pjsip.endpoint.conf'][$testExtension['extension']]));
 	}
 
-	public function testCertman_doDialplanHook_whenAddingPJSipExension_withAutoGenerateCertPreviouslyEnabled_butAsteriskHasBeenDowngradedTo15_1_shouldSetupDtlsConfigWithDefaultCerts() {
+	public function testCertman_doDialplanHook_whenAddingPJSipExtension_withAutoGenerateCertPreviouslyEnabled_butAsteriskHasBeenDowngradedTo15_1_shouldSetupDtlsConfigWithDefaultCerts() {
 		$fname = self::$faker->firstName;
 		$lname = self::$faker->lastName;
 		$testExtension = array(
@@ -353,7 +339,7 @@ class CertmanClassTest extends \PHPUnit_Framework_TestCase
 		$this->assertTrue(in_array("dtls_private_key={$defaultCertificate['files']['key']}", $config['pjsip.endpoint.conf'][$testExtension['extension']]));
 	}
 
-	public function testCertman_addDTLSOptions_whenAddingPJSipExension_withAutoGenerateCertDisabledAndNoCertificatesSpecified_shoudThrowAnException() {
+	public function testCertman_addDTLSOptions_whenAddingPJSipExtension_withAutoGenerateCertDisabledAndNoCertificatesSpecified_shoudThrowAnException() {
 		$fname = self::$faker->firstName;
 		$lname = self::$faker->lastName;
 		$testExtension = array(
@@ -396,7 +382,7 @@ class CertmanClassTest extends \PHPUnit_Framework_TestCase
 		}
 	}
 
-	public function testCertman_addDTLSOptions_whenAddingPJSipExension_withAutoGenerateCertEnabledAndAsteriskVersionLessThan15_2_shoudThrowAnException() {
+	public function testCertman_addDTLSOptions_whenAddingPJSipExtension_withAutoGenerateCertEnabledAndAsteriskVersionLessThan15_2_shoudThrowAnException() {
 		$fname = self::$faker->firstName;
 		$lname = self::$faker->lastName;
 		$testExtension = array(
@@ -466,7 +452,22 @@ class CertmanClassTest extends \PHPUnit_Framework_TestCase
 		$this->assertFalse(\FreePBX::Certman()->pjsipDTLSAutoGenerateCertSupported());
 	}
 
-	public function testCertman_pjsipDTLSAutoGenerateCertSupported_whenAsteriskVersionGreaterThan15_2_shoudReturnFalse() {
+	public function testCertman_pjsipDTLSAutoGenerateCertSupported_whenAsteriskVersionEquals15_2_shoudReturnTrue() {
+		$stubConfig = $this->getMockBuilder(\FreePBX\Config::class)
+			->disableOriginalConstructor()
+			->disableOriginalClone()
+			->disableArgumentCloning()
+			->disallowMockingUnknownTypes()
+			->setMethods(array('get'))
+			->getMock();
+		$stubConfig->method('get')
+			->willReturn('15.2.0');
+		self::$freepbx->Config = $stubConfig;
+
+		$this->assertTrue(\FreePBX::Certman()->pjsipDTLSAutoGenerateCertSupported());
+	}
+
+	public function testCertman_pjsipDTLSAutoGenerateCertSupported_whenAsteriskVersionGreaterThan15_2_shoudReturnTrue() {
 		$stubConfig = $this->getMockBuilder(\FreePBX\Config::class)
 			->disableOriginalConstructor()
 			->disableOriginalClone()
