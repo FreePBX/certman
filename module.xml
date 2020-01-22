@@ -146,7 +146,7 @@
 	</database>
 	<depends>
 		<phpversion>5.3.3</phpversion>
-		<module>core ge 12.0.1beta6</module>
+		<module>core ge 14.0.28.38</module>
 		<version>14.0.8</version>
 	</depends>
 	<console>
