@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-17 17:25+0530\n"
+"POT-Creation-Date: 2020-01-22 06:34+0000\n"
 "PO-Revision-Date: 2015-10-30 06:37+0200\n"
 "Last-Translator: Kevin <kevin@qloog.com>\n"
 "Language-Team: Japanese <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 2.2-dev\n"
 
-#: Certman.class.php:1083 Certman.class.php:1101
+#: Certman.class.php:1146 Certman.class.php:1164
 #, php-format
 msgid "%s already exists!"
 msgstr ""
@@ -31,7 +31,7 @@ msgstr ""
 msgid "%s is not supported at this time"
 msgstr ""
 
-#: Certman.class.php:1607
+#: Certman.class.php:1670
 #, php-format
 msgid "(%s days)"
 msgstr ""
@@ -88,6 +88,10 @@ msgid ""
 "%s"
 msgstr ""
 
+#: certman.i18n.php:6
+msgid "Admin"
+msgstr "アドミン"
+
 #: views/up.php:206
 msgid ""
 "After you have submitted a CSR to a CA, they will sign it, after validation, "
@@ -97,6 +101,14 @@ msgstr ""
 
 #: assets/js/certman.js:14
 msgid "Are you sure you want to make this certificate the system default?"
+msgstr ""
+
+#: functions.inc/hook_core.php:96
+msgid "Auto Generate Certificate"
+msgstr ""
+
+#: functions.inc/hook_core.php:97
+msgid "Automatically generate an ephemeral X.509 certificate"
 msgstr ""
 
 #: Console/Certman.class.php:122
@@ -115,7 +127,7 @@ msgstr ""
 msgid "Certificate"
 msgstr ""
 
-#: Certman.class.php:1500 Certman.class.php:1515 Certman.class.php:1524
+#: Certman.class.php:1563 Certman.class.php:1578 Certman.class.php:1587
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr ""
@@ -128,7 +140,7 @@ msgstr ""
 msgid "Certificate Authority to Reference"
 msgstr ""
 
-#: Certman.class.php:1602
+#: Certman.class.php:1665
 msgid "Certificate Expired!"
 msgstr ""
 
@@ -140,9 +152,19 @@ msgstr ""
 msgid "Certificate List"
 msgstr ""
 
-#: Console/Certman.class.php:25 views/overview.php:7
+#: Console/Certman.class.php:25 certman.i18n.php:10 views/overview.php:7
 msgid "Certificate Management"
 msgstr "証明書の管理"
+
+#: certman.i18n.php:4 certman.i18n.php:14
+msgid "Certificate Manager"
+msgstr ""
+
+#: certman.i18n.php:8
+msgid ""
+"Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
+"WebRTC and secure traffic)"
+msgstr ""
 
 #: views/overview.php:16
 msgid ""
@@ -168,7 +190,7 @@ msgstr ""
 msgid "Certificate Type"
 msgstr ""
 
-#: Certman.class.php:1262
+#: Certman.class.php:1325
 msgid "Certificate is empty"
 msgstr ""
 
@@ -245,15 +267,15 @@ msgstr ""
 msgid "DNS name or your IP address"
 msgstr ""
 
-#: functions.inc/hook_core.php:120
+#: functions.inc/hook_core.php:161
 msgid "DTLS Rekey Interval"
 msgstr ""
 
-#: functions.inc/hook_core.php:106
+#: functions.inc/hook_core.php:147
 msgid "DTLS Setup"
 msgstr ""
 
-#: functions.inc/hook_core.php:88
+#: functions.inc/hook_core.php:129
 msgid "DTLS Verify"
 msgstr ""
 
@@ -313,11 +335,11 @@ msgstr ""
 msgid "Edit Let's Encrypt Certificate"
 msgstr ""
 
-#: functions.inc/hook_core.php:60
+#: functions.inc/hook_core.php:80
 msgid "Enable DTLS"
 msgstr ""
 
-#: functions.inc/hook_core.php:61
+#: functions.inc/hook_core.php:81
 msgid "Enable or disable DTLS-SRTP support"
 msgstr ""
 
@@ -399,7 +421,7 @@ msgstr ""
 msgid "Import any unmanaged certificates in %s"
 msgstr ""
 
-#: Certman.class.php:1285 Certman.class.php:1289
+#: Certman.class.php:1348 Certman.class.php:1352
 msgid "Imported from file system"
 msgstr ""
 
@@ -407,7 +429,7 @@ msgstr ""
 msgid "Information"
 msgstr ""
 
-#: functions.inc/hook_core.php:121
+#: functions.inc/hook_core.php:162
 msgid ""
 "Interval at which to renegotiate the TLS session and rekey the SRTP session. "
 "If this is not set or the value provided is 0 rekeying will be disabled"
@@ -425,11 +447,11 @@ msgstr ""
 msgid "Key does not match certificate after password removal"
 msgstr ""
 
-#: Certman.class.php:1231
+#: Certman.class.php:1294
 msgid "Key is empty"
 msgstr ""
 
-#: Certman.class.php:1241
+#: Certman.class.php:1304
 msgid "Key is password protected or malformed"
 msgstr ""
 
@@ -675,7 +697,7 @@ msgstr ""
 msgid "That is not a valid ID"
 msgstr ""
 
-#: functions.inc/hook_core.php:76
+#: functions.inc/hook_core.php:117
 msgid "The Certificate to use from Certificate Manager"
 msgstr ""
 
@@ -805,20 +827,20 @@ msgstr ""
 msgid "Unable to read key. Is it password protected?"
 msgstr ""
 
-#: Certman.class.php:1199
+#: Certman.class.php:1262
 #, php-format
 msgid "Unable to remove %s"
 msgstr ""
 
-#: Certman.class.php:1321
+#: Certman.class.php:1384
 msgid "Unable to remove ca.cfg"
 msgstr ""
 
-#: Certman.class.php:1316
+#: Certman.class.php:1379
 msgid "Unable to remove ca.crt"
 msgstr ""
 
-#: Certman.class.php:1311
+#: Certman.class.php:1374
 msgid "Unable to remove ca.key"
 msgstr ""
 
@@ -830,7 +852,7 @@ msgstr ""
 msgid "Unable to remove the Certificate Signing Request"
 msgstr ""
 
-#: Certman.class.php:1326
+#: Certman.class.php:1389
 msgid "Unable to remove tmp.cfg"
 msgstr ""
 
@@ -839,7 +861,7 @@ msgstr ""
 msgid "Unable to write to %s"
 msgstr ""
 
-#: Certman.class.php:1592
+#: Certman.class.php:1655
 msgid "Unknown Expiration"
 msgstr ""
 
@@ -884,7 +906,7 @@ msgstr ""
 msgid "Use --import instead"
 msgstr ""
 
-#: functions.inc/hook_core.php:75
+#: functions.inc/hook_core.php:116
 msgid "Use Certificate"
 msgstr ""
 
@@ -892,7 +914,11 @@ msgstr ""
 msgid "Valid Until"
 msgstr ""
 
-#: functions.inc/hook_core.php:89
+#: certman.i18n.php:12
+msgid "Validity period of the certificate (in days)"
+msgstr ""
+
+#: functions.inc/hook_core.php:130
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
 "\t\t<ul>\n"
@@ -911,7 +937,7 @@ msgstr ""
 msgid "What is Certificate Manager?"
 msgstr ""
 
-#: functions.inc/hook_core.php:107
+#: functions.inc/hook_core.php:148
 msgid ""
 "Whether we are willing to accept connections, connect to the other party, or "
 "both.\n"
@@ -924,6 +950,10 @@ msgid ""
 "\t\t\t</ul>"
 msgstr ""
 
+#: certman.i18n.php:16
+msgid "You can change the number of days the certificate is valid."
+msgstr ""
+
 #: views/up.php:215
 msgid ""
 "Your CA may also require a Trusted Chain to be installed. This will be "
@@ -932,9 +962,6 @@ msgid ""
 "below. This may be left blank, or updated at any time. They can be added in "
 "any order."
 msgstr ""
-
-#~ msgid "Admin"
-#~ msgstr "アドミン"
 
 #~ msgid "No"
 #~ msgstr "いいえ"

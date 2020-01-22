@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-17 17:25+0530\n"
+"POT-Creation-Date: 2020-01-22 06:34+0000\n"
 "PO-Revision-Date: 2016-12-11 12:44+0200\n"
 "Last-Translator: Ernesto <ecasas@sangoma.com>\n"
 "Language-Team: Spanish <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2.4\n"
 
-#: Certman.class.php:1083 Certman.class.php:1101
+#: Certman.class.php:1146 Certman.class.php:1164
 #, php-format
 msgid "%s already exists!"
 msgstr ""
@@ -31,7 +31,7 @@ msgstr ""
 msgid "%s is not supported at this time"
 msgstr ""
 
-#: Certman.class.php:1607
+#: Certman.class.php:1670
 #, php-format
 msgid "(%s days)"
 msgstr ""
@@ -100,6 +100,10 @@ msgstr ""
 "registrarse para un certificado GRATIS desde el  proyecto Let's Encrypt. Más "
 "información %s"
 
+#: certman.i18n.php:6
+msgid "Admin"
+msgstr "Administ"
+
 #: views/up.php:206
 msgid ""
 "After you have submitted a CSR to a CA, they will sign it, after validation, "
@@ -117,6 +121,14 @@ msgstr ""
 "Esta seguro que quieres que este certificado sea el \"por defecto\" del "
 "sistema?"
 
+#: functions.inc/hook_core.php:96
+msgid "Auto Generate Certificate"
+msgstr ""
+
+#: functions.inc/hook_core.php:97
+msgid "Automatically generate an ephemeral X.509 certificate"
+msgstr ""
+
 #: Console/Certman.class.php:122
 msgid "Base Name"
 msgstr "Nombre Base"
@@ -133,7 +145,7 @@ msgstr ""
 msgid "Certificate"
 msgstr "Certificado"
 
-#: Certman.class.php:1500 Certman.class.php:1515 Certman.class.php:1524
+#: Certman.class.php:1563 Certman.class.php:1578 Certman.class.php:1587
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr "Certificado %s no puede leerse! No se puede continuar!"
@@ -146,7 +158,7 @@ msgstr "Autoridad Certificadora"
 msgid "Certificate Authority to Reference"
 msgstr "Autoridad Certificadora a Referenciar"
 
-#: Certman.class.php:1602
+#: Certman.class.php:1665
 msgid "Certificate Expired!"
 msgstr ""
 
@@ -158,9 +170,21 @@ msgstr ""
 msgid "Certificate List"
 msgstr "Lista de certificados"
 
-#: Console/Certman.class.php:25 views/overview.php:7
+#: Console/Certman.class.php:25 certman.i18n.php:10 views/overview.php:7
 msgid "Certificate Management"
 msgstr "Gestión Certificado"
+
+#: certman.i18n.php:4 certman.i18n.php:14
+msgid "Certificate Manager"
+msgstr "Administrador de certificados"
+
+#: certman.i18n.php:8
+msgid ""
+"Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
+"WebRTC and secure traffic)"
+msgstr ""
+"Gestor de Certificado para Asterisk. Usado para TLS, conexión DTLS (piense "
+"en WebRTC y trafico seguro)"
 
 #: views/overview.php:16
 msgid ""
@@ -190,7 +214,7 @@ msgstr ""
 msgid "Certificate Type"
 msgstr ""
 
-#: Certman.class.php:1262
+#: Certman.class.php:1325
 msgid "Certificate is empty"
 msgstr "Certificado esta vacío"
 
@@ -273,15 +297,15 @@ msgstr "País"
 msgid "DNS name or your IP address"
 msgstr "Nombre DNS o su dirección IP"
 
-#: functions.inc/hook_core.php:120
+#: functions.inc/hook_core.php:161
 msgid "DTLS Rekey Interval"
 msgstr "Intervalo Rekey DTLS"
 
-#: functions.inc/hook_core.php:106
+#: functions.inc/hook_core.php:147
 msgid "DTLS Setup"
 msgstr "Configuración DTLS"
 
-#: functions.inc/hook_core.php:88
+#: functions.inc/hook_core.php:129
 msgid "DTLS Verify"
 msgstr "Verificar DTLS"
 
@@ -343,11 +367,11 @@ msgstr "Editar la configuración de la autoridad del certificado"
 msgid "Edit Let's Encrypt Certificate"
 msgstr "Editar Certificado Let's Encrypt"
 
-#: functions.inc/hook_core.php:60
+#: functions.inc/hook_core.php:80
 msgid "Enable DTLS"
 msgstr "Habilitar DTLS"
 
-#: functions.inc/hook_core.php:61
+#: functions.inc/hook_core.php:81
 msgid "Enable or disable DTLS-SRTP support"
 msgstr "Habilitar o deshabilitar soporte a DTLS-SRTP"
 
@@ -434,7 +458,7 @@ msgstr "Importar Localmente"
 msgid "Import any unmanaged certificates in %s"
 msgstr ""
 
-#: Certman.class.php:1285 Certman.class.php:1289
+#: Certman.class.php:1348 Certman.class.php:1352
 msgid "Imported from file system"
 msgstr "Importado del sistema de archivos"
 
@@ -442,7 +466,7 @@ msgstr "Importado del sistema de archivos"
 msgid "Information"
 msgstr "Información"
 
-#: functions.inc/hook_core.php:121
+#: functions.inc/hook_core.php:162
 msgid ""
 "Interval at which to renegotiate the TLS session and rekey the SRTP session. "
 "If this is not set or the value provided is 0 rekeying will be disabled"
@@ -463,11 +487,11 @@ msgstr "Llave no coincide con el certificado"
 msgid "Key does not match certificate after password removal"
 msgstr "Llave no coincide con el certificado luego de remover la contraseña"
 
-#: Certman.class.php:1231
+#: Certman.class.php:1294
 msgid "Key is empty"
 msgstr "Llave esta vacía"
 
-#: Certman.class.php:1241
+#: Certman.class.php:1304
 msgid "Key is password protected or malformed"
 msgstr "La llave esta protegida por Contraseña o esta mal-formada"
 
@@ -731,7 +755,7 @@ msgstr "Las Políticas de certificados"
 msgid "That is not a valid ID"
 msgstr "Este no es un ID Valido"
 
-#: functions.inc/hook_core.php:76
+#: functions.inc/hook_core.php:117
 msgid "The Certificate to use from Certificate Manager"
 msgstr "Certificado a usar desde el Gestor de Certificados"
 
@@ -876,20 +900,20 @@ msgstr ""
 msgid "Unable to read key. Is it password protected?"
 msgstr "Incapaz de leer llave. Esta protegida por contraseña?"
 
-#: Certman.class.php:1199
+#: Certman.class.php:1262
 #, php-format
 msgid "Unable to remove %s"
 msgstr "No se puede eliminar %s"
 
-#: Certman.class.php:1321
+#: Certman.class.php:1384
 msgid "Unable to remove ca.cfg"
 msgstr "No se puede eliminar ca.cfg"
 
-#: Certman.class.php:1316
+#: Certman.class.php:1379
 msgid "Unable to remove ca.crt"
 msgstr "Incapaz de remover ca.crt"
 
-#: Certman.class.php:1311
+#: Certman.class.php:1374
 msgid "Unable to remove ca.key"
 msgstr "Incapaz de remover ca.key"
 
@@ -901,7 +925,7 @@ msgstr "Incapaz de remover Certificado de Autoridad"
 msgid "Unable to remove the Certificate Signing Request"
 msgstr "Incapaz de remover la Solicitud de Firma de Certificado"
 
-#: Certman.class.php:1326
+#: Certman.class.php:1389
 msgid "Unable to remove tmp.cfg"
 msgstr "No se puede eliminar tmp.cfg"
 
@@ -910,7 +934,7 @@ msgstr "No se puede eliminar tmp.cfg"
 msgid "Unable to write to %s"
 msgstr "Incapaz de escribir en %s"
 
-#: Certman.class.php:1592
+#: Certman.class.php:1655
 msgid "Unknown Expiration"
 msgstr ""
 
@@ -955,7 +979,7 @@ msgstr "Subido:"
 msgid "Use --import instead"
 msgstr ""
 
-#: functions.inc/hook_core.php:75
+#: functions.inc/hook_core.php:116
 msgid "Use Certificate"
 msgstr "Use Certificado"
 
@@ -963,7 +987,11 @@ msgstr "Use Certificado"
 msgid "Valid Until"
 msgstr "Unidad Valida"
 
-#: functions.inc/hook_core.php:89
+#: certman.i18n.php:12
+msgid "Validity period of the certificate (in days)"
+msgstr ""
+
+#: functions.inc/hook_core.php:130
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
 "\t\t<ul>\n"
@@ -994,7 +1022,7 @@ msgstr ""
 msgid "What is Certificate Manager?"
 msgstr "Que es Gestor de Certificado?"
 
-#: functions.inc/hook_core.php:107
+#: functions.inc/hook_core.php:148
 msgid ""
 "Whether we are willing to accept connections, connect to the other party, or "
 "both.\n"
@@ -1016,6 +1044,10 @@ msgstr ""
 "→→→ <li> actpass (vamos a hacer las dos cosas) </li> ↵\n"
 "→→→ </ul>"
 
+#: certman.i18n.php:16
+msgid "You can change the number of days the certificate is valid."
+msgstr ""
+
 #: views/up.php:215
 msgid ""
 "Your CA may also require a Trusted Chain to be installed. This will be "
@@ -1029,19 +1061,6 @@ msgstr ""
 "archivos de certificados. Pegar el contenido de todos los archivos de la "
 "cadena, en su caso, en la casilla inferior. Esto puede dejarse en blanco, o "
 "actualizar en cualquier momento. Se pueden añadir en cualquier orden."
-
-#~ msgid "Admin"
-#~ msgstr "Administ"
-
-#~ msgid "Certificate Manager"
-#~ msgstr "Administrador de certificados"
-
-#~ msgid ""
-#~ "Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
-#~ "WebRTC and secure traffic)"
-#~ msgstr ""
-#~ "Gestor de Certificado para Asterisk. Usado para TLS, conexión DTLS "
-#~ "(piense en WebRTC y trafico seguro)"
 
 #~ msgid ""
 #~ "No Certificates to import. Try placing a certificate (<name>.crt) and its "
