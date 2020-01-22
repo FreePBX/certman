@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-10 19:59-0400\n"
+"POT-Creation-Date: 2020-01-22 21:58+0000\n"
 "PO-Revision-Date: 2017-12-11 22:57+0200\n"
 "Last-Translator: JCattan <jeremie@famillecattan.com>\n"
 "Language-Team: French <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 2.4\n"
 
-#: Certman.class.php:1079 Certman.class.php:1097
+#: Certman.class.php:1140 Certman.class.php:1158
 #, php-format
 msgid "%s already exists!"
 msgstr "%s existe déjà !"
@@ -31,7 +31,7 @@ msgstr "%s existe déjà !"
 msgid "%s is not supported at this time"
 msgstr ""
 
-#: Certman.class.php:1601
+#: Certman.class.php:1662
 #, php-format
 msgid "(%s days)"
 msgstr "(%s jours)"
@@ -110,6 +110,14 @@ msgstr ""
 msgid "Are you sure you want to make this certificate the system default?"
 msgstr ""
 
+#: functions.inc/hook_core.php:96
+msgid "Auto Generate Certificate"
+msgstr ""
+
+#: functions.inc/hook_core.php:97
+msgid "Automatically generate an ephemeral X.509 certificate"
+msgstr ""
+
 #: Console/Certman.class.php:122
 msgid "Base Name"
 msgstr ""
@@ -122,7 +130,7 @@ msgstr ""
 msgid "Certificate"
 msgstr "Certificat"
 
-#: Certman.class.php:1488 Certman.class.php:1503 Certman.class.php:1512
+#: Certman.class.php:1549 Certman.class.php:1564 Certman.class.php:1573
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr "Le certificat %s n'est pas lisible ! Impossible de continuer !"
@@ -135,7 +143,7 @@ msgstr "Autorité de certification"
 msgid "Certificate Authority to Reference"
 msgstr ""
 
-#: Certman.class.php:1596
+#: Certman.class.php:1657
 msgid "Certificate Expired!"
 msgstr "Le certificat est expiré !"
 
@@ -151,7 +159,7 @@ msgstr "Liste de certificats"
 msgid "Certificate Management"
 msgstr "Gestion des certificats"
 
-#: certman.i18n.php:4
+#: certman.i18n.php:4 certman.i18n.php:14
 msgid "Certificate Manager"
 msgstr "Gestionnaire des certificats"
 
@@ -185,7 +193,7 @@ msgstr ""
 msgid "Certificate Type"
 msgstr ""
 
-#: Certman.class.php:1254
+#: Certman.class.php:1315
 msgid "Certificate is empty"
 msgstr "Le certificat est vide"
 
@@ -262,15 +270,15 @@ msgstr "Pays"
 msgid "DNS name or your IP address"
 msgstr ""
 
-#: functions.inc/hook_core.php:120
+#: functions.inc/hook_core.php:161
 msgid "DTLS Rekey Interval"
 msgstr ""
 
-#: functions.inc/hook_core.php:106
+#: functions.inc/hook_core.php:147
 msgid "DTLS Setup"
 msgstr ""
 
-#: functions.inc/hook_core.php:88
+#: functions.inc/hook_core.php:129
 msgid "DTLS Verify"
 msgstr ""
 
@@ -330,11 +338,11 @@ msgstr ""
 msgid "Edit Let's Encrypt Certificate"
 msgstr ""
 
-#: functions.inc/hook_core.php:60
+#: functions.inc/hook_core.php:80
 msgid "Enable DTLS"
 msgstr ""
 
-#: functions.inc/hook_core.php:61
+#: functions.inc/hook_core.php:81
 msgid "Enable or disable DTLS-SRTP support"
 msgstr ""
 
@@ -416,7 +424,7 @@ msgstr ""
 msgid "Import any unmanaged certificates in %s"
 msgstr ""
 
-#: Certman.class.php:1277 Certman.class.php:1281
+#: Certman.class.php:1338 Certman.class.php:1342
 msgid "Imported from file system"
 msgstr ""
 
@@ -424,7 +432,7 @@ msgstr ""
 msgid "Information"
 msgstr ""
 
-#: functions.inc/hook_core.php:121
+#: functions.inc/hook_core.php:162
 msgid ""
 "Interval at which to renegotiate the TLS session and rekey the SRTP session. "
 "If this is not set or the value provided is 0 rekeying will be disabled"
@@ -442,11 +450,11 @@ msgstr ""
 msgid "Key does not match certificate after password removal"
 msgstr ""
 
-#: Certman.class.php:1223
+#: Certman.class.php:1284
 msgid "Key is empty"
 msgstr ""
 
-#: Certman.class.php:1233
+#: Certman.class.php:1294
 msgid "Key is password protected or malformed"
 msgstr ""
 
@@ -692,7 +700,7 @@ msgstr ""
 msgid "That is not a valid ID"
 msgstr ""
 
-#: functions.inc/hook_core.php:76
+#: functions.inc/hook_core.php:117
 msgid "The Certificate to use from Certificate Manager"
 msgstr "Le certificat à utiliser du gestionnaire de certificat"
 
@@ -822,20 +830,20 @@ msgstr ""
 msgid "Unable to read key. Is it password protected?"
 msgstr ""
 
-#: Certman.class.php:1195
+#: Certman.class.php:1256
 #, php-format
 msgid "Unable to remove %s"
 msgstr ""
 
-#: Certman.class.php:1313
+#: Certman.class.php:1374
 msgid "Unable to remove ca.cfg"
 msgstr ""
 
-#: Certman.class.php:1308
+#: Certman.class.php:1369
 msgid "Unable to remove ca.crt"
 msgstr ""
 
-#: Certman.class.php:1303
+#: Certman.class.php:1364
 msgid "Unable to remove ca.key"
 msgstr ""
 
@@ -847,7 +855,7 @@ msgstr ""
 msgid "Unable to remove the Certificate Signing Request"
 msgstr ""
 
-#: Certman.class.php:1318
+#: Certman.class.php:1379
 msgid "Unable to remove tmp.cfg"
 msgstr ""
 
@@ -856,7 +864,7 @@ msgstr ""
 msgid "Unable to write to %s"
 msgstr ""
 
-#: Certman.class.php:1586
+#: Certman.class.php:1647
 msgid "Unknown Expiration"
 msgstr ""
 
@@ -901,7 +909,7 @@ msgstr ""
 msgid "Use --import instead"
 msgstr ""
 
-#: functions.inc/hook_core.php:75
+#: functions.inc/hook_core.php:116
 msgid "Use Certificate"
 msgstr "Utiliser le certificat"
 
@@ -909,7 +917,11 @@ msgstr "Utiliser le certificat"
 msgid "Valid Until"
 msgstr ""
 
-#: functions.inc/hook_core.php:89
+#: certman.i18n.php:12
+msgid "Validity period of the certificate (in days)"
+msgstr ""
+
+#: functions.inc/hook_core.php:130
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
 "\t\t<ul>\n"
@@ -928,7 +940,7 @@ msgstr ""
 msgid "What is Certificate Manager?"
 msgstr ""
 
-#: functions.inc/hook_core.php:107
+#: functions.inc/hook_core.php:148
 msgid ""
 "Whether we are willing to accept connections, connect to the other party, or "
 "both.\n"
@@ -939,6 +951,10 @@ msgid ""
 "\t\t\t<li>passive (we want to accept connections only)</li>\n"
 "\t\t\t<li>actpass (we will do both)</li>\n"
 "\t\t\t</ul>"
+msgstr ""
+
+#: certman.i18n.php:16
+msgid "You can change the number of days the certificate is valid."
 msgstr ""
 
 #: views/up.php:215
