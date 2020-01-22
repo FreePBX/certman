@@ -40,6 +40,26 @@ function certman_devices_configpageload() {
 	certman_configpageload('extension');
 }
 
+function certman_showPjsipDTLSAutoGenerateCertOption($extension) {
+	if(!FreePBX::CertMan()->pjsipDTLSAutoGenerateCertSupported()) {
+		return false;
+	}
+
+	// check if we are setting up a new pjsip extension
+	$tech = !empty($_REQUEST['tech_hardware']) ? $_REQUEST['tech_hardware'] : null;
+	if ($tech === 'pjsip_generic') {
+		return true;
+	}
+
+	// check the tech on the current device if it exists
+	$currentDevice = \FreePBX::Core()->getDevice($extension);
+	if (!empty($currentDevice['tech']) && $currentDevice['tech'] === 'pjsip') {
+		return true;
+	}
+
+	return false;
+}
+
 function certman_configpageload($mode) {
 	global $amp_conf;
 	global $currentcomponent;
@@ -50,7 +70,7 @@ function certman_configpageload($mode) {
 	$category = "advanced";
 
 	$settings = FreePBX::Certman()->getDTLSOptions($extdisplay);
-	$currentcomponent->addguielem($section, new gui_selectbox(
+	$currentcomponent->addguielem($section, new gui_radio(
 		'dtls_enable',
 		array(
 			array("text" => "No", "value" => "no"),
@@ -59,8 +79,29 @@ function certman_configpageload($mode) {
 		$settings['enable'],
 		_('Enable DTLS'),
 		_('Enable or disable DTLS-SRTP support'),
+		false,
+		'',
+		'',
 		false),6,null,$category
 	);
+
+	if (certman_showPjsipDTLSAutoGenerateCertOption($extdisplay)) {
+		$currentcomponent->addguielem($section, new gui_radio(
+			'dtls_auto_generate_cert',
+			array(
+				array("text" => "No", "value" => 0),
+				array("text" => "Yes","value" => 1)
+			),
+			$settings['auto_generate_cert'],
+			_('Auto Generate Certificate'),
+			_('Automatically generate an ephemeral X.509 certificate'),
+			false,
+			'',
+			'',
+			false),6,null,$category
+		);
+	}
+
 	$certs = array();
 	foreach(FreePBX::Certman()->getAllManagedCertificates() as $cert) {
 		$certs[] = array(
