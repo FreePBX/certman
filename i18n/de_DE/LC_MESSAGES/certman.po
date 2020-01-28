@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-22 21:58+0000\n"
-"PO-Revision-Date: 2019-04-09 01:00+0000\n"
+"PO-Revision-Date: 2020-01-28 09:44+0000\n"
 "Last-Translator: florian alberts <alberts@ar-systems.de>\n"
 "Language-Team: German <http://*/projects/freepbx/certman/de/>\n"
 "Language: de_DE\n"
@@ -119,11 +119,11 @@ msgstr "Möchten Sie dieses Zertifikat wirklich zum Systemstandard machen?"
 
 #: functions.inc/hook_core.php:96
 msgid "Auto Generate Certificate"
-msgstr ""
+msgstr "Zertifikate automatisch generieren"
 
 #: functions.inc/hook_core.php:97
 msgid "Automatically generate an ephemeral X.509 certificate"
-msgstr ""
+msgstr "Generiere automatisch ein kurzlebiges X.509-Zertifikat"
 
 #: Console/Certman.class.php:122
 msgid "Base Name"
@@ -1002,7 +1002,7 @@ msgstr "Gültig bis"
 
 #: certman.i18n.php:12
 msgid "Validity period of the certificate (in days)"
-msgstr ""
+msgstr "Gültigkeitsdauer des Zertifikats (in Tagen)"
 
 #: functions.inc/hook_core.php:130
 msgid ""
@@ -1059,6 +1059,7 @@ msgstr ""
 #: certman.i18n.php:16
 msgid "You can change the number of days the certificate is valid."
 msgstr ""
+"Sie können die Anzahl der Tage ändern, an denen das Zertifikat gültig ist."
 
 #: views/up.php:215
 msgid ""
