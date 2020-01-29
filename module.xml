@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>15.0.21</version>
+	<version>16.0.1</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -13,31 +13,12 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
-		*15.0.21* Fixed a migraiton issue related to DTLS autogenerate cert
-		*15.0.20* Add support for DTLS autogenerate cert 
-		*15.0.19* FREEPBX-20882 Error on Import Locally 
-		*15.0.18* FREEI-974 certificates not included in freepbx 15 legacy restore 
-		*15.0.17* FREEI-1044-unit-tests-and-stuff: Unit tests for DTLS support
-		*15.0.16* FREEI-713 Add: Validity period of the certificate (in days) in Advanced Settings 
-		*15.0.15* FREEPBX-20719 Let's Encrypt ACMEv1 no longer working as of NOV 8 2019 - Breaking LE Cert Creation and Renewal 
-		*15.0.14* FREEPBX-20493 Legacy restore message to show in Warning 
-		*15.0.13* Related to FREEPBX-20414: removed $jobid from runRestore() 
-		*15.0.12* FREEPBX-20493 Legacy backup restoring Certificates. 
-		*15.0.11* Use lazy loading console commands
-		*15.0.10* Fix issue with chgrp
-		*15.0.9* FREEI-405 whoops error issue fix
-		*15.0.8* fixing legacy restore
-		*15.0.7* Fix more backup issues in 15
-		*15.0.6* Fixing problems in Backup 15
-		*15.0.5* Add backup / restore
-		*15.0.4* FREEPBX-18181 fwconsole ce --list fails with undefined helper
-		*15.0.3* FREEPBX-18110 do not try to create new log class
-		*15.0.2* Packaging of ver 15.0.2
-		*15.0.1* Fork from 14.0.2.1, Add Backup;
+		*16.0.1alpha* 16.0.1 alpha release
+
 	</changelog>
 	<category>Admin</category>
 	<supported>
-		<version>15.0</version>
+		<version>16.0</version>
 	</supported>
 	<hooks>
 		<framework class="Chown" namespace="FreePBX\Console\Command">
