@@ -947,12 +947,14 @@ class Certman implements BMO {
 			? $data['auto_generate_cert'] : false;
 
 		if ($autoGenerateCert && !$this->pjsipDTLSAutoGenerateCertSupported()) {
-			throw new \Exception('DTLS autogenerate certificate option not available');
+			dbug('DTLS autogenerate certificate option not available');
+			return;
 		}
 
 		$certificate = empty($data['certificate']) ? null : $data['certificate'];
 		if (!$autoGenerateCert && empty($certificate)) {
-			throw new \Exception('DTLS certificate file not specified');
+			dbug('DTLS certificate file not specified');
+			return;
 		}
 
 		$sql = "REPLACE INTO certman_mapping (

@@ -23,7 +23,6 @@ class Backup Extends Base\BackupBase{
   }
   
   public function buildFileStructure(){
-    dbug("HERE");
     $keyDir = $this->certman->PKCS->getKeysLocation();
     $this->dirs[] = $keyDir;
     $directory = new RecursiveDirectoryIterator($keyDir);
@@ -36,7 +35,6 @@ class Backup Extends Base\BackupBase{
       $this->addFile($fileObj->getBasename(), $fileObj->getPath(), '', $fileObj->getExtension());
     }
     $this->dirs = array_unique($this->dirs);
-    dbug($this->dirs);
     return $this;
   }
 }
