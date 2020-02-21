@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-22 06:34+0000\n"
+"POT-Creation-Date: 2020-02-21 09:22+0530\n"
 "PO-Revision-Date: 2016-12-11 12:44+0200\n"
 "Last-Translator: Ernesto <ecasas@sangoma.com>\n"
 "Language-Team: Spanish <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2.4\n"
 
-#: Certman.class.php:1146 Certman.class.php:1164
+#: Certman.class.php:1148 Certman.class.php:1166
 #, php-format
 msgid "%s already exists!"
 msgstr ""
@@ -31,7 +31,7 @@ msgstr ""
 msgid "%s is not supported at this time"
 msgstr ""
 
-#: Certman.class.php:1670
+#: Certman.class.php:1672
 #, php-format
 msgid "(%s days)"
 msgstr ""
@@ -145,7 +145,7 @@ msgstr ""
 msgid "Certificate"
 msgstr "Certificado"
 
-#: Certman.class.php:1563 Certman.class.php:1578 Certman.class.php:1587
+#: Certman.class.php:1565 Certman.class.php:1580 Certman.class.php:1589
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr "Certificado %s no puede leerse! No se puede continuar!"
@@ -158,7 +158,7 @@ msgstr "Autoridad Certificadora"
 msgid "Certificate Authority to Reference"
 msgstr "Autoridad Certificadora a Referenciar"
 
-#: Certman.class.php:1665
+#: Certman.class.php:1667
 msgid "Certificate Expired!"
 msgstr ""
 
@@ -174,7 +174,7 @@ msgstr "Lista de certificados"
 msgid "Certificate Management"
 msgstr "Gestión Certificado"
 
-#: certman.i18n.php:4 certman.i18n.php:14
+#: certman.i18n.php:4
 msgid "Certificate Manager"
 msgstr "Administrador de certificados"
 
@@ -214,7 +214,7 @@ msgstr ""
 msgid "Certificate Type"
 msgstr ""
 
-#: Certman.class.php:1325
+#: Certman.class.php:1327
 msgid "Certificate is empty"
 msgstr "Certificado esta vacío"
 
@@ -458,7 +458,7 @@ msgstr "Importar Localmente"
 msgid "Import any unmanaged certificates in %s"
 msgstr ""
 
-#: Certman.class.php:1348 Certman.class.php:1352
+#: Certman.class.php:1350 Certman.class.php:1354
 msgid "Imported from file system"
 msgstr "Importado del sistema de archivos"
 
@@ -487,11 +487,11 @@ msgstr "Llave no coincide con el certificado"
 msgid "Key does not match certificate after password removal"
 msgstr "Llave no coincide con el certificado luego de remover la contraseña"
 
-#: Certman.class.php:1294
+#: Certman.class.php:1296
 msgid "Key is empty"
 msgstr "Llave esta vacía"
 
-#: Certman.class.php:1304
+#: Certman.class.php:1306
 msgid "Key is password protected or malformed"
 msgstr "La llave esta protegida por Contraseña o esta mal-formada"
 
@@ -900,20 +900,20 @@ msgstr ""
 msgid "Unable to read key. Is it password protected?"
 msgstr "Incapaz de leer llave. Esta protegida por contraseña?"
 
-#: Certman.class.php:1262
+#: Certman.class.php:1264
 #, php-format
 msgid "Unable to remove %s"
 msgstr "No se puede eliminar %s"
 
-#: Certman.class.php:1384
+#: Certman.class.php:1386
 msgid "Unable to remove ca.cfg"
 msgstr "No se puede eliminar ca.cfg"
 
-#: Certman.class.php:1379
+#: Certman.class.php:1381
 msgid "Unable to remove ca.crt"
 msgstr "Incapaz de remover ca.crt"
 
-#: Certman.class.php:1374
+#: Certman.class.php:1376
 msgid "Unable to remove ca.key"
 msgstr "Incapaz de remover ca.key"
 
@@ -925,7 +925,7 @@ msgstr "Incapaz de remover Certificado de Autoridad"
 msgid "Unable to remove the Certificate Signing Request"
 msgstr "Incapaz de remover la Solicitud de Firma de Certificado"
 
-#: Certman.class.php:1389
+#: Certman.class.php:1391
 msgid "Unable to remove tmp.cfg"
 msgstr "No se puede eliminar tmp.cfg"
 
@@ -934,7 +934,7 @@ msgstr "No se puede eliminar tmp.cfg"
 msgid "Unable to write to %s"
 msgstr "Incapaz de escribir en %s"
 
-#: Certman.class.php:1655
+#: Certman.class.php:1657
 msgid "Unknown Expiration"
 msgstr ""
 
@@ -986,10 +986,6 @@ msgstr "Use Certificado"
 #: views/le.php:90 views/ss.php:62 views/up.php:54
 msgid "Valid Until"
 msgstr "Unidad Valida"
-
-#: certman.i18n.php:12
-msgid "Validity period of the certificate (in days)"
-msgstr ""
 
 #: functions.inc/hook_core.php:130
 msgid ""
@@ -1043,10 +1039,6 @@ msgstr ""
 "→→→ <li> pasiva (queremos aceptar sólo conexiones) </li> ↵\n"
 "→→→ <li> actpass (vamos a hacer las dos cosas) </li> ↵\n"
 "→→→ </ul>"
-
-#: certman.i18n.php:16
-msgid "You can change the number of days the certificate is valid."
-msgstr ""
 
 #: views/up.php:215
 msgid ""
