@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>14.0.7</version>
+	<version>14.0.8</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -13,6 +13,7 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
+		*14.0.8* FREEPBX-21282 
 		*14.0.7* FREEI-995 Add support for DTLS autogenerate cert
 		*14.0.6* FREEI-713 Add: Validity period of the certificate (in days) in Advanced Settings 
 		*14.0.5* FREEPBX-20719 Let's Encrypt ACMEv1 no longer working as of NOV 8 2019 - Breaking LE Cert Creation and Renewal 

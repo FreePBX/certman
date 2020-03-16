@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-22 21:58+0000\n"
+"POT-Creation-Date: 2020-03-16 15:04+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -161,7 +161,6 @@ msgid "Certificate Management"
 msgstr ""
 
 #: certman.i18n.php:4
-#: certman.i18n.php:14
 msgid "Certificate Manager"
 msgstr ""
 
@@ -971,10 +970,6 @@ msgstr ""
 msgid "Valid Until"
 msgstr ""
 
-#: certman.i18n.php:12
-msgid "Validity period of the certificate (in days)"
-msgstr ""
-
 #: functions.inc/hook_core.php:130
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
@@ -1005,10 +1000,6 @@ msgid ""
 "\t\t\t<li>passive (we want to accept connections only)</li>\n"
 "\t\t\t<li>actpass (we will do both)</li>\n"
 "\t\t\t</ul>"
-msgstr ""
-
-#: certman.i18n.php:16
-msgid "You can change the number of days the certificate is valid."
 msgstr ""
 
 #: views/up.php:215

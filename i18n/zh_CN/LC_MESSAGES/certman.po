@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreePBX 2.5 Chinese Translation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-22 21:58+0000\n"
+"POT-Creation-Date: 2020-03-16 15:04+0530\n"
 "PO-Revision-Date: 2018-03-14 14:52+0200\n"
 "Last-Translator: james <zhulizhong@gmail.com>\n"
 "Language-Team: Simplified Chinese <http://weblate.freepbx.org/projects/"
@@ -152,7 +152,7 @@ msgstr ""
 msgid "Certificate Management"
 msgstr "证书管理"
 
-#: certman.i18n.php:4 certman.i18n.php:14
+#: certman.i18n.php:4
 msgid "Certificate Manager"
 msgstr ""
 
@@ -906,10 +906,6 @@ msgstr "使用证书"
 msgid "Valid Until"
 msgstr ""
 
-#: certman.i18n.php:12
-msgid "Validity period of the certificate (in days)"
-msgstr ""
-
 #: functions.inc/hook_core.php:130
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
@@ -940,10 +936,6 @@ msgid ""
 "\t\t\t<li>passive (we want to accept connections only)</li>\n"
 "\t\t\t<li>actpass (we will do both)</li>\n"
 "\t\t\t</ul>"
-msgstr ""
-
-#: certman.i18n.php:16
-msgid "You can change the number of days the certificate is valid."
 msgstr ""
 
 #: views/up.php:215

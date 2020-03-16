@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-22 21:58+0000\n"
+"POT-Creation-Date: 2020-03-16 15:04+0530\n"
 "PO-Revision-Date: 2017-03-23 13:47+0200\n"
 "Last-Translator: Kingvoice <suporte@kingvoice.com.br>\n"
 "Language-Team: Portuguese (Brazil) <http://weblate.freepbx.org/projects/"
@@ -168,7 +168,7 @@ msgstr "Lista de Certificados"
 msgid "Certificate Management"
 msgstr "Gerenciamento de Certificados"
 
-#: certman.i18n.php:4 certman.i18n.php:14
+#: certman.i18n.php:4
 msgid "Certificate Manager"
 msgstr "Gerenciador de Certificado"
 
@@ -987,10 +987,6 @@ msgstr "Usar Certificado"
 msgid "Valid Until"
 msgstr "Válido Até"
 
-#: certman.i18n.php:12
-msgid "Validity period of the certificate (in days)"
-msgstr ""
-
 #: functions.inc/hook_core.php:130
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
@@ -1042,10 +1038,6 @@ msgstr ""
 "\t\t\t<li>passivo (somente aceitar conexões)</li>\n"
 "\t\t\t<li>ativo-passivo(conectar e receber conecções)</li>\n"
 "\t\t\t</ul>"
-
-#: certman.i18n.php:16
-msgid "You can change the number of days the certificate is valid."
-msgstr ""
 
 #: views/up.php:215
 msgid ""

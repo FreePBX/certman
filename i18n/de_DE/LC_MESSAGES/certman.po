@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-22 21:58+0000\n"
+"POT-Creation-Date: 2020-03-16 15:04+0530\n"
 "PO-Revision-Date: 2020-01-28 09:44+0000\n"
 "Last-Translator: florian alberts <alberts@ar-systems.de>\n"
 "Language-Team: German <http://*/projects/freepbx/certman/de/>\n"
@@ -166,7 +166,7 @@ msgstr "Zertifikatsliste"
 msgid "Certificate Management"
 msgstr "Zertifikatverwaltung"
 
-#: certman.i18n.php:4 certman.i18n.php:14
+#: certman.i18n.php:4
 msgid "Certificate Manager"
 msgstr "Zertifikatmanager"
 
@@ -1000,10 +1000,6 @@ msgstr "Zertifikat verwenden"
 msgid "Valid Until"
 msgstr "Gültig bis"
 
-#: certman.i18n.php:12
-msgid "Validity period of the certificate (in days)"
-msgstr "Gültigkeitsdauer des Zertifikats (in Tagen)"
-
 #: functions.inc/hook_core.php:130
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
@@ -1056,11 +1052,6 @@ msgstr ""
 "\t\t\t<li>actpass (ein- und ausgehende Verbindungen</li>\n"
 "\t\t\t</ul>"
 
-#: certman.i18n.php:16
-msgid "You can change the number of days the certificate is valid."
-msgstr ""
-"Sie können die Anzahl der Tage ändern, an denen das Zertifikat gültig ist."
-
 #: views/up.php:215
 msgid ""
 "Your CA may also require a Trusted Chain to be installed. This will be "
@@ -1075,6 +1066,13 @@ msgstr ""
 "vertrauenswürdigen Ketten, falls existent, in das Feld unter diesem Text. "
 "Kann man leer lassen oder irgendwann nachtragen. Die Reihenfolge spielt "
 "dabei keine Rolle."
+
+#~ msgid "Validity period of the certificate (in days)"
+#~ msgstr "Gültigkeitsdauer des Zertifikats (in Tagen)"
+
+#~ msgid "You can change the number of days the certificate is valid."
+#~ msgstr ""
+#~ "Sie können die Anzahl der Tage ändern, an denen das Zertifikat gültig ist."
 
 #~ msgid "<error>"
 #~ msgstr "<Fehler>"
