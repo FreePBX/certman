@@ -938,7 +938,7 @@ class Certman implements \BMO {
 	 */
 	public function addDTLSOptions($device, $data) {
 		$autoGenerateCert = !empty($data['auto_generate_cert']) 
-			? $data['auto_generate_cert'] : false;
+			? $data['auto_generate_cert'] : 0;
 
 		if ($autoGenerateCert && !$this->pjsipDTLSAutoGenerateCertSupported()) {
 			throw new \Exception('DTLS autogenerate certificate option not available');
