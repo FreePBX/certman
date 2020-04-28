@@ -39,74 +39,16 @@ class FirewallAPI {
 		return $this->fw;
 	}
 
-	/**
-	 * Are all the LE hosts correctly set up in firewall?
-	 *
-	 * Note this doesn't check the zone. It assumes that
-	 * if you've changed it, you know what your'e doing.
-	 * This may be a bad decision.
-	 *
-	 * @return bool
-	 */
-	public function hostsConfigured() {
-		// Just in case..
-		if (!$this->fw) {
-			return true;
-		}
-
-		// Get our lists of hosts and zones.
-		$fwhosts = $this->fwobj->getConfig("hostmaps");
-		if (!is_array($fwhosts)) {
-			$fwhosts = array();
-		}
-
-		// Now loop through the ones we know about, and
-		// if they're NOT in the list - ignoring the zone,
-		// because people may change that - return false.
-		foreach ($this->knownhosts as $knownhost) {
-			if (!isset($fwhosts[$knownhost])) {
-				return false;
-			}
-		}
-
-		// Made it through, all hosts are known
-		return true;
+	public function getAdvancedSettings(){
+		return $this->fwobj->getConfig("advancedsettings");
 	}
 
-	/**
-	 * Add any missing hosts to the 'internal' zone.
-	 *
-	 * @return void
-	 */
-	public function addMissingHosts() {
-		// Just in case..
-		if (!$this->fw) {
-			return true;
-		}
-		// Get our lists of hosts and zones.
-		$fwhosts = $this->fwobj->getConfig("hostmaps");
-		if (!is_array($fwhosts)) {
-			$fwhosts = array();
-		}
-
-		// Now loop through the ones we know about, and
-		// if they're NOT in the list, add them to 'internal'
-		foreach ($this->knownhosts as $knownhost) {
-			if (!isset($fwhosts[$knownhost])) {
-				$this->fwobj->addHostToZone($knownhost, 'internal');
-			}
-		}
+	public function fixeLeFilter(){
+		$adv = $this->getAdvancedSettings();
+		$adv["lefilter"] = "enabled";
+		$this->fwobj->setConfig("advancedsettings", $adv);
+		$this->fwobj->restartFirewall();
 	}
-
-	/**
-	 * Return the hosts that require inbound access
-	 *
-	 * @return array
-	 */
-	public function getRequiredHosts() {
-		return $this->knownhosts;
-	}
-
 }
 
 
