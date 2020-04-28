@@ -376,7 +376,7 @@ class Certman implements BMO {
 						// Have we been asked to update firewall rules?
 						if (isset($request['updatefw'])) {
 							$api = $this->getFirewallAPI();
-							$api->addMissingHosts();
+							$api->fixeLeFilter();
 						}
 						$hostname = $this->PKCS->getHostname();
 						echo load_view(__DIR__.'/views/le.php',array('message' => $this->message, 'hostname' => $hostname));
@@ -403,7 +403,7 @@ class Certman implements BMO {
 				// Have we been asked to update firewall rules?
 				if (isset($request['updatefw'])) {
 					$api = $this->getFirewallAPI();
-					$api->addMissingHosts();
+					$api->fixeLeFilter();
 				}
 				$cert = $this->getCertificateDetails($request['id']);
 				$certinfo = array();
