@@ -164,6 +164,9 @@ function certman_configpageload($mode) {
 		'',
 		false),6,null,$category
 	);
+
+	echo '<script type="text/javascript" src="modules/certman/assets/js/views/extensionsHook.js"></script>';
+
 }
 
 function certman_devices_configprocess() {
