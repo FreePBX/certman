@@ -40,7 +40,10 @@ class FirewallAPI {
 	}
 
 	public function getAdvancedSettings(){
-		return $this->fwobj->getConfig("advancedsettings");
+		if($this->fw){
+			return $this->fwobj->getConfig("advancedsettings");
+		}
+		return false;
 	}
 
 	public function fixeLeFilter(){
