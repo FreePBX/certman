@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreePBX 2.5 Chinese Translation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-22 06:34+0000\n"
+"POT-Creation-Date: 2020-02-21 09:22+0530\n"
 "PO-Revision-Date: 2018-03-14 14:52+0200\n"
 "Last-Translator: james <zhulizhong@gmail.com>\n"
 "Language-Team: Simplified Chinese <http://weblate.freepbx.org/projects/"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 2.2-dev\n"
 
-#: Certman.class.php:1146 Certman.class.php:1164
+#: Certman.class.php:1148 Certman.class.php:1166
 #, php-format
 msgid "%s already exists!"
 msgstr ""
@@ -31,7 +31,7 @@ msgstr ""
 msgid "%s is not supported at this time"
 msgstr ""
 
-#: Certman.class.php:1670
+#: Certman.class.php:1672
 #, php-format
 msgid "(%s days)"
 msgstr ""
@@ -127,7 +127,7 @@ msgstr ""
 msgid "Certificate"
 msgstr ""
 
-#: Certman.class.php:1563 Certman.class.php:1578 Certman.class.php:1587
+#: Certman.class.php:1565 Certman.class.php:1580 Certman.class.php:1589
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr ""
@@ -140,7 +140,7 @@ msgstr ""
 msgid "Certificate Authority to Reference"
 msgstr ""
 
-#: Certman.class.php:1665
+#: Certman.class.php:1667
 msgid "Certificate Expired!"
 msgstr ""
 
@@ -156,7 +156,7 @@ msgstr ""
 msgid "Certificate Management"
 msgstr "证书管理"
 
-#: certman.i18n.php:4 certman.i18n.php:14
+#: certman.i18n.php:4
 msgid "Certificate Manager"
 msgstr ""
 
@@ -190,7 +190,7 @@ msgstr ""
 msgid "Certificate Type"
 msgstr ""
 
-#: Certman.class.php:1325
+#: Certman.class.php:1327
 msgid "Certificate is empty"
 msgstr ""
 
@@ -421,7 +421,7 @@ msgstr ""
 msgid "Import any unmanaged certificates in %s"
 msgstr ""
 
-#: Certman.class.php:1348 Certman.class.php:1352
+#: Certman.class.php:1350 Certman.class.php:1354
 msgid "Imported from file system"
 msgstr ""
 
@@ -447,11 +447,11 @@ msgstr ""
 msgid "Key does not match certificate after password removal"
 msgstr ""
 
-#: Certman.class.php:1294
+#: Certman.class.php:1296
 msgid "Key is empty"
 msgstr ""
 
-#: Certman.class.php:1304
+#: Certman.class.php:1306
 msgid "Key is password protected or malformed"
 msgstr ""
 
@@ -827,20 +827,20 @@ msgstr ""
 msgid "Unable to read key. Is it password protected?"
 msgstr ""
 
-#: Certman.class.php:1262
+#: Certman.class.php:1264
 #, php-format
 msgid "Unable to remove %s"
 msgstr ""
 
-#: Certman.class.php:1384
+#: Certman.class.php:1386
 msgid "Unable to remove ca.cfg"
 msgstr ""
 
-#: Certman.class.php:1379
+#: Certman.class.php:1381
 msgid "Unable to remove ca.crt"
 msgstr ""
 
-#: Certman.class.php:1374
+#: Certman.class.php:1376
 msgid "Unable to remove ca.key"
 msgstr ""
 
@@ -852,7 +852,7 @@ msgstr ""
 msgid "Unable to remove the Certificate Signing Request"
 msgstr ""
 
-#: Certman.class.php:1389
+#: Certman.class.php:1391
 msgid "Unable to remove tmp.cfg"
 msgstr ""
 
@@ -861,7 +861,7 @@ msgstr ""
 msgid "Unable to write to %s"
 msgstr ""
 
-#: Certman.class.php:1655
+#: Certman.class.php:1657
 msgid "Unknown Expiration"
 msgstr ""
 
@@ -914,10 +914,6 @@ msgstr "使用证书"
 msgid "Valid Until"
 msgstr ""
 
-#: certman.i18n.php:12
-msgid "Validity period of the certificate (in days)"
-msgstr ""
-
 #: functions.inc/hook_core.php:130
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
@@ -948,10 +944,6 @@ msgid ""
 "\t\t\t<li>passive (we want to accept connections only)</li>\n"
 "\t\t\t<li>actpass (we will do both)</li>\n"
 "\t\t\t</ul>"
-msgstr ""
-
-#: certman.i18n.php:16
-msgid "You can change the number of days the certificate is valid."
 msgstr ""
 
 #: views/up.php:215

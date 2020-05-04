@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-22 06:34+0000\n"
+"POT-Creation-Date: 2020-02-21 09:22+0530\n"
 "PO-Revision-Date: 2019-04-09 01:00+0000\n"
 "Last-Translator: florian alberts <alberts@ar-systems.de>\n"
 "Language-Team: German <http://*/projects/freepbx/certman/de/>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.0.1\n"
 
-#: Certman.class.php:1146 Certman.class.php:1164
+#: Certman.class.php:1148 Certman.class.php:1166
 #, php-format
 msgid "%s already exists!"
 msgstr "%s existiert bereits!"
@@ -30,7 +30,7 @@ msgstr "%s existiert bereits!"
 msgid "%s is not supported at this time"
 msgstr "%s wird zur Zeit nicht unterstützt"
 
-#: Certman.class.php:1670
+#: Certman.class.php:1672
 #, php-format
 msgid "(%s days)"
 msgstr "(%s Tage)"
@@ -141,7 +141,7 @@ msgstr ""
 msgid "Certificate"
 msgstr "Zertifikat"
 
-#: Certman.class.php:1563 Certman.class.php:1578 Certman.class.php:1587
+#: Certman.class.php:1565 Certman.class.php:1580 Certman.class.php:1589
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr "Zertifikat %s ist nicht lesbar! Es kann nicht fortgefahren werden!"
@@ -154,7 +154,7 @@ msgstr "Zertifizierungsstelle"
 msgid "Certificate Authority to Reference"
 msgstr "Referenzierte Zertifizierungsstelle"
 
-#: Certman.class.php:1665
+#: Certman.class.php:1667
 msgid "Certificate Expired!"
 msgstr "Zertifikat abgelaufen!"
 
@@ -170,7 +170,7 @@ msgstr "Zertifikatsliste"
 msgid "Certificate Management"
 msgstr "Zertifikatverwaltung"
 
-#: certman.i18n.php:4 certman.i18n.php:14
+#: certman.i18n.php:4
 msgid "Certificate Manager"
 msgstr "Zertifikatmanager"
 
@@ -210,7 +210,7 @@ msgstr ""
 msgid "Certificate Type"
 msgstr "Typ des Zertifikats"
 
-#: Certman.class.php:1325
+#: Certman.class.php:1327
 msgid "Certificate is empty"
 msgstr "Zertifikat ist leer"
 
@@ -457,7 +457,7 @@ msgstr "Lokal importieren"
 msgid "Import any unmanaged certificates in %s"
 msgstr "Jedes unverwaltete Zertifikat in %s importieren"
 
-#: Certman.class.php:1348 Certman.class.php:1352
+#: Certman.class.php:1350 Certman.class.php:1354
 msgid "Imported from file system"
 msgstr "Aus Dateisystem importiert"
 
@@ -487,11 +487,11 @@ msgid "Key does not match certificate after password removal"
 msgstr ""
 "Schlüssel entspricht nach dem Entfernen des Kennworts nicht dem Zertifikat"
 
-#: Certman.class.php:1294
+#: Certman.class.php:1296
 msgid "Key is empty"
 msgstr "Schlüssel ist leer"
 
-#: Certman.class.php:1304
+#: Certman.class.php:1306
 msgid "Key is password protected or malformed"
 msgstr "Schlüssel ist passwortgeschützt oder fehlerhaft"
 
@@ -921,20 +921,20 @@ msgstr "Erstellen des Zertifikats fehlgeschlagen: %s"
 msgid "Unable to read key. Is it password protected?"
 msgstr "Schlüssel nicht lesbar. Ist der Schlüssel passwortgeschützt?"
 
-#: Certman.class.php:1262
+#: Certman.class.php:1264
 #, php-format
 msgid "Unable to remove %s"
 msgstr "%s konnte nicht entfernt werden"
 
-#: Certman.class.php:1384
+#: Certman.class.php:1386
 msgid "Unable to remove ca.cfg"
 msgstr "Kann ca.cfg nicht löschen"
 
-#: Certman.class.php:1379
+#: Certman.class.php:1381
 msgid "Unable to remove ca.crt"
 msgstr "Kann ca.crt nicht entfernen"
 
-#: Certman.class.php:1374
+#: Certman.class.php:1376
 msgid "Unable to remove ca.key"
 msgstr "Kann ca.key nicht entfernen"
 
@@ -946,7 +946,7 @@ msgstr "Kann Zertifizierungsstelle nicht entfernen"
 msgid "Unable to remove the Certificate Signing Request"
 msgstr "Kann die Zertifikatunterschriftsanfrage (CSR) nicht löschen"
 
-#: Certman.class.php:1389
+#: Certman.class.php:1391
 msgid "Unable to remove tmp.cfg"
 msgstr "Kann tmp.cfg nicht entfernen"
 
@@ -955,7 +955,7 @@ msgstr "Kann tmp.cfg nicht entfernen"
 msgid "Unable to write to %s"
 msgstr "Konnte nicht nach %s schreiben"
 
-#: Certman.class.php:1655
+#: Certman.class.php:1657
 msgid "Unknown Expiration"
 msgstr "Ablaufdatum unbekannt"
 
@@ -1008,10 +1008,6 @@ msgstr "Zertifikat verwenden"
 msgid "Valid Until"
 msgstr "Gültig bis"
 
-#: certman.i18n.php:12
-msgid "Validity period of the certificate (in days)"
-msgstr ""
-
 #: functions.inc/hook_core.php:130
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
@@ -1063,10 +1059,6 @@ msgstr ""
 "\t\t\t<li>passiv (wenn nur für eingehende Anrufe gewünscht)</li>\n"
 "\t\t\t<li>actpass (ein- und ausgehende Verbindungen</li>\n"
 "\t\t\t</ul>"
-
-#: certman.i18n.php:16
-msgid "You can change the number of days the certificate is valid."
-msgstr ""
 
 #: views/up.php:215
 msgid ""
