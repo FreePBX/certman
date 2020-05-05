@@ -864,7 +864,6 @@ class Certman implements BMO {
 			}
 
 			if($o['tech'] === 'pjsip') {
-				$this->FreePBX->PJSip->addEndpoint($device['id'], 'media_encryption', 'dtls');
 				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_verify', $device['verify']);
 				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_setup', $device['setup']);
 				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_rekey', $device['rekey']);
