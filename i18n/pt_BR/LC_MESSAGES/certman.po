@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-21 09:22+0530\n"
+"POT-Creation-Date: 2020-05-05 13:45+0530\n"
 "PO-Revision-Date: 2017-03-23 13:47+0200\n"
 "Last-Translator: Kingvoice <suporte@kingvoice.com.br>\n"
 "Language-Team: Portuguese (Brazil) <http://weblate.freepbx.org/projects/"
@@ -172,7 +172,7 @@ msgstr "Lista de Certificados"
 msgid "Certificate Management"
 msgstr "Gerenciamento de Certificados"
 
-#: certman.i18n.php:4
+#: certman.i18n.php:4 certman.i18n.php:14
 msgid "Certificate Manager"
 msgstr "Gerenciador de Certificado"
 
@@ -659,6 +659,12 @@ msgstr "Cole o nove certificado aqui"
 msgid "Paste new key here"
 msgstr "Cole a nova chave aqui"
 
+#: assets/js/views/extensionsHook.js:8
+msgid ""
+"Please enable DTLS for Media Encryption field first before enabling DTLS "
+"parameters"
+msgstr ""
+
 #: views/ca.php:62 views/up.php:193
 msgid "Private Key"
 msgstr "Chave Privada"
@@ -995,6 +1001,10 @@ msgstr "Usar Certificado"
 msgid "Valid Until"
 msgstr "Válido Até"
 
+#: certman.i18n.php:12
+msgid "Validity period of the certificate (in days)"
+msgstr ""
+
 #: functions.inc/hook_core.php:130
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
@@ -1046,6 +1056,10 @@ msgstr ""
 "\t\t\t<li>passivo (somente aceitar conexões)</li>\n"
 "\t\t\t<li>ativo-passivo(conectar e receber conecções)</li>\n"
 "\t\t\t</ul>"
+
+#: certman.i18n.php:16
+msgid "You can change the number of days the certificate is valid."
+msgstr ""
 
 #: views/up.php:215
 msgid ""
