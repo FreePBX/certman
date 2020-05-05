@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-16 15:04+0530\n"
+"POT-Creation-Date: 2020-05-05 13:52+0530\n"
 "PO-Revision-Date: 2017-12-11 22:57+0200\n"
 "Last-Translator: JCattan <jeremie@famillecattan.com>\n"
 "Language-Team: French <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -159,7 +159,7 @@ msgstr "Liste de certificats"
 msgid "Certificate Management"
 msgstr "Gestion des certificats"
 
-#: certman.i18n.php:4
+#: certman.i18n.php:4 certman.i18n.php:14
 msgid "Certificate Manager"
 msgstr "Gestionnaire des certificats"
 
@@ -608,6 +608,12 @@ msgstr ""
 msgid "Paste new key here"
 msgstr ""
 
+#: assets/js/views/extensionsHook.js:8
+msgid ""
+"Please enable DTLS for Media Encryption field first before enabling DTLS "
+"parameters"
+msgstr ""
+
 #: views/ca.php:62 views/up.php:193
 msgid "Private Key"
 msgstr ""
@@ -917,6 +923,10 @@ msgstr "Utiliser le certificat"
 msgid "Valid Until"
 msgstr ""
 
+#: certman.i18n.php:12
+msgid "Validity period of the certificate (in days)"
+msgstr ""
+
 #: functions.inc/hook_core.php:130
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
@@ -947,6 +957,10 @@ msgid ""
 "\t\t\t<li>passive (we want to accept connections only)</li>\n"
 "\t\t\t<li>actpass (we will do both)</li>\n"
 "\t\t\t</ul>"
+msgstr ""
+
+#: certman.i18n.php:16
+msgid "You can change the number of days the certificate is valid."
 msgstr ""
 
 #: views/up.php:215

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-16 15:04+0530\n"
+"POT-Creation-Date: 2020-05-05 13:52+0530\n"
 "PO-Revision-Date: 2017-08-08 16:34+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese <http://weblate.freepbx.org/projects/freepbx/"
@@ -167,7 +167,7 @@ msgstr "Danh sách chứng thực"
 msgid "Certificate Management"
 msgstr "Quản lý chứng thực"
 
-#: certman.i18n.php:4
+#: certman.i18n.php:4 certman.i18n.php:14
 msgid "Certificate Manager"
 msgstr "Trình quản lý chứng thực"
 
@@ -651,6 +651,12 @@ msgstr "Dán chứng thực mới ở đây"
 msgid "Paste new key here"
 msgstr "Dán khóa mới ở đây"
 
+#: assets/js/views/extensionsHook.js:8
+msgid ""
+"Please enable DTLS for Media Encryption field first before enabling DTLS "
+"parameters"
+msgstr ""
+
 #: views/ca.php:62 views/up.php:193
 msgid "Private Key"
 msgstr "Khóa cá nhân"
@@ -983,6 +989,10 @@ msgstr "Sử dụng chứng thực"
 msgid "Valid Until"
 msgstr "Có hiệu lực đến"
 
+#: certman.i18n.php:12
+msgid "Validity period of the certificate (in days)"
+msgstr ""
+
 #: functions.inc/hook_core.php:130
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
@@ -1034,6 +1044,10 @@ msgstr ""
 "<li>thụ động (chúng tôi muốn chấp nhận chỉ các kết nối)</li>\n"
 "<li>actpass (chúng tôi sẽ làm cả hai)</li>\n"
 "</ul>"
+
+#: certman.i18n.php:16
+msgid "You can change the number of days the certificate is valid."
+msgstr ""
 
 #: views/up.php:215
 msgid ""
