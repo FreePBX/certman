@@ -39,13 +39,52 @@ class FirewallAPI {
 		return $this->fw;
 	}
 
+	/**
+	 * getAdvancedSettings
+	 *
+	 * @return void
+	 */
 	public function getAdvancedSettings(){
-		return $this->fwobj->getConfig("advancedsettings");
+		if($this->fw){
+			return $this->fwobj->getConfig("advancedsettings");
+		}
+		return false;
 	}
 
-	public function fixeLeFilter(){
+	/**
+	 * LE_Rules_Status
+	 *
+	 * @param  string $status
+	 * @return bool
+	 */
+	public function LE_Rules_Status($status = 'disabled'){
+		if(!preg_match('/disabled$|enabled$/', $status)){
+			return false;
+		}
+		$this->fixeLeFilter($status);
+		$i	= 0;
+		$fw	= false;
+
+		/**
+		 * We are waiting Firewall up. 
+		 * Set timeout at 10" max.
+		 */
+		while ($fw == false && $i < 10){
+			$i++;
+			$fw = $this->fwobj->getConfig("status");
+			sleep(1);
+		}
+		return $fw;
+	}
+	
+	/**
+	 * fixeLeFilter
+	 *
+	 * @return void
+	 */
+	public function fixeLeFilter($status = 'disabled'){
 		$adv = $this->getAdvancedSettings();
-		$adv["lefilter"] = "enabled";
+		$adv["lefilter"] = $status;
 		$this->fwobj->setConfig("advancedsettings", $adv);
 		$this->fwobj->restartFirewall();
 	}
