@@ -14,7 +14,7 @@ if ($fwapi->isAvailable()) {
 		// They're not. Add a warning and a button
 		$alert = "<form class='fpbx-submit' name='frm_fixfirewall' id='updatefw' method='post'>";
 		$alert .= "<div class='alert alert-warning'><h3>"._("Firewall Warning")."</h3>";
-		$alert .= "<div class='clearfix'><p class='col-sm-9'>"._("Let's Encrypt requires Internet zone access to the acme-challenge folder on port 80. This option <strong>is not enabled in the System Firewall</strong>. LetsEncrypt may not be able to validate this host, and certificate renewal will fail. To automatically enable this feature in please click the 'Update Firewall' button.")."</p>";
+		$alert .= "<div class='clearfix'><p class='col-sm-9'>"._("Let's Encrypt requires Internet zone access to the acme-challenge folder on port 80. This option <strong>is not enabled in the System Firewall</strong>. LetsEncrypt may not be able to validate this host, and certificate renewal will fail. To automatically enable this feature, please click the 'Update Firewall' button.")."</p>";
 		$alert .= "<p class='col-sm-3'><button class='btn btn-default pull-right' type='submit' name='updatefw' value='updatefw'>"._("Update Firewall")."</button></p></div>";
 		$alert .= "</div></form>";
 	} else {
