@@ -4,37 +4,17 @@ if(!empty($message)) {
 	$messagehtml = '<div class="alert alert-' . $message['type'] .'">'. $message['message'] . '</div>';
 }
 
-$fwapi = \FreePBX::Certman()->getFirewallAPI();
-$adv = $fwapi->getAdvancedSettings();
-
-// Is firewall enabled and available?
-if ($fwapi->isAvailable()) {
-	// Are our hosts already set up?
-	if (!empty($adv["lefilter"]) && $adv["lefilter"] != "enabled") {
-		// They're not. Add a warning and a button
-		$alert = "<form class='fpbx-submit' name='frm_fixfirewall' id='updatefw' method='post'>";
-		$alert .= "<div class='alert alert-warning'><h3>"._("Firewall Warning")."</h3>";
-		$alert .= "<div class='clearfix'><p class='col-sm-9'>"._("Let's Encrypt requires Internet zone access to the acme-challenge folder on port 80. This option <strong>is not enabled in the System Firewall</strong>. LetsEncrypt may not be able to validate this host, and certificate renewal will fail. To automatically enable this feature, please click the 'Update Firewall' button.")."</p>";
-		$alert .= "<p class='col-sm-3'><button class='btn btn-default pull-right' type='submit' name='updatefw' value='updatefw'>"._("Update Firewall")."</button></p></div>";
-		$alert .= "</div></form>";
-	} else {
-		$alert = "<div class='alert alert-success'><h3>"._("Firewall Validated")."</h3>";
-		$alert .= "<p>"._("Let's Encrypt requires Internet zone access to the acme-challenge folder on port 80. This option is correctly enabled in the Firewall module.")."<br>";
-		$alert .= _("However, it's possible that other external firewalls may block access. If you are having problems validating your certificate, this could be the issue.")."</p>";
-		$alert .= "</div>";
-	}
-} else {
-	$alert = "<div class='alert alert-info'><h3>"._("Firewall Warning")."</h3>";
-	$alert .= "<p>"._("Let's Encrypt requires Internet zone (unrestricted) access to the acme-challenge folder on port 80. The PBX system Firewall is not in use, so this can not be verified. Please manually verify inbound connectivity.")."</p>";
-	$alert .= "</div>";
-}
+$alert = "<div class='alert alert-info'><h3>"._("Important")."</h3>";
+$alert .= "<p>"._("Let's Encrypt certificate creation and validation requires unrestricted inbound http access on port 80 to the Let's Encrypt token directories")." </p>";
+$alert .= "<p>"._("If security is managed by the PBX Firewall module, this process should be automatic. Alternate security methods and external firewalls will require manual configuration.")." </p>";
+$alert .= "<p>"._("For more information see: ")."<a href='https://wiki.sangoma.com/display/FPG/Certificate+Management+User+Guide' target='_blank'>https://wiki.sangoma.com/display/FPG/Certificate+Management+User+Guide</a> </p>";
+$alert .= "</div>";
 ?>
 
 <div class="container-fluid">
 	<h1><?php echo !empty($cert['cid']) ? _("Edit Let's Encrypt Certificate") : _("New Let's Encrypt Certificate")?></h1>
 	<?php echo !empty($messagehtml) ? $messagehtml : "" ?>
-	<?php echo $alert; ?>
-	<div class='alert alert-info'><?php printf(_("Let's Encrypt Certificates are <strong>automatically</strong> updated by %s when required (Approximately every 2 months). Do not install your own certificate updaters!"), \FreePBX::Config()->get("DASHBOARD_FREEPBX_BRAND")); ?></div>
+	<div class='alert alert-info'><?php echo $alert; printf(_("Let's Encrypt Certificates are <strong>automatically</strong> updated by %s when required (Approximately every 2 months). Do not install your own certificate updaters!"), \FreePBX::Config()->get("DASHBOARD_FREEPBX_BRAND")); ?></div>
 	<div class = "display full-border">
 		<div class="row">
 			<div class="col-sm-12">
