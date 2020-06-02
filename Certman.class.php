@@ -365,10 +365,6 @@ class Certman implements \BMO {
 				switch($request['type']) {
 					case 'le':
 						// Have we been asked to update firewall rules?
-						if (isset($request['updatefw'])) {
-							$api = $this->getFirewallAPI();
-							$api->addMissingHosts();
-						}
 						$hostname = $this->PKCS->getHostname();
 						echo load_view(__DIR__.'/views/le.php',array('message' => $this->message, 'hostname' => $hostname));
 					break;
@@ -392,10 +388,6 @@ class Certman implements \BMO {
 			break;
 			case 'view':
 				// Have we been asked to update firewall rules?
-				if (isset($request['updatefw'])) {
-					$api = $this->getFirewallAPI();
-					$api->addMissingHosts();
-				}
 				$cert = $this->getCertificateDetails($request['id']);
 				$certinfo = '';
 				if(file_exists($cert['files']['crt'])) {
@@ -595,6 +587,13 @@ class Certman implements \BMO {
 	 * @return boolean          True if success, false if not
 	 */
 	public function updateLE($host, $settings = false, $staging = false) {
+		$api 		= $this->getFirewallAPI();
+		$Le_result 	= $api->LE_Rules_Status("enabled");
+
+		if(!$Le_result) {
+			throw new \Exception("Firewall issue: Check if the Firewall is enabled.");
+		}
+
 		if (!is_array($settings)) {
 			throw new \Exception("BUG: Settings is not an array. Old code?");
 		}
@@ -686,6 +685,7 @@ class Certman implements \BMO {
 			chmod($location."/".$host.".pem",0600);
 			chmod($location."/".$host."-ca-bundle.crt",0600);
 		}
+		$api->LE_Rules_Status("disabled");
 		return true;
 	}
 

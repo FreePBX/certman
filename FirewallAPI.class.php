@@ -38,75 +38,57 @@ class FirewallAPI {
 	public function isAvailable() {
 		return $this->fw;
 	}
-
+	
 	/**
-	 * Are all the LE hosts correctly set up in firewall?
-	 *
-	 * Note this doesn't check the zone. It assumes that
-	 * if you've changed it, you know what your'e doing.
-	 * This may be a bad decision.
-	 *
-	 * @return bool
-	 */
-	public function hostsConfigured() {
-		// Just in case..
-		if (!$this->fw) {
-			return true;
-		}
-
-		// Get our lists of hosts and zones.
-		$fwhosts = $this->fwobj->getConfig("hostmaps");
-		if (!is_array($fwhosts)) {
-			$fwhosts = array();
-		}
-
-		// Now loop through the ones we know about, and
-		// if they're NOT in the list - ignoring the zone,
-		// because people may change that - return false.
-		foreach ($this->knownhosts as $knownhost) {
-			if (!isset($fwhosts[$knownhost])) {
-				return false;
-			}
-		}
-
-		// Made it through, all hosts are known
-		return true;
-	}
-
-	/**
-	 * Add any missing hosts to the 'internal' zone.
+	 * getAdvancedSettings
 	 *
 	 * @return void
 	 */
-	public function addMissingHosts() {
-		// Just in case..
-		if (!$this->fw) {
-			return true;
+	public function getAdvancedSettings(){
+		if($this->fw){
+			return $this->fwobj->getConfig("advancedsettings");
 		}
-		// Get our lists of hosts and zones.
-		$fwhosts = $this->fwobj->getConfig("hostmaps");
-		if (!is_array($fwhosts)) {
-			$fwhosts = array();
-		}
-
-		// Now loop through the ones we know about, and
-		// if they're NOT in the list, add them to 'internal'
-		foreach ($this->knownhosts as $knownhost) {
-			if (!isset($fwhosts[$knownhost])) {
-				$this->fwobj->addHostToZone($knownhost, 'internal');
-			}
-		}
+		return false;
 	}
-
+		
+	
 	/**
-	 * Return the hosts that require inbound access
+	 * LE_Rules_Status
 	 *
-	 * @return array
+	 * @param  string $status
+	 * @return bool
 	 */
-	public function getRequiredHosts() {
-		return $this->knownhosts;
-	}
+	public function LE_Rules_Status($status = 'disabled'){
+		if(!preg_match('/disabled$|enabled$/', $status)){
+			return false;
+		}
+		$this->fixeLeFilter($status);
+		$i	= 0;
+		$fw	= false;
 
+		/**
+		 * We are waiting Firewall up. 
+		 * Set timeout at 10" max.
+		 */
+		while ($fw == false && $i < 10){
+			$i++;
+			$fw = $this->fwobj->getConfig("status");
+			sleep(1);
+		}
+		return $fw;
+	}
+	
+	/**
+	 * fixeLeFilter
+	 *
+	 * @return void
+	 */
+	public function fixeLeFilter($status = 'disabled'){
+		$adv = $this->getAdvancedSettings();
+		$adv["lefilter"] = $status;
+		$this->fwobj->setConfig("advancedsettings", $adv);
+		$this->fwobj->restartFirewall();
+	}
 }
 
 
