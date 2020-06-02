@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-05 13:45+0530\n"
+"POT-Creation-Date: 2020-06-02 07:38+0000\n"
 "PO-Revision-Date: 2017-08-08 16:34+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese <http://weblate.freepbx.org/projects/freepbx/"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 2.4\n"
 
-#: Certman.class.php:1148 Certman.class.php:1166
+#: Certman.class.php:1144 Certman.class.php:1162
 #, php-format
 msgid "%s already exists!"
 msgstr "%s  đã tồn tại!"
@@ -31,12 +31,12 @@ msgstr "%s  đã tồn tại!"
 msgid "%s is not supported at this time"
 msgstr ""
 
-#: Certman.class.php:1672
+#: Certman.class.php:1668
 #, php-format
 msgid "(%s days)"
 msgstr "(%s ngày)"
 
-#: views/le.php:136
+#: views/le.php:134
 msgid "(Port 80)"
 msgstr "( Cổng giao tiếp 80)"
 
@@ -63,7 +63,7 @@ msgstr ""
 "có một chứng thực thực sự từ nhà cung cấp chứng thực tiêu chuẩn hoặc thông "
 "qua Let's Encrypt"
 
-#: views/le.php:121
+#: views/le.php:119
 msgid ""
 "A certificate policy (CP) is a document which aims to state what are the "
 "different actors of a public key infrastructure (PKI), their roles and their "
@@ -142,7 +142,7 @@ msgstr ""
 msgid "Certificate"
 msgstr "Chứng thực"
 
-#: Certman.class.php:1565 Certman.class.php:1580 Certman.class.php:1589
+#: Certman.class.php:1561 Certman.class.php:1576 Certman.class.php:1585
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr "Chứng thực %s không thể đọc được! Không thể tiếp tục!"
@@ -155,11 +155,11 @@ msgstr "Nhà cung cấp chứng thực"
 msgid "Certificate Authority to Reference"
 msgstr "Nhà cung cấp chứng thực để tham chiếu"
 
-#: Certman.class.php:1667
+#: Certman.class.php:1663
 msgid "Certificate Expired!"
 msgstr "Chứng thực đã hết han!"
 
-#: views/le.php:53
+#: views/le.php:51
 msgid "Certificate Host Name"
 msgstr "Tên Host của chứng thực"
 
@@ -192,7 +192,7 @@ msgstr ""
 "( TLS/SRTP), đảm bảo an toàn cho các phiên truy cập we (HTTPS/WEBRTC[WSS] và "
 "nhiều hơn thế"
 
-#: views/le.php:113 views/ss.php:85 views/up.php:97
+#: views/le.php:111 views/ss.php:85 views/up.php:97
 msgid "Certificate Policies"
 msgstr "Các luật chứng thực"
 
@@ -212,7 +212,7 @@ msgstr ""
 msgid "Certificate Type"
 msgstr ""
 
-#: Certman.class.php:1327
+#: Certman.class.php:1323
 msgid "Certificate is empty"
 msgstr "Chứng thực trống"
 
@@ -224,7 +224,7 @@ msgstr "Chứng thực không hợp lệ"
 msgid "Certificate name is already in use"
 msgstr "Tên chứng thực đang được sử dụng"
 
-#: Certman.class.php:533
+#: Certman.class.php:525
 #, php-format
 msgid ""
 "Certificate named \"%s\" has expired. Please update this certificate in "
@@ -233,7 +233,7 @@ msgstr ""
 "Chứng thực đã có tên \"%s\" vừa hết hạn. Vui lòng cập nhật chứng thực này "
 "trong trình quản lý chứng thực"
 
-#: Certman.class.php:559
+#: Certman.class.php:551
 #, php-format
 msgid ""
 "Certificate named \"%s\" is going to expire in less than a month. Please "
@@ -242,7 +242,7 @@ msgstr ""
 "Thời hạn của chứng thực \"%s\" chỉ còn dưới một tháng. Vui lòng cập nhật "
 "chứng thực này trong trình quản lý chứng thực"
 
-#: Certman.class.php:563
+#: Certman.class.php:555
 #, php-format
 msgid "Certificate named \"%s\" is valid"
 msgstr "Chứng thực đã có tên \"%s\" hợp lệ"
@@ -256,7 +256,7 @@ msgstr ""
 msgid "Certificates already exist, no need to generate another one"
 msgstr ""
 
-#: views/le.php:132
+#: views/le.php:130
 msgid "Challenge Over"
 msgstr "Thử thách kết thúc"
 
@@ -280,7 +280,7 @@ msgstr ""
 msgid "City or Locality"
 msgstr "Thành phố hoặc Địa phương"
 
-#: views/le.php:100 views/up.php:74
+#: views/le.php:98 views/up.php:74
 msgid "Common Name"
 msgstr "Tên chung"
 
@@ -288,7 +288,7 @@ msgstr "Tên chung"
 msgid "Common Name (Host Name)"
 msgstr "Tên chung ( Tên host)"
 
-#: views/csr.php:106 views/le.php:149
+#: views/csr.php:106 views/le.php:147
 msgid "Country"
 msgstr "Quốc gia"
 
@@ -316,7 +316,7 @@ msgstr "Mặc định"
 msgid "Default Self-Signed certificate"
 msgstr "Chứng thực tự ký mặc định"
 
-#: Certman.class.php:452
+#: Certman.class.php:444
 msgid "Delete"
 msgstr "Xóa"
 
@@ -324,7 +324,7 @@ msgstr "Xóa"
 msgid "Delete CSR"
 msgstr "Xóa CSR"
 
-#: Certman.class.php:468
+#: Certman.class.php:460
 msgid "Delete Certificate"
 msgstr "Xóa chứng thực"
 
@@ -362,7 +362,7 @@ msgstr "Tải xuống CSR"
 msgid "Edit Certificate Authority Settings"
 msgstr "Hiệu chỉnh cài đặt nhà cung cấp chứng thực"
 
-#: views/le.php:36
+#: views/le.php:34
 msgid "Edit Let's Encrypt Certificate"
 msgstr "Hiệu chỉnh chứng thực Let's Encrypt"
 
@@ -379,11 +379,11 @@ msgstr "Bật hoặc Tắt hỗ trợ DTLS-SRTP"
 msgid "Failed! [%s]"
 msgstr "Thất bại!  [%s]"
 
-#: views/le.php:22
+#: views/le.php:21
 msgid "Firewall Validated"
 msgstr "Tường lửa đã hợp lệ"
 
-#: views/le.php:16 views/le.php:28
+#: views/le.php:16 views/le.php:27
 msgid "Firewall Warning"
 msgstr "Tường lửa đang cảnh báo"
 
@@ -395,11 +395,11 @@ msgstr ""
 "Từ giao diện này bạn có thể khởi tạo một yêu cầu ký chứng thực ( CSR) cho "
 "việc bạn hành một chứng thực sử dụng máy chủ này"
 
-#: Certman.class.php:473 views/certgrid.php:14
+#: Certman.class.php:465 views/certgrid.php:14
 msgid "Generate CSR"
 msgstr "Khởi tạo CSR"
 
-#: Certman.class.php:473 Console/Certman.class.php:30 assets/js/certman.js:56
+#: Certman.class.php:465 Console/Certman.class.php:30 assets/js/certman.js:56
 msgid "Generate Certificate"
 msgstr "Khởi tạo chứng thực"
 
@@ -439,6 +439,12 @@ msgstr ""
 msgid "How long the certificate is valid until"
 msgstr "Chứng thực có hiệu lực tới bao lâu"
 
+#: views/le.php:23
+msgid ""
+"However, it's possible that other external firewalls may block access. If "
+"you are having problems validating your certificate, this could be the issue."
+msgstr ""
+
 #: views/ca.php:7
 msgid "I Know what I am doing"
 msgstr "Tôi biết tôi đang làm gì"
@@ -456,7 +462,7 @@ msgstr "Nhập tại chỗ"
 msgid "Import any unmanaged certificates in %s"
 msgstr ""
 
-#: Certman.class.php:1350 Certman.class.php:1354
+#: Certman.class.php:1346 Certman.class.php:1350
 msgid "Imported from file system"
 msgstr "Đã nhập từ hệ thống tệp"
 
@@ -477,19 +483,19 @@ msgstr ""
 msgid "Invalid Certificate"
 msgstr "Chứng thực không hợp lệ"
 
-#: Certman.class.php:777
+#: Certman.class.php:773
 msgid "Key does not match certificate"
 msgstr "Khóa không khớp với chứng thực"
 
-#: Certman.class.php:792
+#: Certman.class.php:788
 msgid "Key does not match certificate after password removal"
 msgstr "Khóa không khớp với chứng thực sau khi xóa mật khẩu"
 
-#: Certman.class.php:1296
+#: Certman.class.php:1292
 msgid "Key is empty"
 msgstr "Khóa trống"
 
-#: Certman.class.php:1306
+#: Certman.class.php:1302
 msgid "Key is password protected or malformed"
 msgstr "Khóa được bảo vệ bằng mật khẩu hoặc bị sai khóa"
 
@@ -497,7 +503,7 @@ msgstr "Khóa được bảo vệ bằng mật khẩu hoặc bị sai khóa"
 msgid "Let's Encrypt"
 msgstr ""
 
-#: views/le.php:39
+#: views/le.php:37
 #, php-format
 msgid ""
 "Let's Encrypt Certificates are <strong>automatically</strong> updated by %s "
@@ -508,24 +514,37 @@ msgstr ""
 "khi được yêu cầu ( xấp xỉ 2 tháng 1 lần). Không cài đặt các cập nhật chứng "
 "thực của riêng bạn!"
 
+#: views/le.php:28
+msgid ""
+"Let's Encrypt requires Internet zone (unrestricted) access to the acme-"
+"challenge folder on port 80. The PBX system Firewall is not in use, so this "
+"can not be verified. Please manually verify inbound connectivity."
+msgstr ""
+
+#: views/le.php:17
+msgid ""
+"Let's Encrypt requires Internet zone access to the acme-challenge folder on "
+"port 80. This option <strong>is not enabled in the System Firewall</strong>. "
+"LetsEncrypt may not be able to validate this host, and certificate renewal "
+"will fail. To automatically enable this feature, please click the 'Update "
+"Firewall' button."
+msgstr ""
+
+#: views/le.php:22
+msgid ""
+"Let's Encrypt requires Internet zone access to the acme-challenge folder on "
+"port 80. This option is correctly enabled in the Firewall module."
+msgstr ""
+
 #: views/overview.php:23
 msgid "Let's Encrypt:"
 msgstr "Chứng chỉ Let's Encrypt:"
 
-#: views/le.php:140
+#: views/le.php:138
 msgid "LetsEncrypt only supports hostname validation via HTTP on port 80."
 msgstr ""
 "LetsEncrypt chỉ hỗ trợ  xác nhận hostname thông qua HTTP trên cổng giao tiếp "
 "80 ( Port 80)."
-
-#: views/le.php:8
-#, php-format
-msgid ""
-"LetsEncrypt requires the following hosts to be permitted for inbound http "
-"access:<br /> <tt>%s</tt>"
-msgstr ""
-"LetsEncrypt yêu cầu các host sau được cho phép đối với việc truy cập vào "
-"http: <br /> <tt>%s</tt>"
 
 #: Console/Certman.class.php:27
 msgid "List Certificates"
@@ -566,11 +585,11 @@ msgstr "Cài đặt nhà cung cấp chứng thực mới"
 msgid "New Certificate Signing Request"
 msgstr "Yêu cầu ký chứng thực mới"
 
-#: views/le.php:36
+#: views/le.php:34
 msgid "New Let's Encrypt Certificate"
 msgstr "Chứng thực Let's Encrypt mới"
 
-#: Certman.class.php:743
+#: Certman.class.php:739
 msgid "No Certificate provided"
 msgstr "Không có chứng thực nào được cấp"
 
@@ -590,7 +609,7 @@ msgid "No Private key to reference."
 msgstr "Không có khóa cá nhân nào để tham chiếu."
 
 #: Certman.class.php:144 Certman.class.php:242 Certman.class.php:250
-#: Certman.class.php:739
+#: Certman.class.php:735
 msgid "No Private key to reference. Try generating a CSR first."
 msgstr "Không có khóa cá nhân nào để tham chiếu. Thử kích hoạt một CSR trước."
 
@@ -635,17 +654,9 @@ msgstr ""
 "Đơn vị tổ chức. Điều này có thể là hoạt động kinh doanh dưới tên (DBA), hoặc "
 "tên một phòng trong lĩnh vực kinh doanh. Trường này có thể để trống."
 
-#: views/le.php:73
+#: views/le.php:71
 msgid "Owners Email"
 msgstr "Email của người sở hữu"
-
-#: views/le.php:30
-msgid ""
-"PBX System Firewall is not in use so this can not be verified. Please "
-"manually verify inbound connectivity."
-msgstr ""
-"Tường lửa hệ thống PBX trạng thái không sử dụng vì thế nó không được xác "
-"nhận. Vui lòng xác nhận bằng tay kết nối vào."
 
 #: views/up.php:145
 msgid "Passphrase"
@@ -673,7 +684,7 @@ msgstr "Khóa cá nhân"
 msgid "Private Key File to use for this CA"
 msgstr "Tệp khóa cá nhân sử dụng cho nhà cấp chứng chỉ này"
 
-#: Certman.class.php:457
+#: Certman.class.php:449
 msgid "Reset"
 msgstr "Cài đặt lại"
 
@@ -695,11 +706,11 @@ msgstr "Tự ký:"
 msgid "Set certificate default by id"
 msgstr ""
 
-#: Certman.class.php:578
+#: Certman.class.php:570
 msgid "Some Certificates are expiring or have expired"
 msgstr "Một số chứng thực đang hết hạn hoặc vừa hết hạn"
 
-#: Certman.class.php:581
+#: Certman.class.php:573
 msgid ""
 "Some SSL/TLS Certificates have been automatically updated. You may need to "
 "ensure all services have the correctly update certificate by restarting PBX "
@@ -721,11 +732,11 @@ msgstr ""
 msgid "State/Province"
 msgstr "Bang/Tỉnh"
 
-#: views/le.php:165
+#: views/le.php:163
 msgid "State/Province/Region"
 msgstr "Bang/Tỉnh/Miền"
 
-#: Certman.class.php:462
+#: Certman.class.php:454
 msgid "Submit"
 msgstr "Gửi đi"
 
@@ -751,7 +762,7 @@ msgstr "Các chứng thực đã nhập thành công"
 msgid "Successfully set '%s' as the default certificate"
 msgstr ""
 
-#: Certman.class.php:519 Certman.class.php:546
+#: Certman.class.php:511 Certman.class.php:538
 #, php-format
 msgid "Successfully updated certificate named \"%s\""
 msgstr "Chứng thực được đặt tên đã cập nhật thành công \"%s\""
@@ -809,7 +820,7 @@ msgstr "Xảy ra lỗi khi nhập %s. Lỗi này là: %s"
 msgid "There was an error importing the certificate: %s"
 msgstr "Xảy ra lỗi khi nhập chứng thực: %s"
 
-#: Certman.class.php:529 Certman.class.php:555
+#: Certman.class.php:521 Certman.class.php:547
 #, php-format
 msgid "There was an error updating certificate \"%s\": %s"
 msgstr "Xảy ra lỗi khi cập nhật chứng thực  \"%s\": %s"
@@ -819,34 +830,12 @@ msgstr "Xảy ra lỗi khi cập nhật chứng thực  \"%s\": %s"
 msgid "There was an error updating the certificate: %s"
 msgstr "Xảy ra lỗi khi cập nhật chứng thực: %s"
 
-#: Certman.class.php:497
+#: Certman.class.php:489
 #, php-format
 msgid "There were no files left for certificate \"%s\" so it was removed"
 msgstr "Không còn tệp nào cho chứng thực \"%s\" vì vậy nó bị xóa"
 
-#: views/le.php:24
-msgid ""
-"These entries are correctly set up in the Firewall module. However, it's "
-"possible that other external firewalls may block access. If you are having "
-"problems validating your certificate, this could be the issue."
-msgstr ""
-"Các mục nhập này được cài đặt chính xác trên mô đun tường lửa. Tuy nhiên, "
-"các tường lửa nội bộ khác có thể chặn truy nhập. Nếu bạn đang gặp vấn đề "
-"trong việc hợp lệ hóa các chứng thực, đây có thể là vấn đề."
-
-#: views/le.php:18
-msgid ""
-"These hosts <strong>are not configured in the System Firewall</strong>. "
-"LetsEncrypt will not be able to validate this host, and certificate "
-"issueance will fail. To automatically add these hosts, please click on the "
-"'Update Firewall' button."
-msgstr ""
-"Các host <strong> không được cấu hình trong tường lửa hệ thống </strong>. "
-"LetsEncrypt  sẽ không thể xác nhận host này, và việc ban hành chứng thực sẽ "
-"không thành công. Để tự động thêm các host này, vui lòng kích vào nút "
-"'Update Firewall'."
-
-#: views/le.php:81
+#: views/le.php:79
 msgid ""
 "This email address is given to Let's Encrypt. It may be used by them if the "
 "certificate is approaching expiration and it has not been renewed."
@@ -858,7 +847,7 @@ msgstr ""
 msgid "This field cannot be blank and must be alphanumeric"
 msgstr "Trường này không thể để trống và phải là chữ và số"
 
-#: views/le.php:65
+#: views/le.php:63
 msgid ""
 "This must be the hostname you are requesting a certificate for. LetsEncrypt "
 "will validate that the hostname resolves to this machine, and attempt to "
@@ -906,24 +895,24 @@ msgstr "Không thể khởi tạo nhà cung cấp chứng thực"
 msgid "Unable to generate certificate: %s"
 msgstr "Không thể khởi tạo chứng thực: %s"
 
-#: Certman.class.php:773
+#: Certman.class.php:769
 msgid "Unable to read key. Is it password protected?"
 msgstr "Không thể đọc khóa. Nó có được bảo vệ bằng mật khẩu không?"
 
-#: Certman.class.php:1264
+#: Certman.class.php:1260
 #, php-format
 msgid "Unable to remove %s"
 msgstr "Không thể xóa %s"
 
-#: Certman.class.php:1386
+#: Certman.class.php:1382
 msgid "Unable to remove ca.cfg"
 msgstr "Không thể xóa  ca.cfg"
 
-#: Certman.class.php:1381
+#: Certman.class.php:1377
 msgid "Unable to remove ca.crt"
 msgstr "Không thể xóa  ca.crt"
 
-#: Certman.class.php:1376
+#: Certman.class.php:1372
 msgid "Unable to remove ca.key"
 msgstr "Không thể xóa ca.key"
 
@@ -935,20 +924,20 @@ msgstr "Không thể xóa nhà cung cấp chứng thực"
 msgid "Unable to remove the Certificate Signing Request"
 msgstr "Không thể xóa Yêu cầu ký chứng thực"
 
-#: Certman.class.php:1391
+#: Certman.class.php:1387
 msgid "Unable to remove tmp.cfg"
 msgstr "Không thể xóa tmp.cfg"
 
-#: Certman.class.php:756 Certman.class.php:760 Certman.class.php:764
+#: Certman.class.php:752 Certman.class.php:756 Certman.class.php:760
 #, php-format
 msgid "Unable to write to %s"
 msgstr "Không thể ghi tới %s"
 
-#: Certman.class.php:1657
+#: Certman.class.php:1653
 msgid "Unknown Expiration"
 msgstr "Thời gian hết hạn không xác định"
 
-#: Certman.class.php:467
+#: Certman.class.php:459
 msgid "Update Certificate"
 msgstr "Cập nhật chứng thực"
 
@@ -956,11 +945,11 @@ msgstr "Cập nhật chứng thực"
 msgid "Update Existing Certificate"
 msgstr "Cập nhật chứng thực hiện có"
 
-#: views/le.php:19
+#: views/le.php:18
 msgid "Update Firewall"
 msgstr "Cập nhật tường lửa"
 
-#: Certman.class.php:581
+#: Certman.class.php:573
 msgid "Updated Certificates"
 msgstr "Các chứng thực đã cập nhật"
 
@@ -993,7 +982,7 @@ msgstr ""
 msgid "Use Certificate"
 msgstr "Sử dụng chứng thực"
 
-#: views/le.php:90 views/ss.php:62 views/up.php:54
+#: views/le.php:88 views/ss.php:62 views/up.php:54
 msgid "Valid Until"
 msgstr "Có hiệu lực đến"
 
@@ -1070,6 +1059,40 @@ msgstr ""
 "nhiều các tệp chứng thực. Dán các nội dung của các tệp Chuỗi, nếu có vào các "
 "cửa sổ sau. Có thể để trong hoặc cập nhật bất cứ khi nào. Có thể thêm chúng "
 "khi có yêu cầu."
+
+#~ msgid ""
+#~ "LetsEncrypt requires the following hosts to be permitted for inbound http "
+#~ "access:<br /> <tt>%s</tt>"
+#~ msgstr ""
+#~ "LetsEncrypt yêu cầu các host sau được cho phép đối với việc truy cập vào "
+#~ "http: <br /> <tt>%s</tt>"
+
+#~ msgid ""
+#~ "PBX System Firewall is not in use so this can not be verified. Please "
+#~ "manually verify inbound connectivity."
+#~ msgstr ""
+#~ "Tường lửa hệ thống PBX trạng thái không sử dụng vì thế nó không được xác "
+#~ "nhận. Vui lòng xác nhận bằng tay kết nối vào."
+
+#~ msgid ""
+#~ "These entries are correctly set up in the Firewall module. However, it's "
+#~ "possible that other external firewalls may block access. If you are "
+#~ "having problems validating your certificate, this could be the issue."
+#~ msgstr ""
+#~ "Các mục nhập này được cài đặt chính xác trên mô đun tường lửa. Tuy nhiên, "
+#~ "các tường lửa nội bộ khác có thể chặn truy nhập. Nếu bạn đang gặp vấn đề "
+#~ "trong việc hợp lệ hóa các chứng thực, đây có thể là vấn đề."
+
+#~ msgid ""
+#~ "These hosts <strong>are not configured in the System Firewall</strong>. "
+#~ "LetsEncrypt will not be able to validate this host, and certificate "
+#~ "issueance will fail. To automatically add these hosts, please click on "
+#~ "the 'Update Firewall' button."
+#~ msgstr ""
+#~ "Các host <strong> không được cấu hình trong tường lửa hệ thống </strong>. "
+#~ "LetsEncrypt  sẽ không thể xác nhận host này, và việc ban hành chứng thực "
+#~ "sẽ không thành công. Để tự động thêm các host này, vui lòng kích vào nút "
+#~ "'Update Firewall'."
 
 #~ msgid ""
 #~ "No Certificates to import. Try placing a certificate (<name>.crt) and its "
