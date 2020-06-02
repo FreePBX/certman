@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-02 07:38+0000\n"
+"POT-Creation-Date: 2020-06-02 14:42+0000\n"
 "PO-Revision-Date: 2016-12-11 12:44+0200\n"
 "Last-Translator: Ernesto <ecasas@sangoma.com>\n"
 "Language-Team: Spanish <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -36,7 +36,7 @@ msgstr ""
 msgid "(%s days)"
 msgstr ""
 
-#: views/le.php:134
+#: views/le.php:114
 msgid "(Port 80)"
 msgstr ""
 
@@ -63,7 +63,7 @@ msgstr ""
 "recomendamos conseguir un certificado real de una autoridad estándar o a "
 "través del proyecto Let's Encrypt"
 
-#: views/le.php:119
+#: views/le.php:99
 msgid ""
 "A certificate policy (CP) is a document which aims to state what are the "
 "different actors of a public key infrastructure (PKI), their roles and their "
@@ -162,7 +162,7 @@ msgstr "Autoridad Certificadora a Referenciar"
 msgid "Certificate Expired!"
 msgstr ""
 
-#: views/le.php:51
+#: views/le.php:31
 msgid "Certificate Host Name"
 msgstr ""
 
@@ -194,7 +194,7 @@ msgstr ""
 "El Gestor de Certificados administra certificados para llamadas seguras (TLS/"
 "SRTP), sesiones web seguras (HTTPS/WEBRTC[WSS]) y mas"
 
-#: views/le.php:111 views/ss.php:85 views/up.php:97
+#: views/le.php:91 views/ss.php:85 views/up.php:97
 msgid "Certificate Policies"
 msgstr "Políticas de Certificados"
 
@@ -257,7 +257,7 @@ msgstr "Certificado a usar para esta CA (debe referenciar a la Clave Privada)"
 msgid "Certificates already exist, no need to generate another one"
 msgstr ""
 
-#: views/le.php:130
+#: views/le.php:110
 msgid "Challenge Over"
 msgstr "Reto Encima"
 
@@ -281,7 +281,7 @@ msgstr ""
 msgid "City or Locality"
 msgstr "Ciudad o Localidad"
 
-#: views/le.php:98 views/up.php:74
+#: views/le.php:78 views/up.php:74
 msgid "Common Name"
 msgstr "Nombre Común"
 
@@ -289,7 +289,7 @@ msgstr "Nombre Común"
 msgid "Common Name (Host Name)"
 msgstr "Nombre Común (Host name)"
 
-#: views/csr.php:106 views/le.php:147
+#: views/csr.php:106 views/le.php:127
 msgid "Country"
 msgstr "País"
 
@@ -363,7 +363,7 @@ msgstr "Bajar CSR"
 msgid "Edit Certificate Authority Settings"
 msgstr "Editar la configuración de la autoridad del certificado"
 
-#: views/le.php:34
+#: views/le.php:15
 msgid "Edit Let's Encrypt Certificate"
 msgstr "Editar Certificado Let's Encrypt"
 
@@ -380,13 +380,9 @@ msgstr "Habilitar o deshabilitar soporte a DTLS-SRTP"
 msgid "Failed! [%s]"
 msgstr ""
 
-#: views/le.php:21
-msgid "Firewall Validated"
-msgstr "Cortafuegos Validado"
-
-#: views/le.php:16 views/le.php:27
-msgid "Firewall Warning"
-msgstr "Advertencia Cortafuego"
+#: views/le.php:10
+msgid "For more information see: "
+msgstr ""
 
 #: views/overview.php:17
 msgid ""
@@ -441,15 +437,16 @@ msgstr ""
 msgid "How long the certificate is valid until"
 msgstr "Hasta cuando el certificado es valido"
 
-#: views/le.php:23
-msgid ""
-"However, it's possible that other external firewalls may block access. If "
-"you are having problems validating your certificate, this could be the issue."
-msgstr ""
-
 #: views/ca.php:7
 msgid "I Know what I am doing"
 msgstr "Sé lo que estoy haciendo"
+
+#: views/le.php:9
+msgid ""
+"If security is managed by the PBX Firewall module, this process should be "
+"automatic. Alternate security methods and external firewalls will require "
+"manual configuration."
+msgstr ""
 
 #: views/up.php:196
 msgid "If you have a separate private key paste it here."
@@ -462,6 +459,10 @@ msgstr "Importar Localmente"
 #: Console/Certman.class.php:29
 #, php-format
 msgid "Import any unmanaged certificates in %s"
+msgstr ""
+
+#: views/le.php:7
+msgid "Important"
 msgstr ""
 
 #: Certman.class.php:1346 Certman.class.php:1350
@@ -505,7 +506,7 @@ msgstr "La llave esta protegida por Contraseña o esta mal-formada"
 msgid "Let's Encrypt"
 msgstr ""
 
-#: views/le.php:37
+#: views/le.php:17
 #, php-format
 msgid ""
 "Let's Encrypt Certificates are <strong>automatically</strong> updated by %s "
@@ -513,33 +514,17 @@ msgid ""
 "certificate updaters!"
 msgstr ""
 
-#: views/le.php:28
+#: views/le.php:8
 msgid ""
-"Let's Encrypt requires Internet zone (unrestricted) access to the acme-"
-"challenge folder on port 80. The PBX system Firewall is not in use, so this "
-"can not be verified. Please manually verify inbound connectivity."
-msgstr ""
-
-#: views/le.php:17
-msgid ""
-"Let's Encrypt requires Internet zone access to the acme-challenge folder on "
-"port 80. This option <strong>is not enabled in the System Firewall</strong>. "
-"LetsEncrypt may not be able to validate this host, and certificate renewal "
-"will fail. To automatically enable this feature, please click the 'Update "
-"Firewall' button."
-msgstr ""
-
-#: views/le.php:22
-msgid ""
-"Let's Encrypt requires Internet zone access to the acme-challenge folder on "
-"port 80. This option is correctly enabled in the Firewall module."
+"Let's Encrypt certificate creation and validation requires unrestricted "
+"inbound http access on port 80 to the Let's Encrypt token directories"
 msgstr ""
 
 #: views/overview.php:23
 msgid "Let's Encrypt:"
 msgstr "Let's Encrypt:"
 
-#: views/le.php:138
+#: views/le.php:118
 msgid "LetsEncrypt only supports hostname validation via HTTP on port 80."
 msgstr ""
 
@@ -582,7 +567,7 @@ msgstr "Ajustes Autoridad nuevo certificado"
 msgid "New Certificate Signing Request"
 msgstr "Nueva Petición de Firma de Certificado"
 
-#: views/le.php:34
+#: views/le.php:15
 msgid "New Let's Encrypt Certificate"
 msgstr "Nuevo Certificado Let's Encrypt"
 
@@ -651,7 +636,7 @@ msgstr ""
 "Unidad Organizativa. Esto podría ser nombre ficticio (DBA), o nombre del "
 "departamento dentro de la empresa. Se puede dejar en blanco."
 
-#: views/le.php:71
+#: views/le.php:51
 msgid "Owners Email"
 msgstr ""
 
@@ -729,7 +714,7 @@ msgstr ""
 msgid "State/Province"
 msgstr "Estado/Provincia"
 
-#: views/le.php:163
+#: views/le.php:143
 msgid "State/Province/Region"
 msgstr ""
 
@@ -834,7 +819,7 @@ msgstr "Hubo un error actualizando el certificado: %s"
 msgid "There were no files left for certificate \"%s\" so it was removed"
 msgstr "No quedan archivos para certificado \"%s\", por lo tanto fue removido"
 
-#: views/le.php:79
+#: views/le.php:59
 msgid ""
 "This email address is given to Let's Encrypt. It may be used by them if the "
 "certificate is approaching expiration and it has not been renewed."
@@ -844,7 +829,7 @@ msgstr ""
 msgid "This field cannot be blank and must be alphanumeric"
 msgstr "El campo no puede estar en blanco y debe ser alfanumerico"
 
-#: views/le.php:63
+#: views/le.php:43
 msgid ""
 "This must be the hostname you are requesting a certificate for. LetsEncrypt "
 "will validate that the hostname resolves to this machine, and attempt to "
@@ -940,10 +925,6 @@ msgstr "Actualizar Certificado"
 msgid "Update Existing Certificate"
 msgstr "Actualiza Certificado Existente"
 
-#: views/le.php:18
-msgid "Update Firewall"
-msgstr "Actualiza Firewall"
-
 #: Certman.class.php:573
 msgid "Updated Certificates"
 msgstr "Certificados Actualizados"
@@ -977,7 +958,7 @@ msgstr ""
 msgid "Use Certificate"
 msgstr "Use Certificado"
 
-#: views/le.php:88 views/ss.php:62 views/up.php:54
+#: views/le.php:68 views/ss.php:62 views/up.php:54
 msgid "Valid Until"
 msgstr "Unidad Valida"
 
@@ -1055,6 +1036,15 @@ msgstr ""
 "archivos de certificados. Pegar el contenido de todos los archivos de la "
 "cadena, en su caso, en la casilla inferior. Esto puede dejarse en blanco, o "
 "actualizar en cualquier momento. Se pueden añadir en cualquier orden."
+
+#~ msgid "Firewall Validated"
+#~ msgstr "Cortafuegos Validado"
+
+#~ msgid "Firewall Warning"
+#~ msgstr "Advertencia Cortafuego"
+
+#~ msgid "Update Firewall"
+#~ msgstr "Actualiza Firewall"
 
 #~ msgid ""
 #~ "LetsEncrypt requires the following hosts to be permitted for inbound http "

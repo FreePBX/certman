@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-02 07:38+0000\n"
+"POT-Creation-Date: 2020-06-02 14:42+0000\n"
 "PO-Revision-Date: 2017-08-08 16:34+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese <http://weblate.freepbx.org/projects/freepbx/"
@@ -36,7 +36,7 @@ msgstr ""
 msgid "(%s days)"
 msgstr "(%s ngày)"
 
-#: views/le.php:134
+#: views/le.php:114
 msgid "(Port 80)"
 msgstr "( Cổng giao tiếp 80)"
 
@@ -63,7 +63,7 @@ msgstr ""
 "có một chứng thực thực sự từ nhà cung cấp chứng thực tiêu chuẩn hoặc thông "
 "qua Let's Encrypt"
 
-#: views/le.php:119
+#: views/le.php:99
 msgid ""
 "A certificate policy (CP) is a document which aims to state what are the "
 "different actors of a public key infrastructure (PKI), their roles and their "
@@ -159,7 +159,7 @@ msgstr "Nhà cung cấp chứng thực để tham chiếu"
 msgid "Certificate Expired!"
 msgstr "Chứng thực đã hết han!"
 
-#: views/le.php:51
+#: views/le.php:31
 msgid "Certificate Host Name"
 msgstr "Tên Host của chứng thực"
 
@@ -192,7 +192,7 @@ msgstr ""
 "( TLS/SRTP), đảm bảo an toàn cho các phiên truy cập we (HTTPS/WEBRTC[WSS] và "
 "nhiều hơn thế"
 
-#: views/le.php:111 views/ss.php:85 views/up.php:97
+#: views/le.php:91 views/ss.php:85 views/up.php:97
 msgid "Certificate Policies"
 msgstr "Các luật chứng thực"
 
@@ -256,7 +256,7 @@ msgstr ""
 msgid "Certificates already exist, no need to generate another one"
 msgstr ""
 
-#: views/le.php:130
+#: views/le.php:110
 msgid "Challenge Over"
 msgstr "Thử thách kết thúc"
 
@@ -280,7 +280,7 @@ msgstr ""
 msgid "City or Locality"
 msgstr "Thành phố hoặc Địa phương"
 
-#: views/le.php:98 views/up.php:74
+#: views/le.php:78 views/up.php:74
 msgid "Common Name"
 msgstr "Tên chung"
 
@@ -288,7 +288,7 @@ msgstr "Tên chung"
 msgid "Common Name (Host Name)"
 msgstr "Tên chung ( Tên host)"
 
-#: views/csr.php:106 views/le.php:147
+#: views/csr.php:106 views/le.php:127
 msgid "Country"
 msgstr "Quốc gia"
 
@@ -362,7 +362,7 @@ msgstr "Tải xuống CSR"
 msgid "Edit Certificate Authority Settings"
 msgstr "Hiệu chỉnh cài đặt nhà cung cấp chứng thực"
 
-#: views/le.php:34
+#: views/le.php:15
 msgid "Edit Let's Encrypt Certificate"
 msgstr "Hiệu chỉnh chứng thực Let's Encrypt"
 
@@ -379,13 +379,9 @@ msgstr "Bật hoặc Tắt hỗ trợ DTLS-SRTP"
 msgid "Failed! [%s]"
 msgstr "Thất bại!  [%s]"
 
-#: views/le.php:21
-msgid "Firewall Validated"
-msgstr "Tường lửa đã hợp lệ"
-
-#: views/le.php:16 views/le.php:27
-msgid "Firewall Warning"
-msgstr "Tường lửa đang cảnh báo"
+#: views/le.php:10
+msgid "For more information see: "
+msgstr ""
 
 #: views/overview.php:17
 msgid ""
@@ -439,15 +435,16 @@ msgstr ""
 msgid "How long the certificate is valid until"
 msgstr "Chứng thực có hiệu lực tới bao lâu"
 
-#: views/le.php:23
-msgid ""
-"However, it's possible that other external firewalls may block access. If "
-"you are having problems validating your certificate, this could be the issue."
-msgstr ""
-
 #: views/ca.php:7
 msgid "I Know what I am doing"
 msgstr "Tôi biết tôi đang làm gì"
+
+#: views/le.php:9
+msgid ""
+"If security is managed by the PBX Firewall module, this process should be "
+"automatic. Alternate security methods and external firewalls will require "
+"manual configuration."
+msgstr ""
 
 #: views/up.php:196
 msgid "If you have a separate private key paste it here."
@@ -460,6 +457,10 @@ msgstr "Nhập tại chỗ"
 #: Console/Certman.class.php:29
 #, php-format
 msgid "Import any unmanaged certificates in %s"
+msgstr ""
+
+#: views/le.php:7
+msgid "Important"
 msgstr ""
 
 #: Certman.class.php:1346 Certman.class.php:1350
@@ -503,7 +504,7 @@ msgstr "Khóa được bảo vệ bằng mật khẩu hoặc bị sai khóa"
 msgid "Let's Encrypt"
 msgstr ""
 
-#: views/le.php:37
+#: views/le.php:17
 #, php-format
 msgid ""
 "Let's Encrypt Certificates are <strong>automatically</strong> updated by %s "
@@ -514,33 +515,17 @@ msgstr ""
 "khi được yêu cầu ( xấp xỉ 2 tháng 1 lần). Không cài đặt các cập nhật chứng "
 "thực của riêng bạn!"
 
-#: views/le.php:28
+#: views/le.php:8
 msgid ""
-"Let's Encrypt requires Internet zone (unrestricted) access to the acme-"
-"challenge folder on port 80. The PBX system Firewall is not in use, so this "
-"can not be verified. Please manually verify inbound connectivity."
-msgstr ""
-
-#: views/le.php:17
-msgid ""
-"Let's Encrypt requires Internet zone access to the acme-challenge folder on "
-"port 80. This option <strong>is not enabled in the System Firewall</strong>. "
-"LetsEncrypt may not be able to validate this host, and certificate renewal "
-"will fail. To automatically enable this feature, please click the 'Update "
-"Firewall' button."
-msgstr ""
-
-#: views/le.php:22
-msgid ""
-"Let's Encrypt requires Internet zone access to the acme-challenge folder on "
-"port 80. This option is correctly enabled in the Firewall module."
+"Let's Encrypt certificate creation and validation requires unrestricted "
+"inbound http access on port 80 to the Let's Encrypt token directories"
 msgstr ""
 
 #: views/overview.php:23
 msgid "Let's Encrypt:"
 msgstr "Chứng chỉ Let's Encrypt:"
 
-#: views/le.php:138
+#: views/le.php:118
 msgid "LetsEncrypt only supports hostname validation via HTTP on port 80."
 msgstr ""
 "LetsEncrypt chỉ hỗ trợ  xác nhận hostname thông qua HTTP trên cổng giao tiếp "
@@ -585,7 +570,7 @@ msgstr "Cài đặt nhà cung cấp chứng thực mới"
 msgid "New Certificate Signing Request"
 msgstr "Yêu cầu ký chứng thực mới"
 
-#: views/le.php:34
+#: views/le.php:15
 msgid "New Let's Encrypt Certificate"
 msgstr "Chứng thực Let's Encrypt mới"
 
@@ -654,7 +639,7 @@ msgstr ""
 "Đơn vị tổ chức. Điều này có thể là hoạt động kinh doanh dưới tên (DBA), hoặc "
 "tên một phòng trong lĩnh vực kinh doanh. Trường này có thể để trống."
 
-#: views/le.php:71
+#: views/le.php:51
 msgid "Owners Email"
 msgstr "Email của người sở hữu"
 
@@ -732,7 +717,7 @@ msgstr ""
 msgid "State/Province"
 msgstr "Bang/Tỉnh"
 
-#: views/le.php:163
+#: views/le.php:143
 msgid "State/Province/Region"
 msgstr "Bang/Tỉnh/Miền"
 
@@ -835,7 +820,7 @@ msgstr "Xảy ra lỗi khi cập nhật chứng thực: %s"
 msgid "There were no files left for certificate \"%s\" so it was removed"
 msgstr "Không còn tệp nào cho chứng thực \"%s\" vì vậy nó bị xóa"
 
-#: views/le.php:79
+#: views/le.php:59
 msgid ""
 "This email address is given to Let's Encrypt. It may be used by them if the "
 "certificate is approaching expiration and it has not been renewed."
@@ -847,7 +832,7 @@ msgstr ""
 msgid "This field cannot be blank and must be alphanumeric"
 msgstr "Trường này không thể để trống và phải là chữ và số"
 
-#: views/le.php:63
+#: views/le.php:43
 msgid ""
 "This must be the hostname you are requesting a certificate for. LetsEncrypt "
 "will validate that the hostname resolves to this machine, and attempt to "
@@ -945,10 +930,6 @@ msgstr "Cập nhật chứng thực"
 msgid "Update Existing Certificate"
 msgstr "Cập nhật chứng thực hiện có"
 
-#: views/le.php:18
-msgid "Update Firewall"
-msgstr "Cập nhật tường lửa"
-
 #: Certman.class.php:573
 msgid "Updated Certificates"
 msgstr "Các chứng thực đã cập nhật"
@@ -982,7 +963,7 @@ msgstr ""
 msgid "Use Certificate"
 msgstr "Sử dụng chứng thực"
 
-#: views/le.php:88 views/ss.php:62 views/up.php:54
+#: views/le.php:68 views/ss.php:62 views/up.php:54
 msgid "Valid Until"
 msgstr "Có hiệu lực đến"
 
@@ -1059,6 +1040,15 @@ msgstr ""
 "nhiều các tệp chứng thực. Dán các nội dung của các tệp Chuỗi, nếu có vào các "
 "cửa sổ sau. Có thể để trong hoặc cập nhật bất cứ khi nào. Có thể thêm chúng "
 "khi có yêu cầu."
+
+#~ msgid "Firewall Validated"
+#~ msgstr "Tường lửa đã hợp lệ"
+
+#~ msgid "Firewall Warning"
+#~ msgstr "Tường lửa đang cảnh báo"
+
+#~ msgid "Update Firewall"
+#~ msgstr "Cập nhật tường lửa"
 
 #~ msgid ""
 #~ "LetsEncrypt requires the following hosts to be permitted for inbound http "

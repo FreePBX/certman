@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-02 07:38+0000\n"
+"POT-Creation-Date: 2020-06-02 14:42+0000\n"
 "PO-Revision-Date: 2017-12-11 22:57+0200\n"
 "Last-Translator: JCattan <jeremie@famillecattan.com>\n"
 "Language-Team: French <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -36,7 +36,7 @@ msgstr ""
 msgid "(%s days)"
 msgstr "(%s jours)"
 
-#: views/le.php:134
+#: views/le.php:114
 msgid "(Port 80)"
 msgstr "(Port 80)"
 
@@ -64,7 +64,7 @@ msgstr ""
 "fortement d'obtenir un vrai certificat d'une autorité reconnue ou par "
 "l'intermédiaire de \"Let's Encrypt\""
 
-#: views/le.php:119
+#: views/le.php:99
 msgid ""
 "A certificate policy (CP) is a document which aims to state what are the "
 "different actors of a public key infrastructure (PKI), their roles and their "
@@ -151,7 +151,7 @@ msgstr ""
 msgid "Certificate Expired!"
 msgstr "Le certificat est expiré !"
 
-#: views/le.php:51
+#: views/le.php:31
 msgid "Certificate Host Name"
 msgstr "Nom d'hôte du certificat"
 
@@ -179,7 +179,7 @@ msgid ""
 "secure web sessions (HTTPS/WEBRTC[WSS] and more"
 msgstr ""
 
-#: views/le.php:111 views/ss.php:85 views/up.php:97
+#: views/le.php:91 views/ss.php:85 views/up.php:97
 msgid "Certificate Policies"
 msgstr ""
 
@@ -240,7 +240,7 @@ msgstr ""
 msgid "Certificates already exist, no need to generate another one"
 msgstr ""
 
-#: views/le.php:130
+#: views/le.php:110
 msgid "Challenge Over"
 msgstr ""
 
@@ -262,7 +262,7 @@ msgstr ""
 msgid "City or Locality"
 msgstr ""
 
-#: views/le.php:98 views/up.php:74
+#: views/le.php:78 views/up.php:74
 msgid "Common Name"
 msgstr ""
 
@@ -270,7 +270,7 @@ msgstr ""
 msgid "Common Name (Host Name)"
 msgstr ""
 
-#: views/csr.php:106 views/le.php:147
+#: views/csr.php:106 views/le.php:127
 msgid "Country"
 msgstr "Pays"
 
@@ -342,7 +342,7 @@ msgstr ""
 msgid "Edit Certificate Authority Settings"
 msgstr ""
 
-#: views/le.php:34
+#: views/le.php:15
 msgid "Edit Let's Encrypt Certificate"
 msgstr ""
 
@@ -359,12 +359,8 @@ msgstr ""
 msgid "Failed! [%s]"
 msgstr ""
 
-#: views/le.php:21
-msgid "Firewall Validated"
-msgstr ""
-
-#: views/le.php:16 views/le.php:27
-msgid "Firewall Warning"
+#: views/le.php:10
+msgid "For more information see: "
 msgstr ""
 
 #: views/overview.php:17
@@ -415,14 +411,15 @@ msgstr ""
 msgid "How long the certificate is valid until"
 msgstr ""
 
-#: views/le.php:23
-msgid ""
-"However, it's possible that other external firewalls may block access. If "
-"you are having problems validating your certificate, this could be the issue."
-msgstr ""
-
 #: views/ca.php:7
 msgid "I Know what I am doing"
+msgstr ""
+
+#: views/le.php:9
+msgid ""
+"If security is managed by the PBX Firewall module, this process should be "
+"automatic. Alternate security methods and external firewalls will require "
+"manual configuration."
 msgstr ""
 
 #: views/up.php:196
@@ -436,6 +433,10 @@ msgstr ""
 #: Console/Certman.class.php:29
 #, php-format
 msgid "Import any unmanaged certificates in %s"
+msgstr ""
+
+#: views/le.php:7
+msgid "Important"
 msgstr ""
 
 #: Certman.class.php:1346 Certman.class.php:1350
@@ -476,7 +477,7 @@ msgstr ""
 msgid "Let's Encrypt"
 msgstr ""
 
-#: views/le.php:37
+#: views/le.php:17
 #, php-format
 msgid ""
 "Let's Encrypt Certificates are <strong>automatically</strong> updated by %s "
@@ -484,33 +485,17 @@ msgid ""
 "certificate updaters!"
 msgstr ""
 
-#: views/le.php:28
+#: views/le.php:8
 msgid ""
-"Let's Encrypt requires Internet zone (unrestricted) access to the acme-"
-"challenge folder on port 80. The PBX system Firewall is not in use, so this "
-"can not be verified. Please manually verify inbound connectivity."
-msgstr ""
-
-#: views/le.php:17
-msgid ""
-"Let's Encrypt requires Internet zone access to the acme-challenge folder on "
-"port 80. This option <strong>is not enabled in the System Firewall</strong>. "
-"LetsEncrypt may not be able to validate this host, and certificate renewal "
-"will fail. To automatically enable this feature, please click the 'Update "
-"Firewall' button."
-msgstr ""
-
-#: views/le.php:22
-msgid ""
-"Let's Encrypt requires Internet zone access to the acme-challenge folder on "
-"port 80. This option is correctly enabled in the Firewall module."
+"Let's Encrypt certificate creation and validation requires unrestricted "
+"inbound http access on port 80 to the Let's Encrypt token directories"
 msgstr ""
 
 #: views/overview.php:23
 msgid "Let's Encrypt:"
 msgstr ""
 
-#: views/le.php:138
+#: views/le.php:118
 msgid "LetsEncrypt only supports hostname validation via HTTP on port 80."
 msgstr ""
 
@@ -548,7 +533,7 @@ msgstr ""
 msgid "New Certificate Signing Request"
 msgstr ""
 
-#: views/le.php:34
+#: views/le.php:15
 msgid "New Let's Encrypt Certificate"
 msgstr ""
 
@@ -615,7 +600,7 @@ msgid ""
 "of a department within the business. This may be left blank."
 msgstr ""
 
-#: views/le.php:71
+#: views/le.php:51
 msgid "Owners Email"
 msgstr ""
 
@@ -686,7 +671,7 @@ msgstr ""
 msgid "State/Province"
 msgstr ""
 
-#: views/le.php:163
+#: views/le.php:143
 msgid "State/Province/Region"
 msgstr ""
 
@@ -786,7 +771,7 @@ msgstr ""
 msgid "There were no files left for certificate \"%s\" so it was removed"
 msgstr ""
 
-#: views/le.php:79
+#: views/le.php:59
 msgid ""
 "This email address is given to Let's Encrypt. It may be used by them if the "
 "certificate is approaching expiration and it has not been renewed."
@@ -796,7 +781,7 @@ msgstr ""
 msgid "This field cannot be blank and must be alphanumeric"
 msgstr ""
 
-#: views/le.php:63
+#: views/le.php:43
 msgid ""
 "This must be the hostname you are requesting a certificate for. LetsEncrypt "
 "will validate that the hostname resolves to this machine, and attempt to "
@@ -890,10 +875,6 @@ msgstr ""
 msgid "Update Existing Certificate"
 msgstr ""
 
-#: views/le.php:18
-msgid "Update Firewall"
-msgstr ""
-
 #: Certman.class.php:573
 msgid "Updated Certificates"
 msgstr ""
@@ -927,7 +908,7 @@ msgstr ""
 msgid "Use Certificate"
 msgstr "Utiliser le certificat"
 
-#: views/le.php:88 views/ss.php:62 views/up.php:54
+#: views/le.php:68 views/ss.php:62 views/up.php:54
 msgid "Valid Until"
 msgstr ""
 
