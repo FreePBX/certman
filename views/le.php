@@ -5,15 +5,15 @@ if(!empty($message)) {
 }
 
 $alert = "<div class='alert alert-info'><h3>"._("Important")."</h3>";
-$alert .= "<p>"._("Let's Encrypt creation and validation requires unrestricted inbound http access on port 80 to the Let's Encrypt token directories. For more information see:")." </p>";
-$alert .= "<a href='https://wiki.freepbx.org/display/FPG/Certificate+Management+User+Guide'>https://wiki.freepbx.org/display/FPG/Certificate+Management+User+Guide</a>";
+$alert .= "<p>"._("Let's Encrypt certificate creation and validation requires unrestricted inbound http access on port 80 to the Let's Encrypt token directories")." </p>";
+$alert .= "<p>"._("If security is managed by the PBX Firewall module, this process should be automatic. Alternate security methods and external firewalls will require manual configuration.")." </p>";
+$alert .= "<p>"._("For more information see: ")."<a href='https://wiki.sangoma.com/display/FPG/Certificate+Management+User+Guide' target='_blank'>https://wiki.sangoma.com/display/FPG/Certificate+Management+User+Guide</a> </p>";
 $alert .= "</div>";
 ?>
 <div class="container-fluid">
 	<h1><?php echo !empty($cert['cid']) ? _("Edit Let's Encrypt Certificate") : _("New Let's Encrypt Certificate")?></h1>
 	<?php echo !empty($messagehtml) ? $messagehtml : "" ?>
-	<?php echo $alert; ?>
-	<div class='alert alert-info'><?php printf(_("Let's Encrypt Certificates are <strong>automatically</strong> updated by %s when required (Approximately every 2 months). Do not install your own certificate updaters!"), \FreePBX::Config()->get("DASHBOARD_FREEPBX_BRAND")); ?></div>
+	<div class='alert alert-info'><?php echo $alert; printf(_("Let's Encrypt Certificates are <strong>automatically</strong> updated by %s when required (Approximately every 2 months). Do not install your own certificate updaters!"), \FreePBX::Config()->get("DASHBOARD_FREEPBX_BRAND")); ?></div>
 	<div class = "display full-border">
 		<div class="row">
 			<div class="col-sm-12">
