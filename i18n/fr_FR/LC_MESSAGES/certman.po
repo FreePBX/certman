@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-05 13:52+0530\n"
+"POT-Creation-Date: 2020-06-03 07:39+0000\n"
 "PO-Revision-Date: 2017-12-11 22:57+0200\n"
 "Last-Translator: JCattan <jeremie@famillecattan.com>\n"
 "Language-Team: French <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 2.4\n"
 
-#: Certman.class.php:1140 Certman.class.php:1158
+#: Certman.class.php:1136 Certman.class.php:1154
 #, php-format
 msgid "%s already exists!"
 msgstr "%s existe déjà !"
@@ -31,12 +31,12 @@ msgstr "%s existe déjà !"
 msgid "%s is not supported at this time"
 msgstr ""
 
-#: Certman.class.php:1662
+#: Certman.class.php:1658
 #, php-format
 msgid "(%s days)"
 msgstr "(%s jours)"
 
-#: views/le.php:136
+#: views/le.php:114
 msgid "(Port 80)"
 msgstr "(Port 80)"
 
@@ -64,7 +64,7 @@ msgstr ""
 "fortement d'obtenir un vrai certificat d'une autorité reconnue ou par "
 "l'intermédiaire de \"Let's Encrypt\""
 
-#: views/le.php:121
+#: views/le.php:99
 msgid ""
 "A certificate policy (CP) is a document which aims to state what are the "
 "different actors of a public key infrastructure (PKI), their roles and their "
@@ -130,7 +130,7 @@ msgstr ""
 msgid "Certificate"
 msgstr "Certificat"
 
-#: Certman.class.php:1549 Certman.class.php:1564 Certman.class.php:1573
+#: Certman.class.php:1545 Certman.class.php:1560 Certman.class.php:1569
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr "Le certificat %s n'est pas lisible ! Impossible de continuer !"
@@ -143,11 +143,11 @@ msgstr "Autorité de certification"
 msgid "Certificate Authority to Reference"
 msgstr ""
 
-#: Certman.class.php:1657
+#: Certman.class.php:1653
 msgid "Certificate Expired!"
 msgstr "Le certificat est expiré !"
 
-#: views/le.php:53
+#: views/le.php:31
 msgid "Certificate Host Name"
 msgstr "Nom d'hôte du certificat"
 
@@ -175,7 +175,7 @@ msgid ""
 "secure web sessions (HTTPS/WEBRTC[WSS] and more"
 msgstr ""
 
-#: views/le.php:113 views/ss.php:85 views/up.php:97
+#: views/le.php:91 views/ss.php:85 views/up.php:97
 msgid "Certificate Policies"
 msgstr ""
 
@@ -193,7 +193,7 @@ msgstr ""
 msgid "Certificate Type"
 msgstr ""
 
-#: Certman.class.php:1315
+#: Certman.class.php:1311
 msgid "Certificate is empty"
 msgstr "Le certificat est vide"
 
@@ -205,7 +205,7 @@ msgstr "Le certificat est invalide"
 msgid "Certificate name is already in use"
 msgstr "Le nom de certificat est déjà en utilisation"
 
-#: Certman.class.php:524
+#: Certman.class.php:516
 #, php-format
 msgid ""
 "Certificate named \"%s\" has expired. Please update this certificate in "
@@ -214,7 +214,7 @@ msgstr ""
 "Le certificat \"%s\" est expiré. Veuillez le mettre à jour dans le "
 "gestionnaire de certificat"
 
-#: Certman.class.php:550
+#: Certman.class.php:542
 #, php-format
 msgid ""
 "Certificate named \"%s\" is going to expire in less than a month. Please "
@@ -223,7 +223,7 @@ msgstr ""
 "Le certificat \"%s\"  va expirer dans moins de un mois. Veuillez le mettre à "
 "jour dans le gestionnaire de certificat"
 
-#: Certman.class.php:554
+#: Certman.class.php:546
 #, php-format
 msgid "Certificate named \"%s\" is valid"
 msgstr "Le certificat \"%s\" est valide"
@@ -236,7 +236,7 @@ msgstr ""
 msgid "Certificates already exist, no need to generate another one"
 msgstr ""
 
-#: views/le.php:132
+#: views/le.php:110
 msgid "Challenge Over"
 msgstr ""
 
@@ -254,7 +254,7 @@ msgstr ""
 msgid "City or Locality"
 msgstr ""
 
-#: views/le.php:100 views/up.php:74
+#: views/le.php:78 views/up.php:74
 msgid "Common Name"
 msgstr ""
 
@@ -262,7 +262,7 @@ msgstr ""
 msgid "Common Name (Host Name)"
 msgstr ""
 
-#: views/csr.php:106 views/le.php:149
+#: views/csr.php:106 views/le.php:127
 msgid "Country"
 msgstr "Pays"
 
@@ -290,7 +290,7 @@ msgstr ""
 msgid "Default Self-Signed certificate"
 msgstr ""
 
-#: Certman.class.php:443
+#: Certman.class.php:435
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -298,7 +298,7 @@ msgstr "Supprimer"
 msgid "Delete CSR"
 msgstr ""
 
-#: Certman.class.php:459
+#: Certman.class.php:451
 msgid "Delete Certificate"
 msgstr "Détruire le certificat"
 
@@ -334,7 +334,7 @@ msgstr ""
 msgid "Edit Certificate Authority Settings"
 msgstr ""
 
-#: views/le.php:36
+#: views/le.php:15
 msgid "Edit Let's Encrypt Certificate"
 msgstr ""
 
@@ -351,12 +351,8 @@ msgstr ""
 msgid "Failed! [%s]"
 msgstr ""
 
-#: views/le.php:22
-msgid "Firewall Validated"
-msgstr ""
-
-#: views/le.php:16 views/le.php:28
-msgid "Firewall Warning"
+#: views/le.php:10
+msgid "For more information see: "
 msgstr ""
 
 #: views/overview.php:17
@@ -365,11 +361,11 @@ msgid ""
 "which you can then use to issue a certificate to use for this server"
 msgstr ""
 
-#: Certman.class.php:464 views/certgrid.php:14
+#: Certman.class.php:456 views/certgrid.php:14
 msgid "Generate CSR"
 msgstr ""
 
-#: Certman.class.php:464 Console/Certman.class.php:30 assets/js/certman.js:56
+#: Certman.class.php:456 Console/Certman.class.php:30 assets/js/certman.js:56
 msgid "Generate Certificate"
 msgstr ""
 
@@ -411,6 +407,13 @@ msgstr ""
 msgid "I Know what I am doing"
 msgstr ""
 
+#: views/le.php:9
+msgid ""
+"If security is managed by the PBX Firewall module, this process should be "
+"automatic. Alternate security methods and external firewalls will require "
+"manual configuration."
+msgstr ""
+
 #: views/up.php:196
 msgid "If you have a separate private key paste it here."
 msgstr ""
@@ -424,7 +427,11 @@ msgstr ""
 msgid "Import any unmanaged certificates in %s"
 msgstr ""
 
-#: Certman.class.php:1338 Certman.class.php:1342
+#: views/le.php:7
+msgid "Important"
+msgstr ""
+
+#: Certman.class.php:1334 Certman.class.php:1338
 msgid "Imported from file system"
 msgstr ""
 
@@ -442,19 +449,19 @@ msgstr ""
 msgid "Invalid Certificate"
 msgstr ""
 
-#: Certman.class.php:771
+#: Certman.class.php:767
 msgid "Key does not match certificate"
 msgstr ""
 
-#: Certman.class.php:786
+#: Certman.class.php:782
 msgid "Key does not match certificate after password removal"
 msgstr ""
 
-#: Certman.class.php:1284
+#: Certman.class.php:1280
 msgid "Key is empty"
 msgstr ""
 
-#: Certman.class.php:1294
+#: Certman.class.php:1290
 msgid "Key is password protected or malformed"
 msgstr ""
 
@@ -462,7 +469,7 @@ msgstr ""
 msgid "Let's Encrypt"
 msgstr ""
 
-#: views/le.php:39
+#: views/le.php:17
 #, php-format
 msgid ""
 "Let's Encrypt Certificates are <strong>automatically</strong> updated by %s "
@@ -470,19 +477,18 @@ msgid ""
 "certificate updaters!"
 msgstr ""
 
+#: views/le.php:8
+msgid ""
+"Let's Encrypt certificate creation and validation requires unrestricted "
+"inbound http access on port 80 to the Let's Encrypt token directories"
+msgstr ""
+
 #: views/overview.php:23
 msgid "Let's Encrypt:"
 msgstr ""
 
-#: views/le.php:140
+#: views/le.php:118
 msgid "LetsEncrypt only supports hostname validation via HTTP on port 80."
-msgstr ""
-
-#: views/le.php:8
-#, php-format
-msgid ""
-"LetsEncrypt requires the following hosts to be permitted for inbound http "
-"access:<br /> <tt>%s</tt>"
 msgstr ""
 
 #: Console/Certman.class.php:27
@@ -519,11 +525,11 @@ msgstr ""
 msgid "New Certificate Signing Request"
 msgstr ""
 
-#: views/le.php:36
+#: views/le.php:15
 msgid "New Let's Encrypt Certificate"
 msgstr ""
 
-#: Certman.class.php:737
+#: Certman.class.php:733
 msgid "No Certificate provided"
 msgstr ""
 
@@ -543,7 +549,7 @@ msgid "No Private key to reference."
 msgstr ""
 
 #: Certman.class.php:135 Certman.class.php:233 Certman.class.php:241
-#: Certman.class.php:733
+#: Certman.class.php:729
 msgid "No Private key to reference. Try generating a CSR first."
 msgstr ""
 
@@ -586,14 +592,8 @@ msgid ""
 "of a department within the business. This may be left blank."
 msgstr ""
 
-#: views/le.php:73
+#: views/le.php:51
 msgid "Owners Email"
-msgstr ""
-
-#: views/le.php:30
-msgid ""
-"PBX System Firewall is not in use so this can not be verified. Please "
-"manually verify inbound connectivity."
 msgstr ""
 
 #: views/up.php:145
@@ -622,7 +622,7 @@ msgstr ""
 msgid "Private Key File to use for this CA"
 msgstr ""
 
-#: Certman.class.php:448
+#: Certman.class.php:440
 msgid "Reset"
 msgstr "Reset"
 
@@ -642,11 +642,11 @@ msgstr ""
 msgid "Set certificate default by id"
 msgstr ""
 
-#: Certman.class.php:572
+#: Certman.class.php:564
 msgid "Some Certificates are expiring or have expired"
 msgstr ""
 
-#: Certman.class.php:575
+#: Certman.class.php:567
 msgid ""
 "Some SSL/TLS Certificates have been automatically updated. You may need to "
 "ensure all services have the correctly update certificate by restarting PBX "
@@ -663,11 +663,11 @@ msgstr ""
 msgid "State/Province"
 msgstr ""
 
-#: views/le.php:165
+#: views/le.php:143
 msgid "State/Province/Region"
 msgstr ""
 
-#: Certman.class.php:453
+#: Certman.class.php:445
 msgid "Submit"
 msgstr "Envoyer"
 
@@ -693,7 +693,7 @@ msgstr ""
 msgid "Successfully set '%s' as the default certificate"
 msgstr ""
 
-#: Certman.class.php:510 Certman.class.php:537
+#: Certman.class.php:502 Certman.class.php:529
 #, php-format
 msgid "Successfully updated certificate named \"%s\""
 msgstr ""
@@ -748,7 +748,7 @@ msgstr ""
 msgid "There was an error importing the certificate: %s"
 msgstr ""
 
-#: Certman.class.php:520 Certman.class.php:546
+#: Certman.class.php:512 Certman.class.php:538
 #, php-format
 msgid "There was an error updating certificate \"%s\": %s"
 msgstr ""
@@ -758,27 +758,12 @@ msgstr ""
 msgid "There was an error updating the certificate: %s"
 msgstr ""
 
-#: Certman.class.php:488
+#: Certman.class.php:480
 #, php-format
 msgid "There were no files left for certificate \"%s\" so it was removed"
 msgstr ""
 
-#: views/le.php:24
-msgid ""
-"These entries are correctly set up in the Firewall module. However, it's "
-"possible that other external firewalls may block access. If you are having "
-"problems validating your certificate, this could be the issue."
-msgstr ""
-
-#: views/le.php:18
-msgid ""
-"These hosts <strong>are not configured in the System Firewall</strong>. "
-"LetsEncrypt will not be able to validate this host, and certificate "
-"issueance will fail. To automatically add these hosts, please click on the "
-"'Update Firewall' button."
-msgstr ""
-
-#: views/le.php:81
+#: views/le.php:59
 msgid ""
 "This email address is given to Let's Encrypt. It may be used by them if the "
 "certificate is approaching expiration and it has not been renewed."
@@ -788,7 +773,7 @@ msgstr ""
 msgid "This field cannot be blank and must be alphanumeric"
 msgstr ""
 
-#: views/le.php:65
+#: views/le.php:43
 msgid ""
 "This must be the hostname you are requesting a certificate for. LetsEncrypt "
 "will validate that the hostname resolves to this machine, and attempt to "
@@ -832,24 +817,24 @@ msgstr ""
 msgid "Unable to generate certificate: %s"
 msgstr ""
 
-#: Certman.class.php:767
+#: Certman.class.php:763
 msgid "Unable to read key. Is it password protected?"
 msgstr ""
 
-#: Certman.class.php:1256
+#: Certman.class.php:1252
 #, php-format
 msgid "Unable to remove %s"
 msgstr ""
 
-#: Certman.class.php:1374
+#: Certman.class.php:1370
 msgid "Unable to remove ca.cfg"
 msgstr ""
 
-#: Certman.class.php:1369
+#: Certman.class.php:1365
 msgid "Unable to remove ca.crt"
 msgstr ""
 
-#: Certman.class.php:1364
+#: Certman.class.php:1360
 msgid "Unable to remove ca.key"
 msgstr ""
 
@@ -861,20 +846,20 @@ msgstr ""
 msgid "Unable to remove the Certificate Signing Request"
 msgstr ""
 
-#: Certman.class.php:1379
+#: Certman.class.php:1375
 msgid "Unable to remove tmp.cfg"
 msgstr ""
 
-#: Certman.class.php:750 Certman.class.php:754 Certman.class.php:758
+#: Certman.class.php:746 Certman.class.php:750 Certman.class.php:754
 #, php-format
 msgid "Unable to write to %s"
 msgstr ""
 
-#: Certman.class.php:1647
+#: Certman.class.php:1643
 msgid "Unknown Expiration"
 msgstr ""
 
-#: Certman.class.php:458
+#: Certman.class.php:450
 msgid "Update Certificate"
 msgstr ""
 
@@ -882,11 +867,7 @@ msgstr ""
 msgid "Update Existing Certificate"
 msgstr ""
 
-#: views/le.php:19
-msgid "Update Firewall"
-msgstr ""
-
-#: Certman.class.php:575
+#: Certman.class.php:567
 msgid "Updated Certificates"
 msgstr ""
 
@@ -919,7 +900,7 @@ msgstr ""
 msgid "Use Certificate"
 msgstr "Utiliser le certificat"
 
-#: views/le.php:90 views/ss.php:62 views/up.php:54
+#: views/le.php:68 views/ss.php:62 views/up.php:54
 msgid "Valid Until"
 msgstr ""
 
