@@ -594,7 +594,7 @@ class Certman implements BMO {
 	 */
 	public function updateLE($host, $settings = false, $staging = false) {
 		$api 		= $this->getFirewallAPI();
-		$Le_result 	= $api->LE_Rules_Status("enabled");
+		$api->LE_Rules_Status("enabled");
 		
 		if (!is_array($settings)) {
 			throw new Exception("BUG: Settings is not an array. Old code?");
@@ -687,7 +687,15 @@ class Certman implements BMO {
 			chmod($location."/".$host.".pem",0600);
 			chmod($location."/".$host."-ca-bundle.crt",0600);
 		}
-		$api->LE_Rules_Status("disabled");
+
+		/**
+		 * We leave between 1 and 2 minutes before to close the door.
+		 */
+		$spool_dir 	= $this->FreePBX->Config->get("ASTSPOOLDIR");
+		file_put_contents($spool_dir."/tmp/lejob", "/usr/sbin/fwconsole firewall lerules disable > ".$spool_dir."/tmp/lejobresult");
+		$at_path	= fpbx_which("at");
+		$res_at 	= exec($at_path." now + 2 minutes -f ".$spool_dir."/tmp/lejob 2>&1");
+
 		return true;
 	}
 
