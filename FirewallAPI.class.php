@@ -59,23 +59,37 @@ class FirewallAPI {
 	 * @return bool
 	 */
 	public function LE_Rules_Status($status = 'disabled'){
-		if(!preg_match('/disabled$|enabled$/', $status)){
+		$module_info = module_getinfo('firewall', MODULE_STATUS_ENABLED);
+
+		if(!preg_match('/disabled$|enabled$/', $status) || !isset($module_info["firewall"])){
+			/**
+			 * Returns false if FW module is not installed or status not matched.
+			 */
 			return false;
 		}
-		$this->fixeLeFilter($status);
-		$i	= 0;
-		$fw	= false;
 
-		/**
-		 * We are waiting Firewall up. 
-		 * Set timeout at 10" max.
-		 */
-		while ($fw == false && $i < 10){
-			$i++;
-			$fw = $this->fwobj->getConfig("status");
-			sleep(1);
+		if($this->fw){
+			/**
+			 * Setting up LE rules only if FW is enabled
+			 */
+			$this->fixeLeFilter($status);
+			$i	= 0;
+			$fw	= false;
+
+			/**
+			 * We are waiting Firewall up. 
+			 * Set timeout at 10" max.
+			 */
+			while ($fw == false && $i < 10){
+				$i++;
+				$fw = $this->fwobj->getConfig("status");
+				sleep(1);
+			}
+			sleep(2); 	// hopefully LE request will be launched before closing door.
+						// Otherwise, need to check if the system received acme-change request.
+			return $fw;			
 		}
-		return $fw;
+		return true;
 	}
 	
 	/**
@@ -84,10 +98,12 @@ class FirewallAPI {
 	 * @return void
 	 */
 	public function fixeLeFilter($status = 'disabled'){
-		$adv = $this->getAdvancedSettings();
-		$adv["lefilter"] = $status;
-		$this->fwobj->setConfig("advancedsettings", $adv);
-		$this->fwobj->restartFirewall();
+		if($this->fw){
+			$adv = $this->getAdvancedSettings();
+			$adv["lefilter"] = $status;
+			$this->fwobj->setConfig("advancedsettings", $adv);
+			$this->fwobj->restartFirewall();
+		}
 	}
 }
 
