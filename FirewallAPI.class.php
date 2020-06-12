@@ -85,8 +85,7 @@ class FirewallAPI {
 				$fw = $this->fwobj->getConfig("status");
 				sleep(1);
 			}
-			sleep(2); 	// hopefully LE request will be launched before closing door.
-						// Otherwise, need to check if the system received acme-change request.
+			sleep(2); 
 			return $fw;			
 		}
 		return true;
