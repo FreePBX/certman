@@ -86,7 +86,6 @@ class FirewallAPI {
 				sleep(1);
 			}
 			sleep(2); 
-			
 			return $fw;			
 		}
 		return true;
