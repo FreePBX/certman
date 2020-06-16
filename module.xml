@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>13.0.43</version>
+	<version>13.0.44</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -13,6 +13,7 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
+		*13.0.44* FREEPBX-21597 Certman LE Gui frozen 
 		*13.0.43* Bugfix/FREEPBX-21581 whoops exception errorexception 13 
 		*13.0.42* FREEI-1604 Add option to define pre and post LE renewal scripts 
 		*13.0.41* FREEI-713 Add: Validity period of the certificate (in days) in Advanced Settings 
