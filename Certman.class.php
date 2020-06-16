@@ -655,6 +655,8 @@ class Certman implements \BMO {
 			file_put_contents($this->FreePBX->Config->get("AMPWEBROOT").$pathCheck,$token);
 			$pest = new \PestJSON('http://mirror1.freepbx.org');
 			$pest->curl_opts[CURLOPT_FOLLOWLOCATION] = true;
+			$pest->curl_opts[CURLOPT_CONNECTTIMEOUT] = 10;			
+			$pest->curl_opts[CURLOPT_TIMEOUT] = 30;
 			$thing = $pest->get('/lechecker.php',  array('host' => $host, 'path' => $pathCheck, 'token' => $token, 'type' => $challengetype));
 			if(empty($thing)) {
 				throw new \Exception("No valid response from http://mirror1.freepbx.org");
