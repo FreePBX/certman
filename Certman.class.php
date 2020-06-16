@@ -587,12 +587,29 @@ class Certman implements \BMO {
 	 * @return boolean          True if success, false if not
 	 */
 	public function updateLE($host, $settings = false, $staging = false) {
+		/**
+		 * Enable LE rules and set a delay for disabling LE rules.
+		 * The time remaining is between 1 and 2 minutes before to close the door.
+		 * It's good to close the door even if there is any error before the end of process.
+		 * No need to execute a delay if this one is not performed yet.
+		 */		
 		$api 		= $this->getFirewallAPI();
-		$Le_result 	= $api->LE_Rules_Status("enabled");
-
-		if(!$Le_result) {
-			throw new \Exception("Firewall issue: Check if the Firewall is enabled.");
+		$spool_dir 	= $this->FreePBX->Config->get("ASTSPOOLDIR");
+		$at_path	= fpbx_which("at");
+		$rm_path	= fpbx_which("rm");
+		$fwc_path	= fpbx_which("fwconsole");
+		if(!empty($at_path)){
+			if(!file_exists("$spool_dir/tmp/leflag")){
+				$api->LE_Rules_Status("enabled");
+				file_put_contents("$spool_dir/tmp/leflag", "1");
+				file_put_contents("$spool_dir/tmp/lejob", "$rm_path -f $spool_dir/tmp/leflag; $fwc_path firewall lerules disable > $spool_dir/tmp/lejobresult");
+				exec("$at_path now + 2 minutes -f $spool_dir/tmp/lejob 2>&1");
+			}
 		}
+		else{
+			throw new \Exception("Warning: 'at' doesn't exist. Please install 'at' through console '# yum install at' and try again.");;
+		}
+
 
 		if (!is_array($settings)) {
 			throw new \Exception("BUG: Settings is not an array. Old code?");
@@ -685,7 +702,7 @@ class Certman implements \BMO {
 			chmod($location."/".$host.".pem",0600);
 			chmod($location."/".$host."-ca-bundle.crt",0600);
 		}
-		$api->LE_Rules_Status("disabled");
+
 		return true;
 	}
 
