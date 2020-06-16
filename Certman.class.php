@@ -616,7 +616,6 @@ class Certman implements BMO {
 			throw new \Exception("Warning: 'at' doesn't exist. Please install 'at' through console '# yum install at' and try again.");;
 		}
 
-		
 		if (!is_array($settings)) {
 			throw new Exception("BUG: Settings is not an array. Old code?");
 		}
