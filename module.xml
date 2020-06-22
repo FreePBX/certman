@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>16.0.2</version>
+	<version>16.0.3</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -13,6 +13,7 @@
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
 	<changelog>
+		*16.0.3* FREEPBX-21600 fixing -SRTP selection was Enabling DTLS 
 		*16.0.2* Bugfix/FREEI-1464 
 		*16.0.1alpha* 16.0.1 alpha release
 	</changelog>
