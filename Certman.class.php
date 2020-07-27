@@ -6,7 +6,8 @@
 namespace FreePBX\modules\Certman;
 class Logger { function __call($name, $arguments) { dbug(date('Y-m-d H:i:s')." [$name] ${arguments[0]}"); }}
 namespace FreePBX\modules;
-include 'vendor/autoload.php';
+
+include_once __DIR__."/vendor/autoload.php";
 use Composer\CaBundle\CaBundle;
 class Certman implements \BMO {
 	/* Asterisk Defaults */
