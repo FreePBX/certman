@@ -5,7 +5,8 @@
 //	Copyright 2018 Sangoma Technologies.
 namespace FreePBX\modules;
 
-include 'vendor/autoload.php';
+include_once __DIR__."/vendor/autoload.php";
+
 use Composer\CaBundle\CaBundle;
 use BMO;
 use PDO;
