@@ -50,7 +50,11 @@ class FirewallAPI {
 		}
 		return false;
 	}
-		
+	public function setAdvancedSettings($adv){
+		if($this->fw){
+			$this->fwobj->setConfig("advancedsettings", $adv);
+		}
+	}	
 	
 	/**
 	 * LE_Rules_Status
