@@ -8,8 +8,11 @@ class Logger { function __call($name, $arguments) { dbug(date('Y-m-d H:i:s')." [
 namespace FreePBX\modules;
 include 'vendor/autoload.php';
 use Composer\CaBundle\CaBundle;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
+use Exception;
 class Certman implements \BMO {
-	/* Asterisk Defaults */
+/* Asterisk Defaults */
 	private $defaults = array(
 		"sip" => array(
 			"dtlsenable" => "no",
@@ -592,27 +595,12 @@ class Certman implements \BMO {
 		 * The time remaining is between 1 and 2 minutes before to close the door.
 		 * It's good to close the door even if there is any error before the end of process.
 		 * No need to execute a delay if this one is not performed yet.
+		 * Using process to handle enable and disable of LE Rules 
 		 */		
-		$api 		= $this->getFirewallAPI();
-		$spool_dir 	= $this->FreePBX->Config->get("ASTSPOOLDIR");
-		$at_path	= fpbx_which("at");
-		$rm_path	= fpbx_which("rm");
-		$fwc_path	= fpbx_which("fwconsole");
-		if(!empty($at_path)){
-			if(!file_exists("$spool_dir/tmp/leflag")){
-				$api->LE_Rules_Status("enabled");
-				file_put_contents("$spool_dir/tmp/leflag", "1");
-				file_put_contents("$spool_dir/tmp/lejob", "$rm_path -f $spool_dir/tmp/leflag; $fwc_path firewall lerules disable > $spool_dir/tmp/lejobresult");
-				exec("$at_path now + 2 minutes -f $spool_dir/tmp/lejob 2>&1");
-			}
-		}
-		else{
-			throw new \Exception("Warning: 'at' doesn't exist. Please install 'at' through console '# yum install at' and try again.");;
-		}
-
-
+		$leenable = $this->enableFirewallLeRules();
 		if (!is_array($settings)) {
-			throw new \Exception("BUG: Settings is not an array. Old code?");
+			$this->disableFirewallLeRules($leenable);
+			throw new Exception("BUG: Settings is not an array. Old code?");
 		}
 
 		// Get our variables from $settings
@@ -647,7 +635,9 @@ class Certman implements \BMO {
 			if(!file_exists($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck)) {
 				$mkdirok = @mkdir($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck,0777);
 				if (!$mkdirok) {
-					throw new \Exception("Unable to create directory ".$this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck);
+					$this->disableFirewallLeRules($leenable);
+					throw new Exception("Unable to create directory ".$this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck);
+
 				}
 			}
 			$token = bin2hex(openssl_random_pseudo_bytes(16));
@@ -659,10 +649,12 @@ class Certman implements \BMO {
 			$pest->curl_opts[CURLOPT_TIMEOUT] = 30;
 			$thing = $pest->get('/lechecker.php',  array('host' => $host, 'path' => $pathCheck, 'token' => $token, 'type' => $challengetype));
 			if(empty($thing)) {
-				throw new \Exception("No valid response from http://mirror1.freepbx.org");
+				$this->disableFirewallLeRules($leenable);
+				throw new Exception("No valid response from http://mirror1.freepbx.org");
 			}
 			if(!$thing['status']) {
-				throw new \Exception("Error '".$thing['message']."' when requesting $challengetype://$host/$pathCheck");
+				$this->disableFirewallLeRules($leenable);
+				throw new Exception("Error '".$thing['message']."' when requesting $challengetype://$host/$pathCheck");
 			}
 			@unlink($this->FreePBX->Config->get("AMPWEBROOT").$pathCheck);
 		}
@@ -683,7 +675,8 @@ class Certman implements \BMO {
 		}
 
 		if(!file_exists($location."/".$host."/private.pem") || !file_exists($location."/".$host."/cert.pem")) {
-			throw new \Exception("Certificates are missing. Unable to continue");
+			$this->disableFirewallLeRules($leenable);
+			throw new Exception("Certificates are missing. Unable to continue");
 		}
 
 		if(file_exists($location."/".$host)) {
@@ -704,8 +697,56 @@ class Certman implements \BMO {
 			chmod($location."/".$host.".pem",0600);
 			chmod($location."/".$host."-ca-bundle.crt",0600);
 		}
-
+		$this->disableFirewallLeRules($leenable);
 		return true;
+	}
+
+	/* check lerule status*/
+	private function enableFirewallLeRules() {
+		$leenable = false;
+		$api 		= $this->getFirewallAPI();
+		$fwc_path	= fpbx_which("fwconsole");
+		$module_info = module_getinfo('firewall', MODULE_STATUS_ENABLED);
+		if(isset($module_info["firewall"]) && $api->isAvailable()){
+			$adv = $api->getAdvancedSettings();
+			if($adv['lefilter'] == 'disabled'){
+				$command = $fwc_path.' firewall lerules enable';
+				$leenable = $this->executecommand($command,$api,'enabled');
+				if($leenable){
+					//lets wait for some seconds to restart firewall and to load iptables
+					sleep(10);
+				}
+			}
+		}
+		return $leenable;
+	}
+
+	/* disable firewall lerules */
+	private function disableFirewallLeRules($leenable=false) {
+		if($leenable){
+			$api 		= $this->getFirewallAPI();
+			$fwc_path	= fpbx_which("fwconsole");
+			$command = $fwc_path.' firewall lerules disable';
+			$this->executecommand($command,$api,'disabled');
+		}
+	}
+
+	/* execute  command using process */
+	private function executecommand($command,$api,$status){
+		$process = new Process($command);
+		try {
+			$process->setTimeout(180);
+			$process->mustRun();
+			$out = $process->getOutput();
+			$adv = $api->getAdvancedSettings();
+			$adv["lefilter"] = $status;
+			$api->setAdvancedSettings($adv);
+			return true;
+		} catch (ProcessFailedException $e) {
+				dbug("Unable to run command $command ".$e->getMessage());
+				return false;
+		}
+	
 	}
 
 	/**
