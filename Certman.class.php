@@ -480,7 +480,7 @@ class Certman implements BMO {
 	 *
 	 * @return [type] [description]
 	 */
-	public function checkUpdateCertificates() {
+	public function checkUpdateCertificates($force = false) {
 		$certs = $this->getAllManagedCertificates();
 		$messages = array();
 		foreach($certs as $cert) {
@@ -527,7 +527,7 @@ class Certman implements BMO {
 					$messages[] = array('type' => 'warning', 'message' => sprintf(_('Certificate named "%s" has expired. Please update this certificate in Certificate Manager'),$cert['basename']));
 					continue;
 				}
-			} elseif (time() > $renewafter) {
+			} elseif (time() > $renewafter || $force) {
 				// It hasn't expired, but it should be renewed.
 				if($cert['type'] == 'le') {
 					try {
@@ -536,7 +536,7 @@ class Certman implements BMO {
 							"state" => $cert['additional']['ST'],
 							"challengetype" => "http", // https will not work
 							"email" => $cert['additional']['email']
-						));
+						),false,$force);
 						$messages[] = array('type' => 'success', 'message' => sprintf(_('Successfully updated certificate named "%s"'),$cert['basename']));
 						$this->FreePBX->astman->Reload();
 						//Until https://issues.asterisk.org/jira/browse/ASTERISK-25966 is fixed
@@ -594,7 +594,7 @@ class Certman implements BMO {
 	 *
 	 * @return boolean          True if success, false if not
 	 */
-	public function updateLE($host, $settings = false, $staging = false) {
+	public function updateLE($host, $settings = false, $staging = false,$force =false) {
 		/**
 		 * Enable LE rules and set a delay for disabling LE rules.
 		 * The time remaining is between 1 and 2 minutes before to close the door.
@@ -628,7 +628,7 @@ class Certman implements BMO {
 			$certdata = openssl_x509_parse(file_get_contents($certfile));
 			// If it expires in less than a month, we want to renew it.
 			$renewafter = $certdata['validTo_time_t']-(86400*30);
-			if (time() > $renewafter) {
+			if (time() > $renewafter || $force) {
 				// Less than a month left, we need to renew.
 				$needsgen = true;
 			}
@@ -675,7 +675,12 @@ class Certman implements BMO {
 			if (!empty($email)) {
 				$le->contact = array($email);
 			}
-			$le->signDomains(array($host));
+			try{
+				$le->signDomains(array($host));
+			} catch(Exception $e) {
+				$this->disableFirewallLeRules($leenable);
+				throw new Exception($e->getMessage());
+			}
 		}
 
 		if(!file_exists($location."/".$host."/private.pem") || !file_exists($location."/".$host."/cert.pem")) {
@@ -714,12 +719,8 @@ class Certman implements BMO {
 		if(isset($module_info["firewall"]) && $api->isAvailable()){
 			$adv = $api->getAdvancedSettings();
 			if($adv['lefilter'] == 'disabled'){
-				$command = $fwc_path.' firewall lerules enable';
-				$leenable = $this->executecommand($command,$api,'enabled');
-				if($leenable){
-					//lets wait for some seconds to restart firewall and to load iptables
-					sleep(10);
-				}
+				touch($this->FreePBX->Config->get("ASTSPOOLDIR")."/incron/certman.iptablesLEenable");
+				$leenable = true;
 			}
 		}
 		return $leenable;
@@ -728,29 +729,8 @@ class Certman implements BMO {
 	/* disable firewall lerules */
 	private function disableFirewallLeRules($leenable=false) {
 		if($leenable){
-			$api 		= $this->getFirewallAPI();
-			$fwc_path	= fpbx_which("fwconsole");
-			$command = $fwc_path.' firewall lerules disable';
-			$this->executecommand($command,$api,'disabled');
+			touch($this->FreePBX->Config->get("ASTSPOOLDIR")."/incron/certman.iptablesLEdisable");
 		}
-	}
-
-	/* execute  command using process */
-	private function executecommand($command,$api,$status){
-		$process = new Process($command);
-		try {
-			$process->setTimeout(180);
-			$process->mustRun();
-			$out = $process->getOutput();
-			$adv = $api->getAdvancedSettings();
-			$adv["lefilter"] = $status;
-			$api->setAdvancedSettings($adv);
-			return true;
-		} catch (ProcessFailedException $e) {
-				dbug("Unable to run command $command ".$e->getMessage());
-				return false;
-		}
-	
 	}
 
 	/**

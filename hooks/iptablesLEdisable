@@ -1,0 +1,13 @@
+#!/usr/bin/env php
+<?php
+//lets keep it open for 60 seconds
+sleep(60);
+$cmds[] ='iptables -I fpbxfirewall -p tcp -m state --state ESTABLISHED,RELATED -j ACCEPT';
+$cmds[] ='iptables -D fpbxfirewall -p tcp ! --dport 80 -m state --state ESTABLISHED,RELATED -j ACCEPT';
+$cmds[] ='iptables -D INPUT -p tcp --dport 80 -j lefilter';		
+$cmds[] ='iptables -F lefilter';
+$cmds[] ='iptables -X lefilter';
+$cmds[] ='iptables-save';
+foreach($cmds as $cmd) {
+	 exec($cmd . "&>> /var/log/asterisk/cermanlerules.log");
+}
