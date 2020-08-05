@@ -719,9 +719,9 @@ class Certman implements BMO {
 		if(isset($module_info["firewall"]) && $api->isAvailable()){
 			$adv = $api->getAdvancedSettings();
 			if($adv['lefilter'] == 'disabled'){
+				dbug('calling incron/certman.iptablesLEenable');
 				touch($this->FreePBX->Config->get("ASTSPOOLDIR")."/incron/certman.iptablesLEenable");
 				$leenable = true;
-				sleep(10);
 			}
 		}
 		return $leenable;

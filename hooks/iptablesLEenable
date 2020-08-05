@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+touch("var/spool/asterisk/certman.iptablesLEenable".microtime(true));
 $cmds[] ='iptables -w -N lefilter';                                   //this will add new chain with name lerules and below are the rules 
 $cmds[] ='iptables -w -A lefilter -m state --state NEW -j ACCEPT';
 $cmds[] ='iptables -w -A lefilter -m string --string "GET /.well-known/acme-challenge/" --algo kmp --from 52 --to 53 -j ACCEPT';
