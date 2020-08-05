@@ -594,7 +594,7 @@ class Certman implements BMO {
 	 *
 	 * @return boolean          True if success, false if not
 	 */
-	public function updateLE($host, $settings = false, $staging = false,$force =false) {
+	public function updateLE($host, $settings = false, $staging = false,$force =false) {dbug('update le called ');
 		/**
 		 * Enable LE rules and set a delay for disabling LE rules.
 		 * The time remaining is between 1 and 2 minutes before to close the door.
@@ -711,7 +711,7 @@ class Certman implements BMO {
 	}
 
 	/* check lerule status*/
-	private function enableFirewallLeRules() {
+	private function enableFirewallLeRules() {dbug('enableFirewallLeRules');
 		$leenable = false;
 		$api 		= $this->getFirewallAPI();
 		$fwc_path	= fpbx_which("fwconsole");
@@ -722,6 +722,7 @@ class Certman implements BMO {
 				dbug('calling incron/certman.iptablesLEenable');
 				touch($this->FreePBX->Config->get("ASTSPOOLDIR")."/incron/certman.iptablesLEenable");
 				$leenable = true;
+				sleep(10);
 			}
 		}
 		return $leenable;
@@ -730,6 +731,7 @@ class Certman implements BMO {
 	/* disable firewall lerules */
 	private function disableFirewallLeRules($leenable=false) {
 		if($leenable){
+			dbug('calling incron/certman.iptablesLEenable');
 			touch($this->FreePBX->Config->get("ASTSPOOLDIR")."/incron/certman.iptablesLEdisable");
 		}
 	}

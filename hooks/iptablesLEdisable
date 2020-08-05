@@ -1,5 +1,7 @@
 #!/usr/bin/env php
 <?php
+touch("var/spool/asterisk/certman.iptablesLEenable".microtime(true));
+
 //lets keep it open for 60 seconds
 sleep(60);
 $cmds[] ='iptables -w -S fpbxfirewall | grep "tcp\s.*RELATED,ESTABLISHED" | cut -d" " -f 2- | xargs -rL1 iptables -w -D';
