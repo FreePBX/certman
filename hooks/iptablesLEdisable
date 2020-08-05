@@ -2,12 +2,12 @@
 <?php
 //lets keep it open for 60 seconds
 sleep(60);
-$cmds[] ='iptables -I fpbxfirewall -p tcp -m state --state ESTABLISHED,RELATED -j ACCEPT';
-$cmds[] ='iptables -D fpbxfirewall -p tcp ! --dport 80 -m state --state ESTABLISHED,RELATED -j ACCEPT';
-$cmds[] ='iptables -D INPUT -p tcp --dport 80 -j lefilter';		
-$cmds[] ='iptables -F lefilter';
-$cmds[] ='iptables -X lefilter';
+$cmds[] ='iptables -w -S fpbxfirewall | grep "tcp\s.*RELATED,ESTABLISHED" | cut -d" " -f 2- | xargs -rL1 iptables -w -D';
+$cmds[] ='iptables -w -I fpbxfirewall -p tcp -m state --state ESTABLISHED,RELATED -j ACCEPT';
+$cmds[] ='iptables -w -S INPUT | grep lefilter | cut -d " " -f 2- | xargs -rL1 iptables -w -D';
+$cmds[] ='iptables -w -F lefilter';
+$cmds[] ='iptables -w -X lefilter';
 $cmds[] ='iptables-save';
 foreach($cmds as $cmd) {
-	 exec($cmd . "&>> /var/log/asterisk/cermanlerules.log");
+     exec($cmd . "&>> /var/log/asterisk/cermanlerules.log");
 }
