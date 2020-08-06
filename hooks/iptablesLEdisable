@@ -2,8 +2,10 @@
 <?php
 if(file_exists("/var/spool/asterisk/certman.iptablesLEenable_running")){
 	exec('rm /var/spool/asterisk/certman.iptablesLEenable_running');
+}else {
+	//don't want to run now 
+	exit;
 }
-touch("/var/spool/asterisk/certman.iptablesLEdisable".microtime(true));
 //lets keep it open for 60 seconds
 sleep(60);
 $cmds[] ='iptables -w -S fpbxfirewall | grep "tcp\s.*RELATED,ESTABLISHED" | cut -d" " -f 2- | xargs -rL1 iptables -w -D';
