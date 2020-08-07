@@ -731,10 +731,72 @@ class Certman implements BMO {
 	/* disable firewall lerules */
 	private function disableFirewallLeRules($leenable=false) {
 		if($leenable){
-			dbug('calling incron/certman.iptablesLEenable');
-			touch($this->FreePBX->Config->get("ASTSPOOLDIR")."/incron/certman.iptablesLEdisable");
+			$this->runHook("iptablesLEdisable");
 		}
 	}
+
+
+	public function runHook($hookname, $params = false) {
+		// Runs a new style Syadmin hook
+		if (!file_exists("/etc/incron.d/sysadmin")) {
+			throw new \Exception("Sysadmin RPM not up to date");
+		}
+
+		$basedir = "/var/spool/asterisk/incron";
+		if (!is_dir($basedir)) {
+			throw new \Exception("$basedir is not a directory");
+		}
+
+		// Does our hook actually exist?
+		if (!file_exists(__DIR__."/hooks/$hookname")) {
+			throw new \Exception("Hook $hookname doesn't exist");
+		}
+
+
+		// Cool. So I want to run this hook..
+		$filename = "$basedir/certman.$hookname";
+
+		dbug("calling hook ". $filename);
+
+
+
+		// Do I have any params?
+		if ($params) {
+			// Oh. I do. If it's an array, json encode and base64
+			if (is_array($params)) {
+				$b = base64_encode(gzcompress(json_encode($params)));
+				// Note we derp the base64, changing / to _, because filepath.
+				$filename .= ".".str_replace('/', '_', $b);
+			} else {
+				// Cast it to a string if it's anything else, and then make sure
+				// it doesn't have any spaces.
+				$filename .= ".".preg_replace("/[[:blank:]]+/", "", (string) $params);
+			}
+		}
+
+		// Make sure it doesn't exist, if it was left hanging around
+		// for some reason
+		@unlink($filename);
+
+		$fh = fopen($filename, "w+");
+		if ($fh === false) {
+			// WTF, unable to create file?
+			return false;
+		}
+
+		// Now incron does its thing.
+		fclose($fh);
+
+		// Wait .5 of a second, make sure it's been deleted.
+		usleep(500000);
+		if (!file_exists($filename)) {
+			return true;
+		}
+		// Odd. It should be gone. Something went wrong.
+		return false;
+	}
+
+
 
 	/**
 	 * FreePBX chown hooks

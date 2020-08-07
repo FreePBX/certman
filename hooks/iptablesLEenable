@@ -1,11 +1,11 @@
 #!/usr/bin/env php
 <?php
-if(file_exists("/var/spool/asterisk/certman.iptablesLEenable_running")){
-	exit;
-}
-touch("/var/spool/asterisk/certman.iptablesLEenable_running");
+#if(file_exists("/var/spool/asterisk/certman.iptablesLEenable_running")){
+#	exit;
+#}
+#touch("/var/spool/asterisk/certman.iptablesLEenable_running");
 
-touch("/var/spool/asterisk/certman.iptablesLEenable".microtime(true));
+#touch("/var/spool/asterisk/certman.iptablesLEenable".microtime(true));
 
 sleep(2);
 $cmds[] ='iptables -w -N lefilter';                                   //this will add new chain with name lerules and below are the rules 
