@@ -603,9 +603,9 @@ class Certman implements BMO {
 		 * No need to execute a delay if this one is not performed yet.
 		 * Using process to handle enable and disable of LE Rules 
 		 */		
-		$leenable = $this->enableFirewallLeRules();
+		$this->enableFirewallLeRules();
 		if (!is_array($settings)) {
-			$this->disableFirewallLeRules($leenable);
+			$this->disableFirewallLeRules();
 			throw new Exception("BUG: Settings is not an array. Old code?");
 		}
 
@@ -641,7 +641,7 @@ class Certman implements BMO {
 			if(!file_exists($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck)) {
 				$mkdirok = @mkdir($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck,0777);
 				if (!$mkdirok) {
-					$this->disableFirewallLeRules($leenable);
+					$this->disableFirewallLeRules();
 					throw new Exception("Unable to create directory ".$this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck);
 				}
 			}
@@ -652,13 +652,18 @@ class Certman implements BMO {
 			$pest->curl_opts[CURLOPT_FOLLOWLOCATION] = true;
 			$pest->curl_opts[CURLOPT_CONNECTTIMEOUT] = 10;			
 			$pest->curl_opts[CURLOPT_TIMEOUT] = 30;
-			$thing = $pest->get('/lechecker.php',  array('host' => $host, 'path' => $pathCheck, 'token' => $token, 'type' => $challengetype));
+			try {
+				$thing = $pest->get('/lechecker.php',  array('host' => $host, 'path' => $pathCheck, 'token' => $token, 'type' => $challengetype));
+			} catch(Exception $e) {
+				$this->disableFirewallLeRules();
+				throw new Exception($e->getMessage());
+			}
 			if(empty($thing)) {
-				$this->disableFirewallLeRules($leenable);
+				$this->disableFirewallLeRules();
 				throw new Exception("No valid response from http://mirror1.freepbx.org");
 			}
 			if(!$thing['status']) {
-				$this->disableFirewallLeRules($leenable);
+				$this->disableFirewallLeRules();
 				throw new Exception("Error '".$thing['message']."' when requesting $challengetype://$host/$pathCheck");
 			}
 			@unlink($this->FreePBX->Config->get("AMPWEBROOT").$pathCheck);
@@ -680,7 +685,7 @@ class Certman implements BMO {
 		}
 
 		if(!file_exists($location."/".$host."/private.pem") || !file_exists($location."/".$host."/cert.pem")) {
-			$this->disableFirewallLeRules($leenable);
+			$this->disableFirewallLeRules();
 			throw new Exception("Certificates are missing. Unable to continue");
 		}
 
@@ -702,56 +707,27 @@ class Certman implements BMO {
 			chmod($location."/".$host.".pem",0600);
 			chmod($location."/".$host."-ca-bundle.crt",0600);
 		}
-		$this->disableFirewallLeRules($leenable);
+		$this->disableFirewallLeRules();
 		return true;
 	}
 
 	/* check lerule status*/
 	private function enableFirewallLeRules() {
-		$leenable = false;
-		$api 		= $this->getFirewallAPI();
-		$fwc_path	= fpbx_which("fwconsole");
+		$api = $this->getFirewallAPI();
 		$module_info = module_getinfo('firewall', MODULE_STATUS_ENABLED);
 		if(isset($module_info["firewall"]) && $api->isAvailable()){
-			$adv = $api->getAdvancedSettings();
-			if($adv['lefilter'] == 'disabled'){
-				$command = $fwc_path.' firewall lerules enable';
-				$leenable = $this->executecommand($command,$api,'enabled');
-				if($leenable){
-					//lets wait for some seconds to restart firewall and to load iptables
-					sleep(10);
-				}
-			}
+			$api->enableLeRules();
+			usleep(500000);
 		}
-		return $leenable;
 	}
 
 	/* disable firewall lerules */
-	private function disableFirewallLeRules($leenable=false) {
-		if($leenable){
-			$api 		= $this->getFirewallAPI();
-			$fwc_path	= fpbx_which("fwconsole");
-			$command = $fwc_path.' firewall lerules disable';
-			$this->executecommand($command,$api,'disabled');
+	private function disableFirewallLeRules() {
+		$api = $this->getFirewallAPI();
+		$module_info = module_getinfo('firewall', MODULE_STATUS_ENABLED);
+		if(isset($module_info["firewall"]) && $api->isAvailable()){
+			$api->disableLeRules();
 		}
-	}
-
-	/* execute  command using process */
-	private function executecommand($command,$api,$status){
-		$process = new Process($command);
-		try {
-			$process->setTimeout(180);
-			$process->mustRun();
-			$out = $process->getOutput();
-			$adv = $api->getAdvancedSettings();
-			$adv["lefilter"] = $status;
-			$api->setAdvancedSettings($adv);
-			return true;
-		} catch (ProcessFailedException $e) {
-				dbug("Unable to run command $command ".$e->getMessage());
-				return false;
-		}
-	
 	}
 
 	/**

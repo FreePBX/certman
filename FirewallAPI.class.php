@@ -16,9 +16,6 @@ class FirewallAPI {
 	/** Firewall object */
 	private $fwobj;
 
-	/** Default hosts to allow in to the 'internal' zone */
-	private $knownhosts = array ("outbound1.letsencrypt.org", "outbound2.letsencrypt.org", "mirror1.freepbx.org", "mirror2.freepbx.org");
-
 	public function __construct() {
 		// Is firewall enabled and active?
 		try {
@@ -54,8 +51,25 @@ class FirewallAPI {
 		if($this->fw){
 			$this->fwobj->setConfig("advancedsettings", $adv);
 		}
-	}	
+	}
 	
+	public function enableLeRules(){
+		if($this->fw){
+			$this->fwobj->enableLeRules();
+		}
+	}
+
+	/**
+	 * disableLERules
+	 *
+	 * @return void
+	 */
+	public function disableLeRules(){
+		if($this->fw){
+			$this->fwobj->disableLeRules();
+		}
+	}
+
 	/**
 	 * LE_Rules_Status
 	 *
