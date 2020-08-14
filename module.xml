@@ -12,6 +12,7 @@
 	<description>
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
+	<more-info>https://wiki.freepbx.org/display/FPG/Certificate+Management+Module</more-info>
 	<changelog>
 		*13.0.46* FREEI-1975 Require composer libraries only once
 		*13.0.45* FREEPBX-21683 fwconsole certificate update error silently shuts down firewall module 
