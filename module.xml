@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>15.0.26</version>
+	<version>15.0.27</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -12,7 +12,9 @@
 	<description>
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
+	<more-info>https://wiki.freepbx.org/display/FPG/Certificate+Management+Module</more-info>
 	<changelog>
+		*15.0.27* Packaging of ver 15.0.27
 		*15.0.26* FREEI-1975 Require composer libraries only once
 		*15.0.25.4* FREEPBX-21683 fwconsole certificate update error silently shuts down firewall module 
 		*15.0.25.3* FREEPBX-21600 fixing -SRTP selection was Enabling DTLS 
