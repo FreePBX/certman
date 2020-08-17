@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>13.0.46</version>
+	<version>13.0.47</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -14,6 +14,7 @@
 	</description>
 	<more-info>https://wiki.freepbx.org/display/FPG/Certificate+Management+Module</more-info>
 	<changelog>
+		*13.0.47* Packaging of ver 13.0.47
 		*13.0.46* FREEI-1975 Require composer libraries only once
 		*13.0.45* FREEPBX-21683 fwconsole certificate update error silently shuts down firewall module 
 		*13.0.44* FREEPBX-21597 Certman LE Gui frozen 
