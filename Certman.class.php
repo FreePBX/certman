@@ -602,9 +602,7 @@ class Certman implements BMO {
 		 * No need to execute a delay if this one is not performed yet.
 		 * Using process to handle enable and disable of LE Rules 
 		 */		
-		$leenable = $this->enableFirewallLeRules();
 		if (!is_array($settings)) {
-			$this->disableFirewallLeRules($leenable);
 			throw new Exception("BUG: Settings is not an array. Old code?");
 		}
 
@@ -626,7 +624,7 @@ class Certman implements BMO {
 		} else {
 			// We DO have a certificate.
 			$certdata = openssl_x509_parse(file_get_contents($certfile));
-			// If it expires in less than a month, we want to renew it.
+			// If it expires	 in less than a month, we want to renew it.
 			$renewafter = $certdata['validTo_time_t']-(86400*30);
 			if (time() > $renewafter || $force) {
 				// Less than a month left, we need to renew.
@@ -634,160 +632,97 @@ class Certman implements BMO {
 			}
 		}
 
-		//check freepbx.org first
-		if($needsgen) {
-			$basePathCheck = "/.freepbx-known";
-			if(!file_exists($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck)) {
-				$mkdirok = @mkdir($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck,0777);
-				if (!$mkdirok) {
-					$this->disableFirewallLeRules($leenable);
-					throw new Exception("Unable to create directory ".$this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck);
+		try{
+			$this->enableFirewallLeRules();
+
+			//check freepbx.org first
+			if($needsgen) {
+				$basePathCheck = "/.freepbx-known";
+				if(!file_exists($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck)) {
+					$mkdirok = @mkdir($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck,0777);
+					if (!$mkdirok) {
+						throw new Exception("Unable to create directory ".$this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck);
+					}
 				}
+				$token = bin2hex(openssl_random_pseudo_bytes(16));
+				$pathCheck = $basePathCheck."/".$token;
+				file_put_contents($this->FreePBX->Config->get("AMPWEBROOT").$pathCheck,$token);
+				$pest = new \PestJSON('http://mirror1.freepbx.org');
+				$pest->curl_opts[CURLOPT_FOLLOWLOCATION] = true;
+				$pest->curl_opts[CURLOPT_CONNECTTIMEOUT] = 10;			
+				$pest->curl_opts[CURLOPT_TIMEOUT] = 30;
+				$thing = $pest->get('/lechecker.php',  array('host' => $host, 'path' => $pathCheck, 'token' => $token, 'type' => $challengetype));
+				if(empty($thing)) {
+					throw new Exception("No valid response from http://mirror1.freepbx.org");
+				}
+				if(!$thing['status']) {
+					throw new Exception("Error '".$thing['message']."' when requesting $challengetype://$host/$pathCheck");
+				}
+				@unlink($this->FreePBX->Config->get("AMPWEBROOT").$pathCheck);
 			}
-			$token = bin2hex(openssl_random_pseudo_bytes(16));
-			$pathCheck = $basePathCheck."/".$token;
-			file_put_contents($this->FreePBX->Config->get("AMPWEBROOT").$pathCheck,$token);
-			$pest = new \PestJSON('http://mirror1.freepbx.org');
-			$pest->curl_opts[CURLOPT_FOLLOWLOCATION] = true;
-			$pest->curl_opts[CURLOPT_CONNECTTIMEOUT] = 10;			
-			$pest->curl_opts[CURLOPT_TIMEOUT] = 30;
-			$thing = $pest->get('/lechecker.php',  array('host' => $host, 'path' => $pathCheck, 'token' => $token, 'type' => $challengetype));
-			if(empty($thing)) {
-				$this->disableFirewallLeRules($leenable);
-				throw new Exception("No valid response from http://mirror1.freepbx.org");
-			}
-			if(!$thing['status']) {
-				$this->disableFirewallLeRules($leenable);
-				throw new Exception("Error '".$thing['message']."' when requesting $challengetype://$host/$pathCheck");
-			}
-			@unlink($this->FreePBX->Config->get("AMPWEBROOT").$pathCheck);
-		}
 
-		//Now check let's encrypt
-		if($needsgen) {
-			$le = new \Analogic\ACME\Lescript($location, $this->FreePBX->Config->get("AMPWEBROOT"), $logger);
-			if($staging) {
-				$le->ca = 'https://acme-staging.api.letsencrypt.org';
-			}
-			$le->countryCode = $countryCode;
-			$le->state = $state;
-			$le->initAccount();
-			if (!empty($email)) {
-				$le->contact = array($email);
-			}
-			try{
+			//Now check let's encrypt
+			if($needsgen) {
+				$le = new \Analogic\ACME\Lescript($location, $this->FreePBX->Config->get("AMPWEBROOT"), $logger);
+				if($staging) {
+					$le->ca = 'https://acme-staging.api.letsencrypt.org';
+				}
+				$le->countryCode = $countryCode;
+				$le->state = $state;
+				$le->initAccount();
+				if (!empty($email)) {
+					$le->contact = array($email);
+				}
 				$le->signDomains(array($host));
-			} catch(Exception $e) {
-				$this->disableFirewallLeRules($leenable);
-				throw new Exception($e->getMessage());
 			}
-		}
 
-		if(!file_exists($location."/".$host."/private.pem") || !file_exists($location."/".$host."/cert.pem")) {
-			$this->disableFirewallLeRules($leenable);
-			throw new Exception("Certificates are missing. Unable to continue");
-		}
+			if(!file_exists($location."/".$host."/private.pem") || !file_exists($location."/".$host."/cert.pem")) {
+				throw new Exception("Certificates are missing. Unable to continue");
+			}
 
-		if(file_exists($location."/".$host)) {
-			//https://community.letsencrypt.org/t/solved-why-isnt-my-certificate-trusted/2479/4
-			copy($location."/".$host."/private.pem",$location."/".$host.".key"); //webserver.key
-			copy($location."/".$host."/chain.pem",$location."/".$host."-ca-bundle.crt"); //ca-bundle.crt
-			copy($location."/".$host."/cert.pem",$location."/".$host.".crt"); //webserver.crt
-			$key = file_get_contents($location."/".$host.".key");
-			$cert = file_get_contents($location."/".$host.".crt");
-			$bundle = file_get_contents($location."/".$host."-ca-bundle.crt");
-			//https://issues.freepbx.org/browse/FREEPBX-14631
-			$root = file_get_contents(__DIR__."/files/x3-root-ca.cert");
-			$bundle = $bundle."\n-----BEGIN CERTIFICATE-----\n".$root."-----END CERTIFICATE-----\n";
-			file_put_contents($location."/".$host."-ca-bundle.crt",$bundle);
-			file_put_contents($location."/".$host.".pem",$key."\n".$cert."\n".$bundle);
-			chmod($location."/".$host.".crt",0600);
-			chmod($location."/".$host.".key",0600);
-			chmod($location."/".$host.".pem",0600);
-			chmod($location."/".$host."-ca-bundle.crt",0600);
+			if(file_exists($location."/".$host)) {
+				//https://community.letsencrypt.org/t/solved-why-isnt-my-certificate-trusted/2479/4
+				copy($location."/".$host."/private.pem",$location."/".$host.".key"); //webserver.key
+				copy($location."/".$host."/chain.pem",$location."/".$host."-ca-bundle.crt"); //ca-bundle.crt
+				copy($location."/".$host."/cert.pem",$location."/".$host.".crt"); //webserver.crt
+				$key = file_get_contents($location."/".$host.".key");
+				$cert = file_get_contents($location."/".$host.".crt");
+				$bundle = file_get_contents($location."/".$host."-ca-bundle.crt");
+				//https://issues.freepbx.org/browse/FREEPBX-14631
+				$root = file_get_contents(__DIR__."/files/x3-root-ca.cert");
+				$bundle = $bundle."\n-----BEGIN CERTIFICATE-----\n".$root."-----END CERTIFICATE-----\n";
+				file_put_contents($location."/".$host."-ca-bundle.crt",$bundle);
+				file_put_contents($location."/".$host.".pem",$key."\n".$cert."\n".$bundle);
+				chmod($location."/".$host.".crt",0600);
+				chmod($location."/".$host.".key",0600);
+				chmod($location."/".$host.".pem",0600);
+				chmod($location."/".$host."-ca-bundle.crt",0600);
+			}
+			$this->disableFirewallLeRules();
+			return true;
+		} catch(Exception $e) {
+			$this->disableFirewallLeRules();
+			throw new Exception($e->getMessage());
 		}
-		$this->disableFirewallLeRules($leenable);
-		return true;
 	}
 
-	/* check lerule status*/
+	/* enable firewall rules */
 	private function enableFirewallLeRules() {
-		$leenable = false;
-		$api 		= $this->getFirewallAPI();
-		$fwc_path	= fpbx_which("fwconsole");
+		$api = $this->getFirewallAPI();
 		$module_info = module_getinfo('firewall', MODULE_STATUS_ENABLED);
 		if(isset($module_info["firewall"]) && $api->isAvailable()){
-			$adv = $api->getAdvancedSettings();
-			if($adv['lefilter'] == 'disabled'){
-				$this->runHook("iptablesLEenable");
-				$leenable = true;
-				sleep(10);
-			}
+			$api->enableLeRules();
+			usleep(500000);
 		}
-		return $leenable;
 	}
 
 	/* disable firewall lerules */
-	private function disableFirewallLeRules($leenable=false) {
-		if($leenable){
-			$this->runHook("iptablesLEdisable", "stop");
+	private function disableFirewallLeRules() {
+		$api = $this->getFirewallAPI();
+		$module_info = module_getinfo('firewall', MODULE_STATUS_ENABLED);
+		if(isset($module_info["firewall"]) && $api->isAvailable()){
+			$api->disableLeRules();
 		}
-	}
-
-	public function runHook($hookname,$params = false) {
-		// Runs a new style Syadmin hook
-		if (!file_exists("/etc/incron.d/sysadmin")) {
-			throw new \Exception("Sysadmin RPM not up to date");
-		}
-
-		$basedir = "/var/spool/asterisk/incron";
-		if (!is_dir($basedir)) {
-			throw new \Exception("$basedir is not a directory");
-		}
-
-		// Does our hook actually exist?
-		if (!file_exists(__DIR__."/hooks/$hookname")) {
-			throw new \Exception("Hook $hookname doesn't exist");
-		}
-
-		// Cool. So I want to run this hook..
-		$filename = "$basedir/certman.$hookname";
-
-		// Do I have any params?
-		if ($params) {
-			// Oh. I do. If it's an array, json encode and base64
-			if (is_array($params)) {
-				$b = base64_encode(gzcompress(json_encode($params)));
-				// Note we derp the base64, changing / to _, because filepath.
-				$filename .= ".".str_replace('/', '_', $b);
-			} else {
-				// Cast it to a string if it's anything else, and then make sure
-				// it doesn't have any spaces.
-				$filename .= ".".preg_replace("/[[:blank:]]+/", "", (string) $params);
-			}
-		}
-
-		// Make sure it doesn't exist, if it was left hanging around
-		// for some reason
-		@unlink($filename);
-
-		$fh = fopen($filename, "w+");
-		if ($fh === false) {
-			// WTF, unable to create file?
-			return false;
-		}
-
-		// Now incron does its thing.
-		fclose($fh);
-
-		// Wait .5 of a second, make sure it's been deleted.
-		usleep(500000);
-		if (!file_exists($filename)) {
-			return true;
-		}
-		throw new \Exception("Hook file '$filename' was not picked up by Incron after .5 seconds. Is it not running?");
-		// Odd. It should be gone. Something went wrong.
-		return false;
 	}
 
 	/**
