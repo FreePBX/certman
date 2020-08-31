@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php
+if(file_exists("/var/spool/asterisk/certman.iptablesLEenable_running")) {
+	exit;
+}
+touch("/var/spool/asterisk/certman.iptablesLEenable_running");
+
+sleep(2);
+$cmds[] ='/usr/sbin/iptables -w -N lefilter'; //this will add new chain with name lerules and below are the rules 
+$cmds[] ='/usr/sbin/iptables -w -A lefilter -m state --state NEW -j ACCEPT';
+$cmds[] ='/usr/sbin/iptables -w -A lefilter -m string --string "GET /.well-known/acme-challenge/" --algo kmp --from 52 --to 53 -j ACCEPT';
+$cmds[] ='/usr/sbin/iptables -w -A lefilter -m string --string "GET /.freepbx-known" --algo kmp --from 52 --to 53 -j ACCEPT';
+$cmds[] ='/usr/sbin/iptables -w -A lefilter -j RETURN';
+$cmds[] ='/usr/sbin/iptables -w -S fpbxfirewall | grep "tcp\s.*RELATED,ESTABLISHED" | cut -d" " -f 2- | xargs -rL1 iptables -w -D';
+$cmds[] ='/usr/sbin/iptables -w -I fpbxfirewall -p tcp ! --dport 80 -m state --state ESTABLISHED,RELATED -j ACCEPT';
+$cmds[] ='/usr/sbin/iptables -w -I INPUT -p tcp --dport 80 -j lefilter';
+$cmds[] ='/usr/sbin/iptables-save';
+foreach($cmds as $cmd) {
+    exec($cmd . "&>> /var/log/asterisk/cermanlerules.log");
+}

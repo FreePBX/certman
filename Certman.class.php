@@ -603,9 +603,9 @@ class Certman implements BMO {
 		 * No need to execute a delay if this one is not performed yet.
 		 * Using process to handle enable and disable of LE Rules 
 		 */		
-		$this->enableFirewallLeRules();
+		$leenable = $this->enableFirewallLeRules();
 		if (!is_array($settings)) {
-			$this->disableFirewallLeRules();
+			$this->disableFirewallLeRules($leenable);
 			throw new Exception("BUG: Settings is not an array. Old code?");
 		}
 
@@ -641,7 +641,7 @@ class Certman implements BMO {
 			if(!file_exists($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck)) {
 				$mkdirok = @mkdir($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck,0777);
 				if (!$mkdirok) {
-					$this->disableFirewallLeRules();
+					$this->disableFirewallLeRules($leenable);
 					throw new Exception("Unable to create directory ".$this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck);
 				}
 			}
@@ -652,18 +652,13 @@ class Certman implements BMO {
 			$pest->curl_opts[CURLOPT_FOLLOWLOCATION] = true;
 			$pest->curl_opts[CURLOPT_CONNECTTIMEOUT] = 10;			
 			$pest->curl_opts[CURLOPT_TIMEOUT] = 30;
-			try{
-				$thing = $pest->get('/lechecker.php',  array('host' => $host, 'path' => $pathCheck, 'token' => $token, 'type' => $challengetype));
-			} catch(Exception $e) {
-				$this->disableFirewallLeRules();
-				throw new Exception($e->getMessage());
-			}
+			$thing = $pest->get('/lechecker.php',  array('host' => $host, 'path' => $pathCheck, 'token' => $token, 'type' => $challengetype));
 			if(empty($thing)) {
-				$this->disableFirewallLeRules();
+				$this->disableFirewallLeRules($leenable);
 				throw new Exception("No valid response from http://mirror1.freepbx.org");
 			}
 			if(!$thing['status']) {
-				$this->disableFirewallLeRules();
+				$this->disableFirewallLeRules($leenable);
 				throw new Exception("Error '".$thing['message']."' when requesting $challengetype://$host/$pathCheck");
 			}
 			@unlink($this->FreePBX->Config->get("AMPWEBROOT").$pathCheck);
@@ -684,13 +679,13 @@ class Certman implements BMO {
 			try{
 				$le->signDomains(array($host));
 			} catch(Exception $e) {
-				$this->disableFirewallLeRules();
+				$this->disableFirewallLeRules($leenable);
 				throw new Exception($e->getMessage());
 			}
 		}
 
 		if(!file_exists($location."/".$host."/private.pem") || !file_exists($location."/".$host."/cert.pem")) {
-			$this->disableFirewallLeRules();
+			$this->disableFirewallLeRules($leenable);
 			throw new Exception("Certificates are missing. Unable to continue");
 		}
 
@@ -712,27 +707,88 @@ class Certman implements BMO {
 			chmod($location."/".$host.".pem",0600);
 			chmod($location."/".$host."-ca-bundle.crt",0600);
 		}
-		$this->disableFirewallLeRules();
+		$this->disableFirewallLeRules($leenable);
 		return true;
 	}
 
-	/* enable firewall rules */
+	/* check lerule status*/
 	private function enableFirewallLeRules() {
-		$api = $this->getFirewallAPI();
+		$leenable = false;
+		$api 		= $this->getFirewallAPI();
+		$fwc_path	= fpbx_which("fwconsole");
 		$module_info = module_getinfo('firewall', MODULE_STATUS_ENABLED);
 		if(isset($module_info["firewall"]) && $api->isAvailable()){
-			$api->enableLeRules();
-			usleep(500000);
+			$adv = $api->getAdvancedSettings();
+			if($adv['lefilter'] == 'disabled'){
+				$this->runHook("iptablesLEenable");
+				$leenable = true;
+				sleep(10);
+			}
 		}
+		return $leenable;
 	}
 
 	/* disable firewall lerules */
-	private function disableFirewallLeRules() {
-		$api = $this->getFirewallAPI();
-		$module_info = module_getinfo('firewall', MODULE_STATUS_ENABLED);
-		if(isset($module_info["firewall"]) && $api->isAvailable()){
-			$api->disableLeRules();
+	private function disableFirewallLeRules($leenable=false) {
+		if($leenable){
+			$this->runHook("iptablesLEdisable", "stop");
 		}
+	}
+
+	public function runHook($hookname,$params = false) {
+		// Runs a new style Syadmin hook
+		if (!file_exists("/etc/incron.d/sysadmin")) {
+			throw new \Exception("Sysadmin RPM not up to date");
+		}
+
+		$basedir = "/var/spool/asterisk/incron";
+		if (!is_dir($basedir)) {
+			throw new \Exception("$basedir is not a directory");
+		}
+
+		// Does our hook actually exist?
+		if (!file_exists(__DIR__."/hooks/$hookname")) {
+			throw new \Exception("Hook $hookname doesn't exist");
+		}
+
+		// Cool. So I want to run this hook..
+		$filename = "$basedir/certman.$hookname";
+
+		// Do I have any params?
+		if ($params) {
+			// Oh. I do. If it's an array, json encode and base64
+			if (is_array($params)) {
+				$b = base64_encode(gzcompress(json_encode($params)));
+				// Note we derp the base64, changing / to _, because filepath.
+				$filename .= ".".str_replace('/', '_', $b);
+			} else {
+				// Cast it to a string if it's anything else, and then make sure
+				// it doesn't have any spaces.
+				$filename .= ".".preg_replace("/[[:blank:]]+/", "", (string) $params);
+			}
+		}
+
+		// Make sure it doesn't exist, if it was left hanging around
+		// for some reason
+		@unlink($filename);
+
+		$fh = fopen($filename, "w+");
+		if ($fh === false) {
+			// WTF, unable to create file?
+			return false;
+		}
+
+		// Now incron does its thing.
+		fclose($fh);
+
+		// Wait .5 of a second, make sure it's been deleted.
+		usleep(500000);
+		if (!file_exists($filename)) {
+			return true;
+		}
+		throw new \Exception("Hook file '$filename' was not picked up by Incron after .5 seconds. Is it not running?");
+		// Odd. It should be gone. Something went wrong.
+		return false;
 	}
 
 	/**

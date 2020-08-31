@@ -16,6 +16,9 @@ class FirewallAPI {
 	/** Firewall object */
 	private $fwobj;
 
+	/** Default hosts to allow in to the 'internal' zone */
+	private $knownhosts = array ("outbound1.letsencrypt.org", "outbound2.letsencrypt.org", "mirror1.freepbx.org", "mirror2.freepbx.org");
+
 	public function __construct() {
 		// Is firewall enabled and active?
 		try {
@@ -37,24 +40,72 @@ class FirewallAPI {
 	}
 	
 	/**
-	 * enableLERules
+	 * getAdvancedSettings
 	 *
 	 * @return void
 	 */
-	public function enableLeRules(){
+	public function getAdvancedSettings(){
 		if($this->fw){
-			$this->fwobj->enableLeRules();
+			return $this->fwobj->getConfig("advancedsettings");
 		}
+		return false;
 	}
-
+	public function setAdvancedSettings($adv){
+		if($this->fw){
+			$this->fwobj->setConfig("advancedsettings", $adv);
+		}
+	}	
+	
 	/**
-	 * disableLERules
+	 * LE_Rules_Status
+	 *
+	 * @param  string $status
+	 * @return bool
+	 */
+	public function LE_Rules_Status($status = 'disabled'){
+		$module_info = module_getinfo('firewall', MODULE_STATUS_ENABLED);
+
+		if(!preg_match('/disabled$|enabled$/', $status) || !isset($module_info["firewall"])){
+			/**
+			 * Returns false if FW module is not installed or status not matched.
+			 */
+			return false;
+		}
+
+		if($this->fw){
+			/**
+			 * Setting up LE rules only if FW is enabled
+			 */
+			$this->fixeLeFilter($status);
+			$i	= 0;
+			$fw	= false;
+
+			/**
+			 * We are waiting Firewall up. 
+			 * Set timeout at 10" max.
+			 */
+			while ($fw == false && $i < 10){
+				$i++;
+				$fw = $this->fwobj->getConfig("status");
+				sleep(1);
+			}
+			sleep(2); 
+			return $fw;			
+		}
+		return true;
+	}
+	
+	/**
+	 * fixeLeFilter
 	 *
 	 * @return void
 	 */
-	public function disableLeRules(){
+	public function fixeLeFilter($status = 'disabled'){
 		if($this->fw){
-			$this->fwobj->disableLeRules();
+			$adv = $this->getAdvancedSettings();
+			$adv["lefilter"] = $status;
+			$this->fwobj->setConfig("advancedsettings", $adv);
+			$this->fwobj->restartFirewall();
 		}
 	}
 }
