@@ -481,7 +481,7 @@ class Certman implements BMO {
 	 *
 	 * @return [type] [description]
 	 */
-	public function checkUpdateCertificates($force = false) {
+	public function checkUpdateCertificates() {
 		$certs = $this->getAllManagedCertificates();
 		$messages = array();
 		foreach($certs as $cert) {
@@ -528,7 +528,7 @@ class Certman implements BMO {
 					$messages[] = array('type' => 'warning', 'message' => sprintf(_('Certificate named "%s" has expired. Please update this certificate in Certificate Manager'),$cert['basename']));
 					continue;
 				}
-			} elseif (time() > $renewafter || $force) {
+			} elseif (time() > $renewafter) {
 				// It hasn't expired, but it should be renewed.
 				if($cert['type'] == 'le') {
 					try {
@@ -537,7 +537,7 @@ class Certman implements BMO {
 							"state" => $cert['additional']['ST'],
 							"challengetype" => "http", // https will not work
 							"email" => $cert['additional']['email']
-						),false,$force);
+						));
 						$messages[] = array('type' => 'success', 'message' => sprintf(_('Successfully updated certificate named "%s"'),$cert['basename']));
 						$this->FreePBX->astman->Reload();
 						//Until https://issues.asterisk.org/jira/browse/ASTERISK-25966 is fixed
@@ -595,7 +595,7 @@ class Certman implements BMO {
 	 *
 	 * @return boolean          True if success, false if not
 	 */
-	public function updateLE($host, $settings = false, $staging = false,$force =false) {
+	public function updateLE($host, $settings = false, $staging = false) {
 		/**
 		 * Enable LE rules and set a delay for disabling LE rules.
 		 * The time remaining is between 1 and 2 minutes before to close the door.
@@ -629,7 +629,7 @@ class Certman implements BMO {
 			$certdata = openssl_x509_parse(file_get_contents($certfile));
 			// If it expires in less than a month, we want to renew it.
 			$renewafter = $certdata['validTo_time_t']-(86400*30);
-			if (time() > $renewafter || $force) {
+			if (time() > $renewafter) {
 				// Less than a month left, we need to renew.
 				$needsgen = true;
 			}
@@ -676,12 +676,7 @@ class Certman implements BMO {
 			if (!empty($email)) {
 				$le->contact = array($email);
 			}
-			try{
-				$le->signDomains(array($host));
-			} catch(Exception $e) {
-				$this->disableFirewallLeRules($leenable);
-				throw new Exception($e->getMessage());
-			}
+			$le->signDomains(array($host));
 		}
 
 		if(!file_exists($location."/".$host."/private.pem") || !file_exists($location."/".$host."/cert.pem")) {
@@ -720,9 +715,12 @@ class Certman implements BMO {
 		if(isset($module_info["firewall"]) && $api->isAvailable()){
 			$adv = $api->getAdvancedSettings();
 			if($adv['lefilter'] == 'disabled'){
-				$this->runHook("iptablesLEenable");
-				$leenable = true;
-				sleep(10);
+				$command = $fwc_path.' firewall lerules enable';
+				$leenable = $this->executecommand($command,$api,'enabled');
+				if($leenable){
+					//lets wait for some seconds to restart firewall and to load iptables
+					sleep(10);
+				}
 			}
 		}
 		return $leenable;
@@ -731,64 +729,29 @@ class Certman implements BMO {
 	/* disable firewall lerules */
 	private function disableFirewallLeRules($leenable=false) {
 		if($leenable){
-			$this->runHook("iptablesLEdisable", "stop");
+			$api 		= $this->getFirewallAPI();
+			$fwc_path	= fpbx_which("fwconsole");
+			$command = $fwc_path.' firewall lerules disable';
+			$this->executecommand($command,$api,'disabled');
 		}
 	}
 
-	public function runHook($hookname,$params = false) {
-		// Runs a new style Syadmin hook
-		if (!file_exists("/etc/incron.d/sysadmin")) {
-			throw new \Exception("Sysadmin RPM not up to date");
-		}
-
-		$basedir = "/var/spool/asterisk/incron";
-		if (!is_dir($basedir)) {
-			throw new \Exception("$basedir is not a directory");
-		}
-
-		// Does our hook actually exist?
-		if (!file_exists(__DIR__."/hooks/$hookname")) {
-			throw new \Exception("Hook $hookname doesn't exist");
-		}
-
-		// Cool. So I want to run this hook..
-		$filename = "$basedir/certman.$hookname";
-
-		// Do I have any params?
-		if ($params) {
-			// Oh. I do. If it's an array, json encode and base64
-			if (is_array($params)) {
-				$b = base64_encode(gzcompress(json_encode($params)));
-				// Note we derp the base64, changing / to _, because filepath.
-				$filename .= ".".str_replace('/', '_', $b);
-			} else {
-				// Cast it to a string if it's anything else, and then make sure
-				// it doesn't have any spaces.
-				$filename .= ".".preg_replace("/[[:blank:]]+/", "", (string) $params);
-			}
-		}
-
-		// Make sure it doesn't exist, if it was left hanging around
-		// for some reason
-		@unlink($filename);
-
-		$fh = fopen($filename, "w+");
-		if ($fh === false) {
-			// WTF, unable to create file?
-			return false;
-		}
-
-		// Now incron does its thing.
-		fclose($fh);
-
-		// Wait .5 of a second, make sure it's been deleted.
-		usleep(500000);
-		if (!file_exists($filename)) {
+	/* execute  command using process */
+	private function executecommand($command,$api,$status){
+		$process = new Process($command);
+		try {
+			$process->setTimeout(180);
+			$process->mustRun();
+			$out = $process->getOutput();
+			$adv = $api->getAdvancedSettings();
+			$adv["lefilter"] = $status;
+			$api->setAdvancedSettings($adv);
 			return true;
+		} catch (ProcessFailedException $e) {
+				dbug("Unable to run command $command ".$e->getMessage());
+				return false;
 		}
-		throw new \Exception("Hook file '$filename' was not picked up by Incron after .5 seconds. Is it not running?");
-		// Odd. It should be gone. Something went wrong.
-		return false;
+	
 	}
 
 	/**
