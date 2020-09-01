@@ -473,7 +473,7 @@ class Certman implements \BMO {
 	 *
 	 * @return [type] [description]
 	 */
-	public function checkUpdateCertificates() {
+	public function checkUpdateCertificates($force = false) {
 		$certs = $this->getAllManagedCertificates();
 		$messages = array();
 		foreach($certs as $cert) {
@@ -520,7 +520,7 @@ class Certman implements \BMO {
 					$messages[] = array('type' => 'warning', 'message' => sprintf(_('Certificate named "%s" has expired. Please update this certificate in Certificate Manager'),$cert['basename']));
 					continue;
 				}
-			} elseif (time() > $renewafter) {
+			} elseif (time() > $renewafter || $force) {
 				// It hasn't expired, but it should be renewed.
 				if($cert['type'] == 'le') {
 					try {
@@ -529,7 +529,7 @@ class Certman implements \BMO {
 							"state" => $cert['additional']['ST'],
 							"challengetype" => "http", // https will not work
 							"email" => $cert['additional']['email']
-						));
+						),false,$force);
 						$messages[] = array('type' => 'success', 'message' => sprintf(_('Successfully updated certificate named "%s"'),$cert['basename']));
 						$this->FreePBX->astman->Reload();
 						//Until https://issues.asterisk.org/jira/browse/ASTERISK-25966 is fixed
@@ -590,7 +590,7 @@ class Certman implements \BMO {
 	 *
 	 * @return boolean          True if success, false if not
 	 */
-	public function updateLE($host, $settings = false, $staging = false) {
+	public function updateLE($host, $settings = false, $staging = false,$force = false) {
 		/**
 		 * Enable LE rules and set a delay for disabling LE rules.
 		 * The time remaining is between 1 and 2 minutes before to close the door.
@@ -624,7 +624,7 @@ class Certman implements \BMO {
 			$certdata = openssl_x509_parse(file_get_contents($certfile));
 			// If it expires in less than a month, we want to renew it.
 			$renewafter = $certdata['validTo_time_t']-(86400*30);
-			if (time() > $renewafter) {
+			if (time() > $renewafter || $force) {
 				// Less than a month left, we need to renew.
 				$needsgen = true;
 			}
