@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>16.0.5</version>
+	<version>16.0.6</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -14,6 +14,7 @@
 	</description>
 	<more-info>https://wiki.freepbx.org/display/FPG/Certificate+Management+Module</more-info>
 	<changelog>
+		*16.0.6* FREEI-2109 added option to do force update 
 		*16.0.5* Forceupdatebranch 
 		*16.0.4* FREEPBX-21683 fwconsole certificate update error silently shuts down firewall module 
 		*16.0.3* FREEPBX-21600 fixing -SRTP selection was Enabling DTLS 
