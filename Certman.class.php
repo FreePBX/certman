@@ -595,7 +595,7 @@ class Certman implements BMO {
 	 *
 	 * @return boolean          True if success, false if not
 	 */
-	public function updateLE($host, $settings = false, $staging = false,$force =false) {
+	public function updateLE($host, $settings = false, $staging = false,$force = false) {
 		/**
 		 * Enable LE rules and set a delay for disabling LE rules.
 		 * The time remaining is between 1 and 2 minutes before to close the door.

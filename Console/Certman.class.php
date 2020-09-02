@@ -84,7 +84,7 @@ class Certman extends Command {
 		if($input->getOption('updateall')) {
 			$force = $input->getOption('force');
 			if($force) {
-            	$output->writeln("force update enabled !!!");
+        			$output->writeln("force update enabled !!!");
 			}
 			$messages = $certman->checkUpdateCertificates($force);
 			foreach($messages as $message) {
