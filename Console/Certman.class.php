@@ -26,6 +26,7 @@ class Certman extends Command {
 			->setDefinition(array(
 				new InputOption('list', null, InputOption::VALUE_NONE, _('List Certificates')),
 				new InputOption('updateall', null, InputOption::VALUE_NONE, _('Check and Update all Certificates')),
+				new InputOption('force', null, InputOption::VALUE_NONE, _('Force update, by pass 30 days expiry ')),
 				new InputOption('import', null, InputOption::VALUE_NONE, sprintf(_('Import any unmanaged certificates in %s'),$loc)),
 				new InputOption('generate', null, InputOption::VALUE_NONE, _('Generate Certificate')),
 				new InputOption('type', 'default', InputOption::VALUE_REQUIRED, _('Certificate Type')),
@@ -81,7 +82,11 @@ class Certman extends Command {
 		}
 
 		if($input->getOption('updateall')) {
-			$messages = $certman->checkUpdateCertificates();
+			$force = $input->getOption('force');
+			if($force) {
+            	$output->writeln("force update enabled !!!");
+			}
+			$messages = $certman->checkUpdateCertificates($force);
 			foreach($messages as $message) {
 				$m = $message['message'];
 				switch($message['type']) {
