@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-01 05:56+0000\n"
+"POT-Creation-Date: 2020-09-08 15:19+0000\n"
 "PO-Revision-Date: 2017-08-08 16:34+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese <http://weblate.freepbx.org/projects/freepbx/"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 2.4\n"
 
-#: Certman.class.php:1201 Certman.class.php:1219
+#: Certman.class.php:1172 Certman.class.php:1190
 #, php-format
 msgid "%s already exists!"
 msgstr "%s  đã tồn tại!"
@@ -31,7 +31,7 @@ msgstr "%s  đã tồn tại!"
 msgid "%s is not supported at this time"
 msgstr ""
 
-#: Certman.class.php:1723
+#: Certman.class.php:1694
 #, php-format
 msgid "(%s days)"
 msgstr "(%s ngày)"
@@ -138,7 +138,7 @@ msgstr "Tham chiếu CSR ( yêu cầu ký chứng chỉ)"
 msgid "Certificate"
 msgstr "Chứng thực"
 
-#: Certman.class.php:1610 Certman.class.php:1625 Certman.class.php:1634
+#: Certman.class.php:1581 Certman.class.php:1596 Certman.class.php:1605
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr "Chứng thực %s không thể đọc được! Không thể tiếp tục!"
@@ -151,7 +151,7 @@ msgstr "Nhà cung cấp chứng thực"
 msgid "Certificate Authority to Reference"
 msgstr "Nhà cung cấp chứng thực để tham chiếu"
 
-#: Certman.class.php:1718
+#: Certman.class.php:1689
 msgid "Certificate Expired!"
 msgstr "Chứng thực đã hết han!"
 
@@ -208,7 +208,7 @@ msgstr ""
 msgid "Certificate Type"
 msgstr ""
 
-#: Certman.class.php:1376
+#: Certman.class.php:1347
 msgid "Certificate is empty"
 msgstr "Chứng thực trống"
 
@@ -459,7 +459,7 @@ msgstr ""
 msgid "Important"
 msgstr ""
 
-#: Certman.class.php:1399 Certman.class.php:1403
+#: Certman.class.php:1370 Certman.class.php:1374
 msgid "Imported from file system"
 msgstr "Đã nhập từ hệ thống tệp"
 
@@ -480,19 +480,19 @@ msgstr ""
 msgid "Invalid Certificate"
 msgstr "Chứng thực không hợp lệ"
 
-#: Certman.class.php:832
+#: Certman.class.php:803
 msgid "Key does not match certificate"
 msgstr "Khóa không khớp với chứng thực"
 
-#: Certman.class.php:847
+#: Certman.class.php:818
 msgid "Key does not match certificate after password removal"
 msgstr "Khóa không khớp với chứng thực sau khi xóa mật khẩu"
 
-#: Certman.class.php:1345
+#: Certman.class.php:1316
 msgid "Key is empty"
 msgstr "Khóa trống"
 
-#: Certman.class.php:1355
+#: Certman.class.php:1326
 msgid "Key is password protected or malformed"
 msgstr "Khóa được bảo vệ bằng mật khẩu hoặc bị sai khóa"
 
@@ -570,7 +570,7 @@ msgstr "Yêu cầu ký chứng thực mới"
 msgid "New Let's Encrypt Certificate"
 msgstr "Chứng thực Let's Encrypt mới"
 
-#: Certman.class.php:798
+#: Certman.class.php:769
 msgid "No Certificate provided"
 msgstr "Không có chứng thực nào được cấp"
 
@@ -590,7 +590,7 @@ msgid "No Private key to reference."
 msgstr "Không có khóa cá nhân nào để tham chiếu."
 
 #: Certman.class.php:139 Certman.class.php:237 Certman.class.php:245
-#: Certman.class.php:794
+#: Certman.class.php:765
 msgid "No Private key to reference. Try generating a CSR first."
 msgstr "Không có khóa cá nhân nào để tham chiếu. Thử kích hoạt một CSR trước."
 
@@ -876,24 +876,24 @@ msgstr "Không thể khởi tạo nhà cung cấp chứng thực"
 msgid "Unable to generate certificate: %s"
 msgstr "Không thể khởi tạo chứng thực: %s"
 
-#: Certman.class.php:828
+#: Certman.class.php:799
 msgid "Unable to read key. Is it password protected?"
 msgstr "Không thể đọc khóa. Nó có được bảo vệ bằng mật khẩu không?"
 
-#: Certman.class.php:1317
+#: Certman.class.php:1288
 #, php-format
 msgid "Unable to remove %s"
 msgstr "Không thể xóa %s"
 
-#: Certman.class.php:1435
+#: Certman.class.php:1406
 msgid "Unable to remove ca.cfg"
 msgstr "Không thể xóa  ca.cfg"
 
-#: Certman.class.php:1430
+#: Certman.class.php:1401
 msgid "Unable to remove ca.crt"
 msgstr "Không thể xóa  ca.crt"
 
-#: Certman.class.php:1425
+#: Certman.class.php:1396
 msgid "Unable to remove ca.key"
 msgstr "Không thể xóa ca.key"
 
@@ -905,16 +905,16 @@ msgstr "Không thể xóa nhà cung cấp chứng thực"
 msgid "Unable to remove the Certificate Signing Request"
 msgstr "Không thể xóa Yêu cầu ký chứng thực"
 
-#: Certman.class.php:1440
+#: Certman.class.php:1411
 msgid "Unable to remove tmp.cfg"
 msgstr "Không thể xóa tmp.cfg"
 
-#: Certman.class.php:811 Certman.class.php:815 Certman.class.php:819
+#: Certman.class.php:782 Certman.class.php:786 Certman.class.php:790
 #, php-format
 msgid "Unable to write to %s"
 msgstr "Không thể ghi tới %s"
 
-#: Certman.class.php:1708
+#: Certman.class.php:1679
 msgid "Unknown Expiration"
 msgstr "Thời gian hết hạn không xác định"
 
