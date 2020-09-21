@@ -734,7 +734,7 @@ class Certman implements BMO {
 	check ipset is  installed or not
 	return true/flase
 	*/
-	private function checkFirewallAndIpset(){
+	private function checkFirewallAndIpset() {
 		$mf = \module_functions::create();
 		$firewall = $mf->getinfo('firewall');
 		//firewall not present in system
