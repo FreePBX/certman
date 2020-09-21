@@ -590,7 +590,7 @@ class Certman implements \BMO {
 	 *
 	 * @return boolean          True if success, false if not
 	 */
-	public function updateLE($host, $settings = false, $staging = false) {
+		public function updateLE($host, $settings = false, $staging = false,$force = false) {
 		/**
 		 * Enable LE rules and set a delay for disabling LE rules.
 		 * The time remaining is between 1 and 2 minutes before to close the door.
@@ -601,7 +601,9 @@ class Certman implements \BMO {
 		if (!is_array($settings)) {
 			throw new Exception("BUG: Settings is not an array. Old code?");
 		}
-
+		if(!$this->checkFirewallAndIpset()){
+			throw new Exception("Please install ipset package And Restart the Firewall to continue");
+		}
 		// Get our variables from $settings
 		$countryCode = !empty($settings['countryCode']) ? $settings['countryCode'] : 'CA';
 		$state = !empty($settings['state']) ? $settings['state'] : 'Ontario';
@@ -622,7 +624,7 @@ class Certman implements \BMO {
 			$certdata = openssl_x509_parse(file_get_contents($certfile));
 			// If it expires	 in less than a month, we want to renew it.
 			$renewafter = $certdata['validTo_time_t']-(86400*30);
-			if (time() > $renewafter) {
+			if (time() > $renewafter || $force) {
 				// Less than a month left, we need to renew.
 				$needsgen = true;
 			}
@@ -719,6 +721,36 @@ class Certman implements \BMO {
 		if(isset($module_info["firewall"]) && $api->isAvailable()){
 			$api->disableLeRules();
 		}
+	}
+	/* check firewall is enabled or not*
+	if firewall enabled then check the version 13.0.60.13
+	check ipset is  installed or not
+	return true/flase
+	*/
+	private function checkFirewallAndIpset(){
+		$mf = \module_functions::create();
+		$firewall = $mf->getinfo('firewall');
+		//firewall not present in system
+		if(!isset($firewall['firewall'])){
+			return true;
+		}
+		//fire wall module not enabled
+		if ($firewall['firewall']['status'] != 2) {
+			return true;
+		}
+		$api = $this->getFirewallAPI();
+		if(!$api->isAvailable()){
+			return true;
+		}
+		// check firewall version having ipset
+		if (version_compare_freepbx($firewall['firewall']['version'],'13.0.60.14','<')) {
+			throw new Exception("There was an error updating the certificate: Firewall v13.0.60.14 and above required please install");
+		}
+		$ipset = fpbx_which("ipset") ;
+		if($ipset ==''){
+			return false;
+		}
+		return true;
 	}
 
 	/**
