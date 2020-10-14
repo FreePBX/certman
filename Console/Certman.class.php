@@ -48,6 +48,7 @@ class Certman extends Command {
 			$type = $input->getOption('type');
 			switch($type) {
 				case 'ss':
+					$output->writeln("<error>".sprintf(_("%s is not supported at this time"),$type)."</error>");
 					break;
 
 				case 'le':
