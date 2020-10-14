@@ -29,7 +29,15 @@ class Certman extends Command {
 				new InputOption('force', null, InputOption::VALUE_NONE, _('Force update, by pass 30 days expiry ')),
 				new InputOption('import', null, InputOption::VALUE_NONE, sprintf(_('Import any unmanaged certificates in %s'),$loc)),
 				new InputOption('generate', null, InputOption::VALUE_NONE, _('Generate Certificate')),
+
 				new InputOption('type', 'default', InputOption::VALUE_REQUIRED, _('Certificate Type')),
+
+				// LE options
+				new InputOption('hostname', null, InputOption::VALUE_REQUIRED, _('Certificate hostname')),
+				new InputOption('country-code', null, InputOption::VALUE_REQUIRED, _('Country Code')),
+				new InputOption('state', null, InputOption::VALUE_REQUIRED, _('State/Provence/Region')),
+				new InputOption('email', null, InputOption::VALUE_REQUIRED, _("Owner's email")),
+
 				new InputOption('default', null, InputOption::VALUE_REQUIRED, _('Set certificate default by id'))));
 	}
 	protected function execute(InputInterface $input, OutputInterface $output){
@@ -40,9 +48,46 @@ class Certman extends Command {
 			$type = $input->getOption('type');
 			switch($type) {
 				case 'ss':
+					break;
+
 				case 'le':
-					$output->writeln("<error>".sprintf(_("%s is not supported at this time"),$type)."</error>");
-				break;
+					$hostname = $input->getOption('hostname');
+					$country_code = $input->getOption('country-code');
+					$state = $input->getOption('state');
+					$email = $input->getOption('email');
+
+					if (!($hostname && $country_code && $state && $email)) {
+						$output->writeln('<error>'._("Error!").'</error> '._("Missing required argument(s) - 'hostname', 'country-code', 'state' and 'email' are required"));
+						return;
+					}
+
+					$settings = [
+						"countryCode" => $country_code,
+						"state" => $state,
+						"challengetype" => "http", // https will not work.
+						"email" => $email,
+					];
+
+					try {
+						$le_result = $certman->updateLE($hostname, $settings);
+						$certificate_id = $certman->saveCertificate(
+							null,
+							$hostname,
+							$hostname,
+							'le',
+							["C" => $country_code, "ST" => $state, "email" => $email]
+						);
+					} catch (\Exception $e) {
+						$output->writeln(_("<error>" . $e->getMessage()));
+						exit(4);
+					}
+
+					if ($le_result) {
+						$output->writeln(_("Let's Encrypt certificate installed"));
+					}
+
+					break;
+
 				case 'up':
 					$output->writeln("<error>"._("Use --import instead")."</error>");
 				break;
