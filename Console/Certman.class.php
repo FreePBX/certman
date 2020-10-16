@@ -38,8 +38,8 @@ class Certman extends Command {
 				new InputOption('email', null, InputOption::VALUE_REQUIRED, _("Owner's email (LetsEncrypt Generation)")),
 				//new InputOption('description', null, InputOption::VALUE_REQUIRED, _('Certificate Description (Self-Signed Generation)')),
 
-				new InputOption('delete', null, InputOption::VALUE_REQUIRED, _('Delete certificate by id')),
-				new InputOption('default', null, InputOption::VALUE_REQUIRED, _('Set certificate default by id'))));
+				new InputOption('delete', null, InputOption::VALUE_REQUIRED, _('Delete certificate by id or hostname')),
+				new InputOption('default', null, InputOption::VALUE_REQUIRED, _('Set default certificate by id or hostname'))));
 	}
 	protected function execute(InputInterface $input, OutputInterface $output){
 		$certman = \FreePBX::create()->Certman;
@@ -149,15 +149,25 @@ class Certman extends Command {
 		}
 
 		if($input->getOption('delete') !== null) {
-			$certs = $certman->getAllManagedCertificates();
 			$id = $input->getOption('delete');
-			if(!isset($certs[$id])) {
-				$output->writeln("<error>"._("That is not a valid ID")."</error>");
+
+			if (is_numeric($id)) {
+				$certs = $certman->getAllManagedCertificates();
+				$cid = $certs[$id]['cid'];
+				$hostname = $certs[$id]['basename'];
+			} else { 
+				$cert = $certman->getCertificateDetailsByBasename($id);
+				$cid = $cert['cid'];
+				$hostname = $cert['basename'];
+			}
+
+			if (!isset($cid)) {
+				$output->writeln("<error>".sprintf(_("'%s' is not a valid ID"), $id)."</error>");
 				exit(4);
 			}
-			$cid = $certs[$id]['cid'];
+
 			$certman->removeCertificate($cid);
-			$output->writeln(sprintf(_("Deleted certificate '%s'"),$certs[$id]['basename']));
+			$output->writeln(sprintf(_("Deleted certificate '%s'"),$hostname));
 			return;
 		}
 
@@ -233,14 +243,25 @@ class Certman extends Command {
 		}
 
 		if($input->getOption('default') !== null) {
-			$certs = $certman->getAllManagedCertificates();
 			$id = $input->getOption('default');
-			if(!isset($certs[$id])) {
-				$output->writeln("<error>"._("That is not a valid ID")."</error>");
+
+			if (is_numeric($id)) {
+				$certs = $certman->getAllManagedCertificates();
+				$cid = $certs[$id]['cid'];
+				$hostname = $certs[$id]['basename'];
+			} else { 
+				$cert = $certman->getCertificateDetailsByBasename($id);
+				$cid = $cert['cid'];
+				$hostname = $cert['basename'];
+			}
+
+			if (!isset($cid)) {
+				$output->writeln("<error>".sprintf(_("'%s' is not a valid ID"), $id)."</error>");
 				exit(4);
 			}
-			$certman->makeCertDefault($certs[$id]['cid']);
-			$output->writeln(sprintf(_("Successfully set '%s' as the default certificate"),$certs[$id]['basename']));
+
+			$certman->makeCertDefault($cid);
+			$output->writeln(sprintf(_("Successfully set '%s' as the default certificate"),$hostname));
 			return;
 		}
 
