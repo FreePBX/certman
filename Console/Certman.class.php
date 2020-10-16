@@ -28,16 +28,17 @@ class Certman extends Command {
 				new InputOption('updateall', null, InputOption::VALUE_NONE, _('Check and Update all Certificates')),
 				new InputOption('force', null, InputOption::VALUE_NONE, _('Force update, by pass 30 days expiry ')),
 				new InputOption('import', null, InputOption::VALUE_NONE, sprintf(_('Import any unmanaged certificates in %s'),$loc)),
+
+				// cert generation options
 				new InputOption('generate', null, InputOption::VALUE_NONE, _('Generate Certificate')),
+				new InputOption('type', null, InputOption::VALUE_REQUIRED, _('Certificate generation type - "le" for LetsEncrypt')),
+				new InputOption('hostname', null, InputOption::VALUE_REQUIRED, _('Certificate hostname (LetsEncrypt Generation)')),
+				new InputOption('country-code', null, InputOption::VALUE_REQUIRED, _('Country Code (LetsEncrypt Generation)')),
+				new InputOption('state', null, InputOption::VALUE_REQUIRED, _('State/Provence/Region  (LetsEncrypt Generation)')),
+				new InputOption('email', null, InputOption::VALUE_REQUIRED, _("Owner's email (LetsEncrypt Generation)")),
+				//new InputOption('description', null, InputOption::VALUE_REQUIRED, _('Certificate Description (Self-Signed Generation)')),
 
-				new InputOption('type', 'default', InputOption::VALUE_REQUIRED, _('Certificate Type')),
-
-				// LE options
-				new InputOption('hostname', null, InputOption::VALUE_REQUIRED, _('Certificate hostname')),
-				new InputOption('country-code', null, InputOption::VALUE_REQUIRED, _('Country Code')),
-				new InputOption('state', null, InputOption::VALUE_REQUIRED, _('State/Provence/Region')),
-				new InputOption('email', null, InputOption::VALUE_REQUIRED, _("Owner's email")),
-
+				new InputOption('delete', null, InputOption::VALUE_REQUIRED, _('Delete certificate by id')),
 				new InputOption('default', null, InputOption::VALUE_REQUIRED, _('Set certificate default by id'))));
 	}
 	protected function execute(InputInterface $input, OutputInterface $output){
@@ -48,18 +49,21 @@ class Certman extends Command {
 			$type = $input->getOption('type');
 			switch($type) {
 				case 'ss':
-					$output->writeln("<error>".sprintf(_("%s is not supported at this time"),$type)."</error>");
+					$output->writeln("<error>".sprintf(_("Certificate type %s generation is not supported at this time"),$type)."</error>");
 					break;
 
+				case 'letsencrypt';
 				case 'le':
 					$hostname = $input->getOption('hostname');
 					$country_code = $input->getOption('country-code');
 					$state = $input->getOption('state');
 					$email = $input->getOption('email');
+					$force = $input->getOption('force');
+					$cert = $certman->getCertificateDetailsByBasename($hostname);
 
 					if (!($hostname && $country_code && $state && $email)) {
-						$output->writeln('<error>'._("Error!").'</error> '._("Missing required argument(s) - 'hostname', 'country-code', 'state' and 'email' are required"));
-						return;
+						$output->writeln("<error>"._("Missing required argument(s) - 'hostname', 'country-code', 'state' and 'email' are required")."</error>");
+						exit(4);
 					}
 
 					$settings = [
@@ -69,29 +73,46 @@ class Certman extends Command {
 						"email" => $email,
 					];
 
+					if (!$force && isset($cert['cid'])) {
+						$output->writeln("<error>" . sprintf(_("Certificate for '%s' already exists!"), $hostname) . "</error>");
+						exit(4);
+					}
+
 					try {
-						$le_result = $certman->updateLE($hostname, $settings);
-						$certificate_id = $certman->saveCertificate(
-							null,
-							$hostname,
-							$hostname,
-							'le',
-							["C" => $country_code, "ST" => $state, "email" => $email]
-						);
+						if($force) {
+	        					$output->writeln("<info>"._("force update enabled !!!")."</info>");
+						}
+						$le_result = $certman->updateLE($hostname, $settings, false, $force);
+						if (!isset($cert['cid'])) {
+							$certificate_id = $certman->saveCertificate(
+								null,
+								$hostname,
+								$hostname,
+								'le',
+								["C" => $country_code, "ST" => $state, "email" => $email]
+							);
+						} else {
+							$certman->updateCertificate(
+								$cert,
+								$hostname,
+								["C" => $country_code, "ST" => $state, "email" => $email]
+							);
+						}
 					} catch (\Exception $e) {
-						$output->writeln(_("<error>" . $e->getMessage()));
+						$output->writeln("<error>" . $e->getMessage() . "</error>");
 						exit(4);
 					}
 
 					if ($le_result) {
-						$output->writeln(_("Let's Encrypt certificate installed"));
+						$output->writeln(sprintf(_("Successfully installed Let's Encrypt certificate '%s'"), $hostname));
 					}
 
 					break;
 
 				case 'up':
 					$output->writeln("<error>"._("Use --import instead")."</error>");
-				break;
+					break;
+
 				case 'default':
 				default:
 					$certs = $certman->getAllManagedCertificates();
@@ -124,6 +145,19 @@ class Certman extends Command {
 					}
 				break;
 			}
+			return;
+		}
+
+		if($input->getOption('delete') !== null) {
+			$certs = $certman->getAllManagedCertificates();
+			$id = $input->getOption('delete');
+			if(!isset($certs[$id])) {
+				$output->writeln("<error>"._("That is not a valid ID")."</error>");
+				exit(4);
+			}
+			$cid = $certs[$id]['cid'];
+			$certman->removeCertificate($cid);
+			$output->writeln(sprintf(_("Deleted certificate '%s'"),$certs[$id]['basename']));
 			return;
 		}
 
@@ -209,10 +243,6 @@ class Certman extends Command {
 			$output->writeln(sprintf(_("Successfully set '%s' as the default certificate"),$certs[$id]['basename']));
 			return;
 		}
-
-		if($input->getOption('generate')) {
-		}
-
 
 		$this->outputHelp($input,$output);
 	}
