@@ -758,36 +758,6 @@ class Certman implements BMO {
 		return true;
 	}
 
-/* check firewall is enabled or not*
-	if firewall enabled then check the version 13.0.60.13
-	check ipset is  installed or not
-	return true/flase
-	*/
-	private function checkFirewallAndIpset() {
-		$mf = \module_functions::create();
-		$firewall = $mf->getinfo('firewall');
-		//firewall not present in system
-		if(!isset($firewall['firewall'])){
-			return true;
-		}
-		//fire wall module not enabled
-		if ($firewall['firewall']['status'] != 2) {
-			return true;
-		}
-		$api = $this->getFirewallAPI();
-		if(!$api->isAvailable()){
-			return true;
-		}
-		// check firewall version having ipset
-		if (version_compare_freepbx($firewall['firewall']['version'],'15.0.6.29','<')) {
-			throw new Exception("There was an error updating the certificate: Firewall v 15.0.6.29 and above required please install");
-		}
-		$ipset = fpbx_which("ipset") ;
-		if($ipset ==''){
-			return false;
-		}
-		return true;
-	}
 	/**
 	 * FreePBX chown hooks
 	 */
