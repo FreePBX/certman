@@ -176,24 +176,44 @@ class Certman implements BMO {
 					break;
 					case "le":
 						$cert = $this->getCertificateDetails($_POST['cid']);
+						$host = $cert['basename'];
+						$description = $host;
+						$san = array_unique(array_filter(array_map('trim', explode("\n", strtolower($_POST['SAN'])))));
+						if (!empty($san)) {
+							if ($key = array_search($host, $san)) {
+								unset($key);
+							}
+							sort($san);
+							$description .= ", " . implode(", ", $san);
+						}
+
 						if(!empty($cert)) {
+							$additional = array(
+								"C" => $_POST['C'],
+								"ST" => $_POST['ST'],
+								"email" => $_POST['email'],
+							);
+							if (!empty($san)) {$additional['san'] = $san;}
+
+
+							if ($additional == $cert['additional']) {
+								$this->message = array('type' => 'success', 'message' => _('Nothing to do, no changes made'));
+								break;
+							}
+
 							try {
-								$this->updateLE($cert['basename'], array(
+								$this->updateLE($host, array(
 									"countryCode" => $_POST['C'],
 									"state" => $_POST['ST'],
 									"challengetype" => "http", // https will not work.
-									"email" => $_POST['email']
-								));
+									"email" => $_POST['email'],
+									"san" => $san
+								), false, true);
 							} catch(Exception $e) {
 								$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error updating the certificate: %s'),$e->getMessage()));
 								break;
 							}
-							$this->updateCertificate($cert,$_POST['C'], array(
-								"C" => $_POST['C'],
-								"ST" => $_POST['ST'],
-								'challengetype' => "http", // https will not work
-								'email' => $_POST['email']
-							));
+							$this->updateCertificate($cert, $description, $additional);
 							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
 							needreload();
 						} else {
@@ -215,15 +235,32 @@ class Certman implements BMO {
 			case "add":
 				switch($request['type']) {
 					case "le":
-						$host = basename($_POST['host']);
+						$host = basename(strtolower($_POST['host']));
+						$description = $host;
+						$san = array_unique(array_filter(array_map('trim', explode("\n", strtolower($_POST['SAN'])))));
+						if (!empty($san)) {
+							if ($key = array_search($host, $san)) {
+								unset($key);
+							}
+							sort($san);
+							$description .= ", " . implode(", ", $san);
+						}
+						$additional = array(
+								"C" => $_POST['C'],
+								"ST" => $_POST['ST'],
+								"email" => $_POST['email']
+						);
+						if (!empty($san)) {$additional['san'] = $san;}
+
 						try{
 							$this->updateLE($host, array(
 								"countryCode" => $_POST['C'],
 								"state" => $_POST['ST'],
 								"challengetype" => "http", // https will not work
-								"email" => $_POST['email']
+								"email" => $_POST['email'],
+								"san" => $san
 							));
-							$this->saveCertificate(null,$host,$host,'le', array("C" => $_POST['C'], "ST" => $_POST['ST'], "email" => $_POST['email']));
+							$this->saveCertificate(null, $host, $host, 'le', $additional);
 						} catch(Exception $e) {
 							$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error updating the certificate: %s'),$e->getMessage()));
 							break 2;
@@ -503,12 +540,15 @@ class Certman implements BMO {
 
 						// This will probably fail if they're using http_S_ with an expired
 						// cert, but LE should never get to this point.
-						$this->updateLE($cert['info']['crt']['subject']['CN'], array(
+						$settings = array(
 							"countryCode" => $cert['additional']['C'],
 							"state" => $cert['additional']['ST'],
 							"challengetype" => "http", // https will not work
-							"email" => $cert['additional']['email']
-						));
+							"email" => $cert['additional']['email'],
+							"san" => $cert['additional']['san'],
+						);
+
+						$this->updateLE($cert['info']['crt']['subject']['CN'], $settings, false, $force);
 
 						// If that didn't throw, the certificate was succesfully updated
 						$messages[] = array('type' => 'success', 'message' => sprintf(_('Successfully updated certificate named "%s"'),$cert['basename']));
@@ -532,12 +572,15 @@ class Certman implements BMO {
 				// It hasn't expired, but it should be renewed.
 				if($cert['type'] == 'le') {
 					try {
-						$this->updateLE($cert['info']['crt']['subject']['CN'], array(
+						$settings = array(
 							"countryCode" => $cert['additional']['C'],
 							"state" => $cert['additional']['ST'],
 							"challengetype" => "http", // https will not work
-							"email" => $cert['additional']['email']
-						),false,$force);
+							"email" => $cert['additional']['email'],
+							"san" => $cert['additional']['san'],
+						);
+
+						$this->updateLE($cert['info']['crt']['subject']['CN'], $settings, false, $force);
 						$messages[] = array('type' => 'success', 'message' => sprintf(_('Successfully updated certificate named "%s"'),$cert['basename']));
 						$this->FreePBX->astman->Reload();
 						//Until https://issues.asterisk.org/jira/browse/ASTERISK-25966 is fixed
@@ -559,7 +602,7 @@ class Certman implements BMO {
 			}
 			//trigger hook only if we really updated though
 			if($update) {
-				$this->updateCertificate($cert,$cert['description']);
+				$this->updateCertificate($cert, $cert['description'], $cert['additional']);
 			}
 		}
 		$nt = \notifications::create();
@@ -595,17 +638,18 @@ class Certman implements BMO {
 	 *
 	 * @return boolean          True if success, false if not
 	 */
-	public function updateLE($host, $settings = false, $staging = false,$force = false) {
+	public function updateLE($host, $settings = false, $staging = false, $force = false) {
 		/**
 		 * Enable LE rules and set a delay for disabling LE rules.
 		 * The time remaining is between 1 and 2 minutes before to close the door.
 		 * It's good to close the door even if there is any error before the end of process.
 		 * No need to execute a delay if this one is not performed yet.
-		 * Using process to handle enable and disable of LE Rules 
-		 */		
+		 * Using process to handle enable and disable of LE Rules
+		 */
 		if (!is_array($settings)) {
 			throw new Exception("BUG: Settings is not an array. Old code?");
 		}
+
 		if(!$this->checkFirewallAndIpset()){
 			throw new Exception("Please install ipset package And Restart the Firewall to continue");
 		}
@@ -614,20 +658,27 @@ class Certman implements BMO {
 		$state = !empty($settings['state']) ? $settings['state'] : 'Ontario';
 		$challengetype = "http"; // Always http
 		$email = !empty($settings['email']) ? $settings['email'] : '';
+		$san = !empty($settings['san']) ? $settings['san'] : array();
 
 		$location = $this->PKCS->getKeysLocation();
 		$logger = $this->FreePBX->Logger->monoLog;
 		$host = basename($host);
+		$certpath = $location . "/" .$host;
+		array_unshift($san, $host);
 
 		$needsgen = false;
-		$certfile = $location."/".$host."/cert.pem";
+		$certfile = $certpath . "/" . $host."/cert.pem";
+
+		$user = $this->FreePBX->Config->get("AMPASTERISKWEBUSER");
+		$group = $this->FreePBX->Config->get("AMPASTERISKWEBGROUP");
+
 		if (!file_exists($certfile)) {
 			// We don't have a cert, so we need to request one.
 			$needsgen = true;
 		} else {
 			// We DO have a certificate.
 			$certdata = openssl_x509_parse(file_get_contents($certfile));
-			// If it expires	 in less than a month, we want to renew it.
+			// If it expires in less than a month, we want to renew it.
 			$renewafter = $certdata['validTo_time_t']-(86400*30);
 			if (time() > $renewafter || $force) {
 				// Less than a month left, we need to renew.
@@ -652,9 +703,9 @@ class Certman implements BMO {
 				file_put_contents($this->FreePBX->Config->get("AMPWEBROOT").$pathCheck,$token);
 				$pest = new \PestJSON('http://mirror1.freepbx.org');
 				$pest->curl_opts[CURLOPT_FOLLOWLOCATION] = true;
-				$pest->curl_opts[CURLOPT_CONNECTTIMEOUT] = 10;			
+				$pest->curl_opts[CURLOPT_CONNECTTIMEOUT] = 10;
 				$pest->curl_opts[CURLOPT_TIMEOUT] = 30;
-				$thing = $pest->get('/lechecker.php',  array('host' => $host, 'path' => $pathCheck, 'token' => $token, 'type' => $challengetype));
+				$thing = $pest->get('/lechecker.php', array('host' => $host, 'path' => $pathCheck, 'token' => $token, 'type' => $challengetype));
 				if(empty($thing)) {
 					throw new Exception("No valid response from http://mirror1.freepbx.org");
 				}
@@ -672,34 +723,59 @@ class Certman implements BMO {
 				}
 				$le->countryCode = $countryCode;
 				$le->state = $state;
-				$le->initAccount();
+				// Email should not be a per-cert entry.
+				// It is only used whem le account is created on first cert request.
+				// Probably should be a single module-level setup entry or removed.
 				if (!empty($email)) {
-					$le->contact = array($email);
+					$le->contact = array("mailto:" . $email);
 				}
-				$le->signDomains(array($host));
+				$le->initAccount();
+				$le->signDomains($san);
 			}
 
-			if(!file_exists($location."/".$host."/private.pem") || !file_exists($location."/".$host."/cert.pem")) {
+			if(!file_exists($certpath . "/private.pem") || !file_exists($certpath . "/cert.pem")) {
 				throw new Exception("Certificates are missing. Unable to continue");
 			}
 
-			if(file_exists($location."/".$host)) {
+			if(file_exists($certpath)) {
 				//https://community.letsencrypt.org/t/solved-why-isnt-my-certificate-trusted/2479/4
-				copy($location."/".$host."/private.pem",$location."/".$host.".key"); //webserver.key
-				copy($location."/".$host."/chain.pem",$location."/".$host."-ca-bundle.crt"); //ca-bundle.crt
-				copy($location."/".$host."/cert.pem",$location."/".$host.".crt"); //webserver.crt
-				$key = file_get_contents($location."/".$host.".key");
-				$cert = file_get_contents($location."/".$host.".crt");
-				$bundle = file_get_contents($location."/".$host."-ca-bundle.crt");
+				copy($certpath . "/private.pem", $certpath . ".key"); //webserver.key
+				copy($certpath . "/chain.pem", $certpath . "-ca-bundle.crt"); //ca-bundle.crt
+				copy($certpath . "/cert.pem", $certpath . ".crt"); //webserver.crt
+				$key = file_get_contents($certpath . ".key");
+				$cert = file_get_contents($certpath . ".crt");
+				$bundle = file_get_contents($certpath . "-ca-bundle.crt");
 				//https://issues.freepbx.org/browse/FREEPBX-14631
 				$root = file_get_contents(__DIR__."/files/x3-root-ca.cert");
 				$bundle = $bundle."\n-----BEGIN CERTIFICATE-----\n".$root."-----END CERTIFICATE-----\n";
-				file_put_contents($location."/".$host."-ca-bundle.crt",$bundle);
-				file_put_contents($location."/".$host.".pem",$key."\n".$cert."\n".$bundle);
-				chmod($location."/".$host.".crt",0600);
-				chmod($location."/".$host.".key",0600);
-				chmod($location."/".$host.".pem",0600);
-				chmod($location."/".$host."-ca-bundle.crt",0600);
+				file_put_contents($certpath . "-ca-bundle.crt", $bundle);
+				file_put_contents($certpath . ".pem", $key . "\n" . $cert . "\n" . $bundle);
+
+				$chown[] = $certpath;
+				$exts = array(".key", ".crt", ".pem", "-ca-bundle.crt");
+				foreach($exts as $ext){
+					chmod($certpath . $ext, 0600);
+					$chown[] = $certpath . $ext;
+				}
+				$lefiles = array_diff(scandir($certpath), array('..', '.'));
+				foreach($lefiles as $lefile) {
+					chmod($certpath . "/" . $lefile, 0600);
+					$chown[] = $certpath . "/" . $lefile;
+				}
+			}
+			if(file_exists($location . "/_account")) {
+				$chown[] = $location . "/_account";
+				$lefiles = array_diff(scandir($location . "/_account"), array('..', '.'));
+				foreach($lefiles as $lefile) {
+					chmod($location . "/_account/" . $lefile, 0600);
+					$chown[] = $location . "/_account/" . $lefile;
+				}
+			}
+			if(!empty($chown) && posix_geteuid() === 0) {
+				foreach($chown as $file) {
+					chown($file, $user);
+					chgrp($file, $group);
+				}
 			}
 			$this->disableFirewallLeRules();
 			return true;
@@ -727,12 +803,13 @@ class Certman implements BMO {
 			$api->disableLeRules();
 		}
 	}
+
 	/* check firewall is enabled or not*
 	if firewall enabled then check the version 13.0.60.13
-	check ipset is  installed or not
+	check ipset is installed or not
 	return true/flase
 	*/
-	private function checkFirewallAndIpset(){
+	private function checkFirewallAndIpset() {
 		$mf = \module_functions::create();
 		$firewall = $mf->getinfo('firewall');
 		//firewall not present in system
@@ -748,8 +825,8 @@ class Certman implements BMO {
 			return true;
 		}
 		// check firewall version having ipset
-		if (version_compare_freepbx($firewall['firewall']['version'],'13.0.60.14','<')) {
-			throw new Exception("There was an error updating the certificate: Firewall v13.0.60.14 and above required please install");
+		if (version_compare_freepbx($firewall['firewall']['version'],'15.0.6.29','<')) {
+			throw new Exception("There was an error updating the certificate: Firewall v 15.0.6.29 and above required please install");
 		}
 		$ipset = fpbx_which("ipset") ;
 		if($ipset ==''){
@@ -757,13 +834,27 @@ class Certman implements BMO {
 		}
 		return true;
 	}
-
 	/**
 	 * FreePBX chown hooks
 	 */
 	public function chownFreepbx() {
 		$certs = $this->getAllManagedCertificates();
+		$location = $this->PKCS->getKeysLocation();
+		$files[] = array('type' => 'rdir',
+				'path' => $location . "/_account",
+				'perms' => 0600);
+		$files[] = array('type' => 'file',
+				'path' => $location . "/_account",
+				'perms' => 0755);
 		foreach($certs as $cert) {
+			if ($cert['type'] == 'le') {
+				$files[] = array('type' => 'rdir',
+					'path' => $location . "/" . $cert['basename'],
+					'perms' => 0600);
+				$files[] = array('type' => 'file',
+					'path' => $location . "/" . $cert['basename'],
+					'perms' => 0755);
+			}
 			$details = $this->getCertificateDetails($cert['cid']);
 			if(!empty($details['files'])) {
 				foreach($details['files'] as $file) {
@@ -794,7 +885,7 @@ class Certman implements BMO {
 	 * @param  string $certificateChain  RAW Certificate Chain
 	 * @param  string $passphrase        Passphrase to decrypt private key
 	 */
-	public function importCertificate($name,$privateKey,$signedCertificate,$certificateChain='',$passphrase='') {
+	public function importCertificate($name, $privateKey, $signedCertificate, $certificateChain='', $passphrase='') {
 		$location = $this->PKCS->getKeysLocation();
 		$name = basename($name);
 
@@ -1006,7 +1097,7 @@ class Certman implements BMO {
 	 * @param {array} $data	 An array of defined options
 	 */
 	public function addDTLSOptions($device, $data) {
-		$autoGenerateCert = !empty($data['auto_generate_cert']) 
+		$autoGenerateCert = !empty($data['auto_generate_cert'])
 			? $data['auto_generate_cert'] : 0;
 
 		if ($autoGenerateCert && !$this->pjsipDTLSAutoGenerateCertSupported()) {
@@ -1126,7 +1217,7 @@ class Certman implements BMO {
 	 * @param {string} $commonname The common name, usually FQDN or IP
 	 * @param {string} $orgname		The organization name
 	 */
-	public function generateConfig($basename,$commonname,$orgname) {
+	public function generateConfig($basename, $commonname, $orgname) {
 		$this->PKCS->createConfig($basename,$commonname,$orgname);
 	}
 
@@ -1137,7 +1228,7 @@ class Certman implements BMO {
 	 * @param {string} $orgname		The organization name
 	 * @param {string} $passphrase The passphrase (to be encrypted)
 	 */
-	public function saveCA($basename,$commonname,$orgname) {
+	public function saveCA($basename, $commonname, $orgname) {
 		$sql = "INSERT INTO certman_cas (`basename`, `cn`, `on`) VALUES (?, ?, ?)";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($basename, $commonname,$orgname));
@@ -1206,7 +1297,7 @@ class Certman implements BMO {
 	 * @param {string} $base						The base name to generate
 	 * @param {string} $description		 Description of this certificate
 	 */
-	public function generateCertificate($caid,$base,$description) {
+	public function generateCertificate($caid, $base, $description) {
 		if($this->checkCertificateName($base)) {
 			throw new Exception(sprintf(_("%s already exists!"),$base));
 		}
@@ -1224,7 +1315,7 @@ class Certman implements BMO {
 	 * @param {string} $type				The type of the certificate: ss:: self signed, up:: upload, le:: let's encrypt
 	 * @param {string} $additional  Additional data in an array format
 	 */
-	public function saveCertificate($caid=null,$base,$description,$type='ss',$additional=array()) {
+	public function saveCertificate($caid=null, $base, $description, $type='ss', $additional=array()) {
 		if($this->checkCertificateName($base)) {
 			throw new Exception(sprintf(_("%s already exists!"),$base));
 		}
@@ -1318,6 +1409,7 @@ class Certman implements BMO {
 	 */
 	public function removeCertificate($cid) {
 		$cert = $this->getCertificateDetails($cid);
+		$location = $this->PKCS->getKeysLocation();
 		if(empty($cert)) {
 			return false;
 		}
@@ -1328,6 +1420,10 @@ class Certman implements BMO {
 				}
 			}
 		}
+		if ($cert['type'] == 'le' && is_dir($location . "/" . $cert['basename'])) {
+			rrmdir($location . "/" . $cert['basename']);
+		}
+
 		$sql = "DELETE FROM certman_certs WHERE cid = ?";
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array($cid));
@@ -1346,7 +1442,7 @@ class Certman implements BMO {
 		foreach(glob($location."/*.key") as $file) {
 			$name = basename($file,".key");
 			//API key from api module should ignore
-			if($name == 'api_oauth' ||  $name == 'api_oauth_public') {
+			if($name == 'api_oauth' || $name == 'api_oauth_public') {
 				continue;
 			}
 			if(in_array(basename($file),$cas)) {
@@ -1497,7 +1593,7 @@ class Certman implements BMO {
 	 * @param  string $description the cert description
 	 * @return [type]              [description]
 	 */
-	public function updateCertificate($oldDetails,$description,$additional=array()) {
+	public function updateCertificate($oldDetails, $description, $additional=array()) {
 		if(!is_array($additional)) {
 			$additional = array();
 		}
@@ -1510,7 +1606,7 @@ class Certman implements BMO {
 			throw new Exception("Could not find updated certificates");
 		}
 		if(is_array($newDetails['files']) && posix_geteuid() === 0) {
-			$user = $this->FreePBX->Config->get('AMPASTERISKWEBUSER');
+			$user = $this->FreePBX->Config->get("AMPASTERISKWEBUSER");
 			$group = $this->FreePBX->Config->get("AMPASTERISKWEBGROUP");
 			foreach($newDetails['files'] as $file) {
 				chown($file,$user);
@@ -1549,7 +1645,7 @@ class Certman implements BMO {
 		$sth = $this->db->prepare($sql);
 		$sth->execute(array(1,$cid));
 
-		$user = $this->FreePBX->Config->get('AMPASTERISKWEBUSER');
+		$user = $this->FreePBX->Config->get("AMPASTERISKWEBUSER");
 		$group = $this->FreePBX->Config->get("AMPASTERISKWEBGROUP");
 
 		$location = $this->PKCS->getKeysLocation();
