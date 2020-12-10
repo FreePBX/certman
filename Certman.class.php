@@ -260,7 +260,7 @@ class Certman implements BMO {
 								"email" => $_POST['email'],
 								"san" => $san
 							));
-							$this->saveCertificate(null, $host, $host, 'le', $additional);
+							$this->saveCertificate(null, $host, $description, 'le', $additional);
 						} catch(Exception $e) {
 							$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error updating the certificate: %s'),$e->getMessage()));
 							break 2;

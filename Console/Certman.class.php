@@ -84,7 +84,7 @@ class Certman extends Command {
 						"ST" => $state,
 						"email" => $email,
 					);
-					if (!empty($san)) {$additional['SAN'] = $san;}
+					if (!empty($san)) {$additional['san'] = $san;}
 
 					if ($force) {
 						$output->writeln("<info>" . _("Forced update enabled !!!") . "</info>");
