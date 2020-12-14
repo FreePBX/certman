@@ -200,7 +200,7 @@ class Certman implements BMO {
 								$this->message = array('type' => 'success', 'message' => _('Nothing to do, no changes made'));
 								break;
 							}
-
+							ob_start();
 							try {
 								$this->updateLE($host, array(
 									"countryCode" => $_POST['C'],
@@ -210,11 +210,27 @@ class Certman implements BMO {
 									"san" => $san
 								), false, true);
 							} catch(Exception $e) {
-								$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error updating the certificate: %s'),$e->getMessage()));
+								$einfo = json_decode(substr($e->getMessage(), strpos($e->getMessage(), '{')), true);
+								$lelog = trim(ob_get_contents());
+								ob_end_clean();
+								if (!empty($einfo['detail'])) {
+									$emessage = $einfo['detail'];
+									$lelog = $lelog . "\n" . $e->getMessage();
+								} else {
+									$emessage = $e->getMessage();
+									$lelog = $lelog == ''?'': $lelog;
+								}
+								$this->message = array(	'title' => 'LetsEncrypt Update Failure',
+											'type' => 'danger',
+											'message' => $emessage,
+											'log' => $lelog
+										);
 								break;
 							}
+							$lelog = ob_get_contents();
+							ob_end_clean();
 							$this->updateCertificate($cert, $description, $additional);
-							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
+							$this->message = array('type' => 'success', 'title' => _('LetsEncrypt Update Success!'), 'log' => $lelog );
 							needreload();
 						} else {
 							$this->message = array('type' => 'danger', 'message' => _('Certificate is invalid'));
@@ -251,8 +267,11 @@ class Certman implements BMO {
 								"email" => $_POST['email']
 						);
 						if (!empty($san)) {$additional['san'] = $san;}
-
+						ob_start();
 						try{
+							if($this->checkCertificateName($host)) {
+								throw new Exception(sprintf(_("%s already exists!"),$host));
+							}
 							$this->updateLE($host, array(
 								"countryCode" => $_POST['C'],
 								"state" => $_POST['ST'],
@@ -262,10 +281,27 @@ class Certman implements BMO {
 							));
 							$this->saveCertificate(null, $host, $description, 'le', $additional);
 						} catch(Exception $e) {
-							$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error updating the certificate: %s'),$e->getMessage()));
-							break 2;
+							$einfo = json_decode(substr($e->getMessage(), strpos($e->getMessage(), '{')), true);
+							$lelog = trim(ob_get_contents());
+							ob_end_clean();
+							if (!empty($einfo['detail'])) {
+								$emessage = $einfo['detail'];
+								$lelog = $lelog . "\n" . $e->getMessage();
+							} else {
+								$emessage = $e->getMessage();
+								$lelog = $lelog == ''?'': $lelog;
+							}
+							$this->message = array(	'title' => 'LetsEncrypt Generation Failure',
+										'type' => 'danger',
+										'message' => $emessage,
+										'log' => $lelog
+									);
+
+						break 2;
 						}
-						$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
+						$lelog = ob_get_contents();
+						ob_end_clean();
+						$this->message = array('type' => 'success', 'title' => _('LetsEncrypt Generation Success!'), 'log' => $lelog );
 					break;
 					case "up":
 						$name = basename($_POST['name']);
@@ -695,7 +731,7 @@ class Certman implements BMO {
 				if(!file_exists($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck)) {
 					$mkdirok = @mkdir($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck,0777);
 					if (!$mkdirok) {
-						throw new Exception("Unable to create directory ".$this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck);
+						throw new Exception(_("Unable to create directory ").$this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck);
 					}
 				}
 				$token = bin2hex(openssl_random_pseudo_bytes(16));
@@ -707,10 +743,10 @@ class Certman implements BMO {
 				$pest->curl_opts[CURLOPT_TIMEOUT] = 30;
 				$thing = $pest->get('/lechecker.php', array('host' => $host, 'path' => $pathCheck, 'token' => $token, 'type' => $challengetype));
 				if(empty($thing)) {
-					throw new Exception("No valid response from http://mirror1.freepbx.org");
+					throw new Exception(_("No valid response from http://mirror1.freepbx.org"));
 				}
 				if(!$thing['status']) {
-					throw new Exception("Error '".$thing['message']."' when requesting $challengetype://$host/$pathCheck");
+					throw new Exception(sprintf(_("Error '%s' when requesting %s"),$thing['message'], "$challengetype://$host$pathCheck"));
 				}
 				@unlink($this->FreePBX->Config->get("AMPWEBROOT").$pathCheck);
 			}
@@ -734,7 +770,7 @@ class Certman implements BMO {
 			}
 
 			if(!file_exists($certpath . "/private.pem") || !file_exists($certpath . "/cert.pem")) {
-				throw new Exception("Certificates are missing. Unable to continue");
+				throw new Exception(_("Certificates are missing. Unable to continue"));
 			}
 
 			if(file_exists($certpath)) {
@@ -826,7 +862,7 @@ class Certman implements BMO {
 		}
 		// check firewall version having ipset
 		if (version_compare_freepbx($firewall['firewall']['version'],'15.0.6.29','<')) {
-			throw new Exception("There was an error updating the certificate: Firewall v 15.0.6.29 and above required please install");
+			throw new Exception(_("There was an error updating the certificate: Firewall v 15.0.6.29 and above required please install"));
 		}
 		$ipset = fpbx_which("ipset") ;
 		if($ipset ==''){
