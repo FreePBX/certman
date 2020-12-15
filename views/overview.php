@@ -1,6 +1,32 @@
 <?php
 if(!empty($message)) {
-	$messagehtml = '<div class="alert alert-' . $message['type'] .'">'. $message['message'] . '</div>';
+	$loghtml = '';
+	if(!empty($message['log']) & $message['log'] != '') {
+		$loghtml = '<pre class="alert-' . $message['type'] .' pre-scrollable">' . $message['log'] . '</pre>';
+	}
+
+	$mhtml = '<div class="fpbx-container element-container alert alert-' . $message['type'] .' alert-dismissable">
+			<div class="display no-border" >
+				<div class="row">
+					<span class="fa fa-times close" style="margin-top: -15px;" data-dismiss="alert" aria-hidden="true"></span>
+					<div class="col-md-12">';
+	if(!empty($message['title'])) {
+		$mhtml .=			'<label style="font-size: large;">'.$message['title'].'</label>
+						<i class="fpbx-help-icon" data-for="alert">
+							<span class="alert-' . $message['type'] .' align-top glyphicon glyphicon-question-sign"></span>
+						</i>
+						<span id="alert-help" class="fpbx-help-block">
+						<div class="alert-' . $message['type'] . '">
+							<strong>' . $message['message'] . '</strong>' . $loghtml . '
+						</div></span>';
+	} else {
+		$mhtml .=			'<label style="font-size: large;">'.$message['message'].'</label>' . $loghtml;
+	}
+	$mhtml .=			'</div>
+				</div>
+			</div>
+		</div>
+	';
 }
 ?>
 <div class="container-fluid">
@@ -16,17 +42,12 @@ if(!empty($message)) {
 			<p><?php echo _("Certificate Manager manages certificates for secure calling (TLS/SRTP), secure web sessions (HTTPS/WEBRTC[WSS] and more")?></p>
 			<p><?php echo _("From this interface you can generate a Certificate Signing Request (CSR) which you can then use to issue a certificate to use for this server")?></p>
 			<p><?php echo sprintf(_("Additionally if you have opened internet access up to the outside world you can signup for a FREE certificate from the Let's Encrypt project. Learn more %s"),'<a href="https://letsencrypt.org/">'._("Here").'</a>')?></p>
-			<p><?php echo _("A Self-Signed Certificate has been generated for you on install. You can use this certificate now to get started however we strongly urge you to get a real certificate from a standard authority or through Let's Encrypt")?></p>
 			<p><?php echo sprintf(_("To manually import certificate files place them into %s and make sure they have the same basename, EG: %s"),$location,"mycert.key, mycert.crt")?></p>
-			<p><?php echo _("There are three different types of certificates this module can handle:")?></p>
-			<ul>
-				<li><?php echo _("Let's Encrypt:")?> <?php echo _("Information")?></li>
-				<li><?php echo _("Uploaded:")?> <?php echo _("Information")?></li>
-				<li><?php echo _("Self-Signed:")?> <?php echo _("Information")?></li>
-			</ul>
+			<p><?php echo _("Optionally upload existing certificate information through the web interface.")?></p>
+			<p><?php echo _("A Self-Signed Certificate has been generated for you on install. You can use this certificate now to get started however we strongly urge you to get a real certificate from a standard authority or through Let's Encrypt")?></p>
 		</div>
 	</div>
-	<?php echo !empty($messagehtml) ? $messagehtml : "" ?>
+	<?php echo !empty($mhtml) ? $mhtml : "" ?>
 	<div class = "display no-border">
 		<?php echo load_view(__DIR__.'/certgrid.php',array('certs' => $certs, 'csr' => $csr, 'ca' => $ca)); ?>
 		<i><?php echo _("Hover over the 'Default' column and click to make a certificate the system default")?></i>

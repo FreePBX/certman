@@ -28,9 +28,21 @@ class Certman extends Command {
 				new InputOption('updateall', null, InputOption::VALUE_NONE, _('Check and Update all Certificates')),
 				new InputOption('force', null, InputOption::VALUE_NONE, _('Force update, by pass 30 days expiry ')),
 				new InputOption('import', null, InputOption::VALUE_NONE, sprintf(_('Import any unmanaged certificates in %s'),$loc)),
+
+				// cert generation options
 				new InputOption('generate', null, InputOption::VALUE_NONE, _('Generate Certificate')),
-				new InputOption('type', 'default', InputOption::VALUE_REQUIRED, _('Certificate Type')),
-				new InputOption('default', null, InputOption::VALUE_REQUIRED, _('Set certificate default by id'))));
+				new InputOption('type', null, InputOption::VALUE_REQUIRED, _('Certificate generation type - "le" for LetsEncrypt')),
+				new InputOption('hostname', null, InputOption::VALUE_REQUIRED, _('Certificate hostname (LetsEncrypt Generation)')),
+				new InputOption('country-code', null, InputOption::VALUE_REQUIRED, _('Country Code (LetsEncrypt Generation)')),
+				new InputOption('state', null, InputOption::VALUE_REQUIRED, _('State/Provence/Region (LetsEncrypt Generation)')),
+				new InputOption('email', null, InputOption::VALUE_REQUIRED, _("Owner's email (LetsEncrypt Generation)")),
+				new InputOption('san', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, _("Certificate Subject Alternative Name(s) (LetsEncrypt Generation)")),
+
+				new InputOption('delete', null, InputOption::VALUE_REQUIRED, _('Delete certificate by id or hostname')),
+				new InputOption('default', null, InputOption::VALUE_REQUIRED, _('Set default certificate by id or hostname')),
+				new InputOption('details', null, InputOption::VALUE_REQUIRED, _('Display certificate details by id or hostname')),
+				new InputOption('json', null, InputOption::VALUE_NONE, _('Format output as json')),
+			));
 	}
 	protected function execute(InputInterface $input, OutputInterface $output){
 		$certman = \FreePBX::create()->Certman;
@@ -40,12 +52,93 @@ class Certman extends Command {
 			$type = $input->getOption('type');
 			switch($type) {
 				case 'ss':
+					$output->writeln("<error>".sprintf(_("Certificate type %s generation is not supported at this time"),$type)."</error>");
+					break;
+
+				case 'letsencrypt';
 				case 'le':
-					$output->writeln("<error>".sprintf(_("%s is not supported at this time"),$type)."</error>");
-				break;
+					$hostname = strtolower($input->getOption('hostname'));
+					$country_code = $input->getOption('country-code');
+					$state = $input->getOption('state');
+					$email = $input->getOption('email');
+					$description = $hostname;
+					$san = array_unique(array_filter(array_map(function ($v) {return strtolower(trim($v));}, $input->getOption('san'))));
+					$force = $input->getOption('force');
+					$cert = $certman->getCertificateDetailsByBasename($hostname);
+
+					if (!($hostname && $country_code && $state && $email)) {
+						$output->writeln("<error>"._("Missing required argument(s) - 'hostname', 'country-code', 'state' and 'email' are required")."</error>");
+						exit(4);
+					}
+
+					if (!empty($san)) {
+						if ($key = array_search($hostname, $san)) {
+							unset($key);
+						}
+						sort($san);
+						$description .= ", " . implode(", ", $san);
+					}
+
+					$additional = array(
+						"C" => $country_code,
+						"ST" => $state,
+						"email" => $email,
+					);
+					if (!empty($san)) {$additional['san'] = $san;}
+
+					if ($force) {
+						$output->writeln("<info>" . _("Forced update enabled !!!") . "</info>");
+					} else {
+						if (!empty($cert)) {
+							if ($additional == $cert['additional']) {
+								$output->writeln("<info>" . sprintf(_("Certificate '%s' exists, no changes made, nothing to do"), $hostname) . "</info>");
+								exit(4);
+							} else {
+								$force = true;
+							}
+						}
+					}
+
+					try {
+						$settings = array(
+							"countryCode" => $country_code,
+							"state" => $state,
+							"challengetype" => "http", // https will not work.
+							"email" => $email,
+							"san" => $san
+						);
+
+						$le_result = $certman->updateLE($hostname, $settings, false, $force);
+						if (!isset($cert['cid'])) {
+							$cid = $certman->saveCertificate(
+								null,
+								$hostname,
+								$description,
+								'le',
+								$additional
+							);
+						} else {
+							$certman->updateCertificate(
+								$cert,
+								$description,
+								$additional
+							);
+						}
+					} catch (\Exception $e) {
+						$output->writeln("<error>" . $e->getMessage() . "</error>");
+						exit(4);
+					}
+
+					if ($le_result) {
+						$output->writeln(sprintf(_("Successfully installed Let's Encrypt certificate '%s'"), $hostname));
+					}
+
+					break;
+
 				case 'up':
 					$output->writeln("<error>"._("Use --import instead")."</error>");
-				break;
+					break;
+
 				case 'default':
 				default:
 					$certs = $certman->getAllManagedCertificates();
@@ -81,10 +174,53 @@ class Certman extends Command {
 			return;
 		}
 
+		if($input->getOption('delete') !== null) {
+			$id = $input->getOption('delete');
+
+			if (is_numeric($id)) {
+				$certs = $certman->getAllManagedCertificates();
+				$cid = $certs[$id]['cid'];
+				$hostname = $certs[$id]['basename'];
+			} else {
+				$cert = $certman->getCertificateDetailsByBasename($id);
+				$cid = $cert['cid'];
+				$hostname = $cert['basename'];
+			}
+
+			if (!isset($cid)) {
+				$output->writeln("<error>".sprintf(_("'%s' is not a valid ID"), $id)."</error>");
+				exit(4);
+			}
+
+			$certman->removeCertificate($cid);
+			$output->writeln(sprintf(_("Deleted certificate '%s'"),$hostname));
+			return;
+		}
+
+		if($input->getOption('details') !== null) {
+			$id = $input->getOption('details');
+
+			if (is_numeric($id)) {
+				$certs = $certman->getAllManagedCertificates();
+				$cert = $certman->getCertificateDetails($certs[$id]['cid']);
+			} else {
+				$cert = $certman->getCertificateDetailsByBasename($id);
+			}
+
+			if (empty($cert)) {
+				$output->writeln("<error>".sprintf(_("'%s' is not a valid ID"), $id)."</error>");
+				exit(4);
+			}
+
+			print($input->getOption('json') ? json_encode($cert) : print_r($cert, true));
+			print("\n");
+			return;
+		}
+
 		if($input->getOption('updateall')) {
 			$force = $input->getOption('force');
 			if($force) {
-        			$output->writeln("force update enabled !!!");
+				$output->writeln("<info>" . _("Forced update enabled !!!") . "</info>");
 			}
 			$messages = $certman->checkUpdateCertificates($force);
 			foreach($messages as $message) {
@@ -121,12 +257,21 @@ class Certman extends Command {
 					break;
 				}
 				$default = !empty($c['default']) ? 'X' : '';
-				$rows[] = array($key, $c['basename'], $c['description'], $type, $default);
+				if($input->getOption('json')) {
+					$rows[] = array($key, $c['basename'], $c['description'], $c['type'], $type, $default, $c['additional']);
+				} else {
+					$rows[] = array($key, $c['basename'], $c['description'], $type, $default);
+				}
 			}
-			$table = new Table($output);
-			$table->setHeaders(array("ID", _("Base Name"),_("Description"), _("Type"), _("Default")));
-			$table->setRows($rows);
-			$table->render($output);
+			if($input->getOption('json')) {
+				print(json_encode($rows));
+				print("\n");
+			} else {
+				$table = new Table($output);
+				$table->setHeaders(array("ID", _("Base Name"),_("Description"), _("Type"), _("Default")));
+				$table->setRows($rows);
+				$table->render($output);
+			}
 			return;
 		}
 
@@ -153,20 +298,27 @@ class Certman extends Command {
 		}
 
 		if($input->getOption('default') !== null) {
-			$certs = $certman->getAllManagedCertificates();
 			$id = $input->getOption('default');
-			if(!isset($certs[$id])) {
-				$output->writeln("<error>"._("That is not a valid ID")."</error>");
+
+			if (is_numeric($id)) {
+				$certs = $certman->getAllManagedCertificates();
+				$cid = $certs[$id]['cid'];
+				$hostname = $certs[$id]['basename'];
+			} else {
+				$cert = $certman->getCertificateDetailsByBasename($id);
+				$cid = $cert['cid'];
+				$hostname = $cert['basename'];
+			}
+
+			if (!isset($cid)) {
+				$output->writeln("<error>".sprintf(_("'%s' is not a valid ID"), $id)."</error>");
 				exit(4);
 			}
-			$certman->makeCertDefault($certs[$id]['cid']);
-			$output->writeln(sprintf(_("Successfully set '%s' as the default certificate"),$certs[$id]['basename']));
+
+			$certman->makeCertDefault($cid);
+			$output->writeln(sprintf(_("Successfully set '%s' as the default certificate"),$hostname));
 			return;
 		}
-
-		if($input->getOption('generate')) {
-		}
-
 
 		$this->outputHelp($input,$output);
 	}
@@ -177,7 +329,7 @@ class Certman extends Command {
 	 * @return int
 	 * @throws \Symfony\Component\Console\Exception\ExceptionInterface
 	 */
-	protected function outputHelp(InputInterface $input, OutputInterface $output)	 {
+	protected function outputHelp(InputInterface $input, OutputInterface $output) {
 		$help = new HelpCommand();
 		$help->setCommand($this);
 		return $help->run($input, $output);

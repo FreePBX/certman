@@ -1,5 +1,5 @@
 <script type='text/javascript' src='modules/certman/assets/js/views/regions.js?123'></script>
-<?php 
+<?php
 if(!empty($message)) {
 	$messagehtml = '<div class="alert alert-' . $message['type'] .'">'. $message['message'] . '</div>';
 }
@@ -24,66 +24,176 @@ $alert .= "</div>";
 							<input id="certaction" type="hidden" name="certaction" value="<?php echo !empty($cert['cid']) ? 'edit' : 'add'?>">
 							<input id="certtype" type="hidden" name="type" value="le">
 							<input id="cid" type="hidden" name="cid" value="<?php echo !empty($cert['cid']) ? $cert['cid'] : ''?>">
-							<div class="element-container">
-								<div class="row">
-									<div class="form-group form-horizontal">
-										<div class="col-md-3">
-											<label class="control-label" for="host"><?php echo _("Certificate Host Name")?></label>
-											<i class="fa fa-question-circle fpbx-help-icon" data-for="host"></i>
-										</div>
-										<div class="col-md-9">
-											<?php if (empty($cert['cid'])) { ?>
-												<input type="text" class="form-control" id="host" name="host" placeholder="server.example.com" required value="<?php echo $hostname?>">
-											<?php } else { ?>
-												<?php echo !empty($cert['basename']) ? $cert['basename'] : ""?>
-											<?php } ?>
-										</div>
-									</div>
-									<div class="col-md-12">
-										<span id="host-help" class="help-block fpbx-help-block" style=""><?php echo _("This must be the hostname you are requesting a certificate for. LetsEncrypt will validate that the hostname resolves to this machine, and attempt to connect to it.")?></span>
-									</div>
-								</div>
+
+							<!-- Begin Section -->
+							<div class="section-title" data-for="edit-cert">
+								<h3>
+									<i class="fa fa-minus"></i>
+									<?php echo !empty($cert['cid']) ? _("Edit Certificate") : _("New Certificate")?>
+								</h3>
 							</div>
-							<div class="element-container">
-								<div class="row">
-									<div class="form-group form-horizontal">
-										<div class="col-md-3">
-											<label class="control-label" for="email"><?php echo _("Owners Email")?></label>
-											<i class="fa fa-question-circle fpbx-help-icon" data-for="email"></i>
-										</div>
-										<div class="col-md-9">
-											<input type="text" class="form-control" id="email" name="email" placeholder="you@example.com" required value="<?php echo $cert['additional']['email']; ?>">
-										</div>
-									</div>
-									<div class="col-md-12">
-										<span id="email-help" class="help-block fpbx-help-block" style=""><?php echo _("This email address is given to Let's Encrypt. It may be used by them if the certificate is approaching expiration and it has not been renewed.")?></span>
-									</div>
-								</div>
-							</div>
-							<?php if(!empty($cert['cid'])) { ?>
+							<div class="section" data-id="edit-cert">
 								<div class="element-container">
 									<div class="row">
 										<div class="form-group form-horizontal">
 											<div class="col-md-3">
-												<label class="control-label" for="expires"><?php echo _("Valid Until")?></label>
-											</div>
-											<div class="col-md-9"> <?php echo \FreePBX::Certman()->getReadableExpiration($certinfo['validTo_time_t']); ?> </div>
-										</div>
-									</div>
-								</div>
-								<div class="element-container">
-									<div class="row">
-										<div class="form-group form-horizontal">
-											<div class="col-md-3">
-												<label class="control-label" for="cn"><?php echo _("Common Name")?></label>
+												<label class="control-label" for="host"><?php echo _("Certificate Host Name")?></label>
+												<i class="fa fa-question-circle fpbx-help-icon" data-for="host"></i>
 											</div>
 											<div class="col-md-9">
-												<?php echo $certinfo['subject']['CN']?>
+												<?php if (empty($cert['cid'])) { ?>
+													<input type="text" class="form-control" id="host" name="host" placeholder="server.example.com" required value="<?php echo $hostname?>">
+												<?php } else { ?>
+													<?php echo !empty($cert['basename']) ? $cert['basename'] : ""?>
+												<?php } ?>
+											</div>
+										</div>
+										<div class="col-md-12">
+											<span id="host-help" class="help-block fpbx-help-block" style=""><?php echo _("This must be the hostname you are requesting a certificate for. LetsEncrypt will validate that the hostname resolves to this machine, and attempt to connect to it.")?></span>
+										</div>
+									</div>
+								</div>
+								<div class="element-container">
+									<div class="row">
+										<div class="form-group form-horizontal">
+											<div class="col-md-3">
+												<label class="control-label" for="email"><?php echo _("Owners Email")?></label>
+												<i class="fa fa-question-circle fpbx-help-icon" data-for="email"></i>
+											</div>
+											<div class="col-md-9">
+												<input type="text" class="form-control" id="email" name="email" placeholder="you@example.com" required value="<?php echo $cert['additional']['email']; ?>">
+											</div>
+										</div>
+										<div class="col-md-12">
+											<span id="email-help" class="help-block fpbx-help-block" style=""><?php echo _("This email address is given to Let's Encrypt. It may be used by them if the certificate is approaching expiration and it has not been renewed.")?></span>
+										</div>
+									</div>
+								</div>
+
+								<div class="element-container">
+									<div class="row">
+										<div class="form-group form-horizontal">
+											<div class="col-md-3">
+												<label class="control-label" for="C"><?php echo _("Country")?></label>
+											</div>
+											<div class="col-md-9">
+												<?php
+													$country = !empty($cert['additional']['C']) ? $cert['additional']['C'] : "CA";
+													$state = !empty($cert['additional']['ST']) ? $cert['additional']['ST'] : "Ontario";
+												?>
+												<select class="form-control" id="C" name="C" data-current="<?php echo $country; ?>" disabled> </select>
 											</div>
 										</div>
 									</div>
 								</div>
-								<?php if(!empty($certinfo['extensions']['certificatePolicies'])) {?>
+								<div class="element-container">
+									<div class="row">
+										<div class="form-group form-horizontal">
+											<div class="col-md-3">
+												<label class="control-label" for="st"><?php echo _("State/Province/Region")?></label>
+											</div>
+											<div class="col-md-9">
+												<select class="form-control" id="ST" name="ST" data-current="<?php echo $state; ?>"> </select>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!-- Alternative Names -->
+								<div class="element-container">
+									<div class="row">
+										<div class="form-group form-horizontal">
+											<div class="col-md-3">
+												<label class="control-label" for="SAN"><?php echo _("Alternative Names"); ?></label>
+												<i class="fa fa-question-circle fpbx-help-icon" data-for="SAN"></i>
+											</div>
+											<div class="col-md-9">
+												<textarea id="SAN" name="SAN" class="form-control" cols=50 rows=2><?php echo isset($cert['additional']['san'])?implode("\n",$cert['additional']['san']):"";?></textarea>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<span id="SAN-help" class="help-block fpbx-help-block"><?php echo _("List alternate Fully Qualified Domain Names for this certificate, one per line. Names must be resolvable by public DNS and point to this server.")?></span>
+										</div>
+									</div>
+								</div>
+								<!-- END Alternative Names -->
+
+								<!-- Challenge Method -->
+								<div class="element-container">
+									<div class="row">
+										<div class="form-group form-horizontal">
+											<div class="col-md-3">
+												<label class="control-label" for="challengetype"><?php echo _("Challenge Over")?></label>
+												<i class="fa fa-question-circle fpbx-help-icon" data-for="challengetype"></i>
+											</div>
+											<div class="col-md-9">
+												<span class="form-control" disabled><strong>HTTP <?php echo _("(Port 80)"); ?></strong></span>
+											</div>
+										</div>
+										<div class="col-md-12">
+											<span id="challengetype-help" class="help-block fpbx-help-block"><?php echo _("LetsEncrypt only supports hostname validation via HTTP on port 80.")?></span>
+										</div>
+									</div>
+								</div>
+								<!-- END Challenge Method -->
+							</div>
+							<!-- END Section -->
+
+							<!-- Begin Section -->
+							<?php if(!empty($cert['cid'])) { ?>
+								<div class="section-title" data-for="show-cert">
+									<h3>
+										<i class="fa fa-minus"></i>
+										<?php echo _("Issued Certificate Details") ?>
+									</h3>
+								</div>
+								<div class="section" data-id="show-cert">
+									<!-- Common Name -->
+									<div class="element-container">
+										<div class="row">
+											<div class="form-group form-horizontal">
+												<div class="col-md-3">
+													<label class="control-label" for="cn"><?php echo _("Certificate Common Name")?></label>
+												</div>
+												<div class="col-md-9">
+													<?php echo $certinfo['subject']['CN']?>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- END Common Name -->
+
+									<!-- Expiration -->
+									<div class="element-container">
+										<div class="row">
+											<div class="form-group form-horizontal">
+												<div class="col-md-3">
+													<label class="control-label" for="an"><?php echo _("Certificate Alternative Names")?></label>
+												</div>
+												<div class="col-md-9">
+													<?php echo $certinfo['extensions']['subjectAltName']?>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- END Expiration -->
+
+									<!-- Expiration -->
+									<div class="element-container">
+										<div class="row">
+											<div class="form-group form-horizontal">
+												<div class="col-md-3">
+													<label class="control-label" for="expires"><?php echo _("Certificate Valid Until")?></label>
+												</div>
+												<div class="col-md-9"> <?php echo \FreePBX::Certman()->getReadableExpiration($certinfo['validTo_time_t']); ?> </div>
+											</div>
+										</div>
+									</div>
+									<!-- END Expiration -->
+
+									<!-- Policies -->
 									<div class="element-container">
 										<div class="row">
 											<div class="form-group form-horizontal">
@@ -92,7 +202,7 @@ $alert .= "</div>";
 													<i class="fa fa-question-circle fpbx-help-icon" data-for="cp"></i>
 												</div>
 												<div class="col-md-9">
-													<textarea class="form-control" readonly><?php echo $certinfo['extensions']['certificatePolicies']?></textarea>
+													<textarea class="form-control" rows=3 readonly><?php echo $certinfo['extensions']['certificatePolicies']?></textarea>
 												</div>
 											</div>
 											<div class="col-md-12">
@@ -100,54 +210,10 @@ $alert .= "</div>";
 											</div>
 										</div>
 									</div>
-								<?php } ?>
+									<!-- END Policies -->
+								</div>
 							<?php } ?>
-							<!-- Challenge Method -->
-							<div class="element-container">
-								<div class="row">
-									<div class="form-group form-horizontal">
-										<div class="col-md-3">
-											<label class="control-label" for="challengetype"><?php echo _("Challenge Over")?></label>
-											<i class="fa fa-question-circle fpbx-help-icon" data-for="challengetype"></i>
-										</div>
-										<div class="col-md-9">
-											<span class="form-control" disabled><strong>HTTP <?php echo _("(Port 80)"); ?></strong></span>
-										</div>
-									</div>
-									<div class="col-md-12">
-										<span id="challengetype-help" class="help-block fpbx-help-block"><?php echo _("LetsEncrypt only supports hostname validation via HTTP on port 80.")?></span>
-									</div>
-								</div>
-							</div>
-							<!-- END Challenge Method -->
-							<div class="element-container">
-								<div class="row">
-									<div class="form-group form-horizontal">
-										<div class="col-md-3">
-											<label class="control-label" for="C"><?php echo _("Country")?></label>
-										</div>
-										<div class="col-md-9">
-<?php 
-$country = !empty($cert['additional']['C']) ? $cert['additional']['C'] : "CA"; 
-$state = !empty($cert['additional']['ST']) ? $cert['additional']['ST'] : "Ontario";
-?>
-											<select class="form-control" id="C" name="C" data-current="<?php echo $country; ?>" disabled> </select>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="element-container">
-								<div class="row">
-									<div class="form-group form-horizontal">
-										<div class="col-md-3">
-											<label class="control-label" for="st"><?php echo _("State/Province/Region")?></label>
-										</div>
-										<div class="col-md-9">
-											<select class="form-control" id="ST" name="ST" data-current="<?php echo $state; ?>"> </select>
-										</div>
-									</div>
-								</div>
-							</div>
+							<!-- END Section -->
 						</form>
 					</div>
 				</div>
