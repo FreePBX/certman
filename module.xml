@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>15.0.36</version>
+	<version>15.0.37</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -14,6 +14,7 @@
 	</description>
 	<more-info>https://wiki.freepbx.org/display/FPG/Certificate+Management+Module</more-info>
 	<changelog>
+		*15.0.37* FREEPBX-22106-format-letsencrypt-output-display-error-messages 
 		*15.0.36* fix saving --san info for cli generation 
 		*15.0.35* Bugfix/FREEPBX-21964 add SAN support add details fix cli le generation ownership fix 
 		*15.0.34* Packaging of ver 15.0.34
