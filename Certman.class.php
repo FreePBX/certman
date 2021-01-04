@@ -210,6 +210,7 @@ class Certman implements BMO {
 									"san" => $san
 								), false, true);
 							} catch(Exception $e) {
+								$api = $this->getFirewallAPI();
 								$einfo = json_decode(substr($e->getMessage(), strpos($e->getMessage(), '{')), true);
 								$lelog = trim(ob_get_contents());
 								ob_end_clean();
@@ -220,10 +221,12 @@ class Certman implements BMO {
 									$emessage = $e->getMessage();
 									$lelog = $lelog == ''?'': $lelog;
 								}
+								$leoptions = $api->getLeOptions();
 								$this->message = array(	'title' => 'LetsEncrypt Update Failure',
 											'type' => 'danger',
 											'message' => $emessage,
-											'log' => $lelog
+											'log' => $lelog,
+											'hints' => $leoptions['hints']
 										);
 								break;
 							}
@@ -291,10 +294,13 @@ class Certman implements BMO {
 								$emessage = $e->getMessage();
 								$lelog = $lelog == ''?'': $lelog;
 							}
+							$api = $this->getFirewallAPI();
+							$leoptions = $api->getLeOptions();
 							$this->message = array(	'title' => 'LetsEncrypt Generation Failure',
 										'type' => 'danger',
 										'message' => $emessage,
-										'log' => $lelog
+										'log' => $lelog,
+										'hints' => $leoptions['hints']
 									);
 
 						break 2;
@@ -707,6 +713,7 @@ class Certman implements BMO {
 
 		$user = $this->FreePBX->Config->get("AMPASTERISKWEBUSER");
 		$group = $this->FreePBX->Config->get("AMPASTERISKWEBGROUP");
+		$webroot = $this->FreePBX->Config->get("AMPWEBROOT");
 
 		if (!file_exists($certfile)) {
 			// We don't have a cert, so we need to request one.
@@ -728,32 +735,34 @@ class Certman implements BMO {
 			//check freepbx.org first
 			if($needsgen) {
 				$basePathCheck = "/.freepbx-known";
-				if(!file_exists($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck)) {
-					$mkdirok = @mkdir($this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck,0777);
+				if(!file_exists($webroot.$basePathCheck)) {
+					$mkdirok = @mkdir($webroot.$basePathCheck,0777);
 					if (!$mkdirok) {
-						throw new Exception(_("Unable to create directory ").$this->FreePBX->Config->get("AMPWEBROOT").$basePathCheck);
+						throw new Exception(_("Unable to create directory ").$webroot.$basePathCheck);
 					}
 				}
 				$token = bin2hex(openssl_random_pseudo_bytes(16));
 				$pathCheck = $basePathCheck."/".$token;
-				file_put_contents($this->FreePBX->Config->get("AMPWEBROOT").$pathCheck,$token);
+				file_put_contents($webroot.$pathCheck,$token);
 				$pest = new \PestJSON('http://mirror1.freepbx.org');
 				$pest->curl_opts[CURLOPT_FOLLOWLOCATION] = true;
 				$pest->curl_opts[CURLOPT_CONNECTTIMEOUT] = 10;
 				$pest->curl_opts[CURLOPT_TIMEOUT] = 30;
 				$thing = $pest->get('/lechecker.php', array('host' => $host, 'path' => $pathCheck, 'token' => $token, 'type' => $challengetype));
+				@unlink($webroot.$pathCheck);
 				if(empty($thing)) {
 					throw new Exception(_("No valid response from http://mirror1.freepbx.org"));
 				}
 				if(!$thing['status']) {
 					throw new Exception(sprintf(_("Error '%s' when requesting %s"),$thing['message'], "$challengetype://$host$pathCheck"));
 				}
-				@unlink($this->FreePBX->Config->get("AMPWEBROOT").$pathCheck);
 			}
 
 			//Now check let's encrypt
 			if($needsgen) {
-				$le = new \Analogic\ACME\Lescript($location, $this->FreePBX->Config->get("AMPWEBROOT"), $logger);
+				$tokenpath = $webroot . "/.well-known/acme-challenge";
+				$prechallengefiles = glob($tokenpath .'/*'); // */
+				$le = new \Analogic\ACME\Lescript($location, $webroot, $logger);
 				if($staging) {
 					$le->ca = 'https://acme-staging.api.letsencrypt.org';
 				}
@@ -817,6 +826,17 @@ class Certman implements BMO {
 			return true;
 		} catch(Exception $e) {
 			$this->disableFirewallLeRules();
+			// clean up challenge tokens on failed requests
+			// we know the lechecker file name
+			@unlink($webroot.$pathCheck);
+			// Lescript,php doesn't expose the token name, assume we own any new files
+			if(is_dir($tokenpath)) {
+				$postchallengefiles = array_diff(glob($tokenpath .'/*'), $prechallengefiles);
+				foreach($postchallengefiles as $tokenfile) {
+					// ignore unlink errs - it's possible we don't own the new file */
+					if (is_file($tokenfile)) @unlink($tokenfile);
+				}
+			}
 			throw new Exception($e->getMessage());
 		}
 	}

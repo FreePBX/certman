@@ -12,6 +12,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 // Tables
 use Symfony\Component\Console\Helper\Table;
+// Terminal
+use Symfony\Component\Console\Terminal;
 // Process
 use Symfony\Component\Process\Process;
 
@@ -125,7 +127,16 @@ class Certman extends Command {
 							);
 						}
 					} catch (\Exception $e) {
-						$output->writeln("<error>" . $e->getMessage() . "</error>");
+						$einfo = json_decode(substr($e->getMessage(), strpos($e->getMessage(), '{')), true);
+						if (!empty($einfo['detail'])) {
+							$emessage = $einfo['detail'];
+							$output->writeln($e->getMessage()); //append raw message to log output
+						} else {
+							$emessage = $e->getMessage();
+						}
+						$this->showhints($certman, $output);
+						$output->writeln("<error>LetsEncrypt Update Failure:");
+						$output->writeln($emessage . "</error>");
 						exit(4);
 					}
 
@@ -223,6 +234,13 @@ class Certman extends Command {
 				$output->writeln("<info>" . _("Forced update enabled !!!") . "</info>");
 			}
 			$messages = $certman->checkUpdateCertificates($force);
+			foreach($messages as $message) {
+				if ($message['type'] == "danger") {
+					$this->showhints($certman, $output);
+					$output->writeln("<error>LetsEncrypt Update Failure:</error>");
+					break;
+				}
+			}
 			foreach($messages as $message) {
 				$m = $message['message'];
 				switch($message['type']) {
@@ -333,5 +351,85 @@ class Certman extends Command {
 		$help = new HelpCommand();
 		$help->setCommand($this);
 		return $help->run($input, $output);
+	}
+
+	private function showhints($certman, OutputInterface $output) {
+		$api = $certman->getFirewallAPI();
+		$leoptions = $api->getLeOptions();
+		$terminal = new Terminal;
+		$width = $terminal->getWidth() - 10;
+		$rows = array();
+		if (!empty($leoptions['hints'])) {
+			$bullets = array();
+			$output->writeln('');
+			foreach($leoptions['hints'] as $hint) {
+				$rows[] = array('*', $hint);
+				$wrapped = explode("\n",$this->tagwrap($hint, $width));
+				$leader = '<comment>   ** ';
+				foreach($wrapped as $line) {
+					$bullets[] = $leader . $line;
+					$leader = '      ';
+				}
+				$bullets[] = '';
+			}
+			$output->writeln(implode("\n", $bullets));
+		}
+	}
+
+	// wrap ignoring tags -  is there an existing library function for this?
+	private function tagwrap(&$str, $maxLength){
+		$eol = "\n";
+		$count = 0;
+		$tag = 0;
+		$newStr = '';
+		$openTag = false;
+		$lenstr = strlen($str);
+		for($i=0; $i<$lenstr; $i++){
+			$newStr .= $str[$i];
+			if($str[$i] == '<'){
+				$openTag = true;
+				$tag++;
+				continue;
+			}
+			if($openTag && $str[$i] == '>'){
+				$openTag = false;
+				$tag++;
+				continue;
+			}
+			if ($openTag) {
+				$tag++;
+				continue;
+			}
+			if(!$openTag){
+				if($str[$i] == $eol){
+					$count = 0;
+					$lastspace = 0;
+					continue;
+				}
+				if($str[$i] == ' '){
+					if ($count == 0) {
+						$newStr = substr($newStr, 0, -1);
+						$tag = 0;
+						continue;
+					} else {
+						$tag = 0;
+						$lastspace = $count + 1;
+					}
+				}
+				$count++;
+				if($count==$maxLength){
+					if ($str[$i+1] != ' ' && $lastspace && ($lastspace < $count)) {
+						$tmp = ($count - $lastspace)* -1;
+						$newStr = substr($newStr, 0, $tmp - $tag) . $eol . substr($newStr, $tmp - $tag);
+						$count = $tmp * -1;
+					} else {
+						$newStr .= $eol;
+						$count = 0;
+					}
+					$lastspace = 0;
+				}
+			}
+		}
+		return $newStr;
 	}
 }

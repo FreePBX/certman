@@ -1,6 +1,14 @@
 <?php
 if(!empty($message)) {
 	$loghtml = '';
+	$hinthtml = '';
+	if (!empty($message['hints'])) {
+		$hinthtml = '<ul>';
+		foreach($message['hints'] as $hint) {
+			$hinthtml .= '<li>' . $hint . '</li>';
+		}
+		$hinthtml .= '</ul>';
+	}
 	if(!empty($message['log']) & $message['log'] != '') {
 		$loghtml = '<pre class="alert-' . $message['type'] .' pre-scrollable">' . $message['log'] . '</pre>';
 	}
@@ -17,10 +25,10 @@ if(!empty($message)) {
 						</i>
 						<span id="alert-help" class="fpbx-help-block">
 						<div class="alert-' . $message['type'] . '">
-							<strong>' . $message['message'] . '</strong>' . $loghtml . '
+							<strong>' . $message['message'] . '</strong>' . $hinthtml . $loghtml . '
 						</div></span>';
 	} else {
-		$mhtml .=			'<label style="font-size: large;">'.$message['message'].'</label>' . $loghtml;
+		$mhtml .=			'<label style="font-size: large;">'.$message['message'].'</label>' . $hinthtml . $loghtml;
 	}
 	$mhtml .=			'</div>
 				</div>
