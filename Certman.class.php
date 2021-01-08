@@ -922,11 +922,11 @@ class Certman implements \BMO {
 			}
 
 			if($o['tech'] === 'pjsip') {
-				$this->FreePBX->PJSip->addEndpoint($device['id'], 'media_encryption', 'dtls');
-				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_verify', $device['verify']);
-				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_setup', $device['setup']);
-				$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_rekey', $device['rekey']);
-
+				if (isset($o['media_encryption']) && $o['media_encryption'] == 'dtls') {
+					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_verify', $device['verify']);
+					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_setup', $device['setup']);
+					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_rekey', $device['rekey']);
+				}
 				if ((integer)$device['auto_generate_cert'] === 1 && $this->pjsipDTLSAutoGenerateCertSupported()) {
 					$this->FreePBX->PJSip->addEndpoint($device['id'], 'dtls_auto_generate_cert', 'yes');
 					continue;
