@@ -130,11 +130,11 @@ class Certman extends Command {
 						$einfo = json_decode(substr($e->getMessage(), strpos($e->getMessage(), '{')), true);
 						if (!empty($einfo['detail'])) {
 							$emessage = $einfo['detail'];
-							$output->writeln($e->getMessage()); //append raw message to log output
+							//$output->writeln($e->getMessage()); //append raw message to log output
 						} else {
 							$emessage = $e->getMessage();
 						}
-						$this->showhints($certman, $output);
+						$this->showhints($certman, $output, $einfo['hints']);
 						$output->writeln("<error>LetsEncrypt Update Failure:");
 						$output->writeln($emessage . "</error>");
 						exit(4);
@@ -223,7 +223,7 @@ class Certman extends Command {
 				exit(4);
 			}
 
-			print($input->getOption('json') ? json_encode($cert) : print_r($cert, true));
+			print($input->getOption('json') ? json_print_pretty(json_encode($cert)) : print_r($cert, true));
 			print("\n");
 			return;
 		}
@@ -234,12 +234,17 @@ class Certman extends Command {
 				$output->writeln("<info>" . _("Forced update enabled !!!") . "</info>");
 			}
 			$messages = $certman->checkUpdateCertificates($force);
+			$hints = array();
 			foreach($messages as $message) {
-				if ($message['type'] == "danger") {
-					$this->showhints($certman, $output);
-					$output->writeln("<error>LetsEncrypt Update Failure:</error>");
-					break;
+				if (!empty($message['hints'])) {
+					$hints = array_merge($hints, $message['hints']);
 				}
+				if ($message['type'] == "danger") {
+					$danger = true;
+				}
+			}
+			if ($danger) {
+				$this->showhints($certman, $output, array_unique($hints));
 			}
 			foreach($messages as $message) {
 				$m = $message['message'];
@@ -248,10 +253,10 @@ class Certman extends Command {
 						$output->writeln("<error>".$m."</error>");
 					break;
 					case "warning":
-						$output->writeln("<info>".$m."</info>");
+						$output->writeln("<comment>".$m."</comment>");
 					break;
 					case "success":
-						$output->writeln($m);
+						$output->writeln("<info>".$m."</info>");
 					break;
 				}
 			}
@@ -353,16 +358,17 @@ class Certman extends Command {
 		return $help->run($input, $output);
 	}
 
-	private function showhints($certman, OutputInterface $output) {
+	private function showhints($certman, OutputInterface $output, $hints) {
 		$api = $certman->getFirewallAPI();
 		$leoptions = $api->getLeOptions();
 		$terminal = new Terminal;
 		$width = $terminal->getWidth() - 10;
 		$rows = array();
-		if (!empty($leoptions['hints'])) {
+		$hints = !empty($hints) ? array_merge($hints, $leoptions['hints']) : $leoptions['hints'];
+		if (!empty($hints)) {
 			$bullets = array();
 			$output->writeln('');
-			foreach($leoptions['hints'] as $hint) {
+			foreach($hints as $hint) {
 				$rows[] = array('*', $hint);
 				$wrapped = explode("\n",$this->tagwrap($hint, $width));
 				$leader = '<comment>   ** ';

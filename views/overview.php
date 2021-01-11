@@ -10,7 +10,7 @@ if(!empty($message)) {
 		$hinthtml .= '</ul>';
 	}
 	if(!empty($message['log']) & $message['log'] != '') {
-		$loghtml = '<pre class="alert-' . $message['type'] .' pre-scrollable">' . $message['log'] . '</pre>';
+		$loghtml = '<pre class="alert-' . $message['type'] .' pre-scrollable" style="overflow-x: auto; white-space: pre-wrap; word-wrap: normal; overflow-wrap: normal;">' . $message['log'] . '</pre>';
 	}
 
 	$mhtml = '<div class="fpbx-container element-container alert alert-' . $message['type'] .' alert-dismissable">

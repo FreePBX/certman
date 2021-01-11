@@ -210,10 +210,11 @@ class Certman implements BMO {
 									"san" => $san
 								), false, true);
 							} catch(Exception $e) {
-								$api = $this->getFirewallAPI();
-								$einfo = json_decode(substr($e->getMessage(), strpos($e->getMessage(), '{')), true);
 								$lelog = trim(ob_get_contents());
 								ob_end_clean();
+								$einfo = json_decode(substr($e->getMessage(), strpos($e->getMessage(), '{')), true);
+								$api = $this->getFirewallAPI();
+								$leoptions = $api->getLeOptions();
 								if (!empty($einfo['detail'])) {
 									$emessage = $einfo['detail'];
 									$lelog = $lelog . "\n" . $e->getMessage();
@@ -221,12 +222,13 @@ class Certman implements BMO {
 									$emessage = $e->getMessage();
 									$lelog = $lelog == ''?'': $lelog;
 								}
-								$leoptions = $api->getLeOptions();
+
+								$hints = !empty($einfo['hints']) ? array_merge($einfo['hints'], $leoptions['hints']) : $leoptions['hints'];
 								$this->message = array(	'title' => 'LetsEncrypt Update Failure',
 											'type' => 'danger',
 											'message' => $emessage,
 											'log' => $lelog,
-											'hints' => $leoptions['hints']
+											'hints' => $hints,
 										);
 								break;
 							}
@@ -284,9 +286,11 @@ class Certman implements BMO {
 							));
 							$this->saveCertificate(null, $host, $description, 'le', $additional);
 						} catch(Exception $e) {
-							$einfo = json_decode(substr($e->getMessage(), strpos($e->getMessage(), '{')), true);
 							$lelog = trim(ob_get_contents());
 							ob_end_clean();
+							$einfo = json_decode(substr($e->getMessage(), strpos($e->getMessage(), '{')), true);
+							$api = $this->getFirewallAPI();
+							$leoptions = $api->getLeOptions();
 							if (!empty($einfo['detail'])) {
 								$emessage = $einfo['detail'];
 								$lelog = $lelog . "\n" . $e->getMessage();
@@ -294,13 +298,12 @@ class Certman implements BMO {
 								$emessage = $e->getMessage();
 								$lelog = $lelog == ''?'': $lelog;
 							}
-							$api = $this->getFirewallAPI();
-							$leoptions = $api->getLeOptions();
+							$hints = !empty($einfo['hints']) ? array_merge($einfo['hints'], $leoptions['hints']) : $leoptions['hints'];
 							$this->message = array(	'title' => 'LetsEncrypt Generation Failure',
 										'type' => 'danger',
 										'message' => $emessage,
 										'log' => $lelog,
-										'hints' => $leoptions['hints']
+										'hints' => $hints,
 									);
 
 						break 2;
@@ -603,7 +606,17 @@ class Certman implements BMO {
 						}
 						$update = true;
 					} catch(Exception $e) {
-						$messages[] = array('type' => 'danger', 'message' => sprintf(_('There was an error updating certificate "%s": %s'),$cert['basename'],$e->getMessage()));
+						$einfo = json_decode(substr($e->getMessage(), strpos($e->getMessage(), '{')), true);
+						$hints = array();
+						if (!empty($einfo['detail'])) {
+							$emessage = $einfo['detail'];
+						} else {
+							$emessage = $e->getMessage();
+						}
+						if (!empty($einfo['hints'])) {
+							$hints = $einfo['hints'];
+						}
+						$messages[] = array('type' => 'danger', 'message' => sprintf(_('There was an error updating certificate "%s": %s'),$cert['basename'],$emessage), 'hints' => $einfo['hints']);
 						continue;
 					}
 				} else {
@@ -632,7 +645,17 @@ class Certman implements BMO {
 						}
 						$update = true;
 					} catch(Exception $e) {
-						$messages[] = array('type' => 'danger', 'message' => sprintf(_('There was an error updating certificate "%s": %s'),$cert['basename'],$e->getMessage()));
+						$einfo = json_decode(substr($e->getMessage(), strpos($e->getMessage(), '{')), true);
+						$hints = array();
+						if (!empty($einfo['detail'])) {
+							$emessage = $einfo['detail'];
+						} else {
+							$emessage = $e->getMessage();
+						}
+						if (!empty($einfo['hints'])) {
+							$hints = $einfo['hints'];
+						}
+						$messages[] = array('type' => 'danger', 'message' => sprintf(_('There was an error updating certificate "%s": %s'),$cert['basename'],$emessage), 'hints' => $einfo['hints']);
 						continue;
 					}
 				} else {
@@ -732,7 +755,13 @@ class Certman implements BMO {
 		try{
 			$this->enableFirewallLeRules();
 
-			//check freepbx.org first
+			$localip = gethostbyname($host);
+			$localip = @inet_pton($localip) ? $localip : 'dns error';
+			$publicip = $this->getPublicIP($host);
+			$publicip = (!empty($publicip) && @inet_pton($publicip[0])) ? $publicip[0] : 'dns error';
+
+			print(sprintf(_("Processing: %s, Local IP: %s, Public IP: %s"), $host, $localip, $publicip) . "\n");
+			//self-test first
 			if($needsgen) {
 				$basePathCheck = "/.freepbx-known";
 				if(!file_exists($webroot.$basePathCheck)) {
@@ -744,6 +773,29 @@ class Certman implements BMO {
 				$token = bin2hex(openssl_random_pseudo_bytes(16));
 				$pathCheck = $basePathCheck."/".$token;
 				file_put_contents($webroot.$pathCheck,$token);
+
+				print(_("Self test: trying ") . "http://" . $host.$pathCheck . "\n");
+				$pest = new \Pest("http://".$host);
+				$pest->curl_opts[CURLOPT_FOLLOWLOCATION] = true;
+				$pest->curl_opts[CURLOPT_CONNECTTIMEOUT] = 5;
+				$pest->curl_opts[CURLOPT_TIMEOUT] = 5;
+				try {
+					$selftest = $pest->get($pathCheck);
+				} catch(Exception $e) {
+					$errstr = _("Self test error: ") . get_class($e) . " - " . trim(strip_tags($e->getMessage()));
+					$hint = sprintf(_("Does DNS name resolution for %s resolve correctly?\nLocal DNS result: %s, External DNS result: %s"), $host, $localip, $publicip);
+					$hints = array($hint);
+					print($errstr ."\n");
+					throw new Exception(json_print_pretty(json_encode(array('type' => 'selftest', 'detail' => $errstr, 'hints' => $hints)), "  "));
+				}
+				if(empty($selftest)) {
+					$errstr = _("Self test error: no token data");
+					print($errstr ."\n");
+					throw new Exception($errstr);
+				}
+				print("Self test: received ". $selftest . "\n");
+
+			//now check freepbx.org
 				$pest = new \PestJSON('http://mirror1.freepbx.org');
 				$pest->curl_opts[CURLOPT_FOLLOWLOCATION] = true;
 				$pest->curl_opts[CURLOPT_CONNECTTIMEOUT] = 10;
@@ -777,6 +829,7 @@ class Certman implements BMO {
 				$le->initAccount();
 				$le->signDomains($san);
 			}
+			$this->disableFirewallLeRules();
 
 			if(!file_exists($certpath . "/private.pem") || !file_exists($certpath . "/cert.pem")) {
 				throw new Exception(_("Certificates are missing. Unable to continue"));
@@ -822,7 +875,6 @@ class Certman implements BMO {
 					chgrp($file, $group);
 				}
 			}
-			$this->disableFirewallLeRules();
 			return true;
 		} catch(Exception $e) {
 			$this->disableFirewallLeRules();
@@ -1887,5 +1939,35 @@ class Certman implements BMO {
 		$ret .= sprintf(_("(%s days)"), $days);
 
 		return $ret;
+	}
+
+	function getPublicIP($host) {
+		$ips = array();
+		$queries = array(
+			array('url' => 'https://dns.google/resolve?name=' . $host . '&type=1&do=1'),
+			array('url' => 'https://cloudflare-dns.com/dns-query?name=' . $host . '&type=1&do=1'),
+			array('url' => 'https://dns.quad9.net:5053/dns-query?name=' . $host . '$host&type=1&do=1'),
+		);
+		foreach($queries as $q) {
+			$requests = \FreePBX::Curl()->requests($q['url']);
+			$options = array(
+				'timeout' => 2,
+			);
+			$headers = array(
+				'Accept' => 'application/dns-json', //only needed for quad9, add headers to queries?
+			);
+			try {
+				$response = $requests->get('', $headers, $options);
+			} catch(\Exception $e) { break; }
+
+			$decoded = json_decode($response->body, 1);
+			if (!empty($decoded['Answer']) && $decoded['status'] == 0) {
+				foreach($decoded['Answer'] as $a) {
+					if($a['type'] == 1)  $ips[] = $a['data'];
+				}
+				break;
+			}
+		}
+		return $ips;
 	}
 }
