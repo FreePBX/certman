@@ -795,6 +795,7 @@ class Certman implements BMO {
 				if(empty($selftest)) {
 					$selftesterr = _("Self test error: no token data");
 					print($selftesterr ."\n");
+					@unlink($webroot.$pathCheck);
 					throw new Exception($selftesterr);
 				}
 				print("Self test: received ". $selftest . "\n");
@@ -813,7 +814,6 @@ class Certman implements BMO {
 						$lecheckerr = $thing['message'];
 					}
 				} catch(Exception $e) {
-					@unlink($webroot.$pathCheck);
 					$lecheckerr =  _("lechecker: ") . get_class($e) . " - " . trim(strip_tags($e->getMessage()));
 				}
 				if ($lecheckerr) {
