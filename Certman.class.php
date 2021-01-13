@@ -217,7 +217,6 @@ class Certman implements BMO {
 								$leoptions = $api->getLeOptions();
 								if (!empty($einfo['detail'])) {
 									$emessage = $einfo['detail'];
-									$lelog = $lelog . "\n" . $e->getMessage();
 								} else {
 									$emessage = $e->getMessage();
 									$lelog = $lelog == ''?'': $lelog;
@@ -293,7 +292,6 @@ class Certman implements BMO {
 							$leoptions = $api->getLeOptions();
 							if (!empty($einfo['detail'])) {
 								$emessage = $einfo['detail'];
-								$lelog = $lelog . "\n" . $e->getMessage();
 							} else {
 								$emessage = $e->getMessage();
 								$lelog = $lelog == ''?'': $lelog;
