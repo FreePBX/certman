@@ -1962,7 +1962,7 @@ class Certman implements BMO {
 		$queries = array(
 			array('url' => 'https://dns.google/resolve?name=' . $host . '&type=1&do=1'),
 			array('url' => 'https://cloudflare-dns.com/dns-query?name=' . $host . '&type=1&do=1'),
-			array('url' => 'https://dns.quad9.net:5053/dns-query?name=' . $host . '$host&type=1&do=1'),
+			array('url' => 'https://dns.quad9.net:5053/dns-query?name=' . $host . '&type=1&do=1'),
 		);
 		foreach($queries as $q) {
 			$requests = \FreePBX::Curl()->requests($q['url']);
