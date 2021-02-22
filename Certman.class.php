@@ -1679,20 +1679,24 @@ class Certman implements BMO {
 		} catch(Exception $e) {
 			return false;
 		}
-		$files[] = $loc ."/".$csrs[0]['basename'].".csr";
-		$files[] = $loc ."/".$csrs[0]['basename'].".csr-config";
-		if(!$keepKey) {
-			$files[] = $loc ."/".$csrs[0]['basename'].".key";
-		}
-		foreach($files as $file) {
-			if(file_exists($file)) {
-				unlink($file);
+		if(isset($csrs[0])){
+			$files[] = $loc ."/".$csrs[0]['basename'].".csr";
+			$files[] = $loc ."/".$csrs[0]['basename'].".csr-config";
+			if(!$keepKey) {
+				$files[] = $loc ."/".$csrs[0]['basename'].".key";
 			}
-		}
-		$sql = "TRUNCATE certman_csrs";
-		$sth = $this->db->prepare($sql);
-		$sth->execute();
-		return true;
+			foreach($files as $file) {
+				if(file_exists($file)) {
+					unlink($file);
+				}
+			}
+			$sql = "TRUNCATE certman_csrs";
+			$sth = $this->db->prepare($sql);
+			$sth->execute();
+			return true;
+		}else{
+			return false;
+		}	
 	}
 
 	/**
@@ -1969,5 +1973,43 @@ class Certman implements BMO {
 			}
 		}
 		return $ips;
+	}
+	
+	/**
+	 * uploadSSLCertificate
+	 *
+	 * @param  mixed $input
+	 * @return void
+	 */
+	public function uploadSSLCertificate($input){
+		$name = basename($input['name']);
+		if($this->checkCertificateName($name)) {
+			return array('status' => false, 'message' => _('Certificate name is already in use'));
+		}
+		$removeCSR = false;
+		if(empty($input['privateKey']) && !empty($input['CSRReference'])) {
+			$csr = $this->getCSRDetails($input['CSRReference']);
+				if(empty($csr['files']['key'])) {
+					$this->removeCSR();
+					return array('status' => false, 'message' => _('No Private key to reference. Try generating a CSR first.'));
+			}
+			$pkey = file_get_contents($csr['files']['key']);
+			$removeCSR = true;
+		} elseif(!empty($input['privateKey'])) {
+			$pkey = $input['privateKey'];
+		} else {
+			return array('status' => false, 'message' => _('No Private key to reference. Try generating a CSR first.'));
+		}
+
+		try {
+			$this->importCertificate($name,$pkey,$input['signedCertificate'],$input['trustedChain'],$input['passPhrase']);
+			$this->saveCertificate(null,$name,$input['description'],'up');
+		} catch(Exception $e) {
+			return array('status' => false, 'message' => sprintf(_('There was an error importing the certificate: %s'),$e->getMessage()));
+		}
+		if($removeCSR) {
+			$this->removeCSR(true);
+		}
+		return array('status' => true, 'message' => _('Added new certificate'));
 	}
 }
