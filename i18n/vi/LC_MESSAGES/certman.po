@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-12 07:21+0000\n"
+"POT-Creation-Date: 2021-03-16 02:54+0000\n"
 "PO-Revision-Date: 2017-08-08 16:34+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese <http://weblate.freepbx.org/projects/freepbx/"
@@ -55,7 +55,7 @@ msgstr ""
 msgid "'%s' is not a valid ID"
 msgstr ""
 
-#: Certman.class.php:1939
+#: Certman.class.php:1943
 #, php-format
 msgid "(%s days)"
 msgstr "(%s ngày)"
@@ -106,6 +106,14 @@ msgstr ""
 "nhiệm vụ của những đối tượng khác nhau của hạ tầng khóa công khai (Tiếng "
 "anh: public key infrastructure, viết tắt PKI)"
 
+#: Api/Gql/Certman.php:209
+msgid "API message"
+msgstr ""
+
+#: Api/Gql/Certman.php:205
+msgid "API status"
+msgstr ""
+
 #: views/certgrid.php:31
 msgid "Action"
 msgstr "Thao tác"
@@ -114,11 +122,11 @@ msgstr "Thao tác"
 msgid "Add New Certificate"
 msgstr "Thêm chứng thực mới"
 
-#: Certman.class.php:348 Certman.class.php:374
+#: Certman.class.php:348 Certman.class.php:374 Certman.class.php:2013
 msgid "Added new certificate"
 msgstr "Đã thêm chứng thực mới"
 
-#: Certman.class.php:397
+#: Api/Gql/Certman.php:233 Certman.class.php:397
 msgid "Added new certificate signing request"
 msgstr "Đã thêm yêu cầu ký chứng thực mới"
 
@@ -136,7 +144,7 @@ msgstr ""
 msgid "Admin"
 msgstr "Quản trị viên"
 
-#: views/up.php:206
+#: Api/Gql/Certman.php:187 views/up.php:206
 msgid ""
 "After you have submitted a CSR to a CA, they will sign it, after validation, "
 "and return a Signed Certificate. That certificate should be pasted in the "
@@ -179,7 +187,7 @@ msgstr ""
 msgid "Certificate"
 msgstr "Chứng thực"
 
-#: Certman.class.php:1832 Certman.class.php:1847 Certman.class.php:1856
+#: Certman.class.php:1836 Certman.class.php:1851 Certman.class.php:1860
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr "Chứng thực %s không thể đọc được! Không thể tiếp tục!"
@@ -205,7 +213,7 @@ msgstr "Nhà cung cấp chứng thực để tham chiếu"
 msgid "Certificate Common Name"
 msgstr ""
 
-#: Certman.class.php:1934
+#: Certman.class.php:1938
 msgid "Certificate Expired!"
 msgstr "Chứng thực đã hết han!"
 
@@ -250,6 +258,12 @@ msgstr "Các luật chứng thực"
 msgid "Certificate Settings"
 msgstr "Cài đặt chứng thực"
 
+#: Api/Gql/Certman.php:183
+msgid ""
+"Certificate Signing Request to reference. Select \"None\" to upload your own "
+"private key."
+msgstr ""
+
 #: views/up.php:185
 msgid ""
 "Certificate Signing Request to reference. Select 'None' to upload your own "
@@ -282,7 +296,8 @@ msgstr "Chứng thực trống"
 msgid "Certificate is invalid"
 msgstr "Chứng thực không hợp lệ"
 
-#: Certman.class.php:318 Certman.class.php:380
+#: Api/Gql/Certman.php:225 Certman.class.php:318 Certman.class.php:380
+#: Certman.class.php:1987
 msgid "Certificate name is already in use"
 msgstr "Tên chứng thực đang được sử dụng"
 
@@ -339,7 +354,7 @@ msgstr ""
 msgid "Checking Certificate files on backup /etc/asterisk/keys"
 msgstr ""
 
-#: views/csr.php:162
+#: Api/Gql/Certman.php:153 views/csr.php:162
 msgid ""
 "City name such as \"Toronto\" or \"Brisbane.\" Do not abbreviate. For "
 "example, enter \"Saint Louis\" not \"St. Louis\""
@@ -411,6 +426,10 @@ msgstr "Xóa nhà cung cấp chứng chỉ tự ký"
 msgid "Delete certificate by id or hostname"
 msgstr ""
 
+#: Api/Gql/Certman.php:39
+msgid "Delete the CSR Certificate"
+msgstr ""
+
 #: Certman.class.php:426
 msgid "Deleted Certificate"
 msgstr "Chứng thực đã xóa"
@@ -452,6 +471,10 @@ msgstr "Đã xong!"
 #: views/certgrid.php:16
 msgid "Download CSR"
 msgstr "Tải xuống CSR"
+
+#: Api/Gql/Certman.php:26
+msgid "Download the CSR Certificate"
+msgstr ""
 
 #: views/le.php:32
 msgid "Edit Certificate"
@@ -507,11 +530,12 @@ msgstr ""
 "Từ giao diện này bạn có thể khởi tạo một yêu cầu ký chứng thực ( CSR) cho "
 "việc bạn hành một chứng thực sử dụng máy chủ này"
 
-#: Certman.class.php:550 views/certgrid.php:14
+#: Api/Gql/Certman.php:63 Certman.class.php:550 views/certgrid.php:14
 msgid "Generate CSR"
 msgstr "Khởi tạo CSR"
 
-#: Certman.class.php:550 Console/Certman.class.php:35 assets/js/certman.js:56
+#: Api/Gql/Certman.php:93 Certman.class.php:550 Console/Certman.class.php:35
+#: assets/js/certman.js:56
 msgid "Generate Certificate"
 msgstr "Khởi tạo chứng thực"
 
@@ -539,6 +563,10 @@ msgstr "Ở đây"
 msgid "Host Name"
 msgstr "Tên Host"
 
+#: Api/Gql/Certman.php:133
+msgid "Host name"
+msgstr ""
+
 #: views/overview.php:61
 msgid ""
 "Hover over the 'Default' column and click to make a certificate the system "
@@ -562,7 +590,7 @@ msgid ""
 "manual configuration."
 msgstr ""
 
-#: views/up.php:196
+#: Api/Gql/Certman.php:179 views/up.php:196
 msgid "If you have a separate private key paste it here."
 msgstr "Nếu bạn có một khóa cá nhân riêng dán nó vào đây."
 
@@ -695,6 +723,10 @@ msgstr ""
 "chứng thực tiêu chuẩn và đây là khóa để vào trong %s cho các ứng dụng khác "
 "sử dụng"
 
+#: Api/Gql/Certman.php:106
+msgid "Message for the request"
+msgstr ""
+
 #: Console/Certman.class.php:72
 msgid ""
 "Missing required argument(s) - 'hostname', 'country-code', 'state' and "
@@ -745,7 +777,7 @@ msgid "No Private key to reference."
 msgstr "Không có khóa cá nhân nào để tham chiếu."
 
 #: Certman.class.php:147 Certman.class.php:327 Certman.class.php:335
-#: Certman.class.php:1001
+#: Certman.class.php:1001 Certman.class.php:1994 Certman.class.php:2001
 msgid "No Private key to reference. Try generating a CSR first."
 msgstr "Không có khóa cá nhân nào để tham chiếu. Thử kích hoạt một CSR trước."
 
@@ -791,11 +823,15 @@ msgstr "Tên tổ chức"
 msgid "Organization Name such as %s"
 msgstr "Tên tổ chức ví dụ như %s"
 
+#: Api/Gql/Certman.php:137
+msgid "Organization Name such as Sangoma Technologies, Inc."
+msgstr ""
+
 #: views/csr.php:84
 msgid "Organization Unit"
 msgstr "Đơn vị tổ chức"
 
-#: views/csr.php:96
+#: Api/Gql/Certman.php:141 views/csr.php:96
 msgid ""
 "Organizational Unit. This can be a doing business as (DBA) name, or the name "
 "of a department within the business. This may be left blank."
@@ -827,6 +863,10 @@ msgstr "Dán khóa mới ở đây"
 msgid ""
 "Please enable DTLS for Media Encryption field first before enabling DTLS "
 "parameters"
+msgstr ""
+
+#: Api/Gql/Certman.php:33
+msgid "Please find the CSR file contant"
 msgstr ""
 
 #: views/ca.php:62 views/up.php:193
@@ -886,7 +926,11 @@ msgstr ""
 "các dịch vụ có chứng thực cập nhật chính xác bằng cách khởi động lại các "
 "dịch vụ PBX"
 
-#: views/csr.php:140
+#: Api/Gql/Certman.php:263
+msgid "Sorry unable to find any CSR file"
+msgstr ""
+
+#: Api/Gql/Certman.php:149 views/csr.php:140
 msgid ""
 "State or province such as \"Queensland\" or \"Wisconsin\" or \"Ontario.\" Do "
 "not abbreviate. Enter the full name."
@@ -906,6 +950,10 @@ msgstr "Bang/Tỉnh"
 msgid "State/Province/Region"
 msgstr "Bang/Tỉnh/Miền"
 
+#: Api/Gql/Certman.php:110
+msgid "Status for the request"
+msgstr ""
+
 #: Certman.class.php:539
 msgid "Submit"
 msgstr "Gửi đi"
@@ -914,7 +962,7 @@ msgstr "Gửi đi"
 msgid "Successfully deleted the Certificate Authority"
 msgstr "Đã xóa thành công nhà cung cấp chứng thực"
 
-#: Certman.class.php:414
+#: Api/Gql/Certman.php:44 Certman.class.php:414
 msgid "Successfully deleted the Certificate Signing Request"
 msgstr "Đã xóa thành công Yêu cầu ký chứng thực"
 
@@ -955,7 +1003,7 @@ msgstr ""
 msgid "The Certificate to use from Certificate Manager"
 msgstr "Chứng thực sử dụng từ trình quản lý chứng thực"
 
-#: views/ss.php:147 views/up.php:134 views/view.php:59
+#: Api/Gql/Certman.php:171 views/ss.php:147 views/up.php:134 views/view.php:59
 msgid "The Description of this certificate. Used in the module only"
 msgstr "Mô tả của chứng thực này. Chỉ được sử dụng trong mô đun này"
 
@@ -980,7 +1028,7 @@ msgstr ""
 msgid "The Organization Name"
 msgstr "Tên tổ chức"
 
-#: views/up.php:157
+#: Api/Gql/Certman.php:175 views/up.php:157
 msgid ""
 "The Passphrase of the Private Key. This will be used to decrypt the private "
 "key and the certificate. They will be stored unpassworded on the system to "
@@ -990,7 +1038,8 @@ msgstr ""
 "và chứng thực. Chúng sẽ được lưu trữ mà không cần mật khẩu  trên hệ thống để "
 "ngăn chặn các gián đoạn dịch vụ."
 
-#: views/csr.php:36 views/up.php:42 views/view.php:35
+#: Api/Gql/Certman.php:129 Api/Gql/Certman.php:167 views/csr.php:36
+#: views/up.php:42 views/view.php:35
 msgid ""
 "The base name of the certificate, Can only contain alphanumeric characters"
 msgstr "Tên cơ sở của chứng thực, chỉ có thể bao gồm các ký tự chữ và số"
@@ -1004,7 +1053,7 @@ msgstr "Tên thông thường của chứng thực, thường giống như tên 
 msgid "There was an error importing %s. The error was: %s"
 msgstr "Xảy ra lỗi khi nhập %s. Lỗi này là: %s"
 
-#: Certman.class.php:165 Certman.class.php:342
+#: Certman.class.php:165 Certman.class.php:342 Certman.class.php:2008
 #, php-format
 msgid "There was an error importing the certificate: %s"
 msgstr "Xảy ra lỗi khi nhập chứng thực: %s"
@@ -1059,7 +1108,7 @@ msgstr ""
 msgid "Trusted Chain"
 msgstr "Chuỗi tin tưởng"
 
-#: views/csr.php:118
+#: Api/Gql/Certman.php:145 views/csr.php:118
 msgid "Two letter country code, such as \"US\", \"CA\", or \"AU\"."
 msgstr "Mã quốc gia gồm 2 chữ cái, ví dụ  \"US\", \"CA\", or \"AU\"."
 
@@ -1067,7 +1116,7 @@ msgstr "Mã quốc gia gồm 2 chữ cái, ví dụ  \"US\", \"CA\", or \"AU\"."
 msgid "Type"
 msgstr "Kiểu"
 
-#: Certman.class.php:394
+#: Api/Gql/Certman.php:231 Certman.class.php:394
 #, php-format
 msgid "Unable to create CSR: %s"
 msgstr "Không thể tạo CSR: %s"
@@ -1114,7 +1163,7 @@ msgstr "Không thể xóa ca.key"
 msgid "Unable to remove the Certificate Authority"
 msgstr "Không thể xóa nhà cung cấp chứng thực"
 
-#: Certman.class.php:416
+#: Api/Gql/Certman.php:46 Certman.class.php:416
 msgid "Unable to remove the Certificate Signing Request"
 msgstr "Không thể xóa Yêu cầu ký chứng thực"
 
@@ -1127,7 +1176,7 @@ msgstr "Không thể xóa tmp.cfg"
 msgid "Unable to write to %s"
 msgstr "Không thể ghi tới %s"
 
-#: Certman.class.php:1924
+#: Certman.class.php:1928
 msgid "Unknown Expiration"
 msgstr "Thời gian hết hạn không xác định"
 
@@ -1154,6 +1203,10 @@ msgstr "Tải lên nhà cung cấp chứng chỉ"
 #: views/certgrid.php:9 assets/js/certman.js:52
 msgid "Upload Certificate"
 msgstr "Tải lên chứng thực"
+
+#: Api/Gql/Certman.php:73
+msgid "Upload an SSL certificate"
+msgstr ""
 
 #: Console/Certman.class.php:279 views/certgrid.php:45
 msgid "Uploaded"
@@ -1245,12 +1298,28 @@ msgstr ""
 "cửa sổ sau. Có thể để trong hoặc cập nhật bất cứ khi nào. Có thể thêm chúng "
 "khi có yêu cầu."
 
+#: Api/Gql/Certman.php:62
+msgid "generateCSR"
+msgstr ""
+
+#: Api/Gql/Certman.php:191
+msgid ""
+"our CA may also require a Trusted Chain to be installed. This will be "
+"provided by the CA, and will consist of one, or multiple, certificate files. "
+"Paste the contents of all the Chain files, if any, into the box below. This "
+"may be left blank, or updated at any time. They can be added in any order."
+msgstr ""
+
 #: FirewallAPI.class.php:127
 msgid "port"
 msgstr ""
 
 #: FirewallAPI.class.php:127
 msgid "ports"
+msgstr ""
+
+#: Api/Gql/Certman.php:72
+msgid "uploadSSLCertificate"
 msgstr ""
 
 #~ msgid "Information"
