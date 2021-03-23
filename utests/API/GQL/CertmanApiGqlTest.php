@@ -52,7 +52,7 @@ class CertmanGqlApiTest extends ApiBaseTestCase {
       }");
       
       $json = (string)$response->getBody();
-      $this->assertEquals('{"errors":[{"message":"Field Generate CSRInput.city of required type String! was not provided.","status":false}]}',$json);
+      $this->assertEquals('{"errors":[{"message":"Field generateCSRInput.city of required type String! was not provided.","status":false}]}',$json);
       $this->assertEquals(400, $response->getStatusCode());
    }
    
@@ -134,10 +134,11 @@ class CertmanGqlApiTest extends ApiBaseTestCase {
     * @return void
     */
    public function test_delete_CSR_when_certificate_exists_should_return_true(){
-      $response = $this->request("{deleteCSRFile{ 
-         status 
-         message 
-      }}");
+      $response = $this->request("mutation{
+         deleteCSRFile(input: {}){
+            status
+            message
+         }}");
       
       $json = (string)$response->getBody();
       $this->assertEquals('{"data":{"deleteCSRFile":{"status":true,"message":"Successfully deleted the Certificate Signing Request"}}}',$json);
@@ -250,5 +251,58 @@ class CertmanGqlApiTest extends ApiBaseTestCase {
    $this->assertEquals('{"data":{"uploadSSLCertificate":{"message":"Added new certificate.","status":true}}}',$json);
       
    $this->assertEquals(200, $response->getStatusCode());
+   }
+
+   /**
+    * test_deleteCertificate_all_good_should_return_true
+    *
+    * @return void
+    */
+   public function test_deleteCertificate_all_good_should_return_true(){
+      $mockcertman = $this->getMockBuilder(\FreePBX\modules\certman\Certman::class)
+		->disableOriginalConstructor()
+		->disableOriginalClone()
+		->setMethods(array('removeCertificate'))
+      ->getMock();
+      
+	$mockcertman->method('removeCertificate')
+		->willReturn(true);
+    
+   self::$freepbx->PKCS->setcertObj($mockcertman); 
+
+   $response = $this->request("mutation{
+      deleteCertificate(input: {cid : \"2\"}){
+         message
+         status
+      }}");
+
+   $json = (string)$response->getBody();
+   $this->assertEquals('{"data":{"deleteCertificate":{"message":"Successfully deleted the SSL certificate","status":true}}}',$json);
+      
+   $this->assertEquals(200, $response->getStatusCode());
+   }
+
+   public function test_deleteCertificate_when_false_should_return_false(){
+      $mockcertman = $this->getMockBuilder(\FreePBX\modules\certman\Certman::class)
+		->disableOriginalConstructor()
+		->disableOriginalClone()
+		->setMethods(array('removeCertificate'))
+      ->getMock();
+      
+	 $mockcertman->method('removeCertificate')
+		->willReturn(false);
+    
+   self::$freepbx->PKCS->setcertObj($mockcertman); 
+
+   $response = $this->request("mutation{
+      deleteCertificate(input: {cid : \"2\"}){
+         message
+         status
+      }}");
+
+   $json = (string)$response->getBody();
+   $this->assertEquals('{"errors":[{"message":"Unable to delete the SSL certificate","status":false}]}',$json);
+      
+   $this->assertEquals(400, $response->getStatusCode());
    }
 }
