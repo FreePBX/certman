@@ -32,19 +32,7 @@ class Certman extends Base {
 					}else{
 						return ['message'=> _("Please find the CSR file contant"), 'status' => true, 'fileContant' => file_get_contents($res['file'])];
 					}
-				  },
-				],
-			'deleteCSRFile' => [
-				'type' => $this->typeContainer->get('certman')->getObject(),
-				'description' => _('Delete the CSR Certificate'),
-				'args' => Relay::connectionArgs(),
-				'resolve' => function($root) {
-					$status = $this->freepbx->certman->removeCSR(true);
-					if($status) {
-						return array('status' => true, 'message' => _('Successfully deleted the Certificate Signing Request'));
-					} else {
-						return array('status' => false, 'message' => _('Unable to remove the Certificate Signing Request'));
-				}},],
+				  },]
 		];};}
 	}
 	
@@ -76,11 +64,33 @@ class Certman extends Base {
 						'mutateAndGetPayload' => function($input){
 							return $this->uploadSSL($input);
 						}
-					])
+					]),
+					'deleteCSRFile' => Relay::mutationWithClientMutationId([
+						'name' => _('deleteCSRFile'),
+						'description' => _('Delete the CSR'),
+						'inputFields' => [],
+						'outputFields' => $this->getOutputFields(),
+						'mutateAndGetPayload' => function() {
+							$status = $this->freepbx->certman->removeCSR(true);
+							if($status) {
+								return array('status' => true, 'message' => _('Successfully deleted the Certificate Signing Request'));
+							} else {
+								return array('status' => false, 'message' => _('Unable to remove the Certificate Signing Request'));
+							}
+						},
+					]),
+					'deleteCertificate' => Relay::mutationWithClientMutationId([
+						'name' => _('deleteCertificate'),
+						'description' => _('Delete a specific certificate'),
+						'inputFields' => $this->getDeleteInputFields(),
+						'outputFields' => $this->getOutputFields(),
+						'mutateAndGetPayload' => function($input){
+							return $this->deleteCertificate($input);
+						}
+					]),
 				];
 			};
 		}
-
 	}
 		
 	/**
@@ -192,6 +202,20 @@ class Certman extends Base {
          ],
 		];
 	}
+	
+	/**
+	 * getDeleteInputFields
+	 *
+	 * @return void
+	 */
+	private function getDeleteInputFields(){
+		return [
+			'cid' => [
+			'type' => Type::nonNull(Type::string()),
+			'description' => _('CID for the delete certificate')
+			]
+		];
+	}
 
 	/**
 	 * getOutputFields
@@ -281,5 +305,21 @@ class Certman extends Base {
 		$input['trustedChain'] = isset($input['trustedChain'] ) ?  $input['trustedChain'] : '';
 	
 		return $this->freepbx->PKCS->certObj($this->freepbx)->uploadSSLCertificate($input);
+	}
+	
+	/**
+	 * deleteCertificate
+	 *
+	 * @param  mixed $input
+	 * @return void
+	 */
+	private function deleteCertificate($input){	
+		$status = $this->freepbx->PKCS->certObj($this->freepbx)->removeCertificate($input['cid']);
+
+		if($status) {
+			return array('status' => true, 'message' => _('Successfully deleted the SSL certificate'));
+		} else {
+			return array('status' => false, 'message' => _('Unable to delete the SSL certificate'));
+		}
 	}
 }
