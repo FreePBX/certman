@@ -217,7 +217,6 @@ class Certman implements BMO {
 								$leoptions = $api->getLeOptions();
 								if (!empty($einfo['detail'])) {
 									$emessage = $einfo['detail'];
-									$lelog = $lelog . "\n" . $e->getMessage();
 								} else {
 									$emessage = $e->getMessage();
 									$lelog = $lelog == ''?'': $lelog;
@@ -293,7 +292,6 @@ class Certman implements BMO {
 							$leoptions = $api->getLeOptions();
 							if (!empty($einfo['detail'])) {
 								$emessage = $einfo['detail'];
-								$lelog = $lelog . "\n" . $e->getMessage();
 							} else {
 								$emessage = $e->getMessage();
 								$lelog = $lelog == ''?'': $lelog;
@@ -738,6 +736,8 @@ class Certman implements BMO {
 		$group = $this->FreePBX->Config->get("AMPASTERISKWEBGROUP");
 		$webroot = $this->FreePBX->Config->get("AMPWEBROOT");
 
+		$hints = array();
+
 		if (!file_exists($certfile)) {
 			// We don't have a cert, so we need to request one.
 			$needsgen = true;
@@ -760,8 +760,10 @@ class Certman implements BMO {
 			$publicip = $this->getPublicIP($host);
 			$publicip = (!empty($publicip) && @inet_pton($publicip[0])) ? $publicip[0] : 'dns error';
 
-			print(sprintf(_("Processing: %s, Local IP: %s, Public IP: %s"), $host, $localip, $publicip) . "\n");
+			print(sprintf(_("Processing: %s, Local IP: %s, Public IP: %s\n"), $host, $localip, $publicip));
+
 			//self-test first
+			//	if this fails the equivalent code in Lesript.php will fail cryptically
 			if($needsgen) {
 				$basePathCheck = "/.freepbx-known";
 				if(!file_exists($webroot.$basePathCheck)) {
@@ -782,32 +784,41 @@ class Certman implements BMO {
 				try {
 					$selftest = $pest->get($pathCheck);
 				} catch(Exception $e) {
-					$errstr = _("Self test error: ") . get_class($e) . " - " . trim(strip_tags($e->getMessage()));
-					$hint = sprintf(_("Does DNS name resolution for %s resolve correctly?\nLocal DNS result: %s, External DNS result: %s"), $host, $localip, $publicip);
-					$hints = array($hint);
-					print($errstr ."\n");
-					throw new Exception(json_print_pretty(json_encode(array('type' => 'selftest', 'detail' => $errstr, 'hints' => $hints)), "  "));
+					$selftesterr = _("Self test error: ") . get_class($e) . " - " . trim(strip_tags($e->getMessage()));
+					$hints[] = sprintf(_("Does DNS for %s resolve correctly?\nLocal DNS result: %s, External DNS result: %s"), $host, $localip, $publicip);
+					print($selftesterr ."\n");
+					@unlink($webroot.$pathCheck);
+					throw new Exception(json_print_pretty(json_encode(array('type' => 'selftest', 'detail' => $selftesterr)), "  "));
 				}
 				if(empty($selftest)) {
-					$errstr = _("Self test error: no token data");
-					print($errstr ."\n");
-					throw new Exception($errstr);
+					$selftesterr = _("Self test error: no token data");
+					print($selftesterr ."\n");
+					@unlink($webroot.$pathCheck);
+					throw new Exception($selftesterr);
 				}
 				print("Self test: received ". $selftest . "\n");
 
-			//now check freepbx.org
-				$pest = new \PestJSON('http://mirror1.freepbx.org');
-				$pest->curl_opts[CURLOPT_FOLLOWLOCATION] = true;
-				$pest->curl_opts[CURLOPT_CONNECTTIMEOUT] = 10;
-				$pest->curl_opts[CURLOPT_TIMEOUT] = 30;
-				$thing = $pest->get('/lechecker.php', array('host' => $host, 'path' => $pathCheck, 'token' => $token, 'type' => $challengetype));
+			//Now check freepbx.org
+			//	on failure, save error as hint and continue
+				try {
+					$pest = new \PestJSON('http://mirror1.freepbx.org');
+					$pest->curl_opts[CURLOPT_FOLLOWLOCATION] = true;
+					$pest->curl_opts[CURLOPT_CONNECTTIMEOUT] = 10;
+					$pest->curl_opts[CURLOPT_TIMEOUT] = 30;
+					$thing = $pest->get('/lechecker.php', array('host' => $host, 'path' => $pathCheck, 'token' => $token, 'type' => $challengetype));
+					if(empty($thing)) {
+						$lecheckerr = _("No valid response from http://mirror1.freepbx.org");
+					} elseif(!$thing['status']) {
+						$lecheckerr = $thing['message'];
+					}
+				} catch(Exception $e) {
+					$lecheckerr =  _("lechecker: ") . get_class($e) . " - " . trim(strip_tags($e->getMessage()));
+				}
+				if ($lecheckerr) {
+					print($lecheckerr . "\n");
+					$hints[] = $lecheckerr;
+				}
 				@unlink($webroot.$pathCheck);
-				if(empty($thing)) {
-					throw new Exception(_("No valid response from http://mirror1.freepbx.org"));
-				}
-				if(!$thing['status']) {
-					throw new Exception(sprintf(_("Error '%s' when requesting %s"),$thing['message'], "$challengetype://$host$pathCheck"));
-				}
 			}
 
 			//Now check let's encrypt
@@ -889,7 +900,12 @@ class Certman implements BMO {
 					if (is_file($tokenfile)) @unlink($tokenfile);
 				}
 			}
-			throw new Exception($e->getMessage());
+			$einfo = json_decode(substr($e->getMessage(), strpos($e->getMessage(), '{')), true);
+			if (!$einfo) $einfo = array();
+			$einfo['detail'] = !empty($einfo['detail']) ? $einfo['detail'] : $e->getMessage();
+			$einfo['type'] = !empty($einfo['type']) ? $einfo['type'] : "unknown";
+			$einfo['hints'] = !empty($einfo['hints']) ? array_merge($hints, $einfo['hints']) : $hints;
+			throw new Exception(json_print_pretty(json_encode($einfo), "  "));
 		}
 	}
 
@@ -1950,7 +1966,7 @@ class Certman implements BMO {
 		$queries = array(
 			array('url' => 'https://dns.google/resolve?name=' . $host . '&type=1&do=1'),
 			array('url' => 'https://cloudflare-dns.com/dns-query?name=' . $host . '&type=1&do=1'),
-			array('url' => 'https://dns.quad9.net:5053/dns-query?name=' . $host . '$host&type=1&do=1'),
+			array('url' => 'https://dns.quad9.net:5053/dns-query?name=' . $host . '&type=1&do=1'),
 		);
 		foreach($queries as $q) {
 			$requests = \FreePBX::Curl()->requests($q['url']);
@@ -1962,7 +1978,7 @@ class Certman implements BMO {
 			);
 			try {
 				$response = $requests->get('', $headers, $options);
-			} catch(\Exception $e) { break; }
+			} catch(\Exception $e) { continue; }
 
 			$decoded = json_decode($response->body, 1);
 			if (!empty($decoded['Answer']) && $decoded['status'] == 0) {
