@@ -854,10 +854,7 @@ class Certman implements BMO {
 				$key = file_get_contents($certpath . ".key");
 				$cert = file_get_contents($certpath . ".crt");
 				$bundle = file_get_contents($certpath . "-ca-bundle.crt");
-				//https://issues.freepbx.org/browse/FREEPBX-14631
-				$root = file_get_contents(__DIR__."/files/x3-root-ca.cert");
-				$bundle = $bundle."\n-----BEGIN CERTIFICATE-----\n".$root."-----END CERTIFICATE-----\n";
-				file_put_contents($certpath . "-ca-bundle.crt", $bundle);
+				file_put_contents($certpath . "-fullchain.crt", $cert . "\n" . $bundle);
 				file_put_contents($certpath . ".pem", $key . "\n" . $cert . "\n" . $bundle);
 
 				$chown[] = $certpath;
@@ -1078,6 +1075,8 @@ class Certman implements BMO {
 			$bundle = file_get_contents($location."/".$name."-ca-bundle.crt");
 			file_put_contents($location . "/" . $name . ".pem", $privateKey ."\n". $signedCertificate."\n".$bundle);
 			chmod($location."/".$name."-ca-bundle.crt",0600);
+			file_put_contents($location . "/" . $name . "-fullchain.crt", $signedCertificate . "\n" . $bundle);
+			chmod($location."/".$name."-fullchain.crt",0600);
 		} else {
 			file_put_contents($location . "/" . $name . ".pem", $privateKey ."\n". $signedCertificate);
 		}
@@ -1841,7 +1840,7 @@ class Certman implements BMO {
 	 */
 	private function getAdditionalCertDetails($details, $default=false) {
 		$location = $this->PKCS->getKeysLocation();
-		$files = array(".key" => "key",".crt" => "crt",".csr" => "csr",".pem" => "pem","-ca-bundle.crt" => "ca-bundle");
+		$files = array(".key" => "key",".crt" => "crt",".csr" => "csr",".pem" => "pem","-ca-bundle.crt" => "ca-bundle", "-fullchain.crt" => "fullchain");
 		$details['files'] = !empty($details['files']) ? $details['files'] : array();
 		$details['hashes'] = !empty($details['hashes']) ? $details['hashes'] : array();
 		$details['info'] = !empty($details['info']) ? $details['info'] : array();
