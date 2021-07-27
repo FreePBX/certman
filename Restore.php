@@ -41,6 +41,7 @@ class Restore Extends Base\RestoreBase{
 			$this->certman->saveCSR($csr);
 		}
 		foreach ($configs['dtlsOptions'] as $dtls) {
+			$dtls['certificate'] = $dtls['cid'];
 			$this->certman->addDTLSOptions($dtls['id'], $dtls);
 		}
 		return $this;

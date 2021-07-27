@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-10 05:43+0000\n"
+"POT-Creation-Date: 2021-07-27 08:35+0000\n"
 "PO-Revision-Date: 2017-08-08 16:34+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese <http://weblate.freepbx.org/projects/freepbx/"
@@ -183,7 +183,7 @@ msgstr ""
 msgid "CSR Reference"
 msgstr "Tham chiếu CSR ( yêu cầu ký chứng chỉ)"
 
-#: Restore.php:55
+#: Restore.php:56
 msgid "Cerificate files are not found on Legacy backup !"
 msgstr ""
 
@@ -354,7 +354,7 @@ msgstr "Thử thách kết thúc"
 msgid "Check and Update all Certificates"
 msgstr ""
 
-#: Restore.php:53
+#: Restore.php:54
 msgid "Checking Certificate files on backup /etc/asterisk/keys"
 msgstr ""
 

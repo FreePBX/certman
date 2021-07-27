@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-10 05:43+0000\n"
+"POT-Creation-Date: 2021-07-27 08:35+0000\n"
 "PO-Revision-Date: 2019-04-09 01:00+0000\n"
 "Last-Translator: florian alberts <alberts@ar-systems.de>\n"
 "Language-Team: German <http://*/projects/freepbx/certman/de/>\n"
@@ -182,7 +182,7 @@ msgstr ""
 msgid "CSR Reference"
 msgstr "CSR-Referenz"
 
-#: Restore.php:55
+#: Restore.php:56
 msgid "Cerificate files are not found on Legacy backup !"
 msgstr ""
 
@@ -353,7 +353,7 @@ msgstr "Anfrage beendet"
 msgid "Check and Update all Certificates"
 msgstr "Alle Zertifikate prüfen und aktualisieren"
 
-#: Restore.php:53
+#: Restore.php:54
 msgid "Checking Certificate files on backup /etc/asterisk/keys"
 msgstr ""
 
