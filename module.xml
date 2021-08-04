@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>15.0.44</version>
+	<version>15.0.45</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -14,6 +14,7 @@
 	</description>
 	<more-info>https://wiki.freepbx.org/display/FPG/Certificate+Management+Module</more-info>
 	<changelog>
+		*15.0.45* Adding an option to mark uploaded ssl certificate as default 
 		*15.0.44* FREEPBX-22660 Changed array key name cid to certificate while restoring dtls options 
 		*15.0.43* FREEPBX-20610 added logic to write out proper fullchain file 
 		*15.0.42* FREEPBX-21681 
