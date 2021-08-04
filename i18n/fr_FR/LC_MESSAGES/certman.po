@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-27 08:35+0000\n"
+"POT-Creation-Date: 2021-08-04 14:55+0000\n"
 "PO-Revision-Date: 2017-12-11 22:57+0200\n"
 "Last-Translator: JCattan <jeremie@famillecattan.com>\n"
 "Language-Team: French <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -104,11 +104,11 @@ msgid ""
 "duties"
 msgstr ""
 
-#: Api/Gql/Certman.php:233
+#: Api/Gql/Certman.php:237
 msgid "API message"
 msgstr ""
 
-#: Api/Gql/Certman.php:229
+#: Api/Gql/Certman.php:233
 msgid "API status"
 msgstr ""
 
@@ -120,11 +120,11 @@ msgstr "Action"
 msgid "Add New Certificate"
 msgstr "Ajouter un nouveau certificat"
 
-#: Certman.class.php:346 Certman.class.php:372 Certman.class.php:2028
+#: Certman.class.php:346 Certman.class.php:372 Certman.class.php:2031
 msgid "Added new certificate"
 msgstr "Nouveau certificat ajouté"
 
-#: Api/Gql/Certman.php:257 Certman.class.php:395
+#: Api/Gql/Certman.php:261 Certman.class.php:395
 msgid "Added new certificate signing request"
 msgstr ""
 
@@ -167,7 +167,7 @@ msgstr ""
 msgid "Base Name"
 msgstr ""
 
-#: Api/Gql/Certman.php:215
+#: Api/Gql/Certman.php:219
 msgid "CID for the delete certificate"
 msgstr ""
 
@@ -285,7 +285,7 @@ msgstr "Le certificat est vide"
 msgid "Certificate is invalid"
 msgstr "Le certificat est invalide"
 
-#: Api/Gql/Certman.php:249 Certman.class.php:316 Certman.class.php:378
+#: Api/Gql/Certman.php:253 Certman.class.php:316 Certman.class.php:378
 #: Certman.class.php:2002
 msgid "Certificate name is already in use"
 msgstr "Le nom de certificat est déjà en utilisation"
@@ -679,6 +679,10 @@ msgid ""
 "line. Names must be resolvable by public DNS and point to this server."
 msgstr ""
 
+#: Api/Gql/Certman.php:205
+msgid "Make this certificate as default"
+msgstr ""
+
 #: views/overview.php:62
 #, php-format
 msgid ""
@@ -885,7 +889,7 @@ msgid ""
 "services"
 msgstr ""
 
-#: Api/Gql/Certman.php:287
+#: Api/Gql/Certman.php:291
 msgid "Sorry unable to find any CSR file"
 msgstr ""
 
@@ -923,7 +927,7 @@ msgstr ""
 msgid "Successfully deleted the Certificate Signing Request"
 msgstr ""
 
-#: Api/Gql/Certman.php:320
+#: Api/Gql/Certman.php:325
 msgid "Successfully deleted the SSL certificate"
 msgstr ""
 
@@ -1011,7 +1015,7 @@ msgstr ""
 msgid "There was an error importing %s. The error was: %s"
 msgstr ""
 
-#: Certman.class.php:165 Certman.class.php:340 Certman.class.php:2023
+#: Certman.class.php:165 Certman.class.php:340 Certman.class.php:2026
 #, php-format
 msgid "There was an error importing the certificate: %s"
 msgstr ""
@@ -1068,7 +1072,7 @@ msgstr ""
 msgid "Type"
 msgstr "Type"
 
-#: Api/Gql/Certman.php:255 Certman.class.php:392
+#: Api/Gql/Certman.php:259 Certman.class.php:392
 #, php-format
 msgid "Unable to create CSR: %s"
 msgstr ""
@@ -1077,7 +1081,7 @@ msgstr ""
 msgid "Unable to create directory "
 msgstr ""
 
-#: Api/Gql/Certman.php:322
+#: Api/Gql/Certman.php:327
 msgid "Unable to delete the SSL certificate"
 msgstr ""
 
