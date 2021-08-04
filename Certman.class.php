@@ -2018,7 +2018,10 @@ class Certman implements BMO {
 
 		try {
 			$this->importCertificate($name,$pkey,$input['signedCertificate'],$input['trustedChain'],$input['passPhrase']);
-			$this->saveCertificate(null,$name,$input['description'],'up');
+			$cid = $this->saveCertificate(null,$name,$input['description'],'up');
+			if($input['default'] == true){
+				$this->makeCertDefault($cid);
+			}
 		} catch(Exception $e) {
 			return array('status' => false, 'message' => sprintf(_('There was an error importing the certificate: %s'),$e->getMessage()));
 		}

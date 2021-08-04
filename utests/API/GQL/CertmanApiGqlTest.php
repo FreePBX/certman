@@ -243,6 +243,7 @@ class CertmanGqlApiTest extends ApiBaseTestCase {
       CSRReference: \"test\" 
       signedCertificate: \"testcertificate\" 
       trustedChain: \"\"
+      default: true 
       }) {
          message status 
       }}");
