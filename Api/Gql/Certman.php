@@ -200,6 +200,10 @@ class Certman extends Base {
 				'type' => Type::string(),
 				'description' => _('our CA may also require a Trusted Chain to be installed. This will be provided by the CA, and will consist of one, or multiple, certificate files. Paste the contents of all the Chain files, if any, into the box below. This may be left blank, or updated at any time. They can be added in any order.')
          ],
+			'default' => [
+				'type' => Type::boolean(),
+				'description' => _('Make this certificate as default')
+			]
 		];
 	}
 	
@@ -303,6 +307,7 @@ class Certman extends Base {
 		$input['privateKey'] = isset($input['privateKey']) ? $input['privateKey'] : '';
 		$input['CSRReference'] = isset($input['CSRReference'] ) ?  $input['CSRReference'] : '';
 		$input['trustedChain'] = isset($input['trustedChain'] ) ?  $input['trustedChain'] : '';
+		$input['default'] = isset($input['default'] ) ?  $input['default'] : false;
 	
 		return $this->freepbx->PKCS->certObj($this->freepbx)->uploadSSLCertificate($input);
 	}
