@@ -82,10 +82,19 @@ class Certman extends Base {
 					'deleteCertificate' => Relay::mutationWithClientMutationId([
 						'name' => _('deleteCertificate'),
 						'description' => _('Delete a specific certificate'),
-						'inputFields' => $this->getDeleteInputFields(),
+						'inputFields' => $this->getInputFields(),
 						'outputFields' => $this->getOutputFields(),
 						'mutateAndGetPayload' => function($input){
 							return $this->deleteCertificate($input);
+						}
+					]),
+					'updateDefaultCertificate' => Relay::mutationWithClientMutationId([
+						'name' => _('updateDefaultCertificate'),
+						'description' => _('Updates a specific certificate as default'),
+						'inputFields' => $this->getInputFields(),
+						'outputFields' => $this->getOutputFields(),
+						'mutateAndGetPayload' => function($input){
+							return $this->updateDefaultCertificate($input);
 						}
 					]),
 				];
@@ -208,15 +217,15 @@ class Certman extends Base {
 	}
 	
 	/**
-	 * getDeleteInputFields
+	 * getInputFields
 	 *
 	 * @return void
 	 */
-	private function getDeleteInputFields(){
+	private function getInputFields(){
 		return [
 			'cid' => [
-			'type' => Type::nonNull(Type::string()),
-			'description' => _('CID for the delete certificate')
+				'type' => Type::nonNull(Type::string()),
+				'description' => _('CID of the certificate')
 			]
 		];
 	}
@@ -325,6 +334,22 @@ class Certman extends Base {
 			return array('status' => true, 'message' => _('Successfully deleted the SSL certificate'));
 		} else {
 			return array('status' => false, 'message' => _('Unable to delete the SSL certificate'));
+		}
+	}
+
+	/**
+	 * updateDefaultCertificate
+	 *
+	 * @param  mixed $input
+	 * @return void
+	 */
+	private function updateDefaultCertificate($input){	
+		$status = $this->freepbx->certman->makeCertDefault($input['cid']);
+
+		if($status) {
+			return array('status' => true, 'message' => _('Successfully updated certificate as default'));
+		} else {
+			return array('status' => false, 'message' => _('Unable update certificate as default'));
 		}
 	}
 }

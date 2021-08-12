@@ -306,4 +306,69 @@ class CertmanGqlApiTest extends ApiBaseTestCase {
       
    $this->assertEquals(400, $response->getStatusCode());
    }
+    
+   /**
+    * test_updating_certificate_as_default_should_return_true
+    *
+    * @return void
+    */
+   public function test_updating_certificate_as_default_should_return_true(){
+      $mockcertman = $this->getMockBuilder(\FreePBX\modules\certman\Certman::class)
+         ->disableOriginalConstructor()
+         ->disableOriginalClone()
+         ->setMethods(array('getCertificateDetails','makeCertDefault'))
+         ->getMock();
+         
+      $mockcertman->method('getCertificateDetails')
+         ->willReturn(true);
+      
+      $mockcertman->method('makeCertDefault')
+         ->willReturn(true);
+      
+      self::$freepbx->PKCS->setcertObj($mockcertman); 
+
+      $response = $this->request("mutation{
+                                    updateDefaultCertificate(input: {cid : \"1\"}){
+                                       status
+                                       message
+                                    }
+                                 }");
+      
+      $json = (string)$response->getBody();
+      $this->assertEquals('{"data":{"updateDefaultCertificate":{"status":true,"message":"Successfully updated certificate as default"}}}',$json);
+
+      $this->assertEquals(200, $response->getStatusCode());
+   }
+
+   
+   /**
+    * test_updating_certificate_as_default_for_invalid_cert_id_should_return_false
+    *
+    * @return void
+    */
+   public function test_updating_certificate_as_default_for_invalid_cert_id_should_return_false(){
+      $mockcertman = $this->getMockBuilder(\FreePBX\modules\certman\Certman::class)
+         ->disableOriginalConstructor()
+         ->disableOriginalClone()
+         ->setMethods(array('getCertificateDetails'))
+         ->getMock();
+         
+      $mockcertman->method('getCertificateDetails')
+         ->willReturn(false);
+      
+      self::$freepbx->PKCS->setcertObj($mockcertman); 
+
+      $response = $this->request("mutation{
+                                    updateDefaultCertificate(input: {cid : \"1454\"}){
+                                       status
+                                       message
+                                    }
+                                 }");
+      
+      $json = (string)$response->getBody();
+      $this->assertEquals('{"errors":[{"message":"Unable update certificate as default","status":false}]}',$json);
+
+      $this->assertEquals(400, $response->getStatusCode());
+   }
+
 }
