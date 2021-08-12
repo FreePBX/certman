@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-04 14:55+0000\n"
+"POT-Creation-Date: 2021-08-12 03:37+0000\n"
 "PO-Revision-Date: 2017-03-23 13:47+0200\n"
 "Last-Translator: Kingvoice <suporte@kingvoice.com.br>\n"
 "Language-Team: Portuguese (Brazil) <http://weblate.freepbx.org/projects/"
@@ -106,11 +106,11 @@ msgstr ""
 "são os diferentes atores de uma infra-estrutura de chave pública (PKI), seus "
 "papéis e seus deveres"
 
-#: Api/Gql/Certman.php:237
+#: Api/Gql/Certman.php:246
 msgid "API message"
 msgstr ""
 
-#: Api/Gql/Certman.php:233
+#: Api/Gql/Certman.php:242
 msgid "API status"
 msgstr ""
 
@@ -126,7 +126,7 @@ msgstr "Adicionar Novo Certificado"
 msgid "Added new certificate"
 msgstr "Adicionado novo certificado"
 
-#: Api/Gql/Certman.php:261 Certman.class.php:395
+#: Api/Gql/Certman.php:270 Certman.class.php:395
 msgid "Added new certificate signing request"
 msgstr "Nova solicitação de assinatura de certificado adicionada"
 
@@ -145,7 +145,7 @@ msgstr ""
 msgid "Admin"
 msgstr "Admin"
 
-#: Api/Gql/Certman.php:197 views/up.php:206
+#: Api/Gql/Certman.php:206 views/up.php:206
 msgid ""
 "After you have submitted a CSR to a CA, they will sign it, after validation, "
 "and return a Signed Certificate. That certificate should be pasted in the "
@@ -176,8 +176,8 @@ msgstr ""
 msgid "Base Name"
 msgstr "Nome da Base"
 
-#: Api/Gql/Certman.php:219
-msgid "CID for the delete certificate"
+#: Api/Gql/Certman.php:228
+msgid "CID of the certificate"
 msgstr ""
 
 #: views/up.php:168
@@ -262,7 +262,7 @@ msgstr "Política de Certificados"
 msgid "Certificate Settings"
 msgstr "Configurações do Certificado"
 
-#: Api/Gql/Certman.php:193
+#: Api/Gql/Certman.php:202
 msgid ""
 "Certificate Signing Request to reference. Select \"None\" to upload your own "
 "private key."
@@ -300,7 +300,7 @@ msgstr "Certificado está vazio"
 msgid "Certificate is invalid"
 msgstr "Certificado Inválido"
 
-#: Api/Gql/Certman.php:253 Certman.class.php:316 Certman.class.php:378
+#: Api/Gql/Certman.php:262 Certman.class.php:316 Certman.class.php:378
 #: Certman.class.php:2002
 msgid "Certificate name is already in use"
 msgstr "O nome do certificado já está em uso"
@@ -358,7 +358,7 @@ msgstr ""
 msgid "Checking Certificate files on backup /etc/asterisk/keys"
 msgstr ""
 
-#: Api/Gql/Certman.php:163 views/csr.php:162
+#: Api/Gql/Certman.php:172 views/csr.php:162
 msgid ""
 "City name such as \"Toronto\" or \"Brisbane.\" Do not abbreviate. For "
 "example, enter \"Saint Louis\" not \"St. Louis\""
@@ -538,7 +538,7 @@ msgstr ""
 msgid "Generate CSR"
 msgstr "Gerar CSR"
 
-#: Api/Gql/Certman.php:103 Certman.class.php:548 Console/Certman.class.php:35
+#: Api/Gql/Certman.php:112 Certman.class.php:548 Console/Certman.class.php:35
 #: assets/js/certman.js:56
 msgid "Generate Certificate"
 msgstr "Gerar Certificado"
@@ -567,7 +567,7 @@ msgstr "Aqui"
 msgid "Host Name"
 msgstr "Nome do Host"
 
-#: Api/Gql/Certman.php:143
+#: Api/Gql/Certman.php:152
 msgid "Host name"
 msgstr ""
 
@@ -594,7 +594,7 @@ msgid ""
 "manual configuration."
 msgstr ""
 
-#: Api/Gql/Certman.php:189 views/up.php:196
+#: Api/Gql/Certman.php:198 views/up.php:196
 msgid "If you have a separate private key paste it here."
 msgstr "Se você tiver uma chave privada separada, cole-a aqui."
 
@@ -710,7 +710,7 @@ msgid ""
 "line. Names must be resolvable by public DNS and point to this server."
 msgstr ""
 
-#: Api/Gql/Certman.php:205
+#: Api/Gql/Certman.php:214
 msgid "Make this certificate as default"
 msgstr ""
 
@@ -729,7 +729,7 @@ msgstr ""
 "certificados. Ele também colocará um conjunto padrão de certificado e sua "
 "chave em %s para uso por outras aplicações"
 
-#: Api/Gql/Certman.php:116
+#: Api/Gql/Certman.php:125
 msgid "Message for the request"
 msgstr ""
 
@@ -830,7 +830,7 @@ msgstr "Nome da Organização"
 msgid "Organization Name such as %s"
 msgstr "Nome da Organização, como %s"
 
-#: Api/Gql/Certman.php:147
+#: Api/Gql/Certman.php:156
 msgid "Organization Name such as Sangoma Technologies, Inc."
 msgstr ""
 
@@ -838,7 +838,7 @@ msgstr ""
 msgid "Organization Unit"
 msgstr "Unidade Organizacional"
 
-#: Api/Gql/Certman.php:151 views/csr.php:96
+#: Api/Gql/Certman.php:160 views/csr.php:96
 msgid ""
 "Organizational Unit. This can be a doing business as (DBA) name, or the name "
 "of a department within the business. This may be left blank."
@@ -933,11 +933,11 @@ msgstr ""
 "necessário reiniciar os serviços PBX para garantir que todos os serviços "
 "façam a correta atualização dos certificados"
 
-#: Api/Gql/Certman.php:291
+#: Api/Gql/Certman.php:300
 msgid "Sorry unable to find any CSR file"
 msgstr ""
 
-#: Api/Gql/Certman.php:159 views/csr.php:140
+#: Api/Gql/Certman.php:168 views/csr.php:140
 msgid ""
 "State or province such as \"Queensland\" or \"Wisconsin\" or \"Ontario.\" Do "
 "not abbreviate. Enter the full name."
@@ -957,7 +957,7 @@ msgstr "Estado"
 msgid "State/Province/Region"
 msgstr "Estado/Província/Região"
 
-#: Api/Gql/Certman.php:120
+#: Api/Gql/Certman.php:129
 msgid "Status for the request"
 msgstr ""
 
@@ -973,7 +973,7 @@ msgstr "Autoridade Certificadora apagada com sucesso"
 msgid "Successfully deleted the Certificate Signing Request"
 msgstr "Solicitação de Assinatura de Certificado apagada com sucesso"
 
-#: Api/Gql/Certman.php:325
+#: Api/Gql/Certman.php:334
 msgid "Successfully deleted the SSL certificate"
 msgstr ""
 
@@ -996,6 +996,10 @@ msgstr ""
 msgid "Successfully set '%s' as the default certificate"
 msgstr ""
 
+#: Api/Gql/Certman.php:350
+msgid "Successfully updated certificate as default"
+msgstr ""
+
 #: Certman.class.php:597 Certman.class.php:637
 #, php-format
 msgid "Successfully updated certificate named \"%s\""
@@ -1014,7 +1018,7 @@ msgstr ""
 msgid "The Certificate to use from Certificate Manager"
 msgstr "Certificado a ser usado pelo Gerenciador de Certificados"
 
-#: Api/Gql/Certman.php:181 views/ss.php:147 views/up.php:134 views/view.php:59
+#: Api/Gql/Certman.php:190 views/ss.php:147 views/up.php:134 views/view.php:59
 msgid "The Description of this certificate. Used in the module only"
 msgstr "A Descrição deste certificado. Usado somente no módulo"
 
@@ -1039,7 +1043,7 @@ msgstr ""
 msgid "The Organization Name"
 msgstr "Nome da Organização"
 
-#: Api/Gql/Certman.php:185 views/up.php:157
+#: Api/Gql/Certman.php:194 views/up.php:157
 msgid ""
 "The Passphrase of the Private Key. This will be used to decrypt the private "
 "key and the certificate. They will be stored unpassworded on the system to "
@@ -1049,7 +1053,7 @@ msgstr ""
 "privada e o certificado. Serão armazenados sem senha no sistema para evitar "
 "interrupções de serviço."
 
-#: Api/Gql/Certman.php:139 Api/Gql/Certman.php:177 views/csr.php:36
+#: Api/Gql/Certman.php:148 Api/Gql/Certman.php:186 views/csr.php:36
 #: views/up.php:42 views/view.php:35
 msgid ""
 "The base name of the certificate, Can only contain alphanumeric characters"
@@ -1121,7 +1125,7 @@ msgstr ""
 msgid "Trusted Chain"
 msgstr "Cadeia Confiável"
 
-#: Api/Gql/Certman.php:155 views/csr.php:118
+#: Api/Gql/Certman.php:164 views/csr.php:118
 msgid "Two letter country code, such as \"US\", \"CA\", or \"AU\"."
 msgstr "Código de país com duas letras, como \"US\", \"CA\" ou \"BR\"."
 
@@ -1129,7 +1133,7 @@ msgstr "Código de país com duas letras, como \"US\", \"CA\" ou \"BR\"."
 msgid "Type"
 msgstr "Tipo"
 
-#: Api/Gql/Certman.php:259 Certman.class.php:392
+#: Api/Gql/Certman.php:268 Certman.class.php:392
 #, php-format
 msgid "Unable to create CSR: %s"
 msgstr "Não é possível criar o CSR: %s"
@@ -1138,7 +1142,7 @@ msgstr "Não é possível criar o CSR: %s"
 msgid "Unable to create directory "
 msgstr ""
 
-#: Api/Gql/Certman.php:327
+#: Api/Gql/Certman.php:336
 msgid "Unable to delete the SSL certificate"
 msgstr ""
 
@@ -1193,6 +1197,10 @@ msgstr "Não foi possível remover tmp.cfg"
 msgid "Unable to write to %s"
 msgstr "Não é possível gravar em %s"
 
+#: Api/Gql/Certman.php:352
+msgid "Unable update certificate as default"
+msgstr ""
+
 #: Certman.class.php:1943
 msgid "Unknown Expiration"
 msgstr "Expiração Desconhecida"
@@ -1212,6 +1220,10 @@ msgstr "Certificados Atualizados"
 #: Certman.class.php:174 Certman.class.php:247
 msgid "Updated certificate"
 msgstr "Certificado Atualizado"
+
+#: Api/Gql/Certman.php:93
+msgid "Updates a specific certificate as default"
+msgstr ""
 
 #: views/ca.php:42
 msgid "Upload CA"
@@ -1331,7 +1343,7 @@ msgstr ""
 msgid "lechecker: "
 msgstr ""
 
-#: Api/Gql/Certman.php:201
+#: Api/Gql/Certman.php:210
 msgid ""
 "our CA may also require a Trusted Chain to be installed. This will be "
 "provided by the CA, and will consist of one, or multiple, certificate files. "
@@ -1345,6 +1357,10 @@ msgstr ""
 
 #: FirewallAPI.class.php:127
 msgid "ports"
+msgstr ""
+
+#: Api/Gql/Certman.php:92
+msgid "updateDefaultCertificate"
 msgstr ""
 
 #: Api/Gql/Certman.php:60
