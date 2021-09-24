@@ -2030,6 +2030,8 @@ class Certman implements BMO {
 		}
 		return array('status' => true, 'message' => _('Added new certificate'));
 	}
+
+
 	public function runHook($hookname, $params = false) {
 		// Runs a new style Syadmin hook
 		if (!file_exists("/etc/incron.d/sysadmin")) {
