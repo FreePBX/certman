@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-12 03:37+0000\n"
+"POT-Creation-Date: 2021-09-24 11:50+0000\n"
 "PO-Revision-Date: 2017-08-08 16:34+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese <http://weblate.freepbx.org/projects/freepbx/"
@@ -122,7 +122,7 @@ msgstr "Thao tác"
 msgid "Add New Certificate"
 msgstr "Thêm chứng thực mới"
 
-#: Certman.class.php:346 Certman.class.php:372 Certman.class.php:2031
+#: Certman.class.php:346 Certman.class.php:372 Certman.class.php:2032
 msgid "Added new certificate"
 msgstr "Đã thêm chứng thực mới"
 
@@ -301,7 +301,7 @@ msgid "Certificate is invalid"
 msgstr "Chứng thực không hợp lệ"
 
 #: Api/Gql/Certman.php:262 Certman.class.php:316 Certman.class.php:378
-#: Certman.class.php:2002
+#: Certman.class.php:2003
 msgid "Certificate name is already in use"
 msgstr "Tên chứng thực đang được sử dụng"
 
@@ -784,7 +784,7 @@ msgid "No Private key to reference."
 msgstr "Không có khóa cá nhân nào để tham chiếu."
 
 #: Certman.class.php:147 Certman.class.php:325 Certman.class.php:333
-#: Certman.class.php:1014 Certman.class.php:2009 Certman.class.php:2016
+#: Certman.class.php:1014 Certman.class.php:2010 Certman.class.php:2017
 msgid "No Private key to reference. Try generating a CSR first."
 msgstr "Không có khóa cá nhân nào để tham chiếu. Thử kích hoạt một CSR trước."
 
@@ -1068,7 +1068,7 @@ msgstr "Tên thông thường của chứng thực, thường giống như tên 
 msgid "There was an error importing %s. The error was: %s"
 msgstr "Xảy ra lỗi khi nhập %s. Lỗi này là: %s"
 
-#: Certman.class.php:165 Certman.class.php:340 Certman.class.php:2026
+#: Certman.class.php:165 Certman.class.php:340 Certman.class.php:2027
 #, php-format
 msgid "There was an error importing the certificate: %s"
 msgstr "Xảy ra lỗi khi nhập chứng thực: %s"

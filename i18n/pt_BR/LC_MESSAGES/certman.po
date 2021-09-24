@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-12 03:37+0000\n"
+"POT-Creation-Date: 2021-09-24 11:50+0000\n"
 "PO-Revision-Date: 2017-03-23 13:47+0200\n"
 "Last-Translator: Kingvoice <suporte@kingvoice.com.br>\n"
 "Language-Team: Portuguese (Brazil) <http://weblate.freepbx.org/projects/"
@@ -122,7 +122,7 @@ msgstr "Ação"
 msgid "Add New Certificate"
 msgstr "Adicionar Novo Certificado"
 
-#: Certman.class.php:346 Certman.class.php:372 Certman.class.php:2031
+#: Certman.class.php:346 Certman.class.php:372 Certman.class.php:2032
 msgid "Added new certificate"
 msgstr "Adicionado novo certificado"
 
@@ -301,7 +301,7 @@ msgid "Certificate is invalid"
 msgstr "Certificado Inválido"
 
 #: Api/Gql/Certman.php:262 Certman.class.php:316 Certman.class.php:378
-#: Certman.class.php:2002
+#: Certman.class.php:2003
 msgid "Certificate name is already in use"
 msgstr "O nome do certificado já está em uso"
 
@@ -783,7 +783,7 @@ msgid "No Private key to reference."
 msgstr "Nenhuma chave privada para referenciar."
 
 #: Certman.class.php:147 Certman.class.php:325 Certman.class.php:333
-#: Certman.class.php:1014 Certman.class.php:2009 Certman.class.php:2016
+#: Certman.class.php:1014 Certman.class.php:2010 Certman.class.php:2017
 msgid "No Private key to reference. Try generating a CSR first."
 msgstr "Nenhuma chave privada para referenciar.Tente gerar primeiro uma CSR."
 
@@ -1068,7 +1068,7 @@ msgstr "O nome comum do certificado, geralmente o mesmo nome do host"
 msgid "There was an error importing %s. The error was: %s"
 msgstr "Ocorreu um erro ao importar %s. O erro foi: %s"
 
-#: Certman.class.php:165 Certman.class.php:340 Certman.class.php:2026
+#: Certman.class.php:165 Certman.class.php:340 Certman.class.php:2027
 #, php-format
 msgid "There was an error importing the certificate: %s"
 msgstr "Ocorreu um erro ao importar o certificado: %s"
