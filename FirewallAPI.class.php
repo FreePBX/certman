@@ -124,7 +124,7 @@ class FirewallAPI {
 					if ($serviceenabled) {
 						$hints[] = sprintf(_("The LetsEncrypt Service is listening on port %s. Using a custom port other than 80 is not officially supported.\n\nThe LetsEncrypt servers only send challenge queries to port 80. Certificate requests will fail unless your network redirects incoming port 80 requests to port %s."), $leports[0], $leports[0]);
 					} else {
-						$hints[] = sprintf(_("%s http services are not listening on port 80. LetsEncrypt using a port other than 80 is not officially supported.\n\nThe LetsEncrypt servers only send challenge queries to port 80. %s http services are currently listening on %s %s. Certificate requests will fail unless your network redirects incoming port 80 requests to a listening http port."), $brand, $brand, count($leports)==1?_("port"):_("ports"), preg_replace("/,([^,]+)$/", _(" and") . "$1", implode($leports, ', ')));
+						$hints[] = sprintf(_("%s http services are not listening on port 80. LetsEncrypt using a port other than 80 is not officially supported.\n\nThe LetsEncrypt servers only send challenge queries to port 80. %s http services are currently listening on %s %s. Certificate requests will fail unless your network redirects incoming port 80 requests to a listening http port."), $brand, $brand, count($leports)==1?_("port"):_("ports"), preg_replace("/,([^,]+)$/", _(" and") . "$1", implode(', ',$leports)));
 					}
 				}
 			}
