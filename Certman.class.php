@@ -169,12 +169,15 @@ class Certman implements \BMO {
 					case "le":
 						$cert = $this->getCertificateDetails($_POST['cid']);
 						if(!empty($cert)) {
+							$removeDstRootCaX3 = ($_POST['removeDstRootCaX3'] ? true : false);
 							try {
 								$this->updateLE($cert['basename'], array(
 									"countryCode" => $_POST['C'],
 									"state" => $_POST['ST'],
 									"challengetype" => "http", // https will not work.
-									"email" => $_POST['email']
+									"email" => $_POST['email'],
+									"removeDstRootCaX3" => $removeDstRootCaX3,
+
 								));
 							} catch(\Exception $e) {
 								$this->message = array('type' => 'danger', 'message' => sprintf(_('There was an error updating the certificate: %s'),$e->getMessage()));
@@ -184,7 +187,8 @@ class Certman implements \BMO {
 								"C" => $_POST['C'],
 								"ST" => $_POST['ST'],
 								'challengetype' => "http", // https will not work
-								'email' => $_POST['email']
+								'email' => $_POST['email'],
+								"removeDstRootCaX3" => $removeDstRootCaX3,
 							));
 							$this->message = array('type' => 'success', 'message' => _('Updated certificate'));
 							needreload();
@@ -208,12 +212,14 @@ class Certman implements \BMO {
 				switch($request['type']) {
 					case "le":
 						$host = basename($_POST['host']);
+						$removeDstRootCaX3 = ($_POST['removeDstRootCaX3'] ? true : false);
 						try{
 							$this->updateLE($host, array(
 								"countryCode" => $_POST['C'],
 								"state" => $_POST['ST'],
 								"challengetype" => "http", // https will not work
-								"email" => $_POST['email']
+								"email" => $_POST['email'],
+								"removeDstRootCaX3" => $removeDstRootCaX3,
 							));
 							$this->saveCertificate(null,$host,$host,'le', array("C" => $_POST['C'], "ST" => $_POST['ST'], "email" => $_POST['email']));
 						} catch(\Exception $e) {
@@ -499,7 +505,8 @@ class Certman implements \BMO {
 							"countryCode" => $cert['additional']['C'],
 							"state" => $cert['additional']['ST'],
 							"challengetype" => "http", // https will not work
-							"email" => $cert['additional']['email']
+							"email" => $cert['additional']['email'],
+							"removeDstRootCaX3" => $cert['additional']['removeDstRootCaX3'],
 						));
 
 						// If that didn't throw, the certificate was succesfully updated
@@ -528,7 +535,8 @@ class Certman implements \BMO {
 							"countryCode" => $cert['additional']['C'],
 							"state" => $cert['additional']['ST'],
 							"challengetype" => "http", // https will not work
-							"email" => $cert['additional']['email']
+							"email" => $cert['additional']['email'],
+							"removeDstRootCaX3" => $cert['additional']['removeDstRootCaX3'],
 						),false,$force);
 						$messages[] = array('type' => 'success', 'message' => sprintf(_('Successfully updated certificate named "%s"'),$cert['basename']));
 						$this->FreePBX->astman->Reload();
@@ -583,10 +591,45 @@ class Certman implements \BMO {
 	}
 
 	/**
+	 * Parse CA bundle into an array
+	 * @param string $contents the contents of the bundle
+	 * 
+	 * @return array An array of certificates
+	 */
+	function parseCaBundle($contents) {
+		$matches = array();
+		preg_match_all('/-----BEGIN CERTIFICATE-----.*-----END CERTIFICATE-----/sU', $contents, $matches);
+		if (empty($matches)) {
+			return array($contents);
+		}
+
+		return $matches[0];
+	}
+
+	/**
+	 * Remove DST Root CA X3 from an array of certs
+	 * @param array $certs An array of certificates
+	 * 
+	 * @return array An array of certificates
+	 */
+	function removeDstRootCaX3FromBundle($certs) {
+		$results = array();
+		foreach($certs as $cert) {
+			$certDetails = openssl_x509_parse($cert);
+			if (empty($certDetails['issuer']) || !in_array("DST Root CA X3", $certDetails['issuer'])) {
+				$results[] = $cert;
+			}
+		}
+
+	   return $results;
+	}
+
+	/**
 	 * Update or Add Let's Encrypt
 	 * @param  string $host     The hostname (MUST BE A VALID FQDN)
 	 * @param  array $settings  Array of settings for this certificate
 	 * @param  boolean $staging Whether to use the staging server or not
+	 * @param  boolean $force Force renew reguardless of expiration date
 	 *
 	 * @return boolean          True if success, false if not
 	 */
@@ -609,6 +652,7 @@ class Certman implements \BMO {
 		$state = !empty($settings['state']) ? $settings['state'] : 'Ontario';
 		$challengetype = "http"; // Always http
 		$email = !empty($settings['email']) ? $settings['email'] : '';
+		$removeDstRootCaX3 = !empty($settings['removeDstRootCaX3']) ? $settings['removeDstRootCaX3'] : false;
 
 		$location = $this->PKCS->getKeysLocation();
 		$logger = $this->FreePBX->Logger->monoLog;
@@ -681,8 +725,18 @@ class Certman implements \BMO {
 			if(file_exists($location."/".$host)) {
 				//https://community.letsencrypt.org/t/solved-why-isnt-my-certificate-trusted/2479/4
 				copy($location."/".$host."/private.pem",$location."/".$host.".key"); //webserver.key
-				copy($location."/".$host."/chain.pem",$location."/".$host."-ca-bundle.crt"); //ca-bundle.crt
 				copy($location."/".$host."/cert.pem",$location."/".$host.".crt"); //webserver.crt
+				
+				//ca-bundle.crt
+				if ($removeDstRootCaX3) {
+					$caBundleContents = file_get_contents($location."/".$host . "/chain.pem");
+					$certs = $this->parseCaBundle($caBundleContents);
+					$certs = $this->removeDstRootCaX3FromBundle($certs);
+					file_put_contents($location."/".$host . "-ca-bundle.crt", implode("\n", $certs)."\n");
+				} else {
+					copy($location."/".$host."/chain.pem",$location."/".$host."-ca-bundle.crt"); //ca-bundle.crt
+				}
+				
 				$key = file_get_contents($location."/".$host.".key");
 				$cert = file_get_contents($location."/".$host.".crt");
 				$bundle = file_get_contents($location."/".$host."-ca-bundle.crt");
