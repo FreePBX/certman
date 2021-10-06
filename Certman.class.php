@@ -186,15 +186,17 @@ class Certman implements BMO {
 							sort($san);
 							$description .= ", " . implode(", ", $san);
 						}
+						$removeDstRootCaX3 = ($_POST['removeDstRootCaX3'] ? true : false);
 
 						if(!empty($cert)) {
 							$additional = array(
 								"C" => $_POST['C'],
 								"ST" => $_POST['ST'],
 								"email" => $_POST['email'],
+								"removeDstRootCaX3" => $removeDstRootCaX3,
 							);
 							if (!empty($san)) {$additional['san'] = $san;}
-
+							$removeDstRootCaX3 = ($_POST['removeDstRootCaX3'] ? true : false);
 
 							if ($additional == $cert['additional']) {
 								$this->message = array('type' => 'success', 'message' => _('Nothing to do, no changes made'));
@@ -207,7 +209,8 @@ class Certman implements BMO {
 									"state" => $_POST['ST'],
 									"challengetype" => "http", // https will not work.
 									"email" => $_POST['email'],
-									"san" => $san
+									"san" => $san,
+									"removeDstRootCaX3" => $removeDstRootCaX3
 								), false, true);
 							} catch(Exception $e) {
 								$lelog = trim(ob_get_contents());
@@ -265,10 +268,12 @@ class Certman implements BMO {
 							sort($san);
 							$description .= ", " . implode(", ", $san);
 						}
+						$removeDstRootCaX3 = ($_POST['removeDstRootCaX3'] ? true : false);
 						$additional = array(
 								"C" => $_POST['C'],
 								"ST" => $_POST['ST'],
-								"email" => $_POST['email']
+								"email" => $_POST['email'],
+								"removeDstRootCaX3" => $removeDstRootCaX3,
 						);
 						if (!empty($san)) {$additional['san'] = $san;}
 						ob_start();
@@ -281,7 +286,8 @@ class Certman implements BMO {
 								"state" => $_POST['ST'],
 								"challengetype" => "http", // https will not work
 								"email" => $_POST['email'],
-								"san" => $san
+								"san" => $san,
+								"removeDstRootCaX3" => $removeDstRootCaX3,
 							));
 							$this->saveCertificate(null, $host, $description, 'le', $additional);
 						} catch(Exception $e) {
@@ -589,6 +595,7 @@ class Certman implements BMO {
 							"challengetype" => "http", // https will not work
 							"email" => $cert['additional']['email'],
 							"san" => $cert['additional']['san'],
+							"removeDstRootCaX3" => $cert['additional']['removeDstRootCaX3'],
 						);
 
 						$this->updateLE($cert['info']['crt']['subject']['CN'], $settings, false, $force);
@@ -631,6 +638,7 @@ class Certman implements BMO {
 							"challengetype" => "http", // https will not work
 							"email" => $cert['additional']['email'],
 							"san" => $cert['additional']['san'],
+							"removeDstRootCaX3" => $cert['additional']['removeDstRootCaX3'],
 						);
 
 						$this->updateLE($cert['info']['crt']['subject']['CN'], $settings, false, $force);
@@ -694,10 +702,45 @@ class Certman implements BMO {
 	}
 
 	/**
+	 * Parse CA bundle into an array
+	 * @param string $contents the contents of the bundle
+	 * 
+	 * @return array An array of certificates
+	 */
+	function parseCaBundle($contents) {
+		$matches = array();
+		preg_match_all('/-----BEGIN CERTIFICATE-----.*-----END CERTIFICATE-----/sU', $contents, $matches);
+		if (empty($matches)) {
+			return array($contents);
+		}
+
+		return $matches[0];
+	}
+
+	/**
+	 * Remove DST Root CA X3 from an array of certs
+	 * @param array $certs An array of certificates
+	 * 
+	 * @return array An array of certificates
+	 */
+	function removeDstRootCaX3FromBundle($certs) {
+		$results = array();
+		foreach($certs as $cert) {
+			$certDetails = openssl_x509_parse($cert);
+			if (empty($certDetails['issuer']) || !in_array("DST Root CA X3", $certDetails['issuer'])) {
+				$results[] = $cert;
+			}
+		}
+
+	   return $results;
+	}
+
+	/**
 	 * Update or Add Let's Encrypt
 	 * @param  string $host     The hostname (MUST BE A VALID FQDN)
 	 * @param  array $settings  Array of settings for this certificate
 	 * @param  boolean $staging Whether to use the staging server or not
+	 * @param  boolean $force Force renew reguardless of expiration date
 	 *
 	 * @return boolean          True if success, false if not
 	 */
@@ -722,6 +765,7 @@ class Certman implements BMO {
 		$challengetype = "http"; // Always http
 		$email = !empty($settings['email']) ? $settings['email'] : '';
 		$san = !empty($settings['san']) ? $settings['san'] : array();
+		$removeDstRootCaX3 = !empty($settings['removeDstRootCaX3']) ? $settings['removeDstRootCaX3'] : false;
 
 		$location = $this->PKCS->getKeysLocation();
 		$logger = $this->FreePBX->Logger->monoLog;
@@ -849,8 +893,18 @@ class Certman implements BMO {
 			if(file_exists($certpath)) {
 				//https://community.letsencrypt.org/t/solved-why-isnt-my-certificate-trusted/2479/4
 				copy($certpath . "/private.pem", $certpath . ".key"); //webserver.key
-				copy($certpath . "/chain.pem", $certpath . "-ca-bundle.crt"); //ca-bundle.crt
 				copy($certpath . "/cert.pem", $certpath . ".crt"); //webserver.crt
+
+				//ca-bundle.crt
+				if ($removeDstRootCaX3) {
+					$caBundleContents = file_get_contents($certpath . "/chain.pem");
+					$certs = $this->parseCaBundle($caBundleContents);
+					$certs = $this->removeDstRootCaX3FromBundle($certs);
+					file_put_contents($certpath . "-ca-bundle.crt", implode("\n", $certs)."\n");
+				} else {
+					copy($certpath . "/chain.pem", $certpath . "-ca-bundle.crt");
+				}
+
 				$key = file_get_contents($certpath . ".key");
 				$cert = file_get_contents($certpath . ".crt");
 				$bundle = file_get_contents($certpath . "-ca-bundle.crt");
