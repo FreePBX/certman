@@ -85,6 +85,7 @@ class Certman extends Command {
 						"C" => $country_code,
 						"ST" => $state,
 						"email" => $email,
+						"removeDstRootCaX3" => false,
 					);
 					if (!empty($san)) {$additional['san'] = $san;}
 
@@ -107,7 +108,8 @@ class Certman extends Command {
 							"state" => $state,
 							"challengetype" => "http", // https will not work.
 							"email" => $email,
-							"san" => $san
+							"san" => $san,
+							"removeDstRootCaX3" => false,
 						);
 
 						$le_result = $certman->updateLE($hostname, $settings, false, $force);

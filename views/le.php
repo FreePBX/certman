@@ -138,6 +138,25 @@ $alert .= "</div>";
 									</div>
 								</div>
 								<!-- END Challenge Method -->
+
+								<!-- Remove DST Root CA X3 -->
+								<div class="element-container">
+									<div class="row">
+										<div class="form-group form-horizontal">
+											<div class="col-md-3">
+												<label class="control-label" for="removeDstRootCaX3"><?php echo _("Remove DST Root CA X3")?></label>
+												<i class="fa fa-question-circle fpbx-help-icon" data-for="removeDstRootCaX3"></i>
+											</div>
+											<div class="col-md-9">
+												<input type="checkbox" id="removeDstRootCaX3" name="removeDstRootCaX3" <?php echo ($cert['additional']['removeDstRootCaX3'] ? "checked" : ""); ?>>
+											</div>
+										</div>
+										<div class="col-md-12">
+											<span id="removeDstRootCaX3-help" class="help-block fpbx-help-block"><?php echo _("The Let's Encrypt bundled 'DST Root CA X3' can cause issues with older clients. This option removes the 'DST Root CA X3' from the certificate bundle.")?></span>
+										</div>
+									</div>
+								</div>
+								<!-- END DST Root CA X3 -->
 							</div>
 							<!-- END Section -->
 
