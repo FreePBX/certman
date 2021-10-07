@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-12 03:37+0000\n"
+"POT-Creation-Date: 2021-10-07 02:33+0000\n"
 "PO-Revision-Date: 2017-08-08 16:34+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese <http://weblate.freepbx.org/projects/freepbx/"
@@ -25,7 +25,7 @@ msgstr ""
 msgid " and"
 msgstr ""
 
-#: Certman.class.php:277 Certman.class.php:1425 Certman.class.php:1443
+#: Certman.class.php:282 Certman.class.php:1479 Certman.class.php:1497
 #, php-format
 msgid "%s already exists!"
 msgstr "%s  đã tồn tại!"
@@ -49,13 +49,13 @@ msgid ""
 "LetsEncrypt Rules%s is recommended."
 msgstr ""
 
-#: Console/Certman.class.php:202 Console/Certman.class.php:222
-#: Console/Certman.class.php:337
+#: Console/Certman.class.php:204 Console/Certman.class.php:224
+#: Console/Certman.class.php:339
 #, php-format
 msgid "'%s' is not a valid ID"
 msgstr ""
 
-#: Certman.class.php:1958
+#: Certman.class.php:2012
 #, php-format
 msgid "(%s days)"
 msgstr "(%s ngày)"
@@ -64,7 +64,7 @@ msgstr "(%s ngày)"
 msgid "(Port 80)"
 msgstr "( Cổng giao tiếp 80)"
 
-#: Console/Certman.class.php:305 Console/Certman.class.php:311
+#: Console/Certman.class.php:307 Console/Certman.class.php:313
 msgid "<info>"
 msgstr "<thông tin>"
 
@@ -96,7 +96,7 @@ msgstr ""
 "có một chứng thực thực sự từ nhà cung cấp chứng thực tiêu chuẩn hoặc thông "
 "qua Let's Encrypt"
 
-#: views/le.php:209
+#: views/le.php:228
 msgid ""
 "A certificate policy (CP) is a document which aims to state what are the "
 "different actors of a public key infrastructure (PKI), their roles and their "
@@ -122,11 +122,11 @@ msgstr "Thao tác"
 msgid "Add New Certificate"
 msgstr "Thêm chứng thực mới"
 
-#: Certman.class.php:346 Certman.class.php:372 Certman.class.php:2031
+#: Certman.class.php:352 Certman.class.php:378 Certman.class.php:2085
 msgid "Added new certificate"
 msgstr "Đã thêm chứng thực mới"
 
-#: Api/Gql/Certman.php:270 Certman.class.php:395
+#: Api/Gql/Certman.php:270 Certman.class.php:401
 msgid "Added new certificate signing request"
 msgstr "Đã thêm yêu cầu ký chứng thực mới"
 
@@ -171,7 +171,7 @@ msgstr ""
 msgid "Automatically generate an ephemeral X.509 certificate"
 msgstr ""
 
-#: Console/Certman.class.php:294
+#: Console/Certman.class.php:296
 msgid "Base Name"
 msgstr "Tên cơ sở"
 
@@ -191,17 +191,17 @@ msgstr ""
 msgid "Certificate"
 msgstr "Chứng thực"
 
-#: Certman.class.php:1851 Certman.class.php:1866 Certman.class.php:1875
+#: Certman.class.php:1905 Certman.class.php:1920 Certman.class.php:1929
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr "Chứng thực %s không thể đọc được! Không thể tiếp tục!"
 
-#: Console/Certman.class.php:96
+#: Console/Certman.class.php:97
 #, php-format
 msgid "Certificate '%s' exists, no changes made, nothing to do"
 msgstr ""
 
-#: views/le.php:173
+#: views/le.php:192
 msgid "Certificate Alternative Names"
 msgstr ""
 
@@ -213,11 +213,11 @@ msgstr "Nhà cung cấp chứng thực"
 msgid "Certificate Authority to Reference"
 msgstr "Nhà cung cấp chứng thực để tham chiếu"
 
-#: views/le.php:158
+#: views/le.php:177
 msgid "Certificate Common Name"
 msgstr ""
 
-#: Certman.class.php:1953
+#: Certman.class.php:2007
 msgid "Certificate Expired!"
 msgstr "Chứng thực đã hết han!"
 
@@ -254,7 +254,7 @@ msgstr ""
 "( TLS/SRTP), đảm bảo an toàn cho các phiên truy cập we (HTTPS/WEBRTC[WSS] và "
 "nhiều hơn thế"
 
-#: views/le.php:201 views/ss.php:85 views/up.php:97
+#: views/le.php:220 views/ss.php:85 views/up.php:97
 msgid "Certificate Policies"
 msgstr "Các luật chứng thực"
 
@@ -280,7 +280,7 @@ msgstr ""
 msgid "Certificate Subject Alternative Name(s) (LetsEncrypt Generation)"
 msgstr ""
 
-#: views/le.php:188
+#: views/le.php:207
 msgid "Certificate Valid Until"
 msgstr ""
 
@@ -292,20 +292,20 @@ msgstr ""
 msgid "Certificate hostname (LetsEncrypt Generation)"
 msgstr ""
 
-#: Certman.class.php:1609
+#: Certman.class.php:1663
 msgid "Certificate is empty"
 msgstr "Chứng thực trống"
 
-#: Certman.class.php:240 Certman.class.php:250
+#: Certman.class.php:243 Certman.class.php:253
 msgid "Certificate is invalid"
 msgstr "Chứng thực không hợp lệ"
 
-#: Api/Gql/Certman.php:262 Certman.class.php:316 Certman.class.php:378
-#: Certman.class.php:2002
+#: Api/Gql/Certman.php:262 Certman.class.php:322 Certman.class.php:384
+#: Certman.class.php:2056
 msgid "Certificate name is already in use"
 msgstr "Tên chứng thực đang được sử dụng"
 
-#: Certman.class.php:621
+#: Certman.class.php:628
 #, php-format
 msgid ""
 "Certificate named \"%s\" has expired. Please update this certificate in "
@@ -314,7 +314,7 @@ msgstr ""
 "Chứng thực đã có tên \"%s\" vừa hết hạn. Vui lòng cập nhật chứng thực này "
 "trong trình quản lý chứng thực"
 
-#: Certman.class.php:660
+#: Certman.class.php:668
 #, php-format
 msgid ""
 "Certificate named \"%s\" is going to expire in less than a month. Please "
@@ -323,7 +323,7 @@ msgstr ""
 "Thời hạn của chứng thực \"%s\" chỉ còn dưới một tháng. Vui lòng cập nhật "
 "chứng thực này trong trình quản lý chứng thực"
 
-#: Certman.class.php:664
+#: Certman.class.php:672
 #, php-format
 msgid "Certificate named \"%s\" is valid"
 msgstr "Chứng thực đã có tên \"%s\" hợp lệ"
@@ -338,11 +338,11 @@ msgstr ""
 msgid "Certificate type %s generation is not supported at this time"
 msgstr ""
 
-#: Console/Certman.class.php:181
+#: Console/Certman.class.php:183
 msgid "Certificates already exist, no need to generate another one"
 msgstr ""
 
-#: Certman.class.php:846
+#: Certman.class.php:890
 msgid "Certificates are missing. Unable to continue"
 msgstr ""
 
@@ -402,15 +402,15 @@ msgstr "Thiết lập DTLS"
 msgid "DTLS Verify"
 msgstr "Xác minh DTLS"
 
-#: Console/Certman.class.php:294 views/certgrid.php:30
+#: Console/Certman.class.php:296 views/certgrid.php:30
 msgid "Default"
 msgstr "Mặc định"
 
-#: Certman.class.php:80 Console/Certman.class.php:173
+#: Certman.class.php:80 Console/Certman.class.php:175
 msgid "Default Self-Signed certificate"
 msgstr "Chứng thực tự ký mặc định"
 
-#: Certman.class.php:527
+#: Certman.class.php:533
 msgid "Delete"
 msgstr "Xóa"
 
@@ -418,7 +418,7 @@ msgstr "Xóa"
 msgid "Delete CSR"
 msgstr "Xóa CSR"
 
-#: Certman.class.php:543
+#: Certman.class.php:549
 msgid "Delete Certificate"
 msgstr "Xóa chứng thực"
 
@@ -438,11 +438,11 @@ msgstr ""
 msgid "Delete the CSR"
 msgstr ""
 
-#: Certman.class.php:424
+#: Certman.class.php:430
 msgid "Deleted Certificate"
 msgstr "Chứng thực đã xóa"
 
-#: Console/Certman.class.php:207
+#: Console/Certman.class.php:209
 #, php-format
 msgid "Deleted certificate '%s'"
 msgstr ""
@@ -455,7 +455,7 @@ msgstr ""
 "Đang xóa nhà cung cấp chứng thực sẽ làm mất tất cả các chứng thực được tạo "
 "bởi họ ( Chúng sẽ bị xóa). Điều này có được không?"
 
-#: Console/Certman.class.php:294 views/certgrid.php:28 views/ss.php:135
+#: Console/Certman.class.php:296 views/certgrid.php:28 views/ss.php:135
 #: views/up.php:122 views/view.php:47
 msgid "Description"
 msgstr "Mô tả"
@@ -464,15 +464,15 @@ msgstr "Mô tả"
 msgid "Display certificate details by id or hostname"
 msgstr ""
 
-#: Certman.class.php:788
+#: Certman.class.php:832
 #, php-format
 msgid ""
 "Does DNS for %s resolve correctly?\n"
 "Local DNS result: %s, External DNS result: %s"
 msgstr ""
 
-#: Certman.class.php:71 Certman.class.php:82 Console/Certman.class.php:164
-#: Console/Certman.class.php:175
+#: Certman.class.php:71 Certman.class.php:82 Console/Certman.class.php:166
+#: Console/Certman.class.php:177
 msgid "Done!"
 msgstr "Đã xong!"
 
@@ -504,7 +504,7 @@ msgstr "Bật DTLS"
 msgid "Enable or disable DTLS-SRTP support"
 msgstr "Bật hoặc Tắt hỗ trợ DTLS-SRTP"
 
-#: Certman.class.php:84 Console/Certman.class.php:177
+#: Certman.class.php:84 Console/Certman.class.php:179
 #, php-format
 msgid "Failed! [%s]"
 msgstr "Thất bại!  [%s]"
@@ -517,7 +517,7 @@ msgstr ""
 msgid "Force update, by pass 30 days expiry "
 msgstr ""
 
-#: Console/Certman.class.php:92 Console/Certman.class.php:234
+#: Console/Certman.class.php:93 Console/Certman.class.php:236
 msgid "Forced update enabled !!!"
 msgstr ""
 
@@ -533,11 +533,11 @@ msgstr ""
 "Từ giao diện này bạn có thể khởi tạo một yêu cầu ký chứng thực ( CSR) cho "
 "việc bạn hành một chứng thực sử dụng máy chủ này"
 
-#: Api/Gql/Certman.php:51 Certman.class.php:548 views/certgrid.php:14
+#: Api/Gql/Certman.php:51 Certman.class.php:554 views/certgrid.php:14
 msgid "Generate CSR"
 msgstr "Khởi tạo CSR"
 
-#: Api/Gql/Certman.php:112 Certman.class.php:548 Console/Certman.class.php:35
+#: Api/Gql/Certman.php:112 Certman.class.php:554 Console/Certman.class.php:35
 #: assets/js/certman.js:56
 msgid "Generate Certificate"
 msgstr "Khởi tạo chứng thực"
@@ -550,11 +550,11 @@ msgstr "Khởi tạo Chứng thực Let's Encrypt"
 msgid "Generate Self-Signed Certificate"
 msgstr "Khởi tạo Chứng thực tự ký"
 
-#: Certman.class.php:67 Console/Certman.class.php:160
+#: Certman.class.php:67 Console/Certman.class.php:162
 msgid "Generating default CA..."
 msgstr "Đang hởi tạo nhà cung cấp chứng chỉ mặc định..."
 
-#: Certman.class.php:77 Console/Certman.class.php:170
+#: Certman.class.php:77 Console/Certman.class.php:172
 msgid "Generating default certificate..."
 msgstr "Đang khởi tạo chứng thực mặc định..."
 
@@ -610,7 +610,7 @@ msgstr ""
 msgid "Important"
 msgstr ""
 
-#: Certman.class.php:1632 Certman.class.php:1636
+#: Certman.class.php:1686 Certman.class.php:1690
 msgid "Imported from file system"
 msgstr "Đã nhập từ hệ thống tệp"
 
@@ -642,31 +642,31 @@ msgstr ""
 "Nếu điều này không được cài đặt hoặc giá trị được cung cấp là 0 việc thay "
 "đổi khóa sẽ bị vô hiệu"
 
-#: Certman.class.php:420
+#: Certman.class.php:426
 msgid "Invalid Certificate"
 msgstr "Chứng thực không hợp lệ"
 
-#: views/le.php:149
+#: views/le.php:168
 msgid "Issued Certificate Details"
 msgstr ""
 
-#: Certman.class.php:1052
+#: Certman.class.php:1106
 msgid "Key does not match certificate"
 msgstr "Khóa không khớp với chứng thực"
 
-#: Certman.class.php:1067
+#: Certman.class.php:1121
 msgid "Key does not match certificate after password removal"
 msgstr "Khóa không khớp với chứng thực sau khi xóa mật khẩu"
 
-#: Certman.class.php:1578
+#: Certman.class.php:1632
 msgid "Key is empty"
 msgstr "Khóa trống"
 
-#: Certman.class.php:1588
+#: Certman.class.php:1642
 msgid "Key is password protected or malformed"
 msgstr "Khóa được bảo vệ bằng mật khẩu hoặc bị sai khóa"
 
-#: Console/Certman.class.php:276
+#: Console/Certman.class.php:278
 msgid "Let's Encrypt"
 msgstr ""
 
@@ -687,11 +687,11 @@ msgid ""
 "inbound http access on port 80 to the Let's Encrypt token directories"
 msgstr ""
 
-#: Certman.class.php:311
+#: Certman.class.php:317
 msgid "LetsEncrypt Generation Success!"
 msgstr ""
 
-#: Certman.class.php:237
+#: Certman.class.php:240
 msgid "LetsEncrypt Update Success!"
 msgstr ""
 
@@ -764,15 +764,15 @@ msgstr "Yêu cầu ký chứng thực mới"
 msgid "New Let's Encrypt Certificate"
 msgstr "Chứng thực Let's Encrypt mới"
 
-#: Certman.class.php:1018
+#: Certman.class.php:1072
 msgid "No Certificate provided"
 msgstr "Không có chứng thực nào được cấp"
 
-#: Certman.class.php:64 Console/Certman.class.php:157
+#: Certman.class.php:64 Console/Certman.class.php:159
 msgid "No Certificates exist"
 msgstr "Không có chứng thực nào tồn tại"
 
-#: Console/Certman.class.php:305
+#: Console/Certman.class.php:307
 #, php-format
 msgid ""
 "No Certificates to import. Try placing a certificate (<name>.crt) and its "
@@ -783,8 +783,8 @@ msgstr ""
 msgid "No Private key to reference."
 msgstr "Không có khóa cá nhân nào để tham chiếu."
 
-#: Certman.class.php:147 Certman.class.php:325 Certman.class.php:333
-#: Certman.class.php:1014 Certman.class.php:2009 Certman.class.php:2016
+#: Certman.class.php:147 Certman.class.php:331 Certman.class.php:339
+#: Certman.class.php:1068 Certman.class.php:2063 Certman.class.php:2070
 msgid "No Private key to reference. Try generating a CSR first."
 msgstr "Không có khóa cá nhân nào để tham chiếu. Thử kích hoạt một CSR trước."
 
@@ -792,7 +792,7 @@ msgstr "Không có khóa cá nhân nào để tham chiếu. Thử kích hoạt m
 msgid "No certificates to import"
 msgstr "Không có chứng thực nào để nhập"
 
-#: Certman.class.php:810
+#: Certman.class.php:854
 msgid "No valid response from http://mirror1.freepbx.org"
 msgstr ""
 
@@ -812,7 +812,7 @@ msgstr "Không hiển thị đối với bảo mật của bạn. Dán một kh�
 msgid "Note:"
 msgstr "Ghi chú:"
 
-#: Certman.class.php:200
+#: Certman.class.php:202
 msgid "Nothing to do, no changes made"
 msgstr ""
 
@@ -884,12 +884,16 @@ msgstr "Khóa cá nhân"
 msgid "Private Key File to use for this CA"
 msgstr "Tệp khóa cá nhân sử dụng cho nhà cấp chứng chỉ này"
 
-#: Certman.class.php:763
+#: Certman.class.php:807
 #, php-format
 msgid "Processing: %s, Local IP: %s, Public IP: %s\n"
 msgstr ""
 
-#: Certman.class.php:532
+#: views/le.php:147
+msgid "Remove DST Root CA X3"
+msgstr ""
+
+#: Certman.class.php:538
 msgid "Reset"
 msgstr "Cài đặt lại"
 
@@ -899,19 +903,19 @@ msgstr ""
 "Chọn mục này cho các trường bổ sung được sử dụng để tải lên các chứng thực "
 "của riêng bạn."
 
-#: Console/Certman.class.php:273 views/certgrid.php:42
+#: Console/Certman.class.php:275 views/certgrid.php:42
 msgid "Self Signed"
 msgstr "Tự ký"
 
-#: Certman.class.php:787
+#: Certman.class.php:831
 msgid "Self test error: "
 msgstr ""
 
-#: Certman.class.php:794
+#: Certman.class.php:838
 msgid "Self test error: no token data"
 msgstr ""
 
-#: Certman.class.php:779
+#: Certman.class.php:823
 msgid "Self test: trying "
 msgstr ""
 
@@ -919,11 +923,11 @@ msgstr ""
 msgid "Set default certificate by id or hostname"
 msgstr ""
 
-#: Certman.class.php:679
+#: Certman.class.php:687
 msgid "Some Certificates are expiring or have expired"
 msgstr "Một số chứng thực đang hết hạn hoặc vừa hết hạn"
 
-#: Certman.class.php:682
+#: Certman.class.php:690
 msgid ""
 "Some SSL/TLS Certificates have been automatically updated. You may need to "
 "ensure all services have the correctly update certificate by restarting PBX "
@@ -961,15 +965,15 @@ msgstr "Bang/Tỉnh/Miền"
 msgid "Status for the request"
 msgstr ""
 
-#: Certman.class.php:537
+#: Certman.class.php:543
 msgid "Submit"
 msgstr "Gửi đi"
 
-#: Certman.class.php:404
+#: Certman.class.php:410
 msgid "Successfully deleted the Certificate Authority"
 msgstr "Đã xóa thành công nhà cung cấp chứng thực"
 
-#: Api/Gql/Certman.php:76 Certman.class.php:412
+#: Api/Gql/Certman.php:76 Certman.class.php:418
 msgid "Successfully deleted the Certificate Signing Request"
 msgstr "Đã xóa thành công Yêu cầu ký chứng thực"
 
@@ -977,7 +981,7 @@ msgstr "Đã xóa thành công Yêu cầu ký chứng thực"
 msgid "Successfully deleted the SSL certificate"
 msgstr ""
 
-#: Console/Certman.class.php:311
+#: Console/Certman.class.php:313
 #, php-format
 msgid "Successfully imported %s"
 msgstr "Đã nhập thành công %s"
@@ -986,12 +990,12 @@ msgstr "Đã nhập thành công %s"
 msgid "Successfully imported certificates"
 msgstr "Các chứng thực đã nhập thành công"
 
-#: Console/Certman.class.php:144
+#: Console/Certman.class.php:146
 #, php-format
 msgid "Successfully installed Let's Encrypt certificate '%s'"
 msgstr ""
 
-#: Console/Certman.class.php:342
+#: Console/Certman.class.php:344
 #, php-format
 msgid "Successfully set '%s' as the default certificate"
 msgstr ""
@@ -1000,7 +1004,7 @@ msgstr ""
 msgid "Successfully updated certificate as default"
 msgstr ""
 
-#: Certman.class.php:597 Certman.class.php:637
+#: Certman.class.php:604 Certman.class.php:645
 #, php-format
 msgid "Successfully updated certificate named \"%s\""
 msgstr "Chứng thực được đặt tên đã cập nhật thành công \"%s\""
@@ -1021,6 +1025,13 @@ msgstr "Chứng thực sử dụng từ trình quản lý chứng thực"
 #: Api/Gql/Certman.php:190 views/ss.php:147 views/up.php:134 views/view.php:59
 msgid "The Description of this certificate. Used in the module only"
 msgstr "Mô tả của chứng thực này. Chỉ được sử dụng trong mô đun này"
+
+#: views/le.php:155
+msgid ""
+"The Let's Encrypt bundled 'DST Root CA X3' can cause issues with older "
+"clients. This option removes the 'DST Root CA X3' from the certificate "
+"bundle."
+msgstr ""
 
 #: FirewallAPI.class.php:125
 #, php-format
@@ -1063,28 +1074,28 @@ msgstr "Tên cơ sở của chứng thực, chỉ có thể bao gồm các ký t
 msgid "The certificate common name, usually the same as the host name"
 msgstr "Tên thông thường của chứng thực, thường giống như tên host"
 
-#: Console/Certman.class.php:314
+#: Console/Certman.class.php:316
 #, php-format
 msgid "There was an error importing %s. The error was: %s"
 msgstr "Xảy ra lỗi khi nhập %s. Lỗi này là: %s"
 
-#: Certman.class.php:165 Certman.class.php:340 Certman.class.php:2026
+#: Certman.class.php:165 Certman.class.php:346 Certman.class.php:2080
 #, php-format
 msgid "There was an error importing the certificate: %s"
 msgstr "Xảy ra lỗi khi nhập chứng thực: %s"
 
-#: Certman.class.php:617 Certman.class.php:656
+#: Certman.class.php:624 Certman.class.php:664
 #, php-format
 msgid "There was an error updating certificate \"%s\": %s"
 msgstr "Xảy ra lỗi khi cập nhật chứng thực  \"%s\": %s"
 
-#: Certman.class.php:950
+#: Certman.class.php:1004
 msgid ""
 "There was an error updating the certificate: Firewall v 15.0.6.29 and above "
 "required please install"
 msgstr ""
 
-#: Certman.class.php:572
+#: Certman.class.php:578
 #, php-format
 msgid "There were no files left for certificate \"%s\" so it was removed"
 msgstr "Không còn tệp nào cho chứng thực \"%s\" vì vậy nó bị xóa"
@@ -1127,16 +1138,16 @@ msgstr "Chuỗi tin tưởng"
 msgid "Two letter country code, such as \"US\", \"CA\", or \"AU\"."
 msgstr "Mã quốc gia gồm 2 chữ cái, ví dụ  \"US\", \"CA\", or \"AU\"."
 
-#: Console/Certman.class.php:294 views/certgrid.php:29
+#: Console/Certman.class.php:296 views/certgrid.php:29
 msgid "Type"
 msgstr "Kiểu"
 
-#: Api/Gql/Certman.php:268 Certman.class.php:392
+#: Api/Gql/Certman.php:268 Certman.class.php:398
 #, php-format
 msgid "Unable to create CSR: %s"
 msgstr "Không thể tạo CSR: %s"
 
-#: Certman.class.php:772
+#: Certman.class.php:816
 msgid "Unable to create directory "
 msgstr ""
 
@@ -1144,53 +1155,53 @@ msgstr ""
 msgid "Unable to delete the SSL certificate"
 msgstr ""
 
-#: Certman.class.php:361
+#: Certman.class.php:367
 msgid "Unable to find Certificate Authority"
 msgstr "Không thể tìm thấy nhà cung cấp chứng thực"
 
-#: Certman.class.php:354
+#: Certman.class.php:360
 msgid "Unable to generate Certificate Authority"
 msgstr "Không thể khởi tạo nhà cung cấp chứng thực"
 
-#: Certman.class.php:369
+#: Certman.class.php:375
 #, php-format
 msgid "Unable to generate certificate: %s"
 msgstr "Không thể khởi tạo chứng thực: %s"
 
-#: Certman.class.php:1048
+#: Certman.class.php:1102
 msgid "Unable to read key. Is it password protected?"
 msgstr "Không thể đọc khóa. Nó có được bảo vệ bằng mật khẩu không?"
 
-#: Certman.class.php:1542
+#: Certman.class.php:1596
 #, php-format
 msgid "Unable to remove %s"
 msgstr "Không thể xóa %s"
 
-#: Certman.class.php:1668
+#: Certman.class.php:1722
 msgid "Unable to remove ca.cfg"
 msgstr "Không thể xóa  ca.cfg"
 
-#: Certman.class.php:1663
+#: Certman.class.php:1717
 msgid "Unable to remove ca.crt"
 msgstr "Không thể xóa  ca.crt"
 
-#: Certman.class.php:1658
+#: Certman.class.php:1712
 msgid "Unable to remove ca.key"
 msgstr "Không thể xóa ca.key"
 
-#: Certman.class.php:406
+#: Certman.class.php:412
 msgid "Unable to remove the Certificate Authority"
 msgstr "Không thể xóa nhà cung cấp chứng thực"
 
-#: Api/Gql/Certman.php:78 Certman.class.php:414
+#: Api/Gql/Certman.php:78 Certman.class.php:420
 msgid "Unable to remove the Certificate Signing Request"
 msgstr "Không thể xóa Yêu cầu ký chứng thực"
 
-#: Certman.class.php:1673
+#: Certman.class.php:1727
 msgid "Unable to remove tmp.cfg"
 msgstr "Không thể xóa tmp.cfg"
 
-#: Certman.class.php:1031 Certman.class.php:1035 Certman.class.php:1039
+#: Certman.class.php:1085 Certman.class.php:1089 Certman.class.php:1093
 #, php-format
 msgid "Unable to write to %s"
 msgstr "Không thể ghi tới %s"
@@ -1199,11 +1210,11 @@ msgstr "Không thể ghi tới %s"
 msgid "Unable update certificate as default"
 msgstr ""
 
-#: Certman.class.php:1943
+#: Certman.class.php:1997
 msgid "Unknown Expiration"
 msgstr "Thời gian hết hạn không xác định"
 
-#: Certman.class.php:542
+#: Certman.class.php:548
 msgid "Update Certificate"
 msgstr "Cập nhật chứng thực"
 
@@ -1211,11 +1222,11 @@ msgstr "Cập nhật chứng thực"
 msgid "Update Existing Certificate"
 msgstr "Cập nhật chứng thực hiện có"
 
-#: Certman.class.php:682
+#: Certman.class.php:690
 msgid "Updated Certificates"
 msgstr "Các chứng thực đã cập nhật"
 
-#: Certman.class.php:174 Certman.class.php:247
+#: Certman.class.php:174 Certman.class.php:250
 msgid "Updated certificate"
 msgstr "Chứng thực đã cập nhật"
 
@@ -1235,11 +1246,11 @@ msgstr "Tải lên chứng thực"
 msgid "Upload an SSL certificate"
 msgstr ""
 
-#: Console/Certman.class.php:279 views/certgrid.php:45
+#: Console/Certman.class.php:281 views/certgrid.php:45
 msgid "Uploaded"
 msgstr "Đã tải lên"
 
-#: Console/Certman.class.php:150
+#: Console/Certman.class.php:152
 msgid "Use --import instead"
 msgstr ""
 
@@ -1337,7 +1348,7 @@ msgstr ""
 msgid "generateCSR"
 msgstr ""
 
-#: Certman.class.php:815
+#: Certman.class.php:859
 msgid "lechecker: "
 msgstr ""
 
