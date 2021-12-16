@@ -10,9 +10,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-07 02:34+0000\n"
-"PO-Revision-Date: 2020-01-28 09:44+0000\n"
+"PO-Revision-Date: 2021-12-16 08:40+0000\n"
 "Last-Translator: florian alberts <alberts@ar-systems.de>\n"
-"Language-Team: German <http://*/projects/freepbx/certman/de/>\n"
+"Language-Team: German <http://weblate.freepbx.org/projects/freepbx/certman/"
+"de/>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -372,11 +373,11 @@ msgstr "Fehlgeschlagen! [%s]"
 
 #: views/le.php:10
 msgid "For more information see: "
-msgstr ""
+msgstr "Weitere Informationen finden Sie unter: "
 
 #: Console/Certman.class.php:29
 msgid "Force update, by pass 30 days expiry "
-msgstr ""
+msgstr "Update erzwingen, Ablauf von 30 Tagen umgehen "
 
 #: views/overview.php:17
 msgid ""
@@ -441,6 +442,9 @@ msgid ""
 "automatic. Alternate security methods and external firewalls will require "
 "manual configuration."
 msgstr ""
+"Wenn die Sicherheit vom PBX-Firewall-Modul verwaltet wird, sollte dieser "
+"Vorgang automatisch erfolgen. Alternative Sicherheitsmethoden und externe "
+"Firewalls erfordern eine manuelle Konfiguration."
 
 #: views/up.php:196
 msgid "If you have a separate private key paste it here."
@@ -458,7 +462,7 @@ msgstr "Jedes unverwaltete Zertifikat in %s importieren"
 
 #: views/le.php:7
 msgid "Important"
-msgstr ""
+msgstr "Wichtig"
 
 #: Certman.class.php:1456 Certman.class.php:1460
 msgid "Imported from file system"
@@ -518,6 +522,9 @@ msgid ""
 "Let's Encrypt certificate creation and validation requires unrestricted "
 "inbound http access on port 80 to the Let's Encrypt token directories"
 msgstr ""
+"Die Erstellung und Validierung von Let's Encrypt-Zertifikaten erfordert "
+"uneingeschränkten eingehenden HTTP-Zugriff auf Port 80 auf die Token-"
+"Verzeichnisse von Let's Encrypt"
 
 #: views/overview.php:23
 msgid "Let's Encrypt:"
@@ -664,6 +671,8 @@ msgid ""
 "Please enable DTLS for Media Encryption field first before enabling DTLS "
 "parameters"
 msgstr ""
+"Bitte aktivieren Sie zuerst DTLS für das Media Encryption-Feld, bevor Sie "
+"die DTLS-Parameter aktivieren"
 
 #: views/ca.php:62 views/up.php:193
 msgid "Private Key"
@@ -675,7 +684,7 @@ msgstr "Privater Schlüssel (Datei), der für die Unterschrift verwendet wird"
 
 #: views/le.php:158
 msgid "Remove DST Root CA X3"
-msgstr ""
+msgstr "Entferne DST Root CA X3"
 
 #: Certman.class.php:450
 msgid "Reset"
@@ -782,6 +791,9 @@ msgid ""
 "clients. This option removes the 'DST Root CA X3' from the certificate "
 "bundle."
 msgstr ""
+"The Let's Encrypt bundled 'DST Root CA X3' can cause issues with older "
+"clients. This option removes the 'DST Root CA X3' from the certificate "
+"bundle."
 
 #: views/ss.php:194
 msgid "The Organization Name"
