@@ -92,6 +92,7 @@ class Certman implements BMO {
 		try {
 			$this->removeCSR();
 			$this->removeCA();
+			$this->removeCronJob();
 			$certs = $this->getAllManagedCertificates();
 			foreach($certs as $cert) {
 				$this->removeCertificate($cert['cid']);
@@ -108,6 +109,19 @@ class Certman implements BMO {
 		$sth = $this->db->prepare($sql);
 		$sth->execute();
 		return true;
+	}
+
+	public function removeCronJob() {
+		foreach($this->FreePBX->Cron()->getAll() as $cron) {
+			$str = "fwconsole certificates updateall -q";
+			if (preg_match("/".$str."/i",$cron,$matches)) {
+				$this->FreePBX->Cron()->remove($cron);
+			}
+			$str = "fwconsole certificates --updateall -q";
+			if (preg_match("/".$str."/i",$cron,$matches)) {
+				$this->FreePBX->Cron()->remove($cron);
+			}
+		}
 	}
 
 	public function doConfigPageInit($page){
