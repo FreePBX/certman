@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-16 15:04+0530\n"
-"PO-Revision-Date: 2022-04-18 13:03+0000\n"
+"PO-Revision-Date: 2022-04-19 04:49+0000\n"
 "Last-Translator: Dmitriy Q <krotesk@ya.ru>\n"
 "Language-Team: Russian <http://weblate.freepbx.org/projects/freepbx/certman/"
 "ru/>\n"
@@ -397,11 +397,11 @@ msgstr "Фиаско! [%s]"
 
 #: views/le.php:10
 msgid "For more information see: "
-msgstr ""
+msgstr "Для большей информации смотрите: "
 
 #: Console/Certman.class.php:29
 msgid "Force update, by pass 30 days expiry "
-msgstr ""
+msgstr "Принудительное обновление, обход срока истечения 30 дней "
 
 #: views/overview.php:17
 msgid ""
@@ -473,6 +473,9 @@ msgid ""
 "automatic. Alternate security methods and external firewalls will require "
 "manual configuration."
 msgstr ""
+"Если безопасность управляется модулем брандмауэра АТС - этот процесс должен "
+"быть автоматическим. Альтернативные методы защиты и внешние брандмауэры "
+"потребуют ручной настройки."
 
 #: views/up.php:196
 msgid "If you have a separate private key paste it here."
@@ -489,7 +492,7 @@ msgstr "Импорт любых неуправляемых сертификат�
 
 #: views/le.php:7
 msgid "Important"
-msgstr ""
+msgstr "Значительный"
 
 #: Certman.class.php:1456
 #: Certman.class.php:1460
@@ -551,6 +554,8 @@ msgid ""
 "Let's Encrypt certificate creation and validation requires unrestricted "
 "inbound http access on port 80 to the Let's Encrypt token directories"
 msgstr ""
+"Для создания и проверки сертификата Let's Encrypt требуется неограниченный "
+"входящий http-доступ через порт 80 к каталогам токенов Let's Encrypt"
 
 #: views/overview.php:23
 msgid "Let's Encrypt:"
@@ -700,6 +705,8 @@ msgid ""
 "Please enable DTLS for Media Encryption field first before enabling DTLS "
 "parameters"
 msgstr ""
+"Пожалуйста, сначала включите DTLS для поля Шифрование мультимедиа, прежде "
+"чем включать параметры DTLS"
 
 #: views/ca.php:62
 #: views/up.php:193
@@ -712,7 +719,7 @@ msgstr "Файл приватного ключа для использовани
 
 #: views/le.php:158
 msgid "Remove DST Root CA X3"
-msgstr ""
+msgstr "Удалить DST Root CA X3"
 
 #: Certman.class.php:450
 msgid "Reset"
@@ -824,6 +831,9 @@ msgid ""
 "clients. This option removes the 'DST Root CA X3' from the certificate "
 "bundle."
 msgstr ""
+"Входящий в комплект Let's Encrypt 'DST Root CA X3' может вызвать проблемы со "
+"старыми клиентами. Этот параметр удаляет 'DST Root CA X3' из пакета "
+"сертификатов."
 
 #: views/ss.php:194
 msgid "The Organization Name"
@@ -1048,7 +1058,7 @@ msgstr "Действителен до"
 
 #: certman.i18n.php:12
 msgid "Validity period of the certificate (in days)"
-msgstr ""
+msgstr "Срок действия сертификата (в днях)"
 
 #: functions.inc/hook_core.php:130
 msgid ""
@@ -1106,6 +1116,8 @@ msgstr ""
 #: certman.i18n.php:16
 msgid "You can change the number of days the certificate is valid."
 msgstr ""
+"Вы можете изменить количество дней, в течение которых сертификат "
+"действителен."
 
 #: views/up.php:215
 msgid ""
