@@ -20,8 +20,8 @@ if(!empty($message)) {
 							<div class="element-container">
 								<div class="row">
 									<div class="col-md-12">
-										<div class="row">
-											<div class="form-group">
+										<div class="">
+											<div class="row form-group">
 												<div class="col-md-3">
 													<label class="control-label" for="name"><?php echo _("Name")?></label>
 													<i class="fa fa-question-circle fpbx-help-icon" data-for="name"></i>
@@ -48,8 +48,8 @@ if(!empty($message)) {
 								<div class="element-container">
 									<div class="row">
 										<div class="col-md-12">
-											<div class="row">
-												<div class="form-group">
+											<div class="">
+												<div class="row form-group">
 													<div class="col-md-3">
 														<label class="control-label" for="expires"><?php echo _("Valid Until")?></label>
 														<i class="fa fa-question-circle fpbx-help-icon" data-for="expires"></i>
@@ -68,8 +68,8 @@ if(!empty($message)) {
 								<div class="element-container">
 									<div class="row">
 										<div class="col-md-12">
-											<div class="row">
-												<div class="form-group">
+											<div class="">
+												<div class="row form-group">
 													<div class="col-md-3">
 														<label class="control-label" for="cn"><?php echo _("Common Name")?></label>
 														<i class="fa fa-question-circle fpbx-help-icon" data-for="cn"></i>
@@ -91,8 +91,8 @@ if(!empty($message)) {
 									<div class="element-container">
 										<div class="row">
 											<div class="col-md-12">
-												<div class="row">
-													<div class="form-group">
+												<div class="">
+													<div class="row form-group">
 														<div class="col-md-3">
 															<label class="control-label" for="cp"><?php echo _("Certificate Policies")?></label>
 															<i class="fa fa-question-circle fpbx-help-icon" data-for="cp"></i>
@@ -116,8 +116,8 @@ if(!empty($message)) {
 							<div class="element-container">
 								<div class="row">
 									<div class="col-md-12">
-										<div class="row">
-											<div class="form-group">
+										<div class="">
+											<div class="row form-group">
 												<div class="col-md-3">
 													<label class="control-label" for="description"><?php echo _("Description")?></label>
 													<i class="fa fa-question-circle fpbx-help-icon" data-for="description"></i>
@@ -139,8 +139,8 @@ if(!empty($message)) {
 							<div class="element-container">
 								<div class="row">
 									<div class="col-md-12">
-										<div class="row">
-											<div class="form-group">
+										<div class="">
+											<div class="row form-group">
 												<div class="col-md-3">
 													<label class="control-label" for="passphrase"><?php echo _("Passphrase")?></label>
 													<i class="fa fa-question-circle fpbx-help-icon" data-for="passphrase"></i>
@@ -162,8 +162,8 @@ if(!empty($message)) {
 							<div class="element-container">
 								<div class="row">
 									<div class="col-md-12">
-										<div class="row">
-											<div class="form-group">
+										<div class="">
+											<div class="row form-group">
 												<div class="col-md-3">
 													<label class="control-label" for="csrref"><?php echo _("CSR Reference")?></label>
 													<i class="fa fa-question-circle fpbx-help-icon" data-for="csrref"></i>

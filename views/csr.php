@@ -18,8 +18,8 @@ if(!empty($message)) {
 							<div class="element-container">
 								<div class="row">
 									<div class="col-md-12">
-										<div class="row">
-											<div class="form-group">
+										<div class="">
+											<div class="row form-group">
 												<div class="col-md-3">
 													<label class="control-label" for="name"><?php echo _("Name")?></label>
 													<i class="fa fa-question-circle fpbx-help-icon" data-for="name"></i>
@@ -40,8 +40,8 @@ if(!empty($message)) {
 							<div class="element-container">
 								<div class="row">
 									<div class="col-md-12">
-										<div class="row">
-											<div class="form-group">
+										<div class="">
+											<div class="row form-group">
 												<div class="col-md-3">
 													<label class="control-label" for="csrcn"><?php echo _("Common Name (Host Name)")?> (CN)</label>
 												</div>
@@ -56,8 +56,8 @@ if(!empty($message)) {
 							<div class="element-container">
 								<div class="row">
 									<div class="col-md-12">
-										<div class="row">
-											<div class="form-group">
+										<div class="">
+											<div class="row form-group">
 												<div class="col-md-3">
 													<label class="control-label" for="csro"><?php echo _("Organization Name")?> (O)</label>
 													<i class="fa fa-question-circle fpbx-help-icon" data-for="csro"></i>
@@ -78,8 +78,8 @@ if(!empty($message)) {
 							<div class="element-container">
 								<div class="row">
 									<div class="col-md-12">
-										<div class="row">
-											<div class="form-group">
+										<div class="">
+											<div class="row form-group">
 												<div class="col-md-3">
 													<label class="control-label" for="ou"><?php echo _("Organization Unit")?> (OU)</label>
 													<i class="fa fa-question-circle fpbx-help-icon" data-for="OU"></i>
@@ -100,8 +100,8 @@ if(!empty($message)) {
 							<div class="element-container">
 								<div class="row">
 									<div class="col-md-12">
-										<div class="row">
-											<div class="form-group">
+										<div class="">
+											<div class="row form-group">
 												<div class="col-md-3">
 													<label class="control-label" for="c"><?php echo _("Country")?> (C)</label>
 													<i class="fa fa-question-circle fpbx-help-icon" data-for="C"></i>
@@ -122,8 +122,8 @@ if(!empty($message)) {
 							<div class="element-container">
 								<div class="row">
 									<div class="col-md-12">
-										<div class="row">
-											<div class="form-group">
+										<div class="">
+											<div class="row form-group">
 												<div class="col-md-3">
 													<label class="control-label" for="st"><?php echo _("State/Province")?> (ST)</label>
 													<i class="fa fa-question-circle fpbx-help-icon" data-for="ST"></i>
@@ -144,8 +144,8 @@ if(!empty($message)) {
 							<div class="element-container">
 								<div class="row">
 									<div class="col-md-12">
-										<div class="row">
-											<div class="form-group">
+										<div class="">
+											<div class="row form-group">
 												<div class="col-md-3">
 													<label class="control-label" for="l"><?php echo _("City or Locality")?> (L)</label>
 													<i class="fa fa-question-circle fpbx-help-icon" data-for="L"></i>
