@@ -16,19 +16,19 @@ if(!empty($message)) {
 	$mhtml = '<div class="fpbx-container element-container alert alert-' . $message['type'] .' alert-dismissable">
 			<div class="display no-border" >
 				<div class="row">
-					<span class="fa fa-times close" style="margin-top: -15px;" data-dismiss="alert" aria-hidden="true"></span>
+					<span class="fa fa-times close ml-auto" style="margin-top: -15px;" data-dismiss="alert" aria-hidden="true"></span>
 					<div class="col-md-12">';
 	if(!empty($message['title'])) {
-		$mhtml .=			'<label style="font-size: large;">'.$message['title'].'</label>
+		$mhtml .=			'<label class="font-weight-bold" style="font-size: large;">'.$message['title'].'</label>
 						<i class="fpbx-help-icon" data-for="alert">
-							<span class="alert-' . $message['type'] .' align-top glyphicon glyphicon-question-sign"></span>
+							<span class="alert-' . $message['type'] .' align-top fa fa-question-circle"></span>
 						</i>
 						<span id="alert-help" class="fpbx-help-block">
 						<div class="alert-' . $message['type'] . '">
 							<strong>' . $message['message'] . '</strong>' . $hinthtml . $loghtml . '
 						</div></span>';
 	} else {
-		$mhtml .=			'<label style="font-size: large;">'.$message['message'].'</label>' . $hinthtml . $loghtml;
+		$mhtml .=			'<label class="font-weight-bold" style="font-size: large;">'.$message['message'].'</label>' . $hinthtml . $loghtml;
 	}
 	$mhtml .=			'</div>
 				</div>
@@ -43,7 +43,7 @@ if(!empty($message)) {
 	<div class="panel panel-info">
 		<div class="panel-heading">
 			<div class="panel-title">
-				<a href="#" data-toggle="collapse" data-target="#moreinfo"><i class="glyphicon glyphicon-info-sign"></i></a>&nbsp;&nbsp;&nbsp;<?php echo _("What is Certificate Manager?")?></div>
+				<a href="#" data-toggle="collapse" data-target="#moreinfo"><i class="fa fa-info-circle"></i></a>&nbsp;&nbsp;&nbsp;<?php echo _("What is Certificate Manager?")?></div>
 		</div>
 		<!--At some point we can probably kill this... Maybe make is a 1 time panel that may be dismissed-->
 		<div class="panel-body collapse" id="moreinfo">

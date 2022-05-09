@@ -34,8 +34,8 @@ if(count($cas) == 1){
 								<div class="element-container">
 									<div class="row">
 										<div class="col-md-12">
-											<div class="row">
-												<div class="form-group">
+											<div class="">
+												<div class="row form-group">
 													<div class="col-md-3">
 														<label class="control-label" for="cn"><?php echo _("Host Name")?></label>
 														<i class="fa fa-question-circle fpbx-help-icon" data-for="cn"></i>
@@ -56,8 +56,8 @@ if(count($cas) == 1){
 								<div class="element-container">
 									<div class="row">
 										<div class="col-md-12">
-											<div class="row">
-												<div class="form-group">
+											<div class="">
+												<div class="row form-group">
 													<div class="col-md-3">
 														<label class="control-label" for="expires"><?php echo _("Valid Until")?></label>
 														<i class="fa fa-question-circle fpbx-help-icon" data-for="expires"></i>
@@ -79,8 +79,8 @@ if(count($cas) == 1){
 									<div class="element-container">
 										<div class="row">
 											<div class="col-md-12">
-												<div class="row">
-													<div class="form-group">
+												<div class="">
+													<div class="row form-group">
 														<div class="col-md-3">
 															<label class="control-label" for="cp"><?php echo _("Certificate Policies")?></label>
 															<i class="fa fa-question-circle fpbx-help-icon" data-for="cp"></i>
@@ -104,8 +104,8 @@ if(count($cas) == 1){
 								<div class="element-container">
 									<div class="row">
 										<div class="col-md-12">
-											<div class="row">
-												<div class="form-group">
+											<div class="">
+												<div class="row form-group">
 													<div class="col-md-3">
 														<label class="control-label" for="hostname"><?php echo  _("Host Name") ?></label>
 														<i class="fa fa-question-circle fpbx-help-icon" data-for="hostname"></i>
@@ -129,8 +129,8 @@ if(count($cas) == 1){
 							<div class="element-container">
 								<div class="row">
 									<div class="col-md-12">
-										<div class="row">
-											<div class="form-group">
+										<div class="">
+											<div class="row form-group">
 												<div class="col-md-3">
 													<label class="control-label" for="description"><?php echo _("Description")?></label>
 													<i class="fa fa-question-circle fpbx-help-icon" data-for="description"></i>
@@ -153,8 +153,8 @@ if(count($cas) == 1){
 								<div class="element-container">
 									<div class="row">
 										<div class="col-md-12">
-											<div class="row">
-												<div class="form-group">
+											<div class="">
+												<div class="row form-group">
 													<div class="col-md-3">
 														<label class="control-label" for="ca"><?php echo _("Certificate Authority")?></label>
 														<i class="fa fa-question-circle fpbx-help-icon" data-for="ca"></i>
@@ -176,8 +176,8 @@ if(count($cas) == 1){
 								<div class="element-container">
 									<div class="row">
 										<div class="col-md-12">
-											<div class="row">
-												<div class="form-group">
+											<div class="">
+												<div class="row form-group">
 													<div class="col-md-3">
 														<label class="control-label" for="orgname"><?php echo  _("Organization Name") ?></label>
 														<i class="fa fa-question-circle fpbx-help-icon" data-for="orgname"></i>
