@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-14 02:32+0000\n"
+"POT-Creation-Date: 2022-05-09 02:10+0000\n"
 "PO-Revision-Date: 2016-12-11 12:44+0200\n"
 "Last-Translator: Ernesto <ecasas@sangoma.com>\n"
 "Language-Team: Spanish <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -96,7 +96,7 @@ msgstr ""
 "recomendamos conseguir un certificado real de una autoridad estándar o a "
 "través del proyecto Let's Encrypt"
 
-#: views/le.php:228
+#: views/le.php:227
 msgid ""
 "A certificate policy (CP) is a document which aims to state what are the "
 "different actors of a public key infrastructure (PKI), their roles and their "
@@ -694,7 +694,7 @@ msgstr ""
 msgid "LetsEncrypt Update Success!"
 msgstr ""
 
-#: views/le.php:136
+#: views/le.php:135
 msgid "LetsEncrypt only supports hostname validation via HTTP on port 80."
 msgstr ""
 
@@ -1023,7 +1023,7 @@ msgstr "Certificado a usar desde el Gestor de Certificados"
 msgid "The Description of this certificate. Used in the module only"
 msgstr "La Descripción de este certificado. Usado en el modulo únicamente"
 
-#: views/le.php:155
+#: views/le.php:154
 msgid ""
 "The Let's Encrypt bundled 'DST Root CA X3' can cause issues with older "
 "clients. This option removes the 'DST Root CA X3' from the certificate "
@@ -1099,7 +1099,7 @@ msgstr ""
 msgid "There were no files left for certificate \"%s\" so it was removed"
 msgstr "No quedan archivos para certificado \"%s\", por lo tanto fue removido"
 
-#: views/le.php:68
+#: views/le.php:67
 msgid ""
 "This email address is given to Let's Encrypt. It may be used by them if the "
 "certificate is approaching expiration and it has not been renewed."
@@ -1109,7 +1109,7 @@ msgstr ""
 msgid "This field cannot be blank and must be alphanumeric"
 msgstr "El campo no puede estar en blanco y debe ser alfanumerico"
 
-#: views/le.php:52
+#: views/le.php:51
 msgid ""
 "This must be the hostname you are requesting a certificate for. LetsEncrypt "
 "will validate that the hostname resolves to this machine, and attempt to "

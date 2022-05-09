@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-14 02:32+0000\n"
+"POT-Creation-Date: 2022-05-09 02:10+0000\n"
 "PO-Revision-Date: 2017-03-23 13:47+0200\n"
 "Last-Translator: Kingvoice <suporte@kingvoice.com.br>\n"
 "Language-Team: Portuguese (Brazil) <http://weblate.freepbx.org/projects/"
@@ -96,7 +96,7 @@ msgstr ""
 "você obtenha um certificado real de uma autoridade padrão ou através do "
 "projeto Let's Encrypt"
 
-#: views/le.php:228
+#: views/le.php:227
 msgid ""
 "A certificate policy (CP) is a document which aims to state what are the "
 "different actors of a public key infrastructure (PKI), their roles and their "
@@ -695,7 +695,7 @@ msgstr ""
 msgid "LetsEncrypt Update Success!"
 msgstr ""
 
-#: views/le.php:136
+#: views/le.php:135
 msgid "LetsEncrypt only supports hostname validation via HTTP on port 80."
 msgstr ""
 "Let's Encrypt apenas suporta validação de hostname via HTTP na porta 80."
@@ -1026,7 +1026,7 @@ msgstr "Certificado a ser usado pelo Gerenciador de Certificados"
 msgid "The Description of this certificate. Used in the module only"
 msgstr "A Descrição deste certificado. Usado somente no módulo"
 
-#: views/le.php:155
+#: views/le.php:154
 msgid ""
 "The Let's Encrypt bundled 'DST Root CA X3' can cause issues with older "
 "clients. This option removes the 'DST Root CA X3' from the certificate "
@@ -1101,7 +1101,7 @@ msgid "There were no files left for certificate \"%s\" so it was removed"
 msgstr ""
 "Não havia arquivos para o certificado \"%s\", portanto ele foi removido"
 
-#: views/le.php:68
+#: views/le.php:67
 msgid ""
 "This email address is given to Let's Encrypt. It may be used by them if the "
 "certificate is approaching expiration and it has not been renewed."
@@ -1113,7 +1113,7 @@ msgstr ""
 msgid "This field cannot be blank and must be alphanumeric"
 msgstr "Este campo não pode ficar em branco e deve ser alfanumérico"
 
-#: views/le.php:52
+#: views/le.php:51
 msgid ""
 "This must be the hostname you are requesting a certificate for. LetsEncrypt "
 "will validate that the hostname resolves to this machine, and attempt to "
