@@ -1,6 +1,9 @@
 <?php
 
 $ampsbin = FreePBX::Config()->get("AMPSBIN");
+$hour = rand(0,3);
+$minutes = rand(0,59);
+
 foreach(FreePBX::Cron()->getAll() as $cron) {
 	$str = "fwconsole certificates updateall -q";
 	if(preg_match("/".$str."/i",$cron,$matches)) {
@@ -11,11 +14,15 @@ foreach(FreePBX::Cron()->getAll() as $cron) {
 		FreePBX::Cron()->remove($cron);
 	}
 }
-FreePBX::Cron()->add(array(
-	"command" => $ampsbin."/fwconsole certificates --updateall -q 2>&1 >/dev/null",
-	"hour" => rand(0,3),
-	"minute" => rand(0,59),
-));
+
+foreach(FreePBX::Job()->getAll() as $job) {
+	$str = "fwconsole certificates --updateall -q";
+	if(preg_match("/".$str."/i",$job['command'],$matches)) {
+		FreePBX::Job()->remove($job['modulename'], $job['jobname']);
+	}
+}
+
+FreePBX::Job()->addCommand("certman", "updateall", $ampsbin."/fwconsole certificates --updateall -q 2>&1 >/dev/null", "$minutes $hour * * *" );
 
 $freepbx_conf = freepbx_conf::create();
 $set['value'] = '730';
