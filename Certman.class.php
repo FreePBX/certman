@@ -123,10 +123,10 @@ class Certman implements BMO {
 			}
 		}
 
-		foreach(FreePBX::Job()->getAll() as $job) {
+		foreach($this->FreePBX->Job()->getAll() as $job) {
 			$str = "fwconsole certificates --updateall -q";
 			if(preg_match("/".$str."/i",$job['command'],$matches)) {
-				FreePBX::Job()->remove($job['modulename'], $job['jobname']);
+				$this->FreePBX->Job()->remove($job['modulename'], $job['jobname']);
 			}
 		}
 	}
