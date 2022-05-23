@@ -34,8 +34,8 @@ $alert .= "</div>";
 							</div>
 							<div class="section" data-id="edit-cert">
 								<div class="element-container">
-									<div class="">
-										<div class="row form-group form-horizontal">
+									<div class="row">
+										<div class="form-group form-horizontal">
 											<div class="col-md-3">
 												<label class="control-label" for="host"><?php echo _("Certificate Host Name")?></label>
 												<i class="fa fa-question-circle fpbx-help-icon" data-for="host"></i>
@@ -47,15 +47,15 @@ $alert .= "</div>";
 													<?php echo !empty($cert['basename']) ? $cert['basename'] : ""?>
 												<?php } ?>
 											</div>
-											<div class="col-md-12">
-												<span id="host-help" class="help-block fpbx-help-block" style=""><?php echo _("This must be the hostname you are requesting a certificate for. LetsEncrypt will validate that the hostname resolves to this machine, and attempt to connect to it.")?></span>
-											</div>
+										</div>
+										<div class="col-md-12">
+											<span id="host-help" class="help-block fpbx-help-block" style=""><?php echo _("This must be the hostname you are requesting a certificate for. LetsEncrypt will validate that the hostname resolves to this machine, and attempt to connect to it.")?></span>
 										</div>
 									</div>
 								</div>
 								<div class="element-container">
-									<div class="">
-										<div class="row form-group form-horizontal">
+									<div class="row">
+										<div class="form-group form-horizontal">
 											<div class="col-md-3">
 												<label class="control-label" for="email"><?php echo _("Owners Email")?></label>
 												<i class="fa fa-question-circle fpbx-help-icon" data-for="email"></i>
@@ -63,16 +63,16 @@ $alert .= "</div>";
 											<div class="col-md-9">
 												<input type="text" class="form-control" id="email" name="email" placeholder="you@example.com" required value="<?php echo $cert['additional']['email']; ?>">
 											</div>
-											<div class="col-md-12">
-												<span id="email-help" class="help-block fpbx-help-block" style=""><?php echo _("This email address is given to Let's Encrypt. It may be used by them if the certificate is approaching expiration and it has not been renewed.")?></span>
-											</div>
+										</div>
+										<div class="col-md-12">
+											<span id="email-help" class="help-block fpbx-help-block" style=""><?php echo _("This email address is given to Let's Encrypt. It may be used by them if the certificate is approaching expiration and it has not been renewed.")?></span>
 										</div>
 									</div>
 								</div>
 
 								<div class="element-container">
-									<div class="">
-										<div class="row form-group form-horizontal">
+									<div class="row">
+										<div class="form-group form-horizontal">
 											<div class="col-md-3">
 												<label class="control-label" for="C"><?php echo _("Country")?></label>
 											</div>
@@ -87,8 +87,8 @@ $alert .= "</div>";
 									</div>
 								</div>
 								<div class="element-container">
-									<div class="">
-										<div class="row form-group form-horizontal">
+									<div class="row">
+										<div class="form-group form-horizontal">
 											<div class="col-md-3">
 												<label class="control-label" for="st"><?php echo _("State/Province/Region")?></label>
 											</div>
@@ -101,8 +101,8 @@ $alert .= "</div>";
 
 								<!-- Alternative Names -->
 								<div class="element-container">
-									<div class="">
-										<div class="row form-group form-horizontal">
+									<div class="row">
+										<div class="form-group form-horizontal">
 											<div class="col-md-3">
 												<label class="control-label" for="SAN"><?php echo _("Alternative Names"); ?></label>
 												<i class="fa fa-question-circle fpbx-help-icon" data-for="SAN"></i>
@@ -122,8 +122,8 @@ $alert .= "</div>";
 
 								<!-- Challenge Method -->
 								<div class="element-container">
-									<div class="">
-										<div class="row form-group form-horizontal">
+									<div class="row">
+										<div class="form-group form-horizontal">
 											<div class="col-md-3">
 												<label class="control-label" for="challengetype"><?php echo _("Challenge Over")?></label>
 												<i class="fa fa-question-circle fpbx-help-icon" data-for="challengetype"></i>
@@ -131,9 +131,9 @@ $alert .= "</div>";
 											<div class="col-md-9">
 												<span class="form-control" disabled><strong>HTTP <?php echo _("(Port 80)"); ?></strong></span>
 											</div>
-											<div class="col-md-12">
-												<span id="challengetype-help" class="help-block fpbx-help-block"><?php echo _("LetsEncrypt only supports hostname validation via HTTP on port 80.")?></span>
-											</div>
+										</div>
+										<div class="col-md-12">
+											<span id="challengetype-help" class="help-block fpbx-help-block"><?php echo _("LetsEncrypt only supports hostname validation via HTTP on port 80.")?></span>
 										</div>
 									</div>
 								</div>
@@ -141,8 +141,8 @@ $alert .= "</div>";
 
 								<!-- Remove DST Root CA X3 -->
 								<div class="element-container">
-									<div class="">
-										<div class="row form-group form-horizontal">
+									<div class="row">
+										<div class="form-group form-horizontal">
 											<div class="col-md-3">
 												<label class="control-label" for="removeDstRootCaX3"><?php echo _("Remove DST Root CA X3")?></label>
 												<i class="fa fa-question-circle fpbx-help-icon" data-for="removeDstRootCaX3"></i>
@@ -150,9 +150,9 @@ $alert .= "</div>";
 											<div class="col-md-9">
 												<input type="checkbox" id="removeDstRootCaX3" name="removeDstRootCaX3" <?php echo ($cert['additional']['removeDstRootCaX3'] ? "checked" : ""); ?>>
 											</div>
-											<div class="col-md-12">
-												<span id="removeDstRootCaX3-help" class="help-block fpbx-help-block"><?php echo _("The Let's Encrypt bundled 'DST Root CA X3' can cause issues with older clients. This option removes the 'DST Root CA X3' from the certificate bundle.")?></span>
-											</div>
+										</div>
+										<div class="col-md-12">
+											<span id="removeDstRootCaX3-help" class="help-block fpbx-help-block"><?php echo _("The Let's Encrypt bundled 'DST Root CA X3' can cause issues with older clients. This option removes the 'DST Root CA X3' from the certificate bundle.")?></span>
 										</div>
 									</div>
 								</div>
@@ -171,8 +171,8 @@ $alert .= "</div>";
 								<div class="section" data-id="show-cert">
 									<!-- Common Name -->
 									<div class="element-container">
-										<div class="">
-											<div class="row form-group form-horizontal">
+										<div class="row">
+											<div class="form-group form-horizontal">
 												<div class="col-md-3">
 													<label class="control-label" for="cn"><?php echo _("Certificate Common Name")?></label>
 												</div>
@@ -186,8 +186,8 @@ $alert .= "</div>";
 
 									<!-- Expiration -->
 									<div class="element-container">
-										<div class="">
-											<div class="row form-group form-horizontal">
+										<div class="row">
+											<div class="form-group form-horizontal">
 												<div class="col-md-3">
 													<label class="control-label" for="an"><?php echo _("Certificate Alternative Names")?></label>
 												</div>
@@ -201,8 +201,8 @@ $alert .= "</div>";
 
 									<!-- Expiration -->
 									<div class="element-container">
-										<div class="">
-											<div class="row form-group form-horizontal">
+										<div class="row">
+											<div class="form-group form-horizontal">
 												<div class="col-md-3">
 													<label class="control-label" for="expires"><?php echo _("Certificate Valid Until")?></label>
 												</div>
@@ -214,8 +214,8 @@ $alert .= "</div>";
 
 									<!-- Policies -->
 									<div class="element-container">
-										<div class="">
-											<div class="row form-group form-horizontal">
+										<div class="row">
+											<div class="form-group form-horizontal">
 												<div class="col-md-3">
 													<label class="control-label" for="cp"><?php echo _("Certificate Policies")?></label>
 													<i class="fa fa-question-circle fpbx-help-icon" data-for="cp"></i>
@@ -223,9 +223,9 @@ $alert .= "</div>";
 												<div class="col-md-9">
 													<textarea class="form-control" rows=3 readonly><?php echo $certinfo['extensions']['certificatePolicies']?></textarea>
 												</div>
-												<div class="col-md-12">
-													<span id="cp-help" class="help-block fpbx-help-block" style=""><?php echo _('A certificate policy (CP) is a document which aims to state what are the different actors of a public key infrastructure (PKI), their roles and their duties')?></span>
-												</div>
+											</div>
+											<div class="col-md-12">
+												<span id="cp-help" class="help-block fpbx-help-block" style=""><?php echo _('A certificate policy (CP) is a document which aims to state what are the different actors of a public key infrastructure (PKI), their roles and their duties')?></span>
 											</div>
 										</div>
 									</div>
