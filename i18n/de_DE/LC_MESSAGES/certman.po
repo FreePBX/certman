@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-09 02:10+0000\n"
+"POT-Creation-Date: 2022-05-23 09:36+0000\n"
 "PO-Revision-Date: 2019-04-09 01:00+0000\n"
 "Last-Translator: florian alberts <alberts@ar-systems.de>\n"
 "Language-Team: German <http://*/projects/freepbx/certman/de/>\n"
@@ -95,7 +95,7 @@ msgstr ""
 "Zertifikat von einer regulären Zertifizierungsstelle oder von Let's encrypt "
 "verwenden"
 
-#: views/le.php:227
+#: views/le.php:228
 msgid ""
 "A certificate policy (CP) is a document which aims to state what are the "
 "different actors of a public key infrastructure (PKI), their roles and their "
@@ -697,7 +697,7 @@ msgstr ""
 msgid "LetsEncrypt Update Success!"
 msgstr ""
 
-#: views/le.php:135
+#: views/le.php:136
 msgid "LetsEncrypt only supports hostname validation via HTTP on port 80."
 msgstr "Let's Encrypt unterstützt nur Port 80 für die Validierung."
 
@@ -1034,7 +1034,7 @@ msgstr "Das zu verwendende Zertifikat des Zertifikatmanagers"
 msgid "The Description of this certificate. Used in the module only"
 msgstr "Beschreibung des Zertifikats. Wird nur in diesem Modul verwendet"
 
-#: views/le.php:154
+#: views/le.php:155
 msgid ""
 "The Let's Encrypt bundled 'DST Root CA X3' can cause issues with older "
 "clients. This option removes the 'DST Root CA X3' from the certificate "
@@ -1113,7 +1113,7 @@ msgstr ""
 "Für das Zertifikat %s wurden keine Daten hinterlegt, deswegen wurde es "
 "entfernt"
 
-#: views/le.php:67
+#: views/le.php:68
 msgid ""
 "This email address is given to Let's Encrypt. It may be used by them if the "
 "certificate is approaching expiration and it has not been renewed."
@@ -1125,7 +1125,7 @@ msgstr ""
 msgid "This field cannot be blank and must be alphanumeric"
 msgstr "Dieses Feld darf nicht leer sein und muss alphanumerisch sein"
 
-#: views/le.php:51
+#: views/le.php:52
 msgid ""
 "This must be the hostname you are requesting a certificate for. LetsEncrypt "
 "will validate that the hostname resolves to this machine, and attempt to "

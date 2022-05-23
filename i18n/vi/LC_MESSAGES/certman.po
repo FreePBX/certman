@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-09 02:10+0000\n"
+"POT-Creation-Date: 2022-05-23 09:36+0000\n"
 "PO-Revision-Date: 2017-08-08 16:34+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese <http://weblate.freepbx.org/projects/freepbx/"
@@ -96,7 +96,7 @@ msgstr ""
 "có một chứng thực thực sự từ nhà cung cấp chứng thực tiêu chuẩn hoặc thông "
 "qua Let's Encrypt"
 
-#: views/le.php:227
+#: views/le.php:228
 msgid ""
 "A certificate policy (CP) is a document which aims to state what are the "
 "different actors of a public key infrastructure (PKI), their roles and their "
@@ -695,7 +695,7 @@ msgstr ""
 msgid "LetsEncrypt Update Success!"
 msgstr ""
 
-#: views/le.php:135
+#: views/le.php:136
 msgid "LetsEncrypt only supports hostname validation via HTTP on port 80."
 msgstr ""
 "LetsEncrypt chỉ hỗ trợ  xác nhận hostname thông qua HTTP trên cổng giao tiếp "
@@ -1026,7 +1026,7 @@ msgstr "Chứng thực sử dụng từ trình quản lý chứng thực"
 msgid "The Description of this certificate. Used in the module only"
 msgstr "Mô tả của chứng thực này. Chỉ được sử dụng trong mô đun này"
 
-#: views/le.php:154
+#: views/le.php:155
 msgid ""
 "The Let's Encrypt bundled 'DST Root CA X3' can cause issues with older "
 "clients. This option removes the 'DST Root CA X3' from the certificate "
@@ -1100,7 +1100,7 @@ msgstr ""
 msgid "There were no files left for certificate \"%s\" so it was removed"
 msgstr "Không còn tệp nào cho chứng thực \"%s\" vì vậy nó bị xóa"
 
-#: views/le.php:67
+#: views/le.php:68
 msgid ""
 "This email address is given to Let's Encrypt. It may be used by them if the "
 "certificate is approaching expiration and it has not been renewed."
@@ -1112,7 +1112,7 @@ msgstr ""
 msgid "This field cannot be blank and must be alphanumeric"
 msgstr "Trường này không thể để trống và phải là chữ và số"
 
-#: views/le.php:51
+#: views/le.php:52
 msgid ""
 "This must be the hostname you are requesting a certificate for. LetsEncrypt "
 "will validate that the hostname resolves to this machine, and attempt to "
