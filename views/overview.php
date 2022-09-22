@@ -16,10 +16,9 @@ if(!empty($message)) {
 	$mhtml = '<div class="fpbx-container element-container alert alert-' . $message['type'] .' alert-dismissable">
 			<div class="display no-border" >
 				<div class="row">
-					<span class="fa fa-times close ml-auto" style="margin-top: -15px;" data-dismiss="alert" aria-hidden="true"></span>
-					<div class="col-md-12">';
+					<div class="col-md-11">';
 	if(!empty($message['title'])) {
-		$mhtml .=			'<label class="font-weight-bold" style="font-size: large;">'.$message['title'].'</label>
+		$mhtml .=			'<label style="font-size: large;" class="mb-0">'.$message['title'].'</label>
 						<i class="fpbx-help-icon" data-for="alert">
 							<span class="alert-' . $message['type'] .' align-top fa fa-question-circle"></span>
 						</i>
@@ -28,9 +27,12 @@ if(!empty($message)) {
 							<strong>' . $message['message'] . '</strong>' . $hinthtml . $loghtml . '
 						</div></span>';
 	} else {
-		$mhtml .=			'<label class="font-weight-bold" style="font-size: large;">'.$message['message'].'</label>' . $hinthtml . $loghtml;
+		$mhtml .=			'<label style="font-size: large;">'.$message['message'].'</label>' . $hinthtml . $loghtml;
 	}
 	$mhtml .=			'</div>
+					<div>
+						<span class="fa fa-times close" style="margin-top: -13px; position: absolute; right: 5px;" data-dismiss="alert" aria-hidden="true"></span>
+					</div>
 				</div>
 			</div>
 		</div>
