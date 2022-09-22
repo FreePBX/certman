@@ -211,8 +211,15 @@ class Certman implements BMO {
 							);
 							if (!empty($san)) {$additional['san'] = $san;}
 							$removeDstRootCaX3 = ($_POST['removeDstRootCaX3'] ? true : false);
-
-							if ($additional == $cert['additional']) {
+							// check cert expiration
+							$cert = $this->getCertificateDetails($_POST['cid']);
+							$validTo = $cert['info']['crt']['validTo_time_t'];
+							$renewafter = $validTo-(86400*30);
+							$update = false;
+							if(time() > $validTo) {
+								$update = true;
+							}
+							if ($additional == $cert['additional'] && !$update) {
 								$this->message = array('type' => 'success', 'message' => _('Nothing to do, no changes made'));
 								break;
 							}
