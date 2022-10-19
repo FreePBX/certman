@@ -686,7 +686,9 @@ class Certman implements BMO {
 						continue;
 					}
 				} else {
-					$messages[] = array('type' => 'warning', 'message' => sprintf(_('Certificate named "%s" is going to expire in less than a month. Please update this certificate in Certificate Manager'),$cert['basename']));
+					if(time() > $renewafter) {
+						$messages[] = array('type' => 'warning', 'message' => sprintf(_('Certificate named "%s" is going to expire in less than a month. Please update this certificate in Certificate Manager'),$cert['basename']));
+					}
 					continue;
 				}
 			} else {
