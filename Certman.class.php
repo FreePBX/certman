@@ -697,6 +697,7 @@ class Certman implements BMO {
 			//trigger hook only if we really updated though
 			if($update) {
 				$this->updateCertificate($cert, $cert['description'], $cert['additional']);
+				exec(fpbx_which("fwconsole")." reload");
 			}
 		}
 		$nt = \notifications::create();
