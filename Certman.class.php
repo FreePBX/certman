@@ -591,6 +591,7 @@ class Certman implements BMO {
 	public function checkUpdateCertificates($force = false) {
 		$certs = $this->getAllManagedCertificates();
 		$messages = array();
+		$nt = \notifications::create();
 		foreach($certs as $cert) {
 			$cert = $this->getAdditionalCertDetails($cert);
 			if(empty($cert['files'])) {
@@ -693,13 +694,16 @@ class Certman implements BMO {
 				}
 			} else {
 				$messages[] = array('type' => 'success', 'message' => sprintf(_('Certificate named "%s" is valid'),$cert['basename']));
+				if($nt->exists("certman", "EXPIRINGCERTS")) {
+					$nt->delete("certman", "EXPIRINGCERTS");
+				}
 			}
 			//trigger hook only if we really updated though
 			if($update) {
 				$this->updateCertificate($cert, $cert['description'], $cert['additional']);
+				exec(fpbx_which("fwconsole")." reload");
 			}
 		}
-		$nt = \notifications::create();
 		$notification = '';
 		foreach($messages as $m) {
 			if('warning' == $m['type'] || 'danger' == $m['type']){
@@ -711,6 +715,9 @@ class Certman implements BMO {
 		}
 		if($update) {
 			$nt->add_security("certman", "UPDATEDCERTS", _("Updated Certificates"), _("Some SSL/TLS Certificates have been automatically updated. You may need to ensure all services have the correctly update certificate by restarting PBX services"), "", true,true);
+			if($nt->exists("certman", "EXPIRINGCERTS")) {
+				$nt->delete("certman", "EXPIRINGCERTS");
+			}
 		}
 		return $messages;
 	}
