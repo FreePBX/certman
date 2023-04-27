@@ -20,7 +20,7 @@ $alert .= "</div>";
 			<div class="col-sm-12">
 				<div class="fpbx-container">
 					<div class="display full-border" id='certpage'>
-						<form class="fpbx-submit" name="frm_certman" action="config.php?display=certman" method="post" enctype="multipart/form-data" data-fpbx-delete="config.php?display=certman&amp;certaction=delete&amp;type=cert&amp;id=<?php echo $cert['cid']?>">
+						<form class="fpbx-submit" name="frm_certman" action="config.php?display=certman" method="post" enctype="multipart/form-data" data-fpbx-delete="config.php?display=certman&amp;certaction=delete&amp;type=cert&amp;id=<?php echo $cert['cid'] ?? "" ?>">
 							<input id="certaction" type="hidden" name="certaction" value="<?php echo !empty($cert['cid']) ? 'edit' : 'add'?>">
 							<input id="certtype" type="hidden" name="type" value="le">
 							<input id="cid" type="hidden" name="cid" value="<?php echo !empty($cert['cid']) ? $cert['cid'] : ''?>">
@@ -61,7 +61,7 @@ $alert .= "</div>";
 												<i class="fa fa-question-circle fpbx-help-icon" data-for="email"></i>
 											</div>
 											<div class="col-md-9">
-												<input type="text" class="form-control" id="email" name="email" placeholder="you@example.com" required value="<?php echo $cert['additional']['email']; ?>">
+												<input type="text" class="form-control" id="email" name="email" placeholder="you@example.com" required value="<?php echo $cert['additional']['email'] ?? ""; ?>">
 											</div>
 										</div>
 										<div class="col-md-12">
@@ -148,7 +148,7 @@ $alert .= "</div>";
 												<i class="fa fa-question-circle fpbx-help-icon" data-for="removeDstRootCaX3"></i>
 											</div>
 											<div class="col-md-9">
-												<input type="checkbox" id="removeDstRootCaX3" name="removeDstRootCaX3" <?php echo ($cert['additional']['removeDstRootCaX3'] ? "checked" : ""); ?>>
+												<input type="checkbox" id="removeDstRootCaX3" name="removeDstRootCaX3" <?php echo (!empty($cert['additional']['removeDstRootCaX3']) && $cert['additional']['removeDstRootCaX3'] ? "checked" : ""); ?>>
 											</div>
 										</div>
 										<div class="col-md-12">

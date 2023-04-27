@@ -9,7 +9,7 @@ if(!empty($message)) {
 		}
 		$hinthtml .= '</ul>';
 	}
-	if(!empty($message['log']) & $message['log'] != '') {
+	if(!empty($message['log']) && $message['log'] != '') {
 		$loghtml = '<pre class="alert-' . $message['type'] .' pre-scrollable" style="overflow-x: auto; white-space: pre-wrap; word-wrap: normal; overflow-wrap: normal;">' . $message['log'] . '</pre>';
 	}
 

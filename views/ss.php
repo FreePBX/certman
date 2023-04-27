@@ -5,7 +5,7 @@ if(!empty($message)) {
 //ca input
 if(count($cas) == 1){
 	$cainput = '<b>' . $cas[0]['on'] . '</b>';
-	$cainput .= '<input type="hidden" name="ca" id="ca" value="' . $cas[0]['uid'] . '" data-requirespassphrase="'. $rpf . '" >';
+	$cainput .= '<input type="hidden" name="ca" id="ca" value="' . $cas[0]['uid'] . '" data-requirespassphrase="'. ($rpf ?? ""). '" >';
 }else{
 	$cainput = '<select name="ca" id="ca" class="form-control">';
 	foreach($cas as $ca) {
@@ -25,7 +25,7 @@ if(count($cas) == 1){
 			<div class="col-sm-12">
 				<div class="fpbx-container">
 					<div class="display full-border" id='certpage'>
-						<form class="fpbx-submit" name="frm_certman" action="config.php?display=certman" method="post" enctype="multipart/form-data" data-fpbx-delete="config.php?display=certman&amp;type=cert&amp;certaction=delete&amp;id=<?php echo $cert['cid']?>">
+						<form class="fpbx-submit" name="frm_certman" action="config.php?display=certman" method="post" enctype="multipart/form-data" data-fpbx-delete="config.php?display=certman&amp;type=cert&amp;certaction=delete&amp;id=<?php echo $cert['cid'] ?? ""?>">
 							<input id="certaction" type="hidden" name="certaction" value="<?php echo !empty($cert['cid']) ? 'edit' : 'add'?>">
 							<input id="certtype" type="hidden" name="type" value="ss">
 							<input id="cid" type="hidden" name="cid" value="<?php echo !empty($cert['cid']) ? $cert['cid'] : ''?>">
