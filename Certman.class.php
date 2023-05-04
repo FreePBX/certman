@@ -289,7 +289,7 @@ class Certman implements BMO {
 							sort($san);
 							$description .= ", " . implode(", ", $san);
 						}
-						$removeDstRootCaX3 = ($_POST['removeDstRootCaX3'] ? true : false);
+						$removeDstRootCaX3 = (!empty($_POST['removeDstRootCaX3']) && $_POST['removeDstRootCaX3'] ? true : false);
 						$additional = array(
 								"C" => $_POST['C'],
 								"ST" => $_POST['ST'],
@@ -458,7 +458,7 @@ class Certman implements BMO {
 	public function myShowPage($view=''){
 		$view = !empty($this->goto) ? $this->goto : $view;
 		$request = $_REQUEST;
-		switch($request['action']) {
+		switch ($request['action'] ?? '') {
 			case 'download':
 				case 'csr':
 					$csrs = $this->getAllManagedCSRs();
@@ -1522,7 +1522,7 @@ class Certman implements BMO {
 	 * @param {string} $type				The type of the certificate: ss:: self signed, up:: upload, le:: let's encrypt
 	 * @param {string} $additional  Additional data in an array format
 	 */
-	public function saveCertificate($caid=null, $base, $description, $type='ss', $additional=array()) {
+	public function saveCertificate($caid=null, $base='', $description='', $type='ss', $additional=array()) {
 		if($this->checkCertificateName($base)) {
 			throw new Exception(sprintf(_("%s already exists!"),$base));
 		}
