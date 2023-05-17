@@ -712,6 +712,8 @@ class Certman implements BMO {
 		}
 		if(!empty($notification)) {
 			$nt->add_security("certman", "EXPIRINGCERTS", _("Some Certificates are expiring or have expired"), $notification, "config.php?display=certman", true, true);
+		}else{
+			$nt->delete("certman", "EXPIRINGCERTS");
 		}
 		if($update) {
 			$nt->add_security("certman", "UPDATEDCERTS", _("Updated Certificates"), _("Some SSL/TLS Certificates have been automatically updated. You may need to ensure all services have the correctly update certificate by restarting PBX services"), "", true,true);
