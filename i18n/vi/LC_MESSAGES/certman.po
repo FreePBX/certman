@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-02 04:31+0000\n"
+"POT-Creation-Date: 2023-06-15 09:48+0000\n"
 "PO-Revision-Date: 2017-08-08 16:34+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese <http://weblate.freepbx.org/projects/freepbx/"
@@ -278,6 +278,10 @@ msgstr ""
 
 #: Console/Certman.class.php:41
 msgid "Certificate Subject Alternative Name(s) (LetsEncrypt Generation)"
+msgstr ""
+
+#: Certman.class.php:713
+msgid "Certificate Update"
 msgstr ""
 
 #: views/le.php:207
@@ -1222,10 +1226,6 @@ msgstr "Cập nhật chứng thực"
 msgid "Update Existing Certificate"
 msgstr "Cập nhật chứng thực hiện có"
 
-#: Certman.class.php:713
-msgid "Updated Certificates"
-msgstr "Các chứng thực đã cập nhật"
-
 #: Certman.class.php:188 Certman.class.php:271
 msgid "Updated certificate"
 msgstr "Chứng thực đã cập nhật"
@@ -1375,6 +1375,9 @@ msgstr ""
 #: Api/Gql/Certman.php:60
 msgid "uploadSSLCertificate"
 msgstr ""
+
+#~ msgid "Updated Certificates"
+#~ msgstr "Các chứng thực đã cập nhật"
 
 #~ msgid "Information"
 #~ msgstr "Thông tin"

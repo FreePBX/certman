@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-02 04:31+0000\n"
+"POT-Creation-Date: 2023-06-15 09:48+0000\n"
 "PO-Revision-Date: 2022-04-19 04:49+0000\n"
 "Last-Translator: Dmitriy Q <krotesk@ya.ru>\n"
 "Language-Team: Russian <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -276,6 +276,10 @@ msgstr ""
 
 #: Console/Certman.class.php:41
 msgid "Certificate Subject Alternative Name(s) (LetsEncrypt Generation)"
+msgstr ""
+
+#: Certman.class.php:713
+msgid "Certificate Update"
 msgstr ""
 
 #: views/le.php:207
@@ -1236,10 +1240,6 @@ msgstr "Обновление сертификата"
 msgid "Update Existing Certificate"
 msgstr "Обновление существующего сертификата"
 
-#: Certman.class.php:713
-msgid "Updated Certificates"
-msgstr "Обновленные сертификаты"
-
 #: Certman.class.php:188 Certman.class.php:271
 msgid "Updated certificate"
 msgstr "Обновленные сертификаты"
@@ -1392,6 +1392,9 @@ msgstr ""
 #: Api/Gql/Certman.php:60
 msgid "uploadSSLCertificate"
 msgstr ""
+
+#~ msgid "Updated Certificates"
+#~ msgstr "Обновленные сертификаты"
 
 #~ msgid "%s is not supported at this time"
 #~ msgstr "%s в настоящее время не поддерживается"
