@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>16.0.28</version>
+	<version>16.0.29</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -14,6 +14,7 @@
 	</description>
 	<more-info>https://wiki.freepbx.org/display/FPG/Certificate+Management+Module</more-info>
 	<changelog>
+		*16.0.29* FREEI-114 certificate update notification change in dashboard 
 		*16.0.28* FREEPBX-24228 
 		*16.0.27* FREEPBX-24181 
 		*16.0.26* FREEI-5808 

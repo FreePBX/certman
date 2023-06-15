@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-05 09:06+0000\n"
+"POT-Creation-Date: 2023-06-15 09:51+0000\n"
 "PO-Revision-Date: 2017-03-23 13:47+0200\n"
 "Last-Translator: Kingvoice <suporte@kingvoice.com.br>\n"
 "Language-Team: Portuguese (Brazil) <http://weblate.freepbx.org/projects/"
@@ -278,6 +278,10 @@ msgstr ""
 
 #: Console/Certman.class.php:41
 msgid "Certificate Subject Alternative Name(s) (LetsEncrypt Generation)"
+msgstr ""
+
+#: Certman.class.php:720
+msgid "Certificate Update"
 msgstr ""
 
 #: views/le.php:207
@@ -1224,10 +1228,6 @@ msgstr "Atualizar Certificado"
 msgid "Update Existing Certificate"
 msgstr "Atualizar Certificado Existente"
 
-#: Certman.class.php:720
-msgid "Updated Certificates"
-msgstr "Certificados Atualizados"
-
 #: Certman.class.php:189 Certman.class.php:272
 msgid "Updated certificate"
 msgstr "Certificado Atualizado"
@@ -1377,6 +1377,9 @@ msgstr ""
 #: Api/Gql/Certman.php:60
 msgid "uploadSSLCertificate"
 msgstr ""
+
+#~ msgid "Updated Certificates"
+#~ msgstr "Certificados Atualizados"
 
 #~ msgid "Information"
 #~ msgstr "Informação"

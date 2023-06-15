@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-05 09:06+0000\n"
+"POT-Creation-Date: 2023-06-15 09:51+0000\n"
 "PO-Revision-Date: 2015-10-30 06:37+0200\n"
 "Last-Translator: Kevin <kevin@qloog.com>\n"
 "Language-Team: Japanese <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -256,6 +256,10 @@ msgstr ""
 
 #: Console/Certman.class.php:41
 msgid "Certificate Subject Alternative Name(s) (LetsEncrypt Generation)"
+msgstr ""
+
+#: Certman.class.php:720
+msgid "Certificate Update"
 msgstr ""
 
 #: views/le.php:207
@@ -1154,10 +1158,6 @@ msgstr ""
 
 #: views/ss.php:21 views/up.php:8
 msgid "Update Existing Certificate"
-msgstr ""
-
-#: Certman.class.php:720
-msgid "Updated Certificates"
 msgstr ""
 
 #: Certman.class.php:189 Certman.class.php:272

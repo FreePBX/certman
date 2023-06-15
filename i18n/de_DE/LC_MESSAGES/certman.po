@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-05 09:06+0000\n"
+"POT-Creation-Date: 2023-06-15 09:51+0000\n"
 "PO-Revision-Date: 2019-04-09 01:00+0000\n"
 "Last-Translator: florian alberts <alberts@ar-systems.de>\n"
 "Language-Team: German <http://*/projects/freepbx/certman/de/>\n"
@@ -276,6 +276,10 @@ msgstr ""
 
 #: Console/Certman.class.php:41
 msgid "Certificate Subject Alternative Name(s) (LetsEncrypt Generation)"
+msgstr ""
+
+#: Certman.class.php:720
+msgid "Certificate Update"
 msgstr ""
 
 #: views/le.php:207
@@ -1238,10 +1242,6 @@ msgstr "Zertifikat aktualisieren"
 msgid "Update Existing Certificate"
 msgstr "Vorhandenes Zertifikat aktualisieren"
 
-#: Certman.class.php:720
-msgid "Updated Certificates"
-msgstr "Zertifikate aktualisiert"
-
 #: Certman.class.php:189 Certman.class.php:272
 msgid "Updated certificate"
 msgstr "Zertifikat aktualisiert"
@@ -1392,6 +1392,9 @@ msgstr ""
 #: Api/Gql/Certman.php:60
 msgid "uploadSSLCertificate"
 msgstr ""
+
+#~ msgid "Updated Certificates"
+#~ msgstr "Zertifikate aktualisiert"
 
 #~ msgid "Information"
 #~ msgstr "Information"
