@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-26 09:57+0000\n"
+"POT-Creation-Date: 2023-07-13 12:05+0000\n"
 "PO-Revision-Date: 2019-04-09 01:00+0000\n"
 "Last-Translator: florian alberts <alberts@ar-systems.de>\n"
 "Language-Team: German <http://*/projects/freepbx/certman/de/>\n"
@@ -84,7 +84,7 @@ msgstr ""
 "Auf diesem System ist bereits eine Zertifizierungsstelle vorhanden. Durch "
 "das Löschen/Erzeugen/Hochladen werden Ihre aktuellen Zertifikate ungültig!"
 
-#: views/overview.php:55
+#: views/overview.php:57
 msgid ""
 "A Self-Signed Certificate has been generated for you on install. You can use "
 "this certificate now to get started however we strongly urge you to get a "
@@ -129,7 +129,7 @@ msgstr "Neues Zertifikat hinzugefügt"
 msgid "Added new certificate signing request"
 msgstr "Neue Zertifikatsignierungsanforderung hinzugefügt"
 
-#: views/overview.php:52
+#: views/overview.php:54
 #, php-format
 msgid ""
 "Additionally if you have opened internet access up to the outside world you "
@@ -228,7 +228,7 @@ msgstr "Hostname des Zertifikats"
 msgid "Certificate List"
 msgstr "Zertifikatsliste"
 
-#: Console/Certman.class.php:27 certman.i18n.php:10 views/overview.php:41
+#: Console/Certman.class.php:27 certman.i18n.php:10 views/overview.php:43
 msgid "Certificate Management"
 msgstr "Zertifikatverwaltung"
 
@@ -244,7 +244,7 @@ msgstr ""
 "Zertifikatverwaltung für Asterisk. Wird für TLS- und DTLS-Verbindungen "
 "verwendet"
 
-#: views/overview.php:50
+#: views/overview.php:52
 msgid ""
 "Certificate Manager manages certificates for secure calling (TLS/SRTP), "
 "secure web sessions (HTTPS/WEBRTC[WSS] and more"
@@ -524,7 +524,7 @@ msgstr ""
 msgid "Format output as json"
 msgstr ""
 
-#: views/overview.php:51
+#: views/overview.php:53
 msgid ""
 "From this interface you can generate a Certificate Signing Request (CSR) "
 "which you can then use to issue a certificate to use for this server"
@@ -558,7 +558,7 @@ msgstr "Erzeuge Standard-CA..."
 msgid "Generating default certificate..."
 msgstr "Erzeuge Standard-Zertifikat..."
 
-#: views/overview.php:52
+#: views/overview.php:54
 msgid "Here"
 msgstr "Hier"
 
@@ -570,7 +570,7 @@ msgstr "Hostname"
 msgid "Host name"
 msgstr ""
 
-#: views/overview.php:61
+#: views/overview.php:63
 msgid ""
 "Hover over the 'Default' column and click to make a certificate the system "
 "default"
@@ -715,7 +715,7 @@ msgstr ""
 msgid "Make this certificate as default"
 msgstr ""
 
-#: views/overview.php:62
+#: views/overview.php:64
 #, php-format
 msgid ""
 "Making a certificate the 'default' changes certificate settings in Advanced "
@@ -816,7 +816,7 @@ msgstr ""
 "Wird aus Sicherheitsgründen nicht angezeigt. Fügen Sie hier einen neuen "
 "Schlüssel ein"
 
-#: views/overview.php:62
+#: views/overview.php:64
 msgid "Note:"
 msgstr "Hinweis:"
 
@@ -824,7 +824,7 @@ msgstr "Hinweis:"
 msgid "Nothing to do, no changes made"
 msgstr ""
 
-#: views/overview.php:54
+#: views/overview.php:56
 msgid ""
 "Optionally upload existing certificate information through the web interface."
 msgstr ""
@@ -1134,7 +1134,7 @@ msgstr ""
 "Das muß der Rechnername des anfragenden Rechners für das Zertifikat sein. Let"
 "´s Encrypt wird die Namensauflösung durch einen Verbindungsaufbau validieren."
 
-#: views/overview.php:53
+#: views/overview.php:55
 #, php-format
 msgid ""
 "To manually import certificate files place them into %s and make sure they "
@@ -1307,7 +1307,7 @@ msgstr ""
 "\t\t\t<li>'Zertifikat' prüft nur das Zertifikat</li>\n"
 "\t\t\t</ul>"
 
-#: views/overview.php:46
+#: views/overview.php:48
 msgid "What is Certificate Manager?"
 msgstr "Was ist ein Zertifikatmanager?"
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-26 09:57+0000\n"
+"POT-Creation-Date: 2023-07-13 12:05+0000\n"
 "PO-Revision-Date: 2017-12-11 22:57+0200\n"
 "Last-Translator: JCattan <jeremie@famillecattan.com>\n"
 "Language-Team: French <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -86,7 +86,7 @@ msgstr ""
 "suppression/génération/téléversement d'un nouveau invalidera tous vos "
 "certificats actuels !"
 
-#: views/overview.php:55
+#: views/overview.php:57
 msgid ""
 "A Self-Signed Certificate has been generated for you on install. You can use "
 "this certificate now to get started however we strongly urge you to get a "
@@ -128,7 +128,7 @@ msgstr "Nouveau certificat ajouté"
 msgid "Added new certificate signing request"
 msgstr ""
 
-#: views/overview.php:52
+#: views/overview.php:54
 #, php-format
 msgid ""
 "Additionally if you have opened internet access up to the outside world you "
@@ -221,7 +221,7 @@ msgstr "Nom d'hôte du certificat"
 msgid "Certificate List"
 msgstr "Liste de certificats"
 
-#: Console/Certman.class.php:27 certman.i18n.php:10 views/overview.php:41
+#: Console/Certman.class.php:27 certman.i18n.php:10 views/overview.php:43
 msgid "Certificate Management"
 msgstr "Gestion des certificats"
 
@@ -235,7 +235,7 @@ msgid ""
 "WebRTC and secure traffic)"
 msgstr ""
 
-#: views/overview.php:50
+#: views/overview.php:52
 msgid ""
 "Certificate Manager manages certificates for secure calling (TLS/SRTP), "
 "secure web sessions (HTTPS/WEBRTC[WSS] and more"
@@ -505,7 +505,7 @@ msgstr ""
 msgid "Format output as json"
 msgstr ""
 
-#: views/overview.php:51
+#: views/overview.php:53
 msgid ""
 "From this interface you can generate a Certificate Signing Request (CSR) "
 "which you can then use to issue a certificate to use for this server"
@@ -536,7 +536,7 @@ msgstr ""
 msgid "Generating default certificate..."
 msgstr ""
 
-#: views/overview.php:52
+#: views/overview.php:54
 msgid "Here"
 msgstr ""
 
@@ -548,7 +548,7 @@ msgstr "Nom de l'hôte"
 msgid "Host name"
 msgstr ""
 
-#: views/overview.php:61
+#: views/overview.php:63
 msgid ""
 "Hover over the 'Default' column and click to make a certificate the system "
 "default"
@@ -683,7 +683,7 @@ msgstr ""
 msgid "Make this certificate as default"
 msgstr ""
 
-#: views/overview.php:62
+#: views/overview.php:64
 #, php-format
 msgid ""
 "Making a certificate the 'default' changes certificate settings in Advanced "
@@ -771,7 +771,7 @@ msgstr ""
 msgid "Not Shown for your security. Paste a new key here"
 msgstr ""
 
-#: views/overview.php:62
+#: views/overview.php:64
 msgid "Note:"
 msgstr ""
 
@@ -779,7 +779,7 @@ msgstr ""
 msgid "Nothing to do, no changes made"
 msgstr ""
 
-#: views/overview.php:54
+#: views/overview.php:56
 msgid ""
 "Optionally upload existing certificate information through the web interface."
 msgstr ""
@@ -1068,7 +1068,7 @@ msgid ""
 "connect to it."
 msgstr ""
 
-#: views/overview.php:53
+#: views/overview.php:55
 #, php-format
 msgid ""
 "To manually import certificate files place them into %s and make sure they "
@@ -1226,7 +1226,7 @@ msgid ""
 "\t\t\t</ul>"
 msgstr ""
 
-#: views/overview.php:46
+#: views/overview.php:48
 msgid "What is Certificate Manager?"
 msgstr ""
 

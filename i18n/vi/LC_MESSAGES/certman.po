@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-26 09:57+0000\n"
+"POT-Creation-Date: 2023-07-13 12:05+0000\n"
 "PO-Revision-Date: 2017-08-08 16:34+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese <http://weblate.freepbx.org/projects/freepbx/"
@@ -85,7 +85,7 @@ msgstr ""
 "Một nhà cung cấp chứng thực đã có mặt trong hệ thống này. Đang xóa/ Đang "
 "khởi tạo/ Đang tải lên sẽ làm mất tất cả các chứng thực hiện có của bạn!"
 
-#: views/overview.php:55
+#: views/overview.php:57
 msgid ""
 "A Self-Signed Certificate has been generated for you on install. You can use "
 "this certificate now to get started however we strongly urge you to get a "
@@ -130,7 +130,7 @@ msgstr "Đã thêm chứng thực mới"
 msgid "Added new certificate signing request"
 msgstr "Đã thêm yêu cầu ký chứng thực mới"
 
-#: views/overview.php:52
+#: views/overview.php:54
 #, php-format
 msgid ""
 "Additionally if you have opened internet access up to the outside world you "
@@ -229,7 +229,7 @@ msgstr "Tên Host của chứng thực"
 msgid "Certificate List"
 msgstr "Danh sách chứng thực"
 
-#: Console/Certman.class.php:27 certman.i18n.php:10 views/overview.php:41
+#: Console/Certman.class.php:27 certman.i18n.php:10 views/overview.php:43
 msgid "Certificate Management"
 msgstr "Quản lý chứng thực"
 
@@ -245,7 +245,7 @@ msgstr ""
 "Trình quản lý chứng thực cho Asterisk. Được sử dụng cho kết nối TLS, DTLS  "
 "( think WebRTC and lưu lượng truy cập an toàn)"
 
-#: views/overview.php:50
+#: views/overview.php:52
 msgid ""
 "Certificate Manager manages certificates for secure calling (TLS/SRTP), "
 "secure web sessions (HTTPS/WEBRTC[WSS] and more"
@@ -525,7 +525,7 @@ msgstr ""
 msgid "Format output as json"
 msgstr ""
 
-#: views/overview.php:51
+#: views/overview.php:53
 msgid ""
 "From this interface you can generate a Certificate Signing Request (CSR) "
 "which you can then use to issue a certificate to use for this server"
@@ -558,7 +558,7 @@ msgstr "Đang hởi tạo nhà cung cấp chứng chỉ mặc định..."
 msgid "Generating default certificate..."
 msgstr "Đang khởi tạo chứng thực mặc định..."
 
-#: views/overview.php:52
+#: views/overview.php:54
 msgid "Here"
 msgstr "Ở đây"
 
@@ -570,7 +570,7 @@ msgstr "Tên Host"
 msgid "Host name"
 msgstr ""
 
-#: views/overview.php:61
+#: views/overview.php:63
 msgid ""
 "Hover over the 'Default' column and click to make a certificate the system "
 "default"
@@ -715,7 +715,7 @@ msgstr ""
 msgid "Make this certificate as default"
 msgstr ""
 
-#: views/overview.php:62
+#: views/overview.php:64
 #, php-format
 msgid ""
 "Making a certificate the 'default' changes certificate settings in Advanced "
@@ -808,7 +808,7 @@ msgstr "Không hiển thị đối với bảo mật của bạn. Dán một ch�
 msgid "Not Shown for your security. Paste a new key here"
 msgstr "Không hiển thị đối với bảo mật của bạn. Dán một khóa ở đây"
 
-#: views/overview.php:62
+#: views/overview.php:64
 msgid "Note:"
 msgstr "Ghi chú:"
 
@@ -816,7 +816,7 @@ msgstr "Ghi chú:"
 msgid "Nothing to do, no changes made"
 msgstr ""
 
-#: views/overview.php:54
+#: views/overview.php:56
 msgid ""
 "Optionally upload existing certificate information through the web interface."
 msgstr ""
@@ -1121,7 +1121,7 @@ msgstr ""
 "Đây phải là tên host bạn đang yêu cầu một chứng thực cho nó.  LetsEncrypt sẽ "
 "xác nhận rằng tên host liên quan tới máy này, và cố gắng để kết nối với nó."
 
-#: views/overview.php:53
+#: views/overview.php:55
 #, php-format
 msgid ""
 "To manually import certificate files place them into %s and make sure they "
@@ -1292,7 +1292,7 @@ msgstr ""
 "li>\n"
 "</ul>"
 
-#: views/overview.php:46
+#: views/overview.php:48
 msgid "What is Certificate Manager?"
 msgstr "Trình quản lý chứng thực là gì?"
 
