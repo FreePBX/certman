@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-16 15:04+0530\n"
-"PO-Revision-Date: 2022-04-19 04:49+0000\n"
+"PO-Revision-Date: 2023-08-01 13:00+0000\n"
 "Last-Translator: Dmitriy Q <krotesk@ya.ru>\n"
 "Language-Team: Russian <http://weblate.freepbx.org/projects/freepbx/certman/"
 "ru/>\n"
@@ -536,7 +536,7 @@ msgstr "Ключ защищен паролем или некорректен"
 
 #: Console/Certman.class.php:117
 msgid "Let's Encrypt"
-msgstr "Let's Encrypt"
+msgstr "Let'sEncrypt"
 
 #: views/le.php:17
 #, php-format
@@ -559,7 +559,7 @@ msgstr ""
 
 #: views/overview.php:23
 msgid "Let's Encrypt:"
-msgstr "Let's Encrypt:"
+msgstr "Let'sEncrypt:"
 
 #: views/le.php:118
 msgid "LetsEncrypt only supports hostname validation via HTTP on port 80."
