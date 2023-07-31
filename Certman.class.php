@@ -44,6 +44,7 @@ class Certman implements BMO {
 		$this->FreePBX->PJSip = $this->FreePBX->Core->getDriver('pjsip');
 		$this->PKCS = $this->FreePBX->PKCS;
 		$this->PKCS->timeout = 240; //because of piiiiiis
+		$this->days_expiration_alert = $this->FreePBX->Config->get("CERT_DAYS_EXPIRATION_ALERT");
 	}
 
 	public function setDatabase($pdo){
@@ -214,7 +215,7 @@ class Certman implements BMO {
 							// check cert expiration
 							$cert = $this->getCertificateDetails($_POST['cid']);
 							$validTo = $cert['info']['crt']['validTo_time_t'];
-							$renewafter = $validTo-(86400*30);
+							$renewafter = $validTo-(86400*$this->days_expiration_alert);
 							$update = false;
 							if(time() > $validTo) {
 								$update = true;
@@ -601,7 +602,7 @@ class Certman implements BMO {
 				continue;
 			}
 			$validTo = $cert['info']['crt']['validTo_time_t'];
-			$renewafter = $validTo-(86400*30);
+			$renewafter = $validTo-(86400*$this->days_expiration_alert);
 			$update = false;
 
 			// Has this certificate expired?
@@ -712,9 +713,11 @@ class Certman implements BMO {
 		}
 		if(!empty($notification)) {
 			$nt->add_security("certman", "EXPIRINGCERTS", _("Some Certificates are expiring or have expired"), $notification, "config.php?display=certman", true, true);
+		}else{
+			$nt->delete("certman", "EXPIRINGCERTS");
 		}
 		if($update) {
-			$nt->add_security("certman", "UPDATEDCERTS", _("Updated Certificates"), _("Some SSL/TLS Certificates have been automatically updated. You may need to ensure all services have the correctly update certificate by restarting PBX services"), "", true,true);
+			$nt->add_update("certman", "UPDATEDCERTS", _("Certificate Update"), _("Some SSL/TLS Certificates have been automatically updated. You may need to ensure all services have the correctly update certificate by restarting PBX services"), "", true,true);
 			if($nt->exists("certman", "EXPIRINGCERTS")) {
 				$nt->delete("certman", "EXPIRINGCERTS");
 			}
@@ -819,7 +822,7 @@ class Certman implements BMO {
 			// We DO have a certificate.
 			$certdata = openssl_x509_parse(file_get_contents($certfile));
 			// If it expires in less than a month, we want to renew it.
-			$renewafter = $certdata['validTo_time_t']-(86400*30);
+			$renewafter = $certdata['validTo_time_t']-(86400*$this->days_expiration_alert);
 			if (time() > $renewafter || $force) {
 				// Less than a month left, we need to renew.
 				$needsgen = true;
