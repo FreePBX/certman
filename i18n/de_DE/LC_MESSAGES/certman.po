@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-13 12:05+0000\n"
+"POT-Creation-Date: 2023-07-31 05:58+0000\n"
 "PO-Revision-Date: 2019-04-09 01:00+0000\n"
 "Last-Translator: florian alberts <alberts@ar-systems.de>\n"
 "Language-Team: German <http://*/projects/freepbx/certman/de/>\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid " and"
 msgstr ""
 
-#: Certman.class.php:303 Certman.class.php:1509 Certman.class.php:1527
+#: Certman.class.php:304 Certman.class.php:1512 Certman.class.php:1530
 #, php-format
 msgid "%s already exists!"
 msgstr "%s existiert bereits!"
@@ -54,7 +54,7 @@ msgstr ""
 msgid "'%s' is not a valid ID"
 msgstr ""
 
-#: Certman.class.php:2042
+#: Certman.class.php:2045
 #, php-format
 msgid "(%s days)"
 msgstr "(%s Tage)"
@@ -121,11 +121,11 @@ msgstr "Aktion"
 msgid "Add New Certificate"
 msgstr "Neues Zertifikat hinzufügen"
 
-#: Certman.class.php:373 Certman.class.php:399 Certman.class.php:2115
+#: Certman.class.php:374 Certman.class.php:400 Certman.class.php:2118
 msgid "Added new certificate"
 msgstr "Neues Zertifikat hinzugefügt"
 
-#: Api/Gql/Certman.php:270 Certman.class.php:422
+#: Api/Gql/Certman.php:270 Certman.class.php:423
 msgid "Added new certificate signing request"
 msgstr "Neue Zertifikatsignierungsanforderung hinzugefügt"
 
@@ -190,7 +190,7 @@ msgstr ""
 msgid "Certificate"
 msgstr "Zertifikat"
 
-#: Certman.class.php:1935 Certman.class.php:1950 Certman.class.php:1959
+#: Certman.class.php:1938 Certman.class.php:1953 Certman.class.php:1962
 #, php-format
 msgid "Certificate %s is not readable! Can not continue!"
 msgstr "Zertifikat %s ist nicht lesbar! Es kann nicht fortgefahren werden!"
@@ -216,7 +216,7 @@ msgstr "Referenzierte Zertifizierungsstelle"
 msgid "Certificate Common Name"
 msgstr ""
 
-#: Certman.class.php:2037
+#: Certman.class.php:2040
 msgid "Certificate Expired!"
 msgstr "Zertifikat abgelaufen!"
 
@@ -278,6 +278,10 @@ msgstr ""
 msgid "Certificate Subject Alternative Name(s) (LetsEncrypt Generation)"
 msgstr ""
 
+#: Certman.class.php:720
+msgid "Certificate Update"
+msgstr ""
+
 #: views/le.php:207
 msgid "Certificate Valid Until"
 msgstr ""
@@ -290,20 +294,20 @@ msgstr ""
 msgid "Certificate hostname (LetsEncrypt Generation)"
 msgstr ""
 
-#: Certman.class.php:1693
+#: Certman.class.php:1696
 msgid "Certificate is empty"
 msgstr "Zertifikat ist leer"
 
-#: Certman.class.php:264 Certman.class.php:274
+#: Certman.class.php:265 Certman.class.php:275
 msgid "Certificate is invalid"
 msgstr "Zertifikat ist ungültig"
 
-#: Api/Gql/Certman.php:262 Certman.class.php:343 Certman.class.php:405
-#: Certman.class.php:2086
+#: Api/Gql/Certman.php:262 Certman.class.php:344 Certman.class.php:406
+#: Certman.class.php:2089
 msgid "Certificate name is already in use"
 msgstr "Zertifikatsname wird bereits verwendet"
 
-#: Certman.class.php:650
+#: Certman.class.php:651
 #, php-format
 msgid ""
 "Certificate named \"%s\" has expired. Please update this certificate in "
@@ -312,7 +316,7 @@ msgstr ""
 "Das Zertifikat \"%s\" ist abgelaufen. Bitte aktualisieren Sie es in der "
 "Zertifikatverwaltung"
 
-#: Certman.class.php:691
+#: Certman.class.php:692
 #, php-format
 msgid ""
 "Certificate named \"%s\" is going to expire in less than a month. Please "
@@ -321,7 +325,7 @@ msgstr ""
 "Das Zertifikat \"%s\" wird in weniger als einem Monat ablaufen. Bitte "
 "aktualisieren Sie es in der Zertifikatverwaltung"
 
-#: Certman.class.php:696
+#: Certman.class.php:697
 #, php-format
 msgid "Certificate named \"%s\" is valid"
 msgstr "Zertifikat mit dem Namen \"%s\" ist gültig"
@@ -341,7 +345,7 @@ msgstr ""
 msgid "Certificates already exist, no need to generate another one"
 msgstr "Zertifikate existieren bereits, Sie müssen kein weiteres mehr erzeugen"
 
-#: Certman.class.php:920
+#: Certman.class.php:923
 msgid "Certificates are missing. Unable to continue"
 msgstr ""
 
@@ -405,11 +409,11 @@ msgstr "DTLS-Verifizierung"
 msgid "Default"
 msgstr "Standard"
 
-#: Certman.class.php:80 Console/Certman.class.php:175
+#: Certman.class.php:81 Console/Certman.class.php:175
 msgid "Default Self-Signed certificate"
 msgstr "Standard selbst signiertes Zertifikat"
 
-#: Certman.class.php:554
+#: Certman.class.php:555
 msgid "Delete"
 msgstr "Löschen"
 
@@ -417,7 +421,7 @@ msgstr "Löschen"
 msgid "Delete CSR"
 msgstr "CSR löschen"
 
-#: Certman.class.php:570
+#: Certman.class.php:571
 msgid "Delete Certificate"
 msgstr "Zertifikat löschen"
 
@@ -437,7 +441,7 @@ msgstr ""
 msgid "Delete the CSR"
 msgstr ""
 
-#: Certman.class.php:451
+#: Certman.class.php:452
 msgid "Deleted Certificate"
 msgstr "Gelöschtes Zertifikat"
 
@@ -463,14 +467,14 @@ msgstr "Beschreibung"
 msgid "Display certificate details by id or hostname"
 msgstr ""
 
-#: Certman.class.php:862
+#: Certman.class.php:865
 #, php-format
 msgid ""
 "Does DNS for %s resolve correctly?\n"
 "Local DNS result: %s, External DNS result: %s"
 msgstr ""
 
-#: Certman.class.php:71 Certman.class.php:82 Console/Certman.class.php:166
+#: Certman.class.php:72 Certman.class.php:83 Console/Certman.class.php:166
 #: Console/Certman.class.php:177
 msgid "Done!"
 msgstr "Erledigt!"
@@ -503,7 +507,7 @@ msgstr "DTLS aktivieren"
 msgid "Enable or disable DTLS-SRTP support"
 msgstr "DTLS-SRTP-Unterstützung aktivieren oder deaktivieren"
 
-#: Certman.class.php:84 Console/Certman.class.php:179
+#: Certman.class.php:85 Console/Certman.class.php:179
 #, php-format
 msgid "Failed! [%s]"
 msgstr "Fehlgeschlagen! [%s]"
@@ -533,11 +537,11 @@ msgstr ""
 "(CSR) erstellen, die Sie dann für die Erstellung eines Zertifikats für "
 "diesen Server verwenden können"
 
-#: Api/Gql/Certman.php:51 Certman.class.php:575 views/certgrid.php:14
+#: Api/Gql/Certman.php:51 Certman.class.php:576 views/certgrid.php:14
 msgid "Generate CSR"
 msgstr "CSR generieren"
 
-#: Api/Gql/Certman.php:112 Certman.class.php:575 Console/Certman.class.php:35
+#: Api/Gql/Certman.php:112 Certman.class.php:576 Console/Certman.class.php:35
 #: assets/js/certman.js:56
 msgid "Generate Certificate"
 msgstr "Zertifikat generieren"
@@ -550,11 +554,11 @@ msgstr "„Let's encrypt\"-Zertifikat erzeugen"
 msgid "Generate Self-Signed Certificate"
 msgstr "Selbst-signiertes Zertifikat erzeugen"
 
-#: Certman.class.php:67 Console/Certman.class.php:162
+#: Certman.class.php:68 Console/Certman.class.php:162
 msgid "Generating default CA..."
 msgstr "Erzeuge Standard-CA..."
 
-#: Certman.class.php:77 Console/Certman.class.php:172
+#: Certman.class.php:78 Console/Certman.class.php:172
 msgid "Generating default certificate..."
 msgstr "Erzeuge Standard-Zertifikat..."
 
@@ -611,7 +615,7 @@ msgstr "Jedes unverwaltete Zertifikat in %s importieren"
 msgid "Important"
 msgstr ""
 
-#: Certman.class.php:1716 Certman.class.php:1720
+#: Certman.class.php:1719 Certman.class.php:1723
 msgid "Imported from file system"
 msgstr "Aus Dateisystem importiert"
 
@@ -643,7 +647,7 @@ msgstr ""
 "Session. Wenn nicht gesetzt oder der Wert 0 eingetragen ist, werden die "
 "Session Keys nicht erneuert"
 
-#: Certman.class.php:447
+#: Certman.class.php:448
 msgid "Invalid Certificate"
 msgstr "Ungültiges Zertifikat"
 
@@ -651,20 +655,20 @@ msgstr "Ungültiges Zertifikat"
 msgid "Issued Certificate Details"
 msgstr ""
 
-#: Certman.class.php:1136
+#: Certman.class.php:1139
 msgid "Key does not match certificate"
 msgstr "Schlüssel entspricht nicht dem Zertifikat"
 
-#: Certman.class.php:1151
+#: Certman.class.php:1154
 msgid "Key does not match certificate after password removal"
 msgstr ""
 "Schlüssel entspricht nach dem Entfernen des Kennworts nicht dem Zertifikat"
 
-#: Certman.class.php:1662
+#: Certman.class.php:1665
 msgid "Key is empty"
 msgstr "Schlüssel ist leer"
 
-#: Certman.class.php:1672
+#: Certman.class.php:1675
 msgid "Key is password protected or malformed"
 msgstr "Schlüssel ist passwortgeschützt oder fehlerhaft"
 
@@ -689,11 +693,11 @@ msgid ""
 "inbound http access on port 80 to the Let's Encrypt token directories"
 msgstr ""
 
-#: Certman.class.php:338
+#: Certman.class.php:339
 msgid "LetsEncrypt Generation Success!"
 msgstr ""
 
-#: Certman.class.php:261
+#: Certman.class.php:262
 msgid "LetsEncrypt Update Success!"
 msgstr ""
 
@@ -765,11 +769,11 @@ msgstr "Neue Zertifikatsignierungsanfrage"
 msgid "New Let's Encrypt Certificate"
 msgstr "Neues „Let's encrypt“-Zertifikat"
 
-#: Certman.class.php:1102
+#: Certman.class.php:1105
 msgid "No Certificate provided"
 msgstr "Kein Zertifikat bereitgestellt"
 
-#: Certman.class.php:64 Console/Certman.class.php:159
+#: Certman.class.php:65 Console/Certman.class.php:159
 msgid "No Certificates exist"
 msgstr "Keine Zertifikate vorhanden"
 
@@ -782,21 +786,21 @@ msgstr ""
 "Keine Zertifikate zu importieren. Versuchen Sie, ein Zertifikat (<name>.crt) "
 "und den zugehörigen Schlüssel (<name>.key) unter %s abzulegen"
 
-#: Certman.class.php:170
+#: Certman.class.php:171
 msgid "No Private key to reference."
 msgstr "kein Verweis auf privaten Referenzschlüssel."
 
-#: Certman.class.php:161 Certman.class.php:352 Certman.class.php:360
-#: Certman.class.php:1098 Certman.class.php:2093 Certman.class.php:2100
+#: Certman.class.php:162 Certman.class.php:353 Certman.class.php:361
+#: Certman.class.php:1101 Certman.class.php:2096 Certman.class.php:2103
 msgid "No Private key to reference. Try generating a CSR first."
 msgstr ""
 "Kein Verweis auf privaten Referenzschlüssel. Generieren Sie zuerst einen CSR."
 
-#: Certman.class.php:146
+#: Certman.class.php:147
 msgid "No certificates to import"
 msgstr "Keine Zertifikate zum Importieren"
 
-#: Certman.class.php:884
+#: Certman.class.php:887
 msgid "No valid response from http://mirror1.freepbx.org"
 msgstr ""
 
@@ -820,7 +824,7 @@ msgstr ""
 msgid "Note:"
 msgstr "Hinweis:"
 
-#: Certman.class.php:223
+#: Certman.class.php:224
 msgid "Nothing to do, no changes made"
 msgstr ""
 
@@ -892,7 +896,7 @@ msgstr "Privater Schlüssel"
 msgid "Private Key File to use for this CA"
 msgstr "Privater Schlüssel (Datei), der für die Unterschrift verwendet wird"
 
-#: Certman.class.php:837
+#: Certman.class.php:840
 #, php-format
 msgid "Processing: %s, Local IP: %s, Public IP: %s\n"
 msgstr ""
@@ -901,7 +905,7 @@ msgstr ""
 msgid "Remove DST Root CA X3"
 msgstr ""
 
-#: Certman.class.php:559
+#: Certman.class.php:560
 msgid "Reset"
 msgstr "Zurücksetzen"
 
@@ -915,15 +919,15 @@ msgstr ""
 msgid "Self Signed"
 msgstr "Selbst Signiert"
 
-#: Certman.class.php:861
+#: Certman.class.php:864
 msgid "Self test error: "
 msgstr ""
 
-#: Certman.class.php:868
+#: Certman.class.php:871
 msgid "Self test error: no token data"
 msgstr ""
 
-#: Certman.class.php:853
+#: Certman.class.php:856
 msgid "Self test: trying "
 msgstr ""
 
@@ -931,11 +935,11 @@ msgstr ""
 msgid "Set default certificate by id or hostname"
 msgstr ""
 
-#: Certman.class.php:714
+#: Certman.class.php:715
 msgid "Some Certificates are expiring or have expired"
 msgstr "Einige Zertifikate laufen ab oder sind abgelaufen"
 
-#: Certman.class.php:717
+#: Certman.class.php:720
 msgid ""
 "Some SSL/TLS Certificates have been automatically updated. You may need to "
 "ensure all services have the correctly update certificate by restarting PBX "
@@ -973,15 +977,15 @@ msgstr "Land/Region/Bundesland"
 msgid "Status for the request"
 msgstr ""
 
-#: Certman.class.php:564
+#: Certman.class.php:565
 msgid "Submit"
 msgstr "Absenden"
 
-#: Certman.class.php:431
+#: Certman.class.php:432
 msgid "Successfully deleted the Certificate Authority"
 msgstr "Die Zertifizierungsstelle wurde erfolgreich gelöscht"
 
-#: Api/Gql/Certman.php:76 Certman.class.php:439
+#: Api/Gql/Certman.php:76 Certman.class.php:440
 msgid "Successfully deleted the Certificate Signing Request"
 msgstr "Die Zertifikatsignierungsanforderung wurde erfolgreich gelöscht"
 
@@ -994,7 +998,7 @@ msgstr ""
 msgid "Successfully imported %s"
 msgstr "Erfolgreich %s importiert"
 
-#: Certman.class.php:143
+#: Certman.class.php:144
 msgid "Successfully imported certificates"
 msgstr "Zertifikate erfolgreich importiert"
 
@@ -1012,7 +1016,7 @@ msgstr "Erfolgreich %s als Standardzertifikat gesetzt"
 msgid "Successfully updated certificate as default"
 msgstr ""
 
-#: Certman.class.php:626 Certman.class.php:667
+#: Certman.class.php:627 Certman.class.php:668
 #, php-format
 msgid "Successfully updated certificate named \"%s\""
 msgstr "Erfolgreich das Zertifikat mit dem Namen \"%s\" erneuert"
@@ -1089,24 +1093,24 @@ msgstr ""
 msgid "There was an error importing %s. The error was: %s"
 msgstr "Beim Importieren von %s ist ein Fehler aufgetreten. Der Fehler war: %s"
 
-#: Certman.class.php:179 Certman.class.php:367 Certman.class.php:2110
+#: Certman.class.php:180 Certman.class.php:368 Certman.class.php:2113
 #, php-format
 msgid "There was an error importing the certificate: %s"
 msgstr "Beim Importieren des Zertifikats ist ein Fehler aufgetreten: %s"
 
-#: Certman.class.php:646 Certman.class.php:686
+#: Certman.class.php:647 Certman.class.php:687
 #, php-format
 msgid "There was an error updating certificate \"%s\": %s"
 msgstr ""
 "Beim Aktualisieren des Zertifikats \"%s\" ist ein Fehler aufgetreten: %s"
 
-#: Certman.class.php:1034
+#: Certman.class.php:1037
 msgid ""
 "There was an error updating the certificate: Firewall v 15.0.6.29 and above "
 "required please install"
 msgstr ""
 
-#: Certman.class.php:600
+#: Certman.class.php:601
 #, php-format
 msgid "There were no files left for certificate \"%s\" so it was removed"
 msgstr ""
@@ -1157,13 +1161,13 @@ msgstr ""
 msgid "Type"
 msgstr "Typ"
 
-#: Api/Gql/Certman.php:268 Certman.class.php:419
+#: Api/Gql/Certman.php:268 Certman.class.php:420
 #, php-format
 msgid "Unable to create CSR: %s"
 msgstr ""
 "Es war unmöglich einen Zertifikatsunterschriftenantrag (CSR) zu erstellen: %s"
 
-#: Certman.class.php:846
+#: Certman.class.php:849
 msgid "Unable to create directory "
 msgstr ""
 
@@ -1171,53 +1175,53 @@ msgstr ""
 msgid "Unable to delete the SSL certificate"
 msgstr ""
 
-#: Certman.class.php:388
+#: Certman.class.php:389
 msgid "Unable to find Certificate Authority"
 msgstr "Keine gültigen Zertifikatsaussteller gefunden"
 
-#: Certman.class.php:381
+#: Certman.class.php:382
 msgid "Unable to generate Certificate Authority"
 msgstr "Es war unmöglich, eine Zertifizierungsstelle zu erzeugen"
 
-#: Certman.class.php:396
+#: Certman.class.php:397
 #, php-format
 msgid "Unable to generate certificate: %s"
 msgstr "Erstellen des Zertifikats fehlgeschlagen: %s"
 
-#: Certman.class.php:1132
+#: Certman.class.php:1135
 msgid "Unable to read key. Is it password protected?"
 msgstr "Schlüssel nicht lesbar. Ist der Schlüssel passwortgeschützt?"
 
-#: Certman.class.php:1626
+#: Certman.class.php:1629
 #, php-format
 msgid "Unable to remove %s"
 msgstr "%s konnte nicht entfernt werden"
 
-#: Certman.class.php:1752
+#: Certman.class.php:1755
 msgid "Unable to remove ca.cfg"
 msgstr "Kann ca.cfg nicht löschen"
 
-#: Certman.class.php:1747
+#: Certman.class.php:1750
 msgid "Unable to remove ca.crt"
 msgstr "Kann ca.crt nicht entfernen"
 
-#: Certman.class.php:1742
+#: Certman.class.php:1745
 msgid "Unable to remove ca.key"
 msgstr "Kann ca.key nicht entfernen"
 
-#: Certman.class.php:433
+#: Certman.class.php:434
 msgid "Unable to remove the Certificate Authority"
 msgstr "Kann Zertifizierungsstelle nicht entfernen"
 
-#: Api/Gql/Certman.php:78 Certman.class.php:441
+#: Api/Gql/Certman.php:78 Certman.class.php:442
 msgid "Unable to remove the Certificate Signing Request"
 msgstr "Kann die Zertifikatunterschriftsanfrage (CSR) nicht löschen"
 
-#: Certman.class.php:1757
+#: Certman.class.php:1760
 msgid "Unable to remove tmp.cfg"
 msgstr "Kann tmp.cfg nicht entfernen"
 
-#: Certman.class.php:1115 Certman.class.php:1119 Certman.class.php:1123
+#: Certman.class.php:1118 Certman.class.php:1122 Certman.class.php:1126
 #, php-format
 msgid "Unable to write to %s"
 msgstr "Konnte nicht nach %s schreiben"
@@ -1226,11 +1230,11 @@ msgstr "Konnte nicht nach %s schreiben"
 msgid "Unable update certificate as default"
 msgstr ""
 
-#: Certman.class.php:2027
+#: Certman.class.php:2030
 msgid "Unknown Expiration"
 msgstr "Ablaufdatum unbekannt"
 
-#: Certman.class.php:569
+#: Certman.class.php:570
 msgid "Update Certificate"
 msgstr "Zertifikat aktualisieren"
 
@@ -1238,11 +1242,7 @@ msgstr "Zertifikat aktualisieren"
 msgid "Update Existing Certificate"
 msgstr "Vorhandenes Zertifikat aktualisieren"
 
-#: Certman.class.php:717
-msgid "Updated Certificates"
-msgstr "Zertifikate aktualisiert"
-
-#: Certman.class.php:188 Certman.class.php:271
+#: Certman.class.php:189 Certman.class.php:272
 msgid "Updated certificate"
 msgstr "Zertifikat aktualisiert"
 
@@ -1365,7 +1365,7 @@ msgstr ""
 msgid "generateCSR"
 msgstr ""
 
-#: Certman.class.php:889
+#: Certman.class.php:892
 msgid "lechecker: "
 msgstr ""
 
@@ -1392,6 +1392,9 @@ msgstr ""
 #: Api/Gql/Certman.php:60
 msgid "uploadSSLCertificate"
 msgstr ""
+
+#~ msgid "Updated Certificates"
+#~ msgstr "Zertifikate aktualisiert"
 
 #~ msgid "Information"
 #~ msgstr "Information"
