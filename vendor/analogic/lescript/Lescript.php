@@ -5,6 +5,7 @@ namespace Analogic\ACME;
 use \RuntimeException;
 use \Psr\Log\LoggerInterface;
 
+#[\AllowDynamicProperties]
 class Lescript
 {
     public $ca = 'https://acme-v02.api.letsencrypt.org';
@@ -125,7 +126,7 @@ class Lescript
             $tokenPath = $directory . '/' . $challenge['token'];
 
             if (!file_exists($directory) && !@mkdir($directory, 0755, true)) {
-                throw new RuntimeException("Couldn't create directory to expose challenge: ${tokenPath}");
+                throw new RuntimeException("Couldn't create directory to expose challenge: {${tokenPath}}");
             }
 
             $header = array(
@@ -143,7 +144,7 @@ class Lescript
             // 3. verification process itself
             // -------------------------------
 
-            $uri = "http://${domain}/.well-known/acme-challenge/${challenge['token']}";
+            $uri = "http://{${domain}}/.well-known/acme-challenge/{${challenge['token']}}";
 
             $this->log("Token for $domain saved at $tokenPath and should be available at $uri");
 
@@ -183,7 +184,7 @@ class Lescript
                 throw new RuntimeException("Verification timed out");
             }
 
-            $this->log("Verification ended with status: ${result['status']}");
+            $this->log("Verification ended with status: {${result['status']}}");
 
             @unlink($tokenPath);
         } 

@@ -13,6 +13,8 @@ use PDO;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use Exception;
+
+#[\AllowDynamicProperties]
 class Certman implements BMO {
 	/* Asterisk Defaults */
 	private $defaults = array(
