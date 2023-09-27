@@ -492,7 +492,7 @@ class Certman implements BMO {
 					break;
 					case 'up':
 						$csrs = $this->getAllManagedCSRs();
-						echo load_view(__DIR__.'/views/up.php',array('message' => $this->message, 'csrs' => $csrs));
+						echo load_view(__DIR__.'/views/up.php',array('cert' => [],'message' => $this->message, 'csrs' => $csrs));
 					break;
 					case 'ss':
 						$hostname = $this->PKCS->getHostname();

@@ -12,10 +12,10 @@ if(!empty($message)) {
 			<div class="col-sm-12">
 				<div class="fpbx-container">
 					<div class="display full-border" id='certpage'>
-						<form class="fpbx-submit" name="frm_certman" action="config.php?display=certman" method="post" enctype="multipart/form-data"  data-fpbx-delete="config.php?display=certman&amp;type=cert&amp;certaction=delete&amp;id=<?php echo $cert['cid']?>">
-							<input id="certaction" type="hidden" name="certaction" value="<?php echo !empty($cert['cid']) ? 'edit' : 'add'?>">
+						<form class="fpbx-submit" name="frm_certman" action="config.php?display=certman" method="post" enctype="multipart/form-data"  data-fpbx-delete="config.php?display=certman&amp;type=cert&amp;certaction=delete&amp;id=<?php echo $cert['cid'] ?? '';?>">
+							<input id="certaction" type="hidden" name="certaction" value="<?php echo (isset($cert['cid']) && !empty($cert['cid'])) ? 'edit' : 'add'?>">
 							<input id="certtype" type="hidden" name="type" value="up">
-							<input id="cid" type="hidden" name="cid" value="<?php echo !empty($cert['cid']) ? $cert['cid'] : ''?>">
+							<input id="cid" type="hidden" name="cid" value="<?php echo (isset($cert['cid']) && !empty($cert['cid'])) ? $cert['cid'] : ''?>">
 							<!--Name-->
 							<div class="element-container">
 								<div class="row">
@@ -27,10 +27,10 @@ if(!empty($message)) {
 													<i class="fa fa-question-circle fpbx-help-icon" data-for="name"></i>
 												</div>
 												<div class="col-md-9">
-													<?php if (empty($cert['cid'])) { ?>
-														<input type="text" class="form-control" autocomplete="off" name="name" id="name" placeholder="BaseName" data-invalid="<?php echo _('This field cannot be blank and must be alphanumeric')?>" value="<?php echo !empty($cert['basename']) ? $cert['basename'] : ""?>" required pattern="[A-Za-z0-9]{3,100}">
+													<?php if (!isset($cert['cid']) || empty($cert['cid'])) { ?>
+														<input type="text" class="form-control" autocomplete="off" name="name" id="name" placeholder="BaseName" data-invalid="<?php echo _('This field cannot be blank and must be alphanumeric')?>" value="<?php echo (isset($cert['basename']) && !empty($cert['basename'])) ? $cert['basename'] : ""?>" required pattern="[A-Za-z0-9]{3,100}">
 													<?php } else { ?>
-														<?php echo !empty($cert['basename']) ? $cert['basename'] : ""?>
+														<?php echo (isset($cert['basename']) && !empty($cert['basename'])) ? $cert['basename'] : ""?>
 													<?php } ?>
 												</div>
 											</div>
@@ -54,7 +54,7 @@ if(!empty($message)) {
 														<label class="control-label" for="expires"><?php echo _("Valid Until")?></label>
 														<i class="fa fa-question-circle fpbx-help-icon" data-for="expires"></i>
 													</div>
-													<div class="col-md-9"><?php echo \FreePBX::Certman()->getReadableExpiration($certinfo['validTo_time_t']); ?></div>
+													<div class="col-md-9"><?php echo \FreePBX::Certman()->getReadableExpiration($certinfo['validTo_time_t'] ?? ''); ?></div>
 												</div>
 											</div>
 										</div>
@@ -123,7 +123,7 @@ if(!empty($message)) {
 													<i class="fa fa-question-circle fpbx-help-icon" data-for="description"></i>
 												</div>
 												<div class="col-md-9">
-													<input type="text" class="form-control" autocomplete="off" name="description" id="description" value="<?php echo !empty($cert['description']) ? $cert['description'] : ""?>">
+													<input type="text" class="form-control" autocomplete="off" name="description" id="description" value="<?php echo (isset($cert['description']) && !empty($cert['description'])) ? $cert['description'] : ""?>">
 												</div>
 											</div>
 										</div>
@@ -194,7 +194,7 @@ if(!empty($message)) {
 									</div>
 									<div class="panel-body">
 										<p><?php echo _("If you have a separate private key paste it here.")?></p>
-										<textarea class="form-control" rows="5" name="privatekey" placeholder="<?php echo !empty($cert['cid']) ? _("Not Shown for your security. Paste a new key here") : _("Paste new key here")?>"></textarea>
+										<textarea class="form-control" rows="5" name="privatekey" placeholder="<?php echo (isset($cert['cid']) && !empty($cert['cid'])) ? _("Not Shown for your security. Paste a new key here") : _("Paste new key here")?>"></textarea>
 									</div>
 								</div>
 							</div>
@@ -204,7 +204,7 @@ if(!empty($message)) {
 								</div>
 								<div class="panel-body">
 									<p><?php echo _("After you have submitted a CSR to a CA, they will sign it, after validation, and return a Signed Certificate. That certificate should be pasted in the box below. If you leave this box blank, the certificate will not be updated.")?></p>
-									<textarea class="form-control" rows="5" name="signedcert" placeholder="<?php echo !empty($cert['cid']) ? _("Not Shown for your security. Paste a new certificate here") : _("Paste new certificate here")?>"></textarea>
+									<textarea class="form-control" rows="5" name="signedcert" placeholder="<?php echo (isset($cert['cid']) && !empty($cert['cid'])) ? _("Not Shown for your security. Paste a new certificate here") : _("Paste new certificate here")?>"></textarea>
 								</div>
 							</div>
 							<div class="panel panel-default">
@@ -213,7 +213,7 @@ if(!empty($message)) {
 								</div>
 								<div class="panel-body">
 									<p><?php echo _("Your CA may also require a Trusted Chain to be installed. This will be provided by the CA, and will consist of one, or multiple, certificate files.   Paste the contents of all the Chain files, if any, into the box below. This may be left blank, or updated at any time. They can be added in any order.")?></p>
-									<textarea class="form-control" rows="5" name="certchain" placeholder="<?php echo !empty($cert['cid']) ? _("Not Shown for your security. Paste a new certificate here") : _("Paste new certificate here")?>"></textarea>
+									<textarea class="form-control" rows="5" name="certchain" placeholder="<?php echo (isset($cert['cid']) && !empty($cert['cid'])) ? _("Not Shown for your security. Paste a new certificate here") : _("Paste new certificate here")?>"></textarea>
 								</div>
 							</div>
 						</form>
