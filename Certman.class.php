@@ -803,7 +803,8 @@ class Certman implements BMO {
 		$removeDstRootCaX3 = !empty($settings['removeDstRootCaX3']) ? $settings['removeDstRootCaX3'] : false;
 
 		$location = $this->PKCS->getKeysLocation();
-		$logger = $this->FreePBX->Logger->monoLog;
+		// $logger = $this->FreePBX->Logger->monoLog;
+		$logger = new \Monolog\Logger('');
 		$host = basename($host);
 		$certpath = $location . "/" .$host;
 		array_unshift($san, $host);
