@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-30 09:50+0000\n"
+"POT-Creation-Date: 2023-10-31 05:45+0000\n"
 "PO-Revision-Date: 2019-04-09 01:00+0000\n"
 "Last-Translator: florian alberts <alberts@ar-systems.de>\n"
 "Language-Team: German <http://*/projects/freepbx/certman/de/>\n"
@@ -139,10 +139,6 @@ msgstr ""
 "Wenn Sie den Zugriff aus dem Internet zugelassen haben, können Sie vom Let's-"
 "encrypt-Projekt ein kostenloses Zertifikat beziehen. Erfahren Sie mehr %s"
 
-#: certman.i18n.php:6
-msgid "Admin"
-msgstr "Administrator"
-
 #: Api/Gql/Certman.php:206 views/up.php:206
 msgid ""
 "After you have submitted a CSR to a CA, they will sign it, after validation, "
@@ -228,21 +224,9 @@ msgstr "Hostname des Zertifikats"
 msgid "Certificate List"
 msgstr "Zertifikatsliste"
 
-#: Console/Certman.class.php:27 certman.i18n.php:10 views/overview.php:43
+#: Console/Certman.class.php:27 views/overview.php:43
 msgid "Certificate Management"
 msgstr "Zertifikatverwaltung"
-
-#: certman.i18n.php:4 certman.i18n.php:14
-msgid "Certificate Manager"
-msgstr "Zertifikatmanager"
-
-#: certman.i18n.php:8
-msgid ""
-"Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
-"WebRTC and secure traffic)"
-msgstr ""
-"Zertifikatverwaltung für Asterisk. Wird für TLS- und DTLS-Verbindungen "
-"verwendet"
 
 #: views/overview.php:52
 msgid ""
@@ -1278,10 +1262,6 @@ msgstr "Zertifikat verwenden"
 msgid "Valid Until"
 msgstr "Gültig bis"
 
-#: certman.i18n.php:12
-msgid "Validity period of the certificate (in days)"
-msgstr ""
-
 #: functions.inc/hook_core.php:130
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
@@ -1333,10 +1313,6 @@ msgstr ""
 "\t\t\t<li>passiv (wenn nur für eingehende Anrufe gewünscht)</li>\n"
 "\t\t\t<li>actpass (ein- und ausgehende Verbindungen</li>\n"
 "\t\t\t</ul>"
-
-#: certman.i18n.php:16
-msgid "You can change the number of days the certificate is valid."
-msgstr ""
 
 #: views/up.php:215
 msgid ""
@@ -1392,6 +1368,19 @@ msgstr ""
 #: Api/Gql/Certman.php:60
 msgid "uploadSSLCertificate"
 msgstr ""
+
+#~ msgid "Admin"
+#~ msgstr "Administrator"
+
+#~ msgid "Certificate Manager"
+#~ msgstr "Zertifikatmanager"
+
+#~ msgid ""
+#~ "Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
+#~ "WebRTC and secure traffic)"
+#~ msgstr ""
+#~ "Zertifikatverwaltung für Asterisk. Wird für TLS- und DTLS-Verbindungen "
+#~ "verwendet"
 
 #~ msgid "Updated Certificates"
 #~ msgstr "Zertifikate aktualisiert"

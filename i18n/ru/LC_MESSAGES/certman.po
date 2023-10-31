@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-30 09:50+0000\n"
+"POT-Creation-Date: 2023-10-31 05:45+0000\n"
 "PO-Revision-Date: 2022-04-19 04:49+0000\n"
 "Last-Translator: Dmitriy Q <krotesk@ya.ru>\n"
 "Language-Team: Russian <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -139,10 +139,6 @@ msgstr ""
 "подписаться на бесплатный сертификат из проекта Let's Encrypt. Узнайте "
 "больше %s"
 
-#: certman.i18n.php:6
-msgid "Admin"
-msgstr "Админ"
-
 #: Api/Gql/Certman.php:206 views/up.php:206
 msgid ""
 "After you have submitted a CSR to a CA, they will sign it, after validation, "
@@ -228,21 +224,9 @@ msgstr "Имя узла сертификата"
 msgid "Certificate List"
 msgstr "Список сертификатов"
 
-#: Console/Certman.class.php:27 certman.i18n.php:10 views/overview.php:43
+#: Console/Certman.class.php:27 views/overview.php:43
 msgid "Certificate Management"
 msgstr "Управление сертификатами"
-
-#: certman.i18n.php:4 certman.i18n.php:14
-msgid "Certificate Manager"
-msgstr "Менеджер сертификатов"
-
-#: certman.i18n.php:8
-msgid ""
-"Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
-"WebRTC and secure traffic)"
-msgstr ""
-"Менеджер сертификатов для Asterisk. Используется для подключения TLS, DTLS "
-"(например, WebRTC и безопасности траффика)"
 
 #: views/overview.php:52
 msgid ""
@@ -1276,10 +1260,6 @@ msgstr "Используемый сертификат"
 msgid "Valid Until"
 msgstr "Действителен до"
 
-#: certman.i18n.php:12
-msgid "Validity period of the certificate (in days)"
-msgstr "Срок действия сертификата (в днях)"
-
 #: functions.inc/hook_core.php:130
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
@@ -1332,12 +1312,6 @@ msgstr ""
 "\t\t\t<li>пассивный (мы хотим только принимать соединения)</li>\n"
 "\t\t\t<li>actpass (и то и другое)</li>\n"
 "\t\t\t</ul>"
-
-#: certman.i18n.php:16
-msgid "You can change the number of days the certificate is valid."
-msgstr ""
-"Вы можете изменить количество дней, в течение которых сертификат "
-"действителен."
 
 #: views/up.php:215
 msgid ""
@@ -1392,6 +1366,27 @@ msgstr ""
 #: Api/Gql/Certman.php:60
 msgid "uploadSSLCertificate"
 msgstr ""
+
+#~ msgid "Admin"
+#~ msgstr "Админ"
+
+#~ msgid "Certificate Manager"
+#~ msgstr "Менеджер сертификатов"
+
+#~ msgid ""
+#~ "Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
+#~ "WebRTC and secure traffic)"
+#~ msgstr ""
+#~ "Менеджер сертификатов для Asterisk. Используется для подключения TLS, "
+#~ "DTLS (например, WebRTC и безопасности траффика)"
+
+#~ msgid "Validity period of the certificate (in days)"
+#~ msgstr "Срок действия сертификата (в днях)"
+
+#~ msgid "You can change the number of days the certificate is valid."
+#~ msgstr ""
+#~ "Вы можете изменить количество дней, в течение которых сертификат "
+#~ "действителен."
 
 #~ msgid "Updated Certificates"
 #~ msgstr "Обновленные сертификаты"

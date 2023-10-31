@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-30 09:50+0000\n"
+"POT-Creation-Date: 2023-10-31 05:45+0000\n"
 "PO-Revision-Date: 2017-12-11 22:57+0200\n"
 "Last-Translator: JCattan <jeremie@famillecattan.com>\n"
 "Language-Team: French <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -136,10 +136,6 @@ msgid ""
 "%s"
 msgstr ""
 
-#: certman.i18n.php:6
-msgid "Admin"
-msgstr "Admin"
-
 #: Api/Gql/Certman.php:206 views/up.php:206
 msgid ""
 "After you have submitted a CSR to a CA, they will sign it, after validation, "
@@ -221,19 +217,9 @@ msgstr "Nom d'hôte du certificat"
 msgid "Certificate List"
 msgstr "Liste de certificats"
 
-#: Console/Certman.class.php:27 certman.i18n.php:10 views/overview.php:43
+#: Console/Certman.class.php:27 views/overview.php:43
 msgid "Certificate Management"
 msgstr "Gestion des certificats"
-
-#: certman.i18n.php:4 certman.i18n.php:14
-msgid "Certificate Manager"
-msgstr "Gestionnaire des certificats"
-
-#: certman.i18n.php:8
-msgid ""
-"Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
-"WebRTC and secure traffic)"
-msgstr ""
 
 #: views/overview.php:52
 msgid ""
@@ -1207,10 +1193,6 @@ msgstr "Utiliser le certificat"
 msgid "Valid Until"
 msgstr ""
 
-#: certman.i18n.php:12
-msgid "Validity period of the certificate (in days)"
-msgstr ""
-
 #: functions.inc/hook_core.php:130
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
@@ -1241,10 +1223,6 @@ msgid ""
 "\t\t\t<li>passive (we want to accept connections only)</li>\n"
 "\t\t\t<li>actpass (we will do both)</li>\n"
 "\t\t\t</ul>"
-msgstr ""
-
-#: certman.i18n.php:16
-msgid "You can change the number of days the certificate is valid."
 msgstr ""
 
 #: views/up.php:215
@@ -1295,6 +1273,12 @@ msgstr ""
 #: Api/Gql/Certman.php:60
 msgid "uploadSSLCertificate"
 msgstr ""
+
+#~ msgid "Admin"
+#~ msgstr "Admin"
+
+#~ msgid "Certificate Manager"
+#~ msgstr "Gestionnaire des certificats"
 
 #~ msgid "<error>"
 #~ msgstr "<erreur>"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-30 09:50+0000\n"
+"POT-Creation-Date: 2023-10-31 05:45+0000\n"
 "PO-Revision-Date: 2017-03-23 13:47+0200\n"
 "Last-Translator: Kingvoice <suporte@kingvoice.com.br>\n"
 "Language-Team: Portuguese (Brazil) <http://weblate.freepbx.org/projects/"
@@ -141,10 +141,6 @@ msgstr ""
 "inscrever-se para um certificado GRÁTIS  do projeto Let's Encrypt. Saiba "
 "mais %s"
 
-#: certman.i18n.php:6
-msgid "Admin"
-msgstr "Admin"
-
 #: Api/Gql/Certman.php:206 views/up.php:206
 msgid ""
 "After you have submitted a CSR to a CA, they will sign it, after validation, "
@@ -230,21 +226,9 @@ msgstr "Host Name do Certificado"
 msgid "Certificate List"
 msgstr "Lista de Certificados"
 
-#: Console/Certman.class.php:27 certman.i18n.php:10 views/overview.php:43
+#: Console/Certman.class.php:27 views/overview.php:43
 msgid "Certificate Management"
 msgstr "Gerenciamento de Certificados"
-
-#: certman.i18n.php:4 certman.i18n.php:14
-msgid "Certificate Manager"
-msgstr "Gerenciador de Certificado"
-
-#: certman.i18n.php:8
-msgid ""
-"Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
-"WebRTC and secure traffic)"
-msgstr ""
-"Gerenciador de Certificados para o Asterisk. Usado para TLS, conexão DTLS "
-"(pense em WebRTC e tráfego seguro)"
 
 #: views/overview.php:52
 msgid ""
@@ -1264,10 +1248,6 @@ msgstr "Usar Certificado"
 msgid "Valid Until"
 msgstr "Válido Até"
 
-#: certman.i18n.php:12
-msgid "Validity period of the certificate (in days)"
-msgstr ""
-
 #: functions.inc/hook_core.php:130
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
@@ -1319,10 +1299,6 @@ msgstr ""
 "\t\t\t<li>passivo (somente aceitar conexões)</li>\n"
 "\t\t\t<li>ativo-passivo(conectar e receber conecções)</li>\n"
 "\t\t\t</ul>"
-
-#: certman.i18n.php:16
-msgid "You can change the number of days the certificate is valid."
-msgstr ""
 
 #: views/up.php:215
 msgid ""
@@ -1377,6 +1353,19 @@ msgstr ""
 #: Api/Gql/Certman.php:60
 msgid "uploadSSLCertificate"
 msgstr ""
+
+#~ msgid "Admin"
+#~ msgstr "Admin"
+
+#~ msgid "Certificate Manager"
+#~ msgstr "Gerenciador de Certificado"
+
+#~ msgid ""
+#~ "Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
+#~ "WebRTC and secure traffic)"
+#~ msgstr ""
+#~ "Gerenciador de Certificados para o Asterisk. Usado para TLS, conexão DTLS "
+#~ "(pense em WebRTC e tráfego seguro)"
 
 #~ msgid "Updated Certificates"
 #~ msgstr "Certificados Atualizados"
