@@ -13,6 +13,7 @@ if(!empty($message)) {
 		$loghtml = '<pre class="alert-' . $message['type'] .' pre-scrollable" style="overflow-x: auto; white-space: pre-wrap; word-wrap: normal; overflow-wrap: normal;">' . $message['log'] . '</pre>';
 	}
 
+	$alertmsg = $message['message'] ?? '';
 	$mhtml = '<div class="fpbx-container element-container alert alert-' . $message['type'] .' alert-dismissable">
 			<div class="display no-border" >
 				<div class="row">
@@ -24,10 +25,10 @@ if(!empty($message)) {
 						</i>
 						<span id="alert-help" class="fpbx-help-block">
 						<div class="alert-' . $message['type'] . '">
-							<strong>' . $message['message'] . '</strong>' . $hinthtml . $loghtml . '
+							<strong>' . $alertmsg . '</strong>' . $hinthtml . $loghtml . '
 						</div></span>';
 	} else {
-		$mhtml .=			'<label style="font-size: large;">'.$message['message'].'</label>' . $hinthtml . $loghtml;
+		$mhtml .=			'<label style="font-size: large;">'.$alertmsg.'</label>' . $hinthtml . $loghtml;
 	}
 	$mhtml .=			'</div>
 					<div>

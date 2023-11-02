@@ -203,7 +203,7 @@ class Certman implements BMO {
 							sort($san);
 							$description .= ", " . implode(", ", $san);
 						}
-						$removeDstRootCaX3 = ($_POST['removeDstRootCaX3'] ? true : false);
+						$removeDstRootCaX3 = (isset($_POST['removeDstRootCaX3']) && $_POST['removeDstRootCaX3']) ? true : false;
 
 						if(!empty($cert)) {
 							$additional = array(
@@ -213,7 +213,7 @@ class Certman implements BMO {
 								"removeDstRootCaX3" => $removeDstRootCaX3,
 							);
 							if (!empty($san)) {$additional['san'] = $san;}
-							$removeDstRootCaX3 = ($_POST['removeDstRootCaX3'] ? true : false);
+							$removeDstRootCaX3 = (isset($_POST['removeDstRootCaX3']) && $_POST['removeDstRootCaX3']) ? true : false;
 							// check cert expiration
 							$cert = $this->getCertificateDetails($_POST['cid']);
 							$validTo = $cert['info']['crt']['validTo_time_t'];
@@ -894,7 +894,7 @@ class Certman implements BMO {
 				} catch(Exception $e) {
 					$lecheckerr =  _("lechecker: ") . get_class($e) . " - " . trim(strip_tags($e->getMessage()));
 				}
-				if ($lecheckerr) {
+				if (isset($lecheckerr)) {
 					print($lecheckerr . "\n");
 					$hints[] = $lecheckerr;
 				}
@@ -980,7 +980,7 @@ class Certman implements BMO {
 			// we know the lechecker file name
 			@unlink($webroot.$pathCheck);
 			// Lescript,php doesn't expose the token name, assume we own any new files
-			if(is_dir($tokenpath)) {
+			if(isset($tokenpath) && is_dir($tokenpath)) {
 				$postchallengefiles = array_diff(glob($tokenpath .'/*'), $prechallengefiles);
 				foreach($postchallengefiles as $tokenfile) {
 					// ignore unlink errs - it's possible we don't own the new file */
@@ -1028,7 +1028,7 @@ class Certman implements BMO {
 			return true;
 		}
 		//fire wall module not enabled
-		if ($firewall['firewall']['status'] != 2) {
+		if (isset($firewall['firewall']['status']) && $firewall['firewall']['status'] != 2) {
 			return true;
 		}
 		$api = $this->getFirewallAPI();
@@ -2070,7 +2070,7 @@ class Certman implements BMO {
 			} catch(\Exception $e) { continue; }
 
 			$decoded = json_decode($response->body, 1);
-			if (!empty($decoded['Answer']) && $decoded['status'] == 0) {
+			if (!empty($decoded['Answer']) && isset($decoded['status']) && $decoded['status'] == 0) {
 				foreach($decoded['Answer'] as $a) {
 					if($a['type'] == 1)  $ips[] = $a['data'];
 				}
