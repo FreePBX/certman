@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-07 02:34+0000\n"
-"PO-Revision-Date: 2023-11-18 14:00+0000\n"
+"PO-Revision-Date: 2023-12-14 08:20+0000\n"
 "Last-Translator: Szymon Wysokinski <szymon.wysokinski@sqspolska.pl>\n"
 "Language-Team: Polish <http://weblate.freepbx.org/projects/freepbx/certman/"
 "pl/>\n"
@@ -713,7 +713,7 @@ msgstr ""
 
 #: Certman.class.php:455
 msgid "Submit"
-msgstr ""
+msgstr "Zatwierdź"
 
 #: Certman.class.php:322
 msgid "Successfully deleted the Certificate Authority"
