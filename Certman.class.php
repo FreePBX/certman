@@ -262,6 +262,7 @@ class Certman implements BMO {
 							ob_end_clean();
 							$this->updateCertificate($cert, $description, $additional);
 							$this->message = array('type' => 'success', 'title' => _('LetsEncrypt Update Success!'), 'log' => $lelog );
+							$this->addAutoUpdateCron();
 							needreload();
 						} else {
 							$this->message = array('type' => 'danger', 'message' => _('Certificate is invalid'));
@@ -339,6 +340,7 @@ class Certman implements BMO {
 						$lelog = ob_get_contents();
 						ob_end_clean();
 						$this->message = array('type' => 'success', 'title' => _('LetsEncrypt Generation Success!'), 'log' => $lelog );
+						$this->addAutoUpdateCron();
 					break;
 					case "up":
 						$name = basename($_POST['name']);
@@ -2175,5 +2177,29 @@ class Certman implements BMO {
 		}
 		// Odd. It should be gone. Something went wrong.
 		return false;
+	}
+
+	function addAutoUpdateCron() {
+
+		//check if update certificate cron exists, add if not
+		$cronexists = false;
+		foreach($this->FreePBX->Cron()->getAll() as $cron) {
+			$str = "fwconsole certificates updateall -q";
+			if (preg_match("/".$str."/i",$cron,$matches)) {
+				$cronexists = true;
+			}
+			$str = "fwconsole certificates --updateall -q";
+			if (preg_match("/".$str."/i",$cron,$matches)) {
+				$cronexists = true;
+			}
+		}
+		if(!$cronexists) {
+			$ampsbin = $this->FreePBX->Config->get("AMPSBIN") ?? '/usr/sbin/';
+			$this->FreePBX->Cron()->add(array(
+				"command" => $ampsbin."/fwconsole certificates --updateall -q 2>&1 >/dev/null",
+				"hour" => rand(0,3),
+				"minute" => rand(0,59),
+			));
+		}
 	}
 }
