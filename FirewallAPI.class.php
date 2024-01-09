@@ -91,7 +91,8 @@ class FirewallAPI {
 				foreach ($allservices as $services) {
 					foreach($services as $service) {
 						$s = $this->fwobj->getService($service);
-						if (!$s['disabled']) {
+						// If not disabled then continue, disable may not be present for some services so continue for those services.
+						if (!isset($s['disabled']) || !$s['disabled']) {
 							foreach ($s['fw'] as $fw) {
 								if ($fw['leport']) {
 									$leports[] = $fw['port'];
