@@ -237,6 +237,7 @@ class Certman extends Command {
 			}
 			$messages = $certman->checkUpdateCertificates($force);
 			$hints = array();
+			$danger = false;
 			foreach($messages as $message) {
 				if (!empty($message['hints'])) {
 					$hints = array_merge($hints, $message['hints']);
