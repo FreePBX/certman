@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-09 07:46-0500\n"
+"POT-Creation-Date: 2024-02-13 07:22-0500\n"
 "PO-Revision-Date: 2019-04-09 01:00+0000\n"
 "Last-Translator: florian alberts <alberts@ar-systems.de>\n"
 "Language-Team: German <http://*/projects/freepbx/certman/de/>\n"
@@ -49,7 +49,7 @@ msgid ""
 msgstr ""
 
 #: Console/Certman.class.php:204 Console/Certman.class.php:224
-#: Console/Certman.class.php:339
+#: Console/Certman.class.php:340
 #, php-format
 msgid "'%s' is not a valid ID"
 msgstr ""
@@ -63,7 +63,7 @@ msgstr "(%s Tage)"
 msgid "(Port 80)"
 msgstr "(Port 80)"
 
-#: Console/Certman.class.php:307 Console/Certman.class.php:313
+#: Console/Certman.class.php:308 Console/Certman.class.php:314
 msgid "<info>"
 msgstr "<Info>"
 
@@ -170,7 +170,7 @@ msgstr ""
 msgid "Automatically generate an ephemeral X.509 certificate"
 msgstr ""
 
-#: Console/Certman.class.php:296
+#: Console/Certman.class.php:297
 msgid "Base Name"
 msgstr "Basisname"
 
@@ -405,7 +405,7 @@ msgstr "DTLS-Einrichtung"
 msgid "DTLS Verify"
 msgstr "DTLS-Verifizierung"
 
-#: Console/Certman.class.php:296 views/certgrid.php:30
+#: Console/Certman.class.php:297 views/certgrid.php:30
 msgid "Default"
 msgstr "Standard"
 
@@ -458,7 +458,7 @@ msgstr ""
 "Durch das Löschen der Certificate Authority werden alle von ihr erzeugten "
 "Zertifikate ungültig (und werden gelöscht). Ist das OK?"
 
-#: Console/Certman.class.php:296 views/certgrid.php:28 views/ss.php:135
+#: Console/Certman.class.php:297 views/certgrid.php:28 views/ss.php:135
 #: views/up.php:122 views/view.php:47
 msgid "Description"
 msgstr "Beschreibung"
@@ -672,7 +672,7 @@ msgstr "Schlüssel ist leer"
 msgid "Key is password protected or malformed"
 msgstr "Schlüssel ist passwortgeschützt oder fehlerhaft"
 
-#: Console/Certman.class.php:278
+#: Console/Certman.class.php:279
 msgid "Let's Encrypt"
 msgstr "Let's Encrypt"
 
@@ -777,7 +777,7 @@ msgstr "Kein Zertifikat bereitgestellt"
 msgid "No Certificates exist"
 msgstr "Keine Zertifikate vorhanden"
 
-#: Console/Certman.class.php:307
+#: Console/Certman.class.php:308
 #, php-format
 msgid ""
 "No Certificates to import. Try placing a certificate (<name>.crt) and its "
@@ -924,7 +924,7 @@ msgstr ""
 "Wählen, wenn Sie zusätzliche Felder beim Hochladen Ihres eigenen Zertifikats "
 "benutzen möchten."
 
-#: Console/Certman.class.php:275 views/certgrid.php:42
+#: Console/Certman.class.php:276 views/certgrid.php:42
 msgid "Self Signed"
 msgstr "Selbst Signiert"
 
@@ -1002,7 +1002,7 @@ msgstr "Die Zertifikatsignierungsanforderung wurde erfolgreich gelöscht"
 msgid "Successfully deleted the SSL certificate"
 msgstr ""
 
-#: Console/Certman.class.php:313
+#: Console/Certman.class.php:314
 #, php-format
 msgid "Successfully imported %s"
 msgstr "Erfolgreich %s importiert"
@@ -1016,7 +1016,7 @@ msgstr "Zertifikate erfolgreich importiert"
 msgid "Successfully installed Let's Encrypt certificate '%s'"
 msgstr ""
 
-#: Console/Certman.class.php:344
+#: Console/Certman.class.php:345
 #, php-format
 msgid "Successfully set '%s' as the default certificate"
 msgstr "Erfolgreich %s als Standardzertifikat gesetzt"
@@ -1097,7 +1097,7 @@ msgid "The certificate common name, usually the same as the host name"
 msgstr ""
 "Der Name des Zertifikats, für gewöhnlich identisch mit dem Rechnernamen"
 
-#: Console/Certman.class.php:316
+#: Console/Certman.class.php:317
 #, php-format
 msgid "There was an error importing %s. The error was: %s"
 msgstr "Beim Importieren von %s ist ein Fehler aufgetreten. Der Fehler war: %s"
@@ -1166,7 +1166,7 @@ msgstr ""
 "Zweistellige (internationale) Kurzbezeichnung des Landes, z.B. \"DE\", "
 "\"CH\" oder \"AT\"."
 
-#: Console/Certman.class.php:296 views/certgrid.php:29
+#: Console/Certman.class.php:297 views/certgrid.php:29
 msgid "Type"
 msgstr "Typ"
 
@@ -1271,7 +1271,7 @@ msgstr "Lade Zertifikat"
 msgid "Upload an SSL certificate"
 msgstr ""
 
-#: Console/Certman.class.php:281 views/certgrid.php:45
+#: Console/Certman.class.php:282 views/certgrid.php:45
 msgid "Uploaded"
 msgstr "Hochgeladen"
 

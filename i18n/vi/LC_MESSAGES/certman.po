@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-09 07:46-0500\n"
+"POT-Creation-Date: 2024-02-13 07:22-0500\n"
 "PO-Revision-Date: 2017-08-08 16:34+0200\n"
 "Last-Translator: PETER <ftek@ymail.com>\n"
 "Language-Team: Vietnamese <http://weblate.freepbx.org/projects/freepbx/"
@@ -50,7 +50,7 @@ msgid ""
 msgstr ""
 
 #: Console/Certman.class.php:204 Console/Certman.class.php:224
-#: Console/Certman.class.php:339
+#: Console/Certman.class.php:340
 #, php-format
 msgid "'%s' is not a valid ID"
 msgstr ""
@@ -64,7 +64,7 @@ msgstr "(%s ngày)"
 msgid "(Port 80)"
 msgstr "( Cổng giao tiếp 80)"
 
-#: Console/Certman.class.php:307 Console/Certman.class.php:313
+#: Console/Certman.class.php:308 Console/Certman.class.php:314
 msgid "<info>"
 msgstr "<thông tin>"
 
@@ -171,7 +171,7 @@ msgstr ""
 msgid "Automatically generate an ephemeral X.509 certificate"
 msgstr ""
 
-#: Console/Certman.class.php:296
+#: Console/Certman.class.php:297
 msgid "Base Name"
 msgstr "Tên cơ sở"
 
@@ -406,7 +406,7 @@ msgstr "Thiết lập DTLS"
 msgid "DTLS Verify"
 msgstr "Xác minh DTLS"
 
-#: Console/Certman.class.php:296 views/certgrid.php:30
+#: Console/Certman.class.php:297 views/certgrid.php:30
 msgid "Default"
 msgstr "Mặc định"
 
@@ -459,7 +459,7 @@ msgstr ""
 "Đang xóa nhà cung cấp chứng thực sẽ làm mất tất cả các chứng thực được tạo "
 "bởi họ ( Chúng sẽ bị xóa). Điều này có được không?"
 
-#: Console/Certman.class.php:296 views/certgrid.php:28 views/ss.php:135
+#: Console/Certman.class.php:297 views/certgrid.php:28 views/ss.php:135
 #: views/up.php:122 views/view.php:47
 msgid "Description"
 msgstr "Mô tả"
@@ -670,7 +670,7 @@ msgstr "Khóa trống"
 msgid "Key is password protected or malformed"
 msgstr "Khóa được bảo vệ bằng mật khẩu hoặc bị sai khóa"
 
-#: Console/Certman.class.php:278
+#: Console/Certman.class.php:279
 msgid "Let's Encrypt"
 msgstr ""
 
@@ -776,7 +776,7 @@ msgstr "Không có chứng thực nào được cấp"
 msgid "No Certificates exist"
 msgstr "Không có chứng thực nào tồn tại"
 
-#: Console/Certman.class.php:307
+#: Console/Certman.class.php:308
 #, php-format
 msgid ""
 "No Certificates to import. Try placing a certificate (<name>.crt) and its "
@@ -916,7 +916,7 @@ msgstr ""
 "Chọn mục này cho các trường bổ sung được sử dụng để tải lên các chứng thực "
 "của riêng bạn."
 
-#: Console/Certman.class.php:275 views/certgrid.php:42
+#: Console/Certman.class.php:276 views/certgrid.php:42
 msgid "Self Signed"
 msgstr "Tự ký"
 
@@ -994,7 +994,7 @@ msgstr "Đã xóa thành công Yêu cầu ký chứng thực"
 msgid "Successfully deleted the SSL certificate"
 msgstr ""
 
-#: Console/Certman.class.php:313
+#: Console/Certman.class.php:314
 #, php-format
 msgid "Successfully imported %s"
 msgstr "Đã nhập thành công %s"
@@ -1008,7 +1008,7 @@ msgstr "Các chứng thực đã nhập thành công"
 msgid "Successfully installed Let's Encrypt certificate '%s'"
 msgstr ""
 
-#: Console/Certman.class.php:344
+#: Console/Certman.class.php:345
 #, php-format
 msgid "Successfully set '%s' as the default certificate"
 msgstr ""
@@ -1087,7 +1087,7 @@ msgstr "Tên cơ sở của chứng thực, chỉ có thể bao gồm các ký t
 msgid "The certificate common name, usually the same as the host name"
 msgstr "Tên thông thường của chứng thực, thường giống như tên host"
 
-#: Console/Certman.class.php:316
+#: Console/Certman.class.php:317
 #, php-format
 msgid "There was an error importing %s. The error was: %s"
 msgstr "Xảy ra lỗi khi nhập %s. Lỗi này là: %s"
@@ -1151,7 +1151,7 @@ msgstr "Chuỗi tin tưởng"
 msgid "Two letter country code, such as \"US\", \"CA\", or \"AU\"."
 msgstr "Mã quốc gia gồm 2 chữ cái, ví dụ  \"US\", \"CA\", or \"AU\"."
 
-#: Console/Certman.class.php:296 views/certgrid.php:29
+#: Console/Certman.class.php:297 views/certgrid.php:29
 msgid "Type"
 msgstr "Kiểu"
 
@@ -1255,7 +1255,7 @@ msgstr "Tải lên chứng thực"
 msgid "Upload an SSL certificate"
 msgstr ""
 
-#: Console/Certman.class.php:281 views/certgrid.php:45
+#: Console/Certman.class.php:282 views/certgrid.php:45
 msgid "Uploaded"
 msgstr "Đã tải lên"
 

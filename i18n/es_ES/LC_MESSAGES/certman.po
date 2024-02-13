@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-09 07:46-0500\n"
+"POT-Creation-Date: 2024-02-13 07:22-0500\n"
 "PO-Revision-Date: 2016-12-11 12:44+0200\n"
 "Last-Translator: Ernesto <ecasas@sangoma.com>\n"
 "Language-Team: Spanish <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -50,7 +50,7 @@ msgid ""
 msgstr ""
 
 #: Console/Certman.class.php:204 Console/Certman.class.php:224
-#: Console/Certman.class.php:339
+#: Console/Certman.class.php:340
 #, php-format
 msgid "'%s' is not a valid ID"
 msgstr ""
@@ -64,7 +64,7 @@ msgstr ""
 msgid "(Port 80)"
 msgstr ""
 
-#: Console/Certman.class.php:307 Console/Certman.class.php:313
+#: Console/Certman.class.php:308 Console/Certman.class.php:314
 msgid "<info>"
 msgstr "<info>"
 
@@ -174,7 +174,7 @@ msgstr ""
 msgid "Automatically generate an ephemeral X.509 certificate"
 msgstr ""
 
-#: Console/Certman.class.php:296
+#: Console/Certman.class.php:297
 msgid "Base Name"
 msgstr "Nombre Base"
 
@@ -407,7 +407,7 @@ msgstr "Configuración DTLS"
 msgid "DTLS Verify"
 msgstr "Verificar DTLS"
 
-#: Console/Certman.class.php:296 views/certgrid.php:30
+#: Console/Certman.class.php:297 views/certgrid.php:30
 msgid "Default"
 msgstr "Predeterminado"
 
@@ -460,7 +460,7 @@ msgstr ""
 "Borrar la autoridad de certificación va a invalidar todos los certificados "
 "generados por ella (Seran eliminados). Esta de acuerdo?"
 
-#: Console/Certman.class.php:296 views/certgrid.php:28 views/ss.php:135
+#: Console/Certman.class.php:297 views/certgrid.php:28 views/ss.php:135
 #: views/up.php:122 views/view.php:47
 msgid "Description"
 msgstr "Descripción"
@@ -672,7 +672,7 @@ msgstr "Llave esta vacía"
 msgid "Key is password protected or malformed"
 msgstr "La llave esta protegida por Contraseña o esta mal-formada"
 
-#: Console/Certman.class.php:278
+#: Console/Certman.class.php:279
 msgid "Let's Encrypt"
 msgstr ""
 
@@ -773,7 +773,7 @@ msgstr "No Certificado provisto"
 msgid "No Certificates exist"
 msgstr "No existe Certificado"
 
-#: Console/Certman.class.php:307
+#: Console/Certman.class.php:308
 #, php-format
 msgid ""
 "No Certificates to import. Try placing a certificate (<name>.crt) and its "
@@ -913,7 +913,7 @@ msgstr ""
 "Selecciones este para campos adicionales usados para bajar su propio "
 "certificado."
 
-#: Console/Certman.class.php:275 views/certgrid.php:42
+#: Console/Certman.class.php:276 views/certgrid.php:42
 msgid "Self Signed"
 msgstr "Auto-Firmado"
 
@@ -991,7 +991,7 @@ msgstr "La solicitud de Firma de Certificado borrada satisfactoriamente"
 msgid "Successfully deleted the SSL certificate"
 msgstr ""
 
-#: Console/Certman.class.php:313
+#: Console/Certman.class.php:314
 #, php-format
 msgid "Successfully imported %s"
 msgstr "Importado Satisfactoriamente %s"
@@ -1005,7 +1005,7 @@ msgstr "Certificados Importados Satisfactoriamente"
 msgid "Successfully installed Let's Encrypt certificate '%s'"
 msgstr ""
 
-#: Console/Certman.class.php:344
+#: Console/Certman.class.php:345
 #, php-format
 msgid "Successfully set '%s' as the default certificate"
 msgstr ""
@@ -1086,7 +1086,7 @@ msgid "The certificate common name, usually the same as the host name"
 msgstr ""
 "El nombre común del certificado, usualmente el mismo que el nombre del Host"
 
-#: Console/Certman.class.php:316
+#: Console/Certman.class.php:317
 #, php-format
 msgid "There was an error importing %s. The error was: %s"
 msgstr "Hubo un error importando %s. El error fue: %s"
@@ -1146,7 +1146,7 @@ msgstr "Cadena Confiable"
 msgid "Two letter country code, such as \"US\", \"CA\", or \"AU\"."
 msgstr "Código de País de 2 letras, como \"US\", \"BR\" o \"MX\"."
 
-#: Console/Certman.class.php:296 views/certgrid.php:29
+#: Console/Certman.class.php:297 views/certgrid.php:29
 msgid "Type"
 msgstr "Tipo"
 
@@ -1250,7 +1250,7 @@ msgstr "Subir Certificado"
 msgid "Upload an SSL certificate"
 msgstr ""
 
-#: Console/Certman.class.php:281 views/certgrid.php:45
+#: Console/Certman.class.php:282 views/certgrid.php:45
 msgid "Uploaded"
 msgstr "Subido"
 

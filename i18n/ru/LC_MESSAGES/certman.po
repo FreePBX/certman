@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-09 07:46-0500\n"
+"POT-Creation-Date: 2024-02-13 07:22-0500\n"
 "PO-Revision-Date: 2022-04-19 04:49+0000\n"
 "Last-Translator: Dmitriy Q <krotesk@ya.ru>\n"
 "Language-Team: Russian <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -48,7 +48,7 @@ msgid ""
 msgstr ""
 
 #: Console/Certman.class.php:204 Console/Certman.class.php:224
-#: Console/Certman.class.php:339
+#: Console/Certman.class.php:340
 #, php-format
 msgid "'%s' is not a valid ID"
 msgstr ""
@@ -62,7 +62,7 @@ msgstr "(%s дней)"
 msgid "(Port 80)"
 msgstr "(порт 80)"
 
-#: Console/Certman.class.php:307 Console/Certman.class.php:313
+#: Console/Certman.class.php:308 Console/Certman.class.php:314
 msgid "<info>"
 msgstr "<информация>"
 
@@ -170,7 +170,7 @@ msgstr "Автоматическое создание сертификата"
 msgid "Automatically generate an ephemeral X.509 certificate"
 msgstr "Автоматическое создание кратковременного сертификата X. 509"
 
-#: Console/Certman.class.php:296
+#: Console/Certman.class.php:297
 msgid "Base Name"
 msgstr "Базовое имя"
 
@@ -404,7 +404,7 @@ msgstr "Настройка DTLS"
 msgid "DTLS Verify"
 msgstr "Проверка DTLS"
 
-#: Console/Certman.class.php:296 views/certgrid.php:30
+#: Console/Certman.class.php:297 views/certgrid.php:30
 msgid "Default"
 msgstr "По-умолчанию"
 
@@ -457,7 +457,7 @@ msgstr ""
 "Удаление центра сертификации приведет к аннулированию всех сертификатов, "
 "созданных этим центром (они будут удалены). Это нормально?"
 
-#: Console/Certman.class.php:296 views/certgrid.php:28 views/ss.php:135
+#: Console/Certman.class.php:297 views/certgrid.php:28 views/ss.php:135
 #: views/up.php:122 views/view.php:47
 msgid "Description"
 msgstr "Описание"
@@ -672,7 +672,7 @@ msgstr "Ключ пуст"
 msgid "Key is password protected or malformed"
 msgstr "Ключ защищен паролем или некорректен"
 
-#: Console/Certman.class.php:278
+#: Console/Certman.class.php:279
 msgid "Let's Encrypt"
 msgstr "Let's Encrypt"
 
@@ -779,7 +779,7 @@ msgstr "Сертификат не предоставлен"
 msgid "No Certificates exist"
 msgstr "Нет существующих сертификатов"
 
-#: Console/Certman.class.php:307
+#: Console/Certman.class.php:308
 #, php-format
 msgid ""
 "No Certificates to import. Try placing a certificate (<name>.crt) and its "
@@ -924,7 +924,7 @@ msgstr ""
 "Выберите этот параметр для дополнительных полей, используемых для загрузки "
 "вашего собственного сертификата."
 
-#: Console/Certman.class.php:275 views/certgrid.php:42
+#: Console/Certman.class.php:276 views/certgrid.php:42
 msgid "Self Signed"
 msgstr "Самозаверенный"
 
@@ -1002,7 +1002,7 @@ msgstr "Запрос на подпись сертификата успешно �
 msgid "Successfully deleted the SSL certificate"
 msgstr ""
 
-#: Console/Certman.class.php:313
+#: Console/Certman.class.php:314
 #, php-format
 msgid "Successfully imported %s"
 msgstr "Успешно импортирован %s"
@@ -1016,7 +1016,7 @@ msgstr "Сертификаты успешно импортированы"
 msgid "Successfully installed Let's Encrypt certificate '%s'"
 msgstr ""
 
-#: Console/Certman.class.php:344
+#: Console/Certman.class.php:345
 #, php-format
 msgid "Successfully set '%s' as the default certificate"
 msgstr "'%s' успешно установлен в качестве сертификата по умолчанию"
@@ -1098,7 +1098,7 @@ msgstr "Базовое имя сертификата может содержат
 msgid "The certificate common name, usually the same as the host name"
 msgstr "Общее имя сертификата, обычно совпадающее с именем хоста"
 
-#: Console/Certman.class.php:316
+#: Console/Certman.class.php:317
 #, php-format
 msgid "There was an error importing %s. The error was: %s"
 msgstr "Произошла ошибка при импорте %s. Ошибка: %s"
@@ -1165,7 +1165,7 @@ msgstr "Доверенная цепочка"
 msgid "Two letter country code, such as \"US\", \"CA\", or \"AU\"."
 msgstr "Двухбуквенный код страны, например \"RU\", \"CA\" или \"AU\"."
 
-#: Console/Certman.class.php:296 views/certgrid.php:29
+#: Console/Certman.class.php:297 views/certgrid.php:29
 msgid "Type"
 msgstr "Тип"
 
@@ -1269,7 +1269,7 @@ msgstr "Загрузить сертификат"
 msgid "Upload an SSL certificate"
 msgstr ""
 
-#: Console/Certman.class.php:281 views/certgrid.php:45
+#: Console/Certman.class.php:282 views/certgrid.php:45
 msgid "Uploaded"
 msgstr "Загружено"
 
