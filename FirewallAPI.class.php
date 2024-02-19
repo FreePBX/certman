@@ -82,7 +82,7 @@ class FirewallAPI {
 			if (isset($fwservice['fw'][0]['port'])) {
 				$serviceenabled = true;
 				$leports[] = $fwservice['fw'][0]['port'];
-				if (!$fwservice['disabled']) {
+				if (!isset($fwservice['disabled']) || !$fwservice['disabled']) {
 					$fwzones = $fwservice['zones'];
 				}
 			} else {
@@ -94,7 +94,7 @@ class FirewallAPI {
 						// If not disabled then continue, disable may not be present for some services so continue for those services.
 						if (!isset($s['disabled']) || !$s['disabled']) {
 							foreach ($s['fw'] as $fw) {
-								if ($fw['leport']) {
+								if (isset($fw['leport']) && $fw['leport']) {
 									$leports[] = $fw['port'];
 								}
 							}
