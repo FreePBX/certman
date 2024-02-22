@@ -59,7 +59,7 @@ class Certman extends Command {
 
 				case 'letsencrypt';
 				case 'le':
-					$hostname = strtolower($input->getOption('hostname'));
+					$hostname = strtolower((string)$input->getOption('hostname'));
 					$country_code = $input->getOption('country-code');
 					$state = $input->getOption('state');
 					$email = $input->getOption('email');
