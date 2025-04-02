@@ -14,7 +14,9 @@ class Restore Extends Base\RestoreBase{
 		$originalKeyDir = $configs['keyDir'];
 		foreach ($dirs as $dir) {
 			$dir = str_Replace($originalKeyDir,$keyDir,$dir->getPathTo());
-			@mkdir($dir,0755,true);
+			if (!file_exists($dir)) {
+				mkdir($dir,0755,true);
+			}
 		}
 		foreach ($files as $file) {
 			$backupFilename = $file->getPathTo() . '/' . $file->getFilename();
