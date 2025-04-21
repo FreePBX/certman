@@ -12,7 +12,7 @@
 	<description>
 		Certificate Manager for Asterisk. Used for TLS, DTLS connection (think WebRTC and secure traffic)
 	</description>
-	<more-info>https://wiki.freepbx.org/display/FPG/Certificate+Management+Module</more-info>
+	<more-info>https://sangomakb.atlassian.net/wiki/spaces/PG/pages/20775139/PBX+GUI+-+Certificate+Management+Module</more-info>
 	<changelog>
 		*17.0.3.13* Packaging of ver 17.0.3.13
 		*17.0.1alpha* 17.0.1 alpha release
