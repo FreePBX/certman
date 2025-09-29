@@ -127,6 +127,7 @@ class Certman extends Command {
 								$description,
 								$additional
 							);
+							$certman->reloadHAProxyIfEnabled();
 						}
 					} catch (\Exception $e) {
 						$einfo = json_decode(substr($e->getMessage(), strpos($e->getMessage(), '{')), true);

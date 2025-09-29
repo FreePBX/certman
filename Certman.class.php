@@ -265,6 +265,8 @@ class Certman implements BMO {
 							$this->message = array('type' => 'success', 'title' => _('LetsEncrypt Update Success!'), 'log' => $lelog );
 							$this->addAutoUpdateCron();
 							needreload();
+							// Reload HAProxy
+							$this->reloadHAProxyIfEnabled();
 						} else {
 							$this->message = array('type' => 'danger', 'message' => _('Certificate is invalid'));
 						}
@@ -708,6 +710,8 @@ class Certman implements BMO {
 			if($update) {
 				$this->updateCertificate($cert, $cert['description'], $cert['additional']);
 				exec(fpbx_which("fwconsole")." reload");
+				// Reload HAProxy
+				$this->reloadHAProxyIfEnabled();
 			}
 		}
 		$notification = '';
@@ -2217,6 +2221,31 @@ class Certman implements BMO {
 				"hour" => rand(0,3),
 				"minute" => rand(0,59),
 			));
+		}
+	}
+
+	/**
+	 * Reload HAProxy service if it's enabled to pick up renewed certificates.
+	 * 
+	 * This method checks if the sysadmin module is available and HAProxy is enabled,
+	 * then triggers the appropriate hook to reload HAProxy with the new certificate.
+	 */
+	private function reloadHAProxyIfEnabled() {
+		if (!$this->FreePBX->Modules->checkStatus("sysadmin")) {
+			return;
+		}
+
+		try {
+			$sysadmin = $this->FreePBX->Sysadmin;
+			$haproxyEnabled = $sysadmin->getConfig("enbableHaproxy");
+			dbug("reloadHAProxyIfEnabled: HAProxy is enabled: " . $haproxyEnabled);
+			if ($haproxyEnabled === 'enabled') {
+				// Trigger the sysadmin hook to restart HAProxy with new certificate
+				$sysadmin->runHook("update-sslconf", ['restart_haproxy' => true]);
+				dbug("Certificate Manager: HAProxy reloaded after Let's Encrypt certificate renewal");
+			}
+		} catch (Exception $e) {
+			dbug("Certificate Manager: Failed to reload HAProxy after certificate renewal: " . $e->getMessage());
 		}
 	}
 }
