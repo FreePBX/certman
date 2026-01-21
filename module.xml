@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>17.0.3.13</version>
+	<version>17.0.3.14</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -14,6 +14,7 @@
 	</description>
 	<more-info>https://sangomakb.atlassian.net/wiki/spaces/PG/pages/20775139/PBX+GUI+-+Certificate+Management+Module</more-info>
 	<changelog>
+		*17.0.3.14* FREEI-2385 fix:Integrate HAProxy reload into certificate renewal process for Let's Encrypt certificates 
 		*17.0.3.13* Packaging of ver 17.0.3.13
 		*17.0.1alpha* 17.0.1 alpha release
 	</changelog>
