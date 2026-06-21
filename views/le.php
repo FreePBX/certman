@@ -139,6 +139,64 @@ $alert .= "</div>";
 								</div>
 								<!-- END Challenge Method -->
 
+								<!-- Custom / Private ACME server -->
+								<?php
+									$acmeUrl = $cert['additional']['acmeUrl'] ?? '';
+									$acmeCa  = $cert['additional']['acmeCaBundle'] ?? '';
+									$acmeInsecure = !empty($cert['additional']['acmeInsecure']);
+								?>
+								<div class="element-container">
+									<div class="row">
+										<div class="form-group form-horizontal">
+											<div class="col-md-3">
+												<label class="control-label" for="acme_url"><?php echo _("Custom ACME Server URL")?></label>
+												<i class="fa fa-question-circle fpbx-help-icon" data-for="acme_url"></i>
+											</div>
+											<div class="col-md-9">
+												<input type="text" class="form-control" id="acme_url" name="acme_url" placeholder="https://acme.internal.example.com/acme/acme/directory" value="<?php echo htmlspecialchars($acmeUrl, ENT_QUOTES); ?>">
+											</div>
+										</div>
+										<div class="col-md-12">
+											<span id="acme_url-help" class="help-block fpbx-help-block"><?php echo _("Leave empty to use the public Let's Encrypt service. To use a private/self-hosted ACME server, enter the full ACME <strong>directory</strong> URL (e.g. step-ca: <code>/acme/&lt;provisioner&gt;/directory</code>, Pebble: <code>/dir</code>). Validation still uses the http-01 challenge on port 80.")?></span>
+										</div>
+									</div>
+								</div>
+
+								<div class="element-container">
+									<div class="row">
+										<div class="form-group form-horizontal">
+											<div class="col-md-3">
+												<label class="control-label" for="acme_ca"><?php echo _("ACME Server CA Bundle")?></label>
+												<i class="fa fa-question-circle fpbx-help-icon" data-for="acme_ca"></i>
+											</div>
+											<div class="col-md-9">
+												<input type="text" class="form-control" id="acme_ca" name="acme_ca" placeholder="/etc/ssl/certs/internal-ca.pem" value="<?php echo htmlspecialchars($acmeCa, ENT_QUOTES); ?>">
+											</div>
+										</div>
+										<div class="col-md-12">
+											<span id="acme_ca-help" class="help-block fpbx-help-block"><?php echo _("Optional. Only needed when the custom ACME server presents a TLS certificate signed by a private CA that this server does not already trust. You have three options, pick one: (1) install that CA into the system trust store from the <strong>Installed CAs</strong> page and leave this field empty; (2) enter here the path to a PEM CA bundle that signs the ACME server certificate; or (3) enable <strong>Skip ACME Server TLS Verification</strong> below. Leave empty for the public Let's Encrypt service.")?></span>
+										</div>
+									</div>
+								</div>
+
+								<div class="element-container">
+									<div class="row">
+										<div class="form-group form-horizontal">
+											<div class="col-md-3">
+												<label class="control-label" for="acme_insecure"><?php echo _("Skip ACME Server TLS Verification")?></label>
+												<i class="fa fa-question-circle fpbx-help-icon" data-for="acme_insecure"></i>
+											</div>
+											<div class="col-md-9">
+												<input type="checkbox" id="acme_insecure" name="acme_insecure" <?php echo ($acmeInsecure ? "checked" : ""); ?>>
+											</div>
+										</div>
+										<div class="col-md-12">
+											<span id="acme_insecure-help" class="help-block fpbx-help-block"><?php echo _("Disable TLS certificate verification when connecting to the custom ACME server. Use only for self-signed servers on a trusted network when no CA bundle is available. Ignored for the public Let's Encrypt service.")?></span>
+										</div>
+									</div>
+								</div>
+								<!-- END Custom / Private ACME server -->
+
 								<!-- Remove DST Root CA X3 -->
 								<div class="element-container">
 									<div class="row">

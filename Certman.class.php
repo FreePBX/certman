@@ -129,6 +129,22 @@ class Certman implements BMO {
 		$request = $_REQUEST;
 		$request['certaction'] = !empty($request['certaction']) ? $request['certaction'] : "";
 		switch($request['certaction']) {
+			case "installca":
+				$pem = '';
+				if (!empty($_FILES['ca_file']['tmp_name']) && is_uploaded_file($_FILES['ca_file']['tmp_name'])) {
+					$pem = (string)file_get_contents($_FILES['ca_file']['tmp_name']);
+				} elseif (!empty($_POST['ca_pem'])) {
+					$pem = (string)$_POST['ca_pem'];
+				}
+				$res = $this->installSystemCA($pem, $_POST['ca_name'] ?? '');
+				if (!empty($res['status'])) {
+					$msg = $res['message'];
+					if (!empty($res['warning'])) { $msg .= ' ' . $res['warning']; }
+					$this->message = array('type' => 'success', 'message' => $msg);
+				} else {
+					$this->message = array('type' => 'danger', 'message' => $res['message']);
+				}
+			break;
 			case "importlocally":
 				$processed = $this->importLocalCertificates();
 				if(!empty($processed)) {
@@ -203,6 +219,9 @@ class Certman implements BMO {
 						}
 						$removeDstRootCaX3 = ($_POST['removeDstRootCaX3'] ? true : false);
 
+						$acmeUrl = !empty($_POST['acme_url']) ? trim($_POST['acme_url']) : '';
+						$acmeCaBundle = !empty($_POST['acme_ca']) ? trim($_POST['acme_ca']) : '';
+						$acmeInsecure = (!empty($_POST['acme_insecure'])) ? true : false;
 						if(!empty($cert)) {
 							$additional = array(
 								"C" => $_POST['C'],
@@ -211,6 +230,11 @@ class Certman implements BMO {
 								"removeDstRootCaX3" => $removeDstRootCaX3,
 							);
 							if (!empty($san)) {$additional['san'] = $san;}
+							if ($acmeUrl !== '') {
+								$additional['acmeUrl'] = $acmeUrl;
+								$additional['acmeCaBundle'] = $acmeCaBundle;
+								$additional['acmeInsecure'] = $acmeInsecure;
+							}
 							$removeDstRootCaX3 = ($_POST['removeDstRootCaX3'] ? true : false);
 							// check cert expiration
 							$cert = $this->getCertificateDetails($_POST['cid']);
@@ -232,7 +256,10 @@ class Certman implements BMO {
 									"challengetype" => "http", // https will not work.
 									"email" => $_POST['email'],
 									"san" => $san,
-									"removeDstRootCaX3" => $removeDstRootCaX3
+									"removeDstRootCaX3" => $removeDstRootCaX3,
+									"acmeUrl" => $acmeUrl,
+									"acmeCaBundle" => $acmeCaBundle,
+									"acmeInsecure" => $acmeInsecure
 								), false, true);
 							} catch(Exception $e) {
 								$lelog = trim(ob_get_contents());
@@ -292,6 +319,9 @@ class Certman implements BMO {
 							$description .= ", " . implode(", ", $san);
 						}
 						$removeDstRootCaX3 = ($_POST['removeDstRootCaX3'] ? true : false);
+						$acmeUrl = !empty($_POST['acme_url']) ? trim($_POST['acme_url']) : '';
+						$acmeCaBundle = !empty($_POST['acme_ca']) ? trim($_POST['acme_ca']) : '';
+						$acmeInsecure = (!empty($_POST['acme_insecure'])) ? true : false;
 						$additional = array(
 								"C" => $_POST['C'],
 								"ST" => $_POST['ST'],
@@ -299,6 +329,11 @@ class Certman implements BMO {
 								"removeDstRootCaX3" => $removeDstRootCaX3,
 						);
 						if (!empty($san)) {$additional['san'] = $san;}
+						if ($acmeUrl !== '') {
+							$additional['acmeUrl'] = $acmeUrl;
+							$additional['acmeCaBundle'] = $acmeCaBundle;
+							$additional['acmeInsecure'] = $acmeInsecure;
+						}
 						ob_start();
 						try{
 							if($this->checkCertificateName($host)) {
@@ -311,6 +346,9 @@ class Certman implements BMO {
 								"email" => $_POST['email'],
 								"san" => $san,
 								"removeDstRootCaX3" => $removeDstRootCaX3,
+								"acmeUrl" => $acmeUrl,
+								"acmeCaBundle" => $acmeCaBundle,
+								"acmeInsecure" => $acmeInsecure,
 							));
 							$this->saveCertificate(null, $host, $description, 'le', $additional);
 						} catch(Exception $e) {
@@ -538,6 +576,10 @@ class Certman implements BMO {
 					}
 				}
 			break;
+			case 'systemcas':
+				$systemcas = $this->getSystemCAs();
+				echo load_view(__DIR__.'/views/systemcas.php',array('systemcas' => $systemcas, 'message' => $this->message));
+			break;
 			default:
 				$certs = $this->getAllManagedCertificates();
 				$csr = $this->checkCSRexists();
@@ -621,6 +663,9 @@ class Certman implements BMO {
 							"email" => $cert['additional']['email'],
 							"san" => $cert['additional']['san'],
 							"removeDstRootCaX3" => $cert['additional']['removeDstRootCaX3'],
+							"acmeUrl" => $cert['additional']['acmeUrl'] ?? '',
+							"acmeCaBundle" => $cert['additional']['acmeCaBundle'] ?? '',
+							"acmeInsecure" => $cert['additional']['acmeInsecure'] ?? false,
 						);
 
 						$this->updateLE($cert['info']['crt']['subject']['CN'], $settings, false, $force);
@@ -664,6 +709,9 @@ class Certman implements BMO {
 							"email" => $cert['additional']['email'],
 							"san" => $cert['additional']['san'],
 							"removeDstRootCaX3" => $cert['additional']['removeDstRootCaX3'],
+							"acmeUrl" => $cert['additional']['acmeUrl'] ?? '',
+							"acmeCaBundle" => $cert['additional']['acmeCaBundle'] ?? '',
+							"acmeInsecure" => $cert['additional']['acmeInsecure'] ?? false,
 						);
 
 						$this->updateLE($cert['info']['crt']['subject']['CN'], $settings, false, $force);
@@ -737,6 +785,242 @@ class Certman implements BMO {
 	}
 
 	/**
+	 * Render an openssl DN array (subject/issuer) as a readable string.
+	 * @param array $dn
+	 * @return string
+	 */
+	private function dnToString($dn) {
+		$parts = array();
+		foreach ((array)$dn as $k => $v) {
+			if (is_array($v)) { $v = implode('+', $v); }
+			$parts[] = $k . '=' . $v;
+		}
+		return implode(', ', $parts);
+	}
+
+	/**
+	 * Detect which distribution trust-store family this server uses.
+	 * @return string 'debian', 'rhel', or '' when it can't be determined
+	 */
+	private function detectTrustStoreFamily() {
+		if (is_file('/etc/redhat-release')) { return 'rhel'; }
+		if (is_file('/etc/debian_version')) { return 'debian'; }
+		// Fall back to the presence of the trust tooling / anchor directories.
+		$hasRhel   = is_dir('/etc/pki/ca-trust/source/anchors') || (function_exists('fpbx_which') && fpbx_which('update-ca-trust'));
+		$hasDebian = is_dir('/usr/local/share/ca-certificates') || (function_exists('fpbx_which') && fpbx_which('update-ca-certificates'));
+		if ($hasRhel && !$hasDebian) { return 'rhel'; }
+		if ($hasDebian && !$hasRhel) { return 'debian'; }
+		return ''; // unknown or ambiguous - show everything
+	}
+
+	/**
+	 * Enumerate the CA certificates trusted by this server.
+	 *
+	 * Reads the active system CA bundle (the one PHP/cURL resolve to) plus the
+	 * common distribution bundle files and custom trust-anchor directories, then
+	 * returns the parsed certificates. This is primarily a helper for operators
+	 * configuring a private/self-hosted ACME server: it lets them confirm the
+	 * ACME server's CA is already trusted and locate a CA bundle path to use in
+	 * the "ACME Server CA Bundle" field.
+	 *
+	 * @return array array('sources' => array(...), 'cas' => array(...))
+	 */
+	public function getSystemCAs() {
+		$candidates = array();
+
+		// Whatever PHP/cURL currently resolve to (file or directory).
+		$primary = $this->getCABundle();
+		if (!empty($primary)) {
+			$candidates[$primary] = _('Active system CA bundle (used by PHP/cURL)');
+		}
+
+		// Common distribution bundle files and custom anchor directories, each
+		// tagged with the distro family it belongs to ('any' = generic).
+		$known = array(
+			'/etc/ssl/certs/ca-certificates.crt' => array('label' => _('Debian/Ubuntu system bundle'),        'family' => 'debian'),
+			'/etc/pki/tls/certs/ca-bundle.crt'   => array('label' => _('RHEL/CentOS system bundle'),          'family' => 'rhel'),
+			'/etc/ssl/cert.pem'                  => array('label' => _('OpenSSL default bundle'),              'family' => 'any'),
+			'/usr/local/share/ca-certificates'   => array('label' => _('Custom CAs (Debian/Ubuntu anchors)'), 'family' => 'debian'),
+			'/etc/pki/ca-trust/source/anchors'   => array('label' => _('Custom CAs (RHEL/CentOS anchors)'),   'family' => 'rhel'),
+		);
+		// Only list stores that match the detected distro; show everything when unknown.
+		$family = $this->detectTrustStoreFamily();
+		foreach ($known as $path => $meta) {
+			if (isset($candidates[$path])) { continue; }
+			if ($family !== '' && $meta['family'] !== 'any' && $meta['family'] !== $family) { continue; }
+			$candidates[$path] = $meta['label'];
+		}
+
+		$sources = array();
+		$cas = array();
+		$seen = array(); // dedupe identical certs that appear in several stores
+
+		foreach ($candidates as $path => $label) {
+			$files = array();
+			if (is_dir($path)) {
+				foreach ((array)glob(rtrim($path, '/') . '/*') as $f) {
+					if (is_file($f)) { $files[] = $f; }
+				}
+			} elseif (is_file($path)) {
+				$files[] = $path;
+			} else {
+				$sources[] = array('path' => $path, 'label' => $label, 'exists' => false, 'count' => 0);
+				continue;
+			}
+
+			$count = 0;
+			foreach ($files as $f) {
+				$contents = @file_get_contents($f);
+				if ($contents === false) { continue; }
+				foreach ($this->parseCaBundle($contents) as $pem) {
+					if (strpos($pem, 'BEGIN CERTIFICATE') === false) { continue; }
+					$info = @openssl_x509_parse($pem);
+					if (empty($info)) { continue; }
+					$fp = @openssl_x509_fingerprint($pem, 'sha1');
+					if ($fp && isset($seen[$fp])) { continue; }
+					if ($fp) { $seen[$fp] = true; }
+					$count++;
+					$subject = $info['subject'] ?? array();
+					$issuer  = $info['issuer'] ?? array();
+					$cas[] = array(
+						'cn'               => $subject['CN'] ?? ($subject['O'] ?? ($subject['OU'] ?? _('(unnamed)'))),
+						'subject'          => $this->dnToString($subject),
+						'issuer'           => $this->dnToString($issuer),
+						'validFrom_time_t' => $info['validFrom_time_t'] ?? 0,
+						'validTo_time_t'   => $info['validTo_time_t'] ?? 0,
+						'selfSigned'       => ($subject == $issuer),
+						'fingerprint'      => $fp ? strtoupper(implode(':', str_split($fp, 2))) : '',
+						'source'           => $f,
+					);
+				}
+			}
+			$sources[] = array('path' => $path, 'label' => $label, 'exists' => true, 'count' => $count);
+		}
+
+		usort($cas, function ($a, $b) { return strcasecmp($a['cn'], $b['cn']); });
+
+		return array('sources' => $sources, 'cas' => $cas);
+	}
+
+	/**
+	 * Install a CA certificate into the system trust store.
+	 *
+	 * Validates the supplied PEM, stages it in the module's ca-staging directory
+	 * and triggers the privileged "install-ca" hook (run as root by the Sysadmin
+	 * incron runner) which copies it into the distribution trust anchors and
+	 * refreshes the trust store. When already running as root (e.g. fwconsole)
+	 * the hook is executed directly. Installation is confirmed by re-scanning the
+	 * trust store for the certificate fingerprint.
+	 *
+	 * @param  string $pem          PEM encoded CA certificate
+	 * @param  string $friendlyName Optional friendly name used for the stored filename
+	 * @return array  array('status' => bool, 'message' => string[, 'warning' => string])
+	 */
+	public function installSystemCA($pem, $friendlyName = '') {
+		$pem = trim((string)$pem);
+		if ($pem === '') {
+			return array('status' => false, 'message' => _('No certificate data provided'));
+		}
+		if (strlen($pem) > 100000) {
+			return array('status' => false, 'message' => _('The supplied certificate data is too large.'));
+		}
+		// Never accept a private key here - we only install public CA certificates.
+		if (stripos($pem, 'PRIVATE KEY') !== false) {
+			return array('status' => false, 'message' => _('The supplied data contains a private key; provide only the CA certificate.'));
+		}
+		// Exactly one certificate, so the operator sees precisely what is trusted
+		// and we never trust extra certificates hidden in a bundle.
+		if (substr_count($pem, '-----BEGIN CERTIFICATE-----') !== 1) {
+			return array('status' => false, 'message' => _('Please provide exactly one CA certificate in PEM format.'));
+		}
+
+		$info = @openssl_x509_parse($pem);
+		if (empty($info)) {
+			return array('status' => false, 'message' => _('The supplied data is not a valid PEM certificate'));
+		}
+		$fp = @openssl_x509_fingerprint($pem, 'sha1');
+		$rawCn = $info['subject']['CN'] ?? ($info['subject']['O'] ?? 'ca');
+		// The CN comes from an attacker-controlled certificate and is rendered as
+		// HTML in the web message, so escape it for display.
+		$cn = htmlspecialchars((string)$rawCn, ENT_QUOTES);
+		// A trust anchor should be a CA; warn (but don't block) if it is not.
+		$isCa = !empty($info['extensions']['basicConstraints']) && stripos($info['extensions']['basicConstraints'], 'CA:TRUE') !== false;
+
+		// Build a safe, collision-resistant target basename (name + fingerprint).
+		$name = $friendlyName !== '' ? $friendlyName : $rawCn;
+		$name = preg_replace('/[^A-Za-z0-9._-]+/', '_', (string)$name);
+		$name = trim($name, '._-');
+		if ($name === '') { $name = 'ca'; }
+		$fpShort = $fp ? substr(preg_replace('/[^a-f0-9]/i', '', $fp), 0, 12) : '';
+		$base = 'certman-' . $name . ($fpShort !== '' ? '-' . $fpShort : '');
+
+		// Stage the PEM where the root hook can read it.
+		$staging = __DIR__ . '/ca-staging';
+		if (!is_dir($staging) && !@mkdir($staging, 0775, true)) {
+			return array('status' => false, 'message' => sprintf(_('Unable to create staging directory %s'), $staging));
+		}
+		// Clean slate: drop any leftover staged files so the root hook only ever
+		// processes the certificate we are about to write.
+		foreach ((array)glob($staging . '/*.{crt,result}', GLOB_BRACE) as $stale) {
+			@unlink($stale);
+		}
+		$crtFile = $staging . '/' . $base . '.crt';
+		$resultFile = $staging . '/' . $base . '.result';
+		if (@file_put_contents($crtFile, $pem . "\n") === false) {
+			return array('status' => false, 'message' => _('Unable to stage the certificate for installation'));
+		}
+
+		// Run the privileged install.
+		try {
+			if (function_exists('posix_geteuid') && posix_geteuid() === 0) {
+				// Already root (e.g. fwconsole) - run the hook directly, restricted to our file.
+				exec(escapeshellarg(__DIR__ . '/hooks/install-ca') . ' ' . escapeshellarg($base . '.crt') . ' 2>&1');
+			} else {
+				$this->runHook('install-ca');
+				// incron is asynchronous; wait for the hook to drop its result file.
+				$waited = 0;
+				while (!file_exists($resultFile) && $waited < 20) {
+					usleep(500000);
+					$waited++;
+				}
+			}
+		} catch (\Exception $e) {
+			@unlink($crtFile);
+			return array('status' => false, 'message' => sprintf(_('Unable to run the privileged install hook: %s. The Sysadmin module is required to install CAs into the system trust store from the web interface.'), $e->getMessage()));
+		}
+
+		$hookResult = file_exists($resultFile) ? trim((string)@file_get_contents($resultFile)) : '';
+		@unlink($resultFile);
+		@unlink($crtFile); // the hook removes it on success; clean up just in case
+
+		// The hook is authoritative: it reports "OK" only after update-ca-* actually
+		// succeeded (and rolls the anchor back otherwise).
+		$hookOk = ($hookResult !== '' && stripos($hookResult, 'OK') === 0);
+
+		// Only when the hook left no result (e.g. it ran fully out-of-band) do we
+		// fall back to confirming the certificate is present in the trust store.
+		$installed = $hookOk;
+		if (!$installed && $hookResult === '' && $fp) {
+			$target = strtoupper(implode(':', str_split($fp, 2)));
+			$sys = $this->getSystemCAs();
+			foreach ($sys['cas'] as $c) {
+				if (!empty($c['fingerprint']) && $c['fingerprint'] === $target) { $installed = true; break; }
+			}
+		}
+
+		if ($installed) {
+			$result = array('status' => true, 'message' => sprintf(_('CA "%s" was installed into the system trust store.'), $cn));
+			if (!$isCa) {
+				$result['warning'] = _('Note: this certificate is not marked as a CA (basicConstraints CA:TRUE).');
+			}
+			return $result;
+		}
+
+		$detail = $hookResult !== '' ? htmlspecialchars($hookResult, ENT_QUOTES) : _('the certificate was staged but could not be confirmed in the system trust store. Ensure the Sysadmin module is installed and up to date.');
+		return array('status' => false, 'message' => sprintf(_('Could not confirm installation of CA "%s": %s'), $cn, $detail));
+	}
+
+	/**
 	 * Parse CA bundle into an array
 	 * @param string $contents the contents of the bundle
 	 * 
@@ -801,6 +1085,12 @@ class Certman implements BMO {
 		$email = !empty($settings['email']) ? $settings['email'] : '';
 		$san = !empty($settings['san']) ? $settings['san'] : array();
 		$removeDstRootCaX3 = !empty($settings['removeDstRootCaX3']) ? $settings['removeDstRootCaX3'] : false;
+		// Custom / private ACME server (self-hosted Let's Encrypt compatible, http-01).
+		// When acmeUrl is set we point lescript at it instead of the public LE endpoint.
+		$acmeUrl = !empty($settings['acmeUrl']) ? trim($settings['acmeUrl']) : '';
+		$acmeCaBundle = !empty($settings['acmeCaBundle']) ? trim($settings['acmeCaBundle']) : '';
+		$acmeInsecure = !empty($settings['acmeInsecure']) ? true : false;
+		$useCustomAcme = ($acmeUrl !== '');
 
 		$location = $this->PKCS->getKeysLocation();
 		$logger = $this->FreePBX->Logger->monoLog;
@@ -879,23 +1169,27 @@ class Certman implements BMO {
 
 			//Now check freepbx.org
 			//	on failure, save error as hint and continue
-				try {
-					$pest = new \PestJSON('http://mirror1.freepbx.org');
-					$pest->curl_opts[CURLOPT_FOLLOWLOCATION] = true;
-					$pest->curl_opts[CURLOPT_CONNECTTIMEOUT] = 10;
-					$pest->curl_opts[CURLOPT_TIMEOUT] = 30;
-					$thing = $pest->get('/lechecker.php', array('host' => $host, 'path' => $pathCheck, 'token' => $token, 'type' => $challengetype));
-					if(empty($thing)) {
-						$lecheckerr = _("No valid response from http://mirror1.freepbx.org");
-					} elseif(!$thing['status']) {
-						$lecheckerr = $thing['message'];
+			//	Skipped for a custom/private ACME server: that public reachability
+			//	probe is only meaningful for the public Let's Encrypt service.
+				if(!$useCustomAcme) {
+					try {
+						$pest = new \PestJSON('http://mirror1.freepbx.org');
+						$pest->curl_opts[CURLOPT_FOLLOWLOCATION] = true;
+						$pest->curl_opts[CURLOPT_CONNECTTIMEOUT] = 10;
+						$pest->curl_opts[CURLOPT_TIMEOUT] = 30;
+						$thing = $pest->get('/lechecker.php', array('host' => $host, 'path' => $pathCheck, 'token' => $token, 'type' => $challengetype));
+						if(empty($thing)) {
+							$lecheckerr = _("No valid response from http://mirror1.freepbx.org");
+						} elseif(!$thing['status']) {
+							$lecheckerr = $thing['message'];
+						}
+					} catch(Exception $e) {
+						$lecheckerr =  _("lechecker: ") . get_class($e) . " - " . trim(strip_tags($e->getMessage()));
 					}
-				} catch(Exception $e) {
-					$lecheckerr =  _("lechecker: ") . get_class($e) . " - " . trim(strip_tags($e->getMessage()));
-				}
-				if ($lecheckerr) {
-					print($lecheckerr . "\n");
-					$hints[] = $lecheckerr;
+					if ($lecheckerr) {
+						print($lecheckerr . "\n");
+						$hints[] = $lecheckerr;
+					}
 				}
 				@unlink($webroot.$pathCheck);
 			}
@@ -904,9 +1198,25 @@ class Certman implements BMO {
 			if($needsgen) {
 				$tokenpath = $webroot . "/.well-known/acme-challenge";
 				$prechallengefiles = glob($tokenpath .'/*'); // */
-				$le = new \Analogic\ACME\Lescript($location, $webroot, $logger);
-				if($staging) {
-					$le->ca = 'https://acme-staging.api.letsencrypt.org';
+				if($useCustomAcme) {
+					// Private ACME server: inject our own transport so lescript talks
+					// to the configured directory URL (and trusts a private CA if set).
+					require_once __DIR__ . '/Acme/AcmeHttpClient.php';
+					$origin = preg_replace('~^(https?://[^/]+).*~', '$1', $acmeUrl);
+					$client = new \FreePBX\modules\Certman\AcmeHttpClient(
+						$origin,
+						$acmeUrl,
+						($acmeCaBundle !== '' ? $acmeCaBundle : null),
+						$acmeInsecure
+					);
+					$le = new \Analogic\ACME\Lescript($location, $webroot, $logger, $client);
+					$le->ca = $acmeUrl;
+					print(sprintf(_("Using custom ACME server: %s\n"), $acmeUrl));
+				} else {
+					$le = new \Analogic\ACME\Lescript($location, $webroot, $logger);
+					if($staging) {
+						$le->ca = 'https://acme-staging.api.letsencrypt.org';
+					}
 				}
 				$le->countryCode = $countryCode;
 				$le->state = $state;
