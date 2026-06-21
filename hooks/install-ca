@@ -1,0 +1,59 @@
+#!/bin/bash
+# Certificate Manager - install CA certificate(s) into the system trust store.
+#
+# This hook is executed AS ROOT by the Sysadmin incron runner (see runHook()).
+# The web UI, running as the unprivileged web user, stages one or more PEM
+# certificates as *.crt files in the module's ca-staging directory; this hook
+# copies each into the distribution trust anchors and refreshes the trust store.
+# For every staged file it writes a <name>.result file the web side reads back,
+# then removes the staged input.
+
+MODDIR="$(cd "$(dirname "$0")/.." && pwd)"
+STAGING="$MODDIR/ca-staging"
+
+[ -d "$STAGING" ] || exit 0
+
+# Pick the distribution trust mechanism.
+if command -v update-ca-trust >/dev/null 2>&1 && [ -d /etc/pki/ca-trust/source/anchors ]; then
+	DEST="/etc/pki/ca-trust/source/anchors"
+	MODE="rhel"
+elif command -v update-ca-certificates >/dev/null 2>&1 && [ -d /usr/local/share/ca-certificates ]; then
+	DEST="/usr/local/share/ca-certificates"
+	MODE="debian"
+else
+	MODE="none"
+fi
+
+shopt -s nullglob
+for f in "$STAGING"/*.crt; do
+	base="$(basename "${f%.crt}")"
+	result="${f%.crt}.result"
+
+	if [ "$MODE" = "none" ]; then
+		echo "ERROR: no supported system trust store found (need update-ca-trust or update-ca-certificates)" > "$result"
+		rm -f "$f"
+		continue
+	fi
+
+	# Make sure it really is a certificate before trusting it.
+	if ! openssl x509 -in "$f" -noout >/dev/null 2>&1; then
+		echo "ERROR: not a valid PEM certificate" > "$result"
+		rm -f "$f"
+		continue
+	fi
+
+	if cp "$f" "$DEST/$base.crt" 2>/dev/null; then
+		chmod 0644 "$DEST/$base.crt"
+		if [ "$MODE" = "rhel" ]; then
+			update-ca-trust extract >/dev/null 2>&1
+		else
+			update-ca-certificates >/dev/null 2>&1
+		fi
+		echo "OK: installed as $DEST/$base.crt" > "$result"
+	else
+		echo "ERROR: could not write to $DEST" > "$result"
+	fi
+	rm -f "$f"
+done
+
+exit 0

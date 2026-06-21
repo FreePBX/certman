@@ -30,6 +30,7 @@ class Certman extends Command {
 				new InputOption('updateall', null, InputOption::VALUE_NONE, _('Check and Update all Certificates')),
 				new InputOption('force', null, InputOption::VALUE_NONE, _('Force update, by pass 30 days expiry ')),
 				new InputOption('import', null, InputOption::VALUE_NONE, sprintf(_('Import any unmanaged certificates in %s'),$loc)),
+				new InputOption('install-ca', null, InputOption::VALUE_REQUIRED, _('Install a CA certificate (path to a PEM file) into the system trust store')),
 
 				// cert generation options
 				new InputOption('generate', null, InputOption::VALUE_NONE, _('Generate Certificate')),
@@ -39,6 +40,9 @@ class Certman extends Command {
 				new InputOption('state', null, InputOption::VALUE_REQUIRED, _('State/Provence/Region (LetsEncrypt Generation)')),
 				new InputOption('email', null, InputOption::VALUE_REQUIRED, _("Owner's email (LetsEncrypt Generation)")),
 				new InputOption('san', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, _("Certificate Subject Alternative Name(s) (LetsEncrypt Generation)")),
+				new InputOption('acme-url', null, InputOption::VALUE_REQUIRED, _('Custom ACME directory URL for a private/self-hosted Let\'s Encrypt server (LetsEncrypt Generation). Empty uses the public service')),
+				new InputOption('acme-ca', null, InputOption::VALUE_REQUIRED, _('Path to the CA bundle that signed the custom ACME server certificate (LetsEncrypt Generation)')),
+				new InputOption('acme-insecure', null, InputOption::VALUE_NONE, _('Skip TLS verification of the custom ACME server (LetsEncrypt Generation)')),
 
 				new InputOption('delete', null, InputOption::VALUE_REQUIRED, _('Delete certificate by id or hostname')),
 				new InputOption('default', null, InputOption::VALUE_REQUIRED, _('Set default certificate by id or hostname')),
@@ -49,6 +53,23 @@ class Certman extends Command {
 	protected function execute(InputInterface $input, OutputInterface $output){
 		$certman = \FreePBX::create()->Certman;
 		$pkcs = \FreePBX::create()->PKCS;
+
+		if($installCa = $input->getOption('install-ca')) {
+			if(!is_file($installCa)) {
+				$output->writeln("<error>".sprintf(_("File not found: %s"), $installCa)."</error>");
+				exit(4);
+			}
+			$pem = file_get_contents($installCa);
+			$res = $certman->installSystemCA($pem, basename($installCa));
+			if(!empty($res['status'])) {
+				$msg = $res['message'];
+				if(!empty($res['warning'])) { $msg .= ' ' . $res['warning']; }
+				$output->writeln("<info>".$msg."</info>");
+				return 0;
+			}
+			$output->writeln("<error>".$res['message']."</error>");
+			exit(4);
+		}
 
 		if($input->getOption('generate')) {
 			$type = $input->getOption('type');
@@ -66,6 +87,9 @@ class Certman extends Command {
 					$description = $hostname;
 					$san = array_unique(array_filter(array_map(function ($v) {return strtolower(trim($v));}, $input->getOption('san'))));
 					$force = $input->getOption('force');
+					$acmeUrl = trim((string)$input->getOption('acme-url'));
+					$acmeCaBundle = trim((string)$input->getOption('acme-ca'));
+					$acmeInsecure = (bool)$input->getOption('acme-insecure');
 					$cert = $certman->getCertificateDetailsByBasename($hostname);
 
 					if (!($hostname && $country_code && $state && $email)) {
@@ -88,6 +112,11 @@ class Certman extends Command {
 						"removeDstRootCaX3" => false,
 					);
 					if (!empty($san)) {$additional['san'] = $san;}
+					if ($acmeUrl !== '') {
+						$additional['acmeUrl'] = $acmeUrl;
+						$additional['acmeCaBundle'] = $acmeCaBundle;
+						$additional['acmeInsecure'] = $acmeInsecure;
+					}
 
 					if ($force) {
 						$output->writeln("<info>" . _("Forced update enabled !!!") . "</info>");
@@ -110,6 +139,9 @@ class Certman extends Command {
 							"email" => $email,
 							"san" => $san,
 							"removeDstRootCaX3" => false,
+							"acmeUrl" => $acmeUrl,
+							"acmeCaBundle" => $acmeCaBundle,
+							"acmeInsecure" => $acmeInsecure,
 						);
 
 						$le_result = $certman->updateLE($hostname, $settings, false, $force);

@@ -112,7 +112,7 @@ $(function() {
 		var stop = false,
 				type = $("#certtype").val();
 		$("form[name=frm_certman] input[type=\"text\"]").each( function(i, v) {
-			if($(this).attr("name") == "ST" || $(this).attr("name") == "L" || $(this).attr("name") == "OU") {
+			if($(this).attr("name") == "ST" || $(this).attr("name") == "L" || $(this).attr("name") == "OU" || $(this).attr("name") == "acme_url" || $(this).attr("name") == "acme_ca") {
 				return true;
 			}
 			if ($(this).val() === "") {
