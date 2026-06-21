@@ -928,31 +928,51 @@ class Certman implements BMO {
 		if ($pem === '') {
 			return array('status' => false, 'message' => _('No certificate data provided'));
 		}
+		if (strlen($pem) > 100000) {
+			return array('status' => false, 'message' => _('The supplied certificate data is too large.'));
+		}
+		// Never accept a private key here - we only install public CA certificates.
+		if (stripos($pem, 'PRIVATE KEY') !== false) {
+			return array('status' => false, 'message' => _('The supplied data contains a private key; provide only the CA certificate.'));
+		}
+		// Exactly one certificate, so the operator sees precisely what is trusted
+		// and we never trust extra certificates hidden in a bundle.
+		if (substr_count($pem, '-----BEGIN CERTIFICATE-----') !== 1) {
+			return array('status' => false, 'message' => _('Please provide exactly one CA certificate in PEM format.'));
+		}
 
 		$info = @openssl_x509_parse($pem);
 		if (empty($info)) {
 			return array('status' => false, 'message' => _('The supplied data is not a valid PEM certificate'));
 		}
 		$fp = @openssl_x509_fingerprint($pem, 'sha1');
-		$cn = $info['subject']['CN'] ?? ($info['subject']['O'] ?? 'ca');
+		$rawCn = $info['subject']['CN'] ?? ($info['subject']['O'] ?? 'ca');
+		// The CN comes from an attacker-controlled certificate and is rendered as
+		// HTML in the web message, so escape it for display.
+		$cn = htmlspecialchars((string)$rawCn, ENT_QUOTES);
 		// A trust anchor should be a CA; warn (but don't block) if it is not.
 		$isCa = !empty($info['extensions']['basicConstraints']) && stripos($info['extensions']['basicConstraints'], 'CA:TRUE') !== false;
 
-		// Build a safe target basename.
-		$name = $friendlyName !== '' ? $friendlyName : $cn;
+		// Build a safe, collision-resistant target basename (name + fingerprint).
+		$name = $friendlyName !== '' ? $friendlyName : $rawCn;
 		$name = preg_replace('/[^A-Za-z0-9._-]+/', '_', (string)$name);
 		$name = trim($name, '._-');
 		if ($name === '') { $name = 'ca'; }
-		$base = 'certman-' . $name;
+		$fpShort = $fp ? substr(preg_replace('/[^a-f0-9]/i', '', $fp), 0, 12) : '';
+		$base = 'certman-' . $name . ($fpShort !== '' ? '-' . $fpShort : '');
 
 		// Stage the PEM where the root hook can read it.
 		$staging = __DIR__ . '/ca-staging';
 		if (!is_dir($staging) && !@mkdir($staging, 0775, true)) {
 			return array('status' => false, 'message' => sprintf(_('Unable to create staging directory %s'), $staging));
 		}
+		// Clean slate: drop any leftover staged files so the root hook only ever
+		// processes the certificate we are about to write.
+		foreach ((array)glob($staging . '/*.{crt,result}', GLOB_BRACE) as $stale) {
+			@unlink($stale);
+		}
 		$crtFile = $staging . '/' . $base . '.crt';
 		$resultFile = $staging . '/' . $base . '.result';
-		@unlink($resultFile);
 		if (@file_put_contents($crtFile, $pem . "\n") === false) {
 			return array('status' => false, 'message' => _('Unable to stage the certificate for installation'));
 		}
@@ -960,8 +980,8 @@ class Certman implements BMO {
 		// Run the privileged install.
 		try {
 			if (function_exists('posix_geteuid') && posix_geteuid() === 0) {
-				// Already root (e.g. fwconsole) - run the hook directly.
-				exec(escapeshellarg(__DIR__ . '/hooks/install-ca') . ' 2>&1');
+				// Already root (e.g. fwconsole) - run the hook directly, restricted to our file.
+				exec(escapeshellarg(__DIR__ . '/hooks/install-ca') . ' ' . escapeshellarg($base . '.crt') . ' 2>&1');
 			} else {
 				$this->runHook('install-ca');
 				// incron is asynchronous; wait for the hook to drop its result file.
@@ -980,9 +1000,14 @@ class Certman implements BMO {
 		@unlink($resultFile);
 		@unlink($crtFile); // the hook removes it on success; clean up just in case
 
-		// Confirm the certificate is now present in the trust store.
-		$installed = false;
-		if ($fp) {
+		// The hook is authoritative: it reports "OK" only after update-ca-* actually
+		// succeeded (and rolls the anchor back otherwise).
+		$hookOk = ($hookResult !== '' && stripos($hookResult, 'OK') === 0);
+
+		// Only when the hook left no result (e.g. it ran fully out-of-band) do we
+		// fall back to confirming the certificate is present in the trust store.
+		$installed = $hookOk;
+		if (!$installed && $hookResult === '' && $fp) {
 			$target = strtoupper(implode(':', str_split($fp, 2)));
 			$sys = $this->getSystemCAs();
 			foreach ($sys['cas'] as $c) {
@@ -998,7 +1023,7 @@ class Certman implements BMO {
 			return $result;
 		}
 
-		$detail = $hookResult !== '' ? $hookResult : _('the certificate was staged but could not be confirmed in the system trust store. Ensure the Sysadmin module is installed and up to date.');
+		$detail = $hookResult !== '' ? htmlspecialchars($hookResult, ENT_QUOTES) : _('the certificate was staged but could not be confirmed in the system trust store. Ensure the Sysadmin module is installed and up to date.');
 		return array('status' => false, 'message' => sprintf(_('Could not confirm installation of CA "%s": %s'), $cn, $detail));
 	}
 
