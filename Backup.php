@@ -7,8 +7,7 @@ class Backup Extends Base\BackupBase{
   public $dirs = [];
   public function runBackup($id,$transaction){
     $this->certman = $this->FreePBX->Certman;
-    $this->buildFileStructure()
-      ->addDirectories($this->dirs);
+    $this->buildFileStructure()->addDirectories($this->dirs);
     $this->addDependency('core');
     $this->addConfigs($this->buildConfigs());
   }
@@ -18,6 +17,9 @@ class Backup Extends Base\BackupBase{
       'managedCerts' => $this->certman->getAllManagedCertificates(),
       'managedCSRs' => $this->certman->getAllManagedCSRs(),
       'dtlsOptions' => $this->certman->getAllDTLSOptions(),
+      // Dump the whole module KVStore (Certman extends DB_Helper) - this captures
+      // the system trust-store CAs (id 'systemcas') and any future KVStore data.
+      'kvstore' => $this->dumpKVStore(),
       'keyDir' => $this->certman->PKCS->getKeysLocation()
     ];
   }

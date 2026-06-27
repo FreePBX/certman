@@ -1,5 +1,6 @@
 <div id="toolbar-certman">
 	<a href='?display=certman' class="btn btn-default"><i class="fa fa-th-list"></i>&nbsp;&nbsp;<?php echo _('Certificate List')?></a>
+    <a href='?display=certman&action=systemcas' class="btn btn-default"><i class="fa fa-th-list"></i>&nbsp;&nbsp;<?php echo _("Installed CA's")?></a>
 </div>
 <table data-url="ajax.php?module=certman&command=getJSON&jdata=grid" data-cache="false" data-toggle="table" data-toolbar="#toolbar-certman" data-search="true" class="table" id="table-all-side">
     <thead>
