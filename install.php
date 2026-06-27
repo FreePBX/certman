@@ -44,13 +44,13 @@ $set['description'] = 'Number of days before a certificate expiration for sendin
 $set['type'] = CONF_TYPE_INT;
 $freepbx_conf->define_conf_setting('CERT_DAYS_EXPIRATION_ALERT',$set,true);
 
-// Fix Let's Encrypt DST-Root-CA-X3 issue
-$m = \module_functions::create();
-$distro = $m->_distro_id();
-
-// Only run this on SNG7
-if ($distro['pbx_type'] === "freepbxdistro" && FreePBX::Modules()->checkStatus("sysadmin")) {
-	if (!file_exists('/etc/pki/ca-trust/source/blacklist/DST-Root-CA-X3.pem')) {
-		FreePBX::Certman()->runHook("fix-le-root-ca");
+// Self-heal: install.php runs as root during "fwconsole ma install", so reconcile
+// any managed CAs back into the system trust store (e.g. after an OS update wiped
+// the anchors). Safe no-op when there is nothing managed.
+try {
+	if (function_exists('posix_geteuid') && posix_geteuid() === 0) {
+		FreePBX::Certman()->reconcileSystemCAs();
 	}
+} catch (\Exception $e) {
+	dbug("certman install: reconcileSystemCAs failed: " . $e->getMessage());
 }

@@ -112,7 +112,7 @@ $(function() {
 		var stop = false,
 				type = $("#certtype").val();
 		$("form[name=frm_certman] input[type=\"text\"]").each( function(i, v) {
-			if($(this).attr("name") == "ST" || $(this).attr("name") == "L" || $(this).attr("name") == "OU" || $(this).attr("name") == "acme_url" || $(this).attr("name") == "acme_ca") {
+			if($(this).attr("name") == "ST" || $(this).attr("name") == "L" || $(this).attr("name") == "OU" || $(this).attr("name") == "email" || $(this).attr("name") == "acme_url" || $(this).attr("name") == "acme_ca") {
 				return true;
 			}
 			if ($(this).val() === "") {
@@ -125,13 +125,23 @@ $(function() {
 			return false;
 		}
 		if(type == "le") {
-			if($("#ST").val() === "") {
-				warnInvalid($("#ST"),_("State can not be left blank!"));
-				return false;
-			}
+			// Host name is always required. For the public Let's Encrypt service
+			// country and email are required too; a private ACME server (custom URL)
+			// only needs the host (the CA uses CN/SAN and updateLE defaults the rest).
 			if($("#host").val() === "") {
 				warnInvalid($("#host"),_("Host Name can not be left blank!"));
 				return false;
+			}
+			var leIsPrivate = $.trim($("#acme_url").val()) !== "";
+			if(!leIsPrivate) {
+				if($("#email").val() === "") {
+					warnInvalid($("#email"),_("Email is required for the public Let's Encrypt service!"));
+					return false;
+				}
+				if($("#C").val() === "" || $("#C").val() === null) {
+					warnInvalid($("#C"),_("Country is required for the public Let's Encrypt service!"));
+					return false;
+				}
 			}
 		} else {
 			if($("#ST").val() === "" && $("#L").val() === "") {

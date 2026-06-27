@@ -31,6 +31,7 @@ class Certman extends Command {
 				new InputOption('force', null, InputOption::VALUE_NONE, _('Force update, by pass 30 days expiry ')),
 				new InputOption('import', null, InputOption::VALUE_NONE, sprintf(_('Import any unmanaged certificates in %s'),$loc)),
 				new InputOption('install-ca', null, InputOption::VALUE_REQUIRED, _('Install a CA certificate (path to a PEM file) into the system trust store')),
+				new InputOption('reconcile-system-cas', null, InputOption::VALUE_NONE, _('Install any managed CA certificates that are missing from the system trust store (run as root)')),
 
 				// cert generation options
 				new InputOption('generate', null, InputOption::VALUE_NONE, _('Generate Certificate')),
@@ -71,6 +72,21 @@ class Certman extends Command {
 			exit(4);
 		}
 
+		if($input->getOption('reconcile-system-cas')) {
+			$sum = $certman->reconcileSystemCAs();
+			if(!empty($input->getOption('json'))) {
+				$output->writeln(json_encode($sum));
+				return 0;
+			}
+			$output->writeln(sprintf(_("Trust store: %s"), $sum['mode'] === 'none' ? _('none found') : $sum['mode']));
+			$output->writeln(sprintf(_("Installed: %d, removed: %d, already present: %d, errors: %d"),
+				count($sum['installed']), count($sum['removed'] ?? array()), count($sum['skipped']), count($sum['errors'])));
+			foreach($sum['errors'] as $e) {
+				$output->writeln("<error>".$e."</error>");
+			}
+			return empty($sum['errors']) ? 0 : 4;
+		}
+
 		if($input->getOption('generate')) {
 			$type = $input->getOption('type');
 			switch($type) {
@@ -92,8 +108,14 @@ class Certman extends Command {
 					$acmeInsecure = (bool)$input->getOption('acme-insecure');
 					$cert = $certman->getCertificateDetailsByBasename($hostname);
 
-					if (!($hostname && $country_code && $state && $email)) {
-						$output->writeln("<error>"._("Missing required argument(s) - 'hostname', 'country-code', 'state' and 'email' are required")."</error>");
+					if (!$hostname) {
+						$output->writeln("<error>"._("Missing required argument 'hostname'")."</error>");
+						exit(4);
+					}
+					// The public Let's Encrypt service also requires country and email;
+					// a private ACME server (--acme-url) only needs the hostname.
+					if ($acmeUrl === '' && !($country_code && $email)) {
+						$output->writeln("<error>"._("'country-code' and 'email' are required for the public Let's Encrypt service")."</error>");
 						exit(4);
 					}
 

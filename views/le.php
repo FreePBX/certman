@@ -61,7 +61,7 @@ $alert .= "</div>";
 												<i class="fa fa-question-circle fpbx-help-icon" data-for="email"></i>
 											</div>
 											<div class="col-md-9">
-												<input type="text" class="form-control" id="email" name="email" placeholder="you@example.com" required value="<?php echo $cert['additional']['email'] ?? ""; ?>">
+												<input type="text" class="form-control" id="email" name="email" placeholder="you@example.com" value="<?php echo $cert['additional']['email'] ?? ""; ?>">
 											</div>
 										</div>
 										<div class="col-md-12">
@@ -196,25 +196,6 @@ $alert .= "</div>";
 									</div>
 								</div>
 								<!-- END Custom / Private ACME server -->
-
-								<!-- Remove DST Root CA X3 -->
-								<div class="element-container">
-									<div class="row">
-										<div class="form-group form-horizontal">
-											<div class="col-md-3">
-												<label class="control-label" for="removeDstRootCaX3"><?php echo _("Remove DST Root CA X3")?></label>
-												<i class="fa fa-question-circle fpbx-help-icon" data-for="removeDstRootCaX3"></i>
-											</div>
-											<div class="col-md-9">
-												<input type="checkbox" id="removeDstRootCaX3" name="removeDstRootCaX3" <?php echo (!empty($cert['additional']['removeDstRootCaX3']) && $cert['additional']['removeDstRootCaX3'] ? "checked" : ""); ?>>
-											</div>
-										</div>
-										<div class="col-md-12">
-											<span id="removeDstRootCaX3-help" class="help-block fpbx-help-block"><?php echo _("The Let's Encrypt bundled 'DST Root CA X3' can cause issues with older clients. This option removes the 'DST Root CA X3' from the certificate bundle.")?></span>
-										</div>
-									</div>
-								</div>
-								<!-- END DST Root CA X3 -->
 							</div>
 							<!-- END Section -->
 
@@ -298,3 +279,119 @@ $alert .= "</div>";
 		</div>
 	</div>
 </div>
+
+<!-- Background Let's Encrypt generation: progress modal -->
+<div class="modal fade" id="leGenModal" tabindex="-1" role="dialog" aria-labelledby="leGenModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="leGenModalLabel"><i class="fa fa-certificate"></i> <?php echo _("Generating Let's Encrypt Certificate")?></h4>
+			</div>
+			<div class="modal-body">
+				<p id="leGenStatus"><i class="fa fa-spinner fa-spin"></i> <?php echo _("Starting...")?></p>
+				<div class="progress" style="margin-bottom:10px;">
+					<div id="leGenBar" class="progress-bar progress-bar-striped active" role="progressbar" style="width:100%;"></div>
+				</div>
+				<label class="control-label"><?php echo _("Output")?></label>
+				<pre id="leGenLog" style="margin-top:5px; min-height:80px; max-height:320px; overflow:auto; white-space:pre-wrap; word-break:break-all;"><?php echo _("Waiting for output...")?></pre>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" id="leGenClose" data-dismiss="modal" style="display:none;"><?php echo _("Close")?></button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+(function(){
+	// certman.js disables the action-bar Submit button and changes its label to
+	// "Generating... Please wait" on every form submit. Because we handle the
+	// generation via AJAX, restore it when the operation fails or the modal closes.
+	var leGenSubmitVal = '';
+	function leGenResetSubmit(){ $('#Submit').val(leGenSubmitVal).prop('disabled', false); }
+
+	// Progress bar state: 'running' (animated), 'success' (green 100%), 'error' (red 100%).
+	// Colours are forced inline because the theme styles .progress-bar with its own
+	// brand colour/stripes at a higher specificity than the Bootstrap state classes.
+	function leGenBarState(state){
+		var bar = $('#leGenBar');
+		bar.removeClass('progress-bar-striped active progress-bar-success progress-bar-danger').css('width','100%');
+		if(state === 'success'){
+			bar.addClass('progress-bar-success').css({'background-color':'#5cb85c','background-image':'none'});
+		} else if(state === 'error'){
+			bar.addClass('progress-bar-danger').css({'background-color':'#d9534f','background-image':'none'});
+		} else {
+			bar.addClass('progress-bar-striped active').css({'background-color':'','background-image':''});
+		}
+	}
+
+	function leGenPoll(host){
+		$.get('ajax.php?module=certman&command=generateLEStatus&host='+encodeURIComponent(host), function(res){
+			if(res && typeof res.log === 'string'){
+				var el = document.getElementById('leGenLog');
+				el.textContent = res.log.trim() !== '' ? res.log : '<?php echo _("Waiting for output...")?>';
+				el.scrollTop = el.scrollHeight;
+			}
+			if(res && res.finished){
+				if(res.success){
+					leGenBarState('success');
+					$('#leGenStatus').html('<i class="fa fa-check text-success"></i> <?php echo _("Certificate generated successfully. Redirecting...")?>');
+					setTimeout(function(){ window.location = 'config.php?display=certman'; }, 1500);
+				} else {
+					leGenBarState('error');
+					$('#leGenStatus').html('<i class="fa fa-times text-danger"></i> <?php echo _("Generation failed. See the log below.")?>');
+					$('#leGenClose').show();
+					leGenResetSubmit();
+				}
+				return;
+			}
+			$('#leGenStatus').html('<i class="fa fa-spinner fa-spin"></i> <?php echo _("Generating certificate, please wait. This can take a minute...")?>');
+			setTimeout(function(){ leGenPoll(host); }, 2000);
+		}, 'json').fail(function(){
+			setTimeout(function(){ leGenPoll(host); }, 3000);
+		});
+	}
+
+	$(document).ready(function(){
+		leGenSubmitVal = $('#Submit').val();
+		$('#leGenModal').on('hidden.bs.modal', leGenResetSubmit);
+		$('form[name=frm_certman]').on('submit', function(e){
+			// Intercept both new generation and edits of existing LE certificates.
+			var leAct = $('#certaction').val();
+			if(leAct !== 'add' && leAct !== 'edit'){ return true; }
+			if(this.checkValidity && !this.checkValidity()){
+				e.preventDefault();
+				if(this.reportValidity){ this.reportValidity(); }
+				return false;
+			}
+			e.preventDefault();
+			var form = this;
+			var host = ($('#host').val()||'').toLowerCase();
+			$('#leGenLog').text('<?php echo _("Waiting for output...")?>');
+			$('#leGenStatus').html('<i class="fa fa-spinner fa-spin"></i> <?php echo _("Starting...")?>');
+			$('#leGenClose').hide();
+			leGenBarState('running');
+			$('#leGenModal').modal({backdrop:'static', keyboard:false});
+			$('#leGenModal').modal('show');
+			$.post('ajax.php?module=certman&command=generateLEStart', $(form).serialize(), function(res){
+				if(!res || !res.status){
+					leGenBarState('error');
+					$('#leGenStatus').html('<i class="fa fa-times text-danger"></i> <?php echo _("Generation failed.")?>');
+					$('#leGenLog').text((res&&res.message)?res.message:'<?php echo _("Could not start generation.")?>');
+					$('#leGenClose').show();
+					leGenResetSubmit();
+					return;
+				}
+				leGenPoll(res.host || host);
+			}, 'json').fail(function(){
+				leGenBarState('error');
+				$('#leGenStatus').html('<i class="fa fa-times text-danger"></i> <?php echo _("Generation failed.")?>');
+				$('#leGenLog').text('<?php echo _("Could not start generation.")?>');
+				$('#leGenClose').show();
+				leGenResetSubmit();
+			});
+			return false;
+		});
+	});
+})();
+</script>

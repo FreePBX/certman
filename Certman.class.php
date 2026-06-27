@@ -14,8 +14,7 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use Exception;
 
-#[\AllowDynamicProperties]
-class Certman implements BMO {
+class Certman extends \FreePBX\DB_Helper implements BMO {
 	/* Asterisk Defaults */
 	private $defaults = array(
 		"sip" => array(
@@ -132,20 +131,53 @@ class Certman implements BMO {
 		$request = $_REQUEST;
 		$request['certaction'] = !empty($request['certaction']) ? $request['certaction'] : "";
 		switch($request['certaction']) {
-			case "installca":
+			case "savecert":
+				// Step 1: load/register the certificate (does NOT install it).
 				$pem = '';
 				if (!empty($_FILES['ca_file']['tmp_name']) && is_uploaded_file($_FILES['ca_file']['tmp_name'])) {
 					$pem = (string)file_get_contents($_FILES['ca_file']['tmp_name']);
 				} elseif (!empty($_POST['ca_pem'])) {
 					$pem = (string)$_POST['ca_pem'];
 				}
-				$res = $this->installSystemCA($pem, $_POST['ca_name'] ?? '');
+				$res = $this->saveSystemCA($pem, $_POST['ca_name'] ?? '');
 				if (!empty($res['status'])) {
 					$msg = $res['message'];
 					if (!empty($res['warning'])) { $msg .= ' ' . $res['warning']; }
 					$this->message = array('type' => 'success', 'message' => $msg);
 				} else {
 					$this->message = array('type' => 'danger', 'message' => $res['message']);
+				}
+			break;
+			case "installca":
+			case "uninstallca":
+				// Step 2: install / uninstall a loaded CA from the system trust store.
+				$fp = $_POST['fp'] ?? ($_REQUEST['fp'] ?? '');
+				$res = $this->setSystemCAInstall($fp, $request['certaction'] === 'installca');
+				if (!empty($res['status'])) {
+					$msg = $res['message'];
+					if (!empty($res['warning'])) { $msg .= ' ' . $res['warning']; }
+					$this->message = array('type' => 'success', 'message' => $msg);
+				} else {
+					$this->message = array('type' => 'danger', 'message' => $res['message']);
+				}
+			break;
+			case "reinstallca":
+				// Re-run the privileged reconcile to sync the trust store with the
+				// managed desired state (install missing, remove orphans).
+				$err = $this->triggerReconcile();
+				if ($err === '') {
+					$this->message = array('type' => 'success', 'message' => _("Reconcile triggered: the system trust store will be synced with the managed CAs."));
+				} else {
+					$this->message = array('type' => 'danger', 'message' => $err);
+				}
+			break;
+			case "removeca":
+				// Forget a CA entirely (and remove it from the system if installed).
+				$fp = $_POST['fp'] ?? ($_REQUEST['fp'] ?? '');
+				if ($this->removeManagedSystemCA($fp)) {
+					$this->message = array('type' => 'success', 'message' => _("CA removed from Certman and from the system trust store."));
+				} else {
+					$this->message = array('type' => 'danger', 'message' => _("Could not find that managed CA."));
 				}
 			break;
 			case "importlocally":
@@ -583,7 +615,26 @@ class Certman implements BMO {
 			break;
 			case 'systemcas':
 				$systemcas = $this->getSystemCAs();
-				echo load_view(__DIR__.'/views/systemcas.php',array('systemcas' => $systemcas, 'message' => $this->message));
+				// Annotate the managed (desired-state) CAs with whether each is
+				// actually present in the system trust store, so the view can flag
+				// drift (managed but missing).
+				$present = array();
+				foreach ($systemcas['cas'] as $c) {
+					if (!empty($c['fingerprint'])) { $present[$c['fingerprint']] = true; }
+				}
+				$managed = array();
+				foreach ($this->getManagedSystemCAs() as $fp => $rec) {
+					$target = strtoupper(implode(':', str_split($fp, 2)));
+					$managed[] = array(
+						'fp'          => $fp,
+						'fingerprint' => $target,
+						'cn'          => $rec['cn'] ?? ($rec['friendly'] ?? $fp),
+						'added'       => $rec['added'] ?? 0,
+						'wantInstall' => !empty($rec['install']),
+						'present'     => isset($present[$target]),
+					);
+				}
+				echo load_view(__DIR__.'/views/systemcas.php',array('systemcas' => $systemcas, 'managed' => $managed, 'message' => $this->message));
 			break;
 			default:
 				$certs = $this->getAllManagedCertificates();
@@ -910,20 +961,16 @@ class Certman implements BMO {
 	}
 
 	/**
-	 * Install a CA certificate into the system trust store.
-	 *
-	 * Validates the supplied PEM, stages it in the module's ca-staging directory
-	 * and triggers the privileged "install-ca" hook (run as root by the Sysadmin
-	 * incron runner) which copies it into the distribution trust anchors and
-	 * refreshes the trust store. When already running as root (e.g. fwconsole)
-	 * the hook is executed directly. Installation is confirmed by re-scanning the
-	 * trust store for the certificate fingerprint.
+	 * Step 1 - Load a CA certificate into Certman (does NOT touch the system trust
+	 * store). Validates the PEM and stores it as managed desired-state in the
+	 * KVStore. Installing/uninstalling it into the OS is a separate action
+	 * (setSystemCAInstall()), so the operator decides when it becomes trusted.
 	 *
 	 * @param  string $pem          PEM encoded CA certificate
 	 * @param  string $friendlyName Optional friendly name used for the stored filename
-	 * @return array  array('status' => bool, 'message' => string[, 'warning' => string])
+	 * @return array  array('status'=>bool, 'message'=>string[, 'fp'=>string, 'warning'=>string])
 	 */
-	public function installSystemCA($pem, $friendlyName = '') {
+	public function saveSystemCA($pem, $friendlyName = '') {
 		$pem = trim((string)$pem);
 		if ($pem === '') {
 			return array('status' => false, 'message' => _('No certificate data provided'));
@@ -931,7 +978,7 @@ class Certman implements BMO {
 		if (strlen($pem) > 100000) {
 			return array('status' => false, 'message' => _('The supplied certificate data is too large.'));
 		}
-		// Never accept a private key here - we only install public CA certificates.
+		// Never accept a private key here - we only handle public CA certificates.
 		if (stripos($pem, 'PRIVATE KEY') !== false) {
 			return array('status' => false, 'message' => _('The supplied data contains a private key; provide only the CA certificate.'));
 		}
@@ -961,70 +1008,277 @@ class Certman implements BMO {
 		$fpShort = $fp ? substr(preg_replace('/[^a-f0-9]/i', '', $fp), 0, 12) : '';
 		$base = 'certman-' . $name . ($fpShort !== '' ? '-' . $fpShort : '');
 
-		// Stage the PEM where the root hook can read it.
-		$staging = __DIR__ . '/ca-staging';
-		if (!is_dir($staging) && !@mkdir($staging, 0775, true)) {
-			return array('status' => false, 'message' => sprintf(_('Unable to create staging directory %s'), $staging));
+		// Preserve the install flag if this CA is being re-uploaded.
+		$existing = $this->getConfig($fp, 'systemcas');
+		$install  = (is_array($existing) && !empty($existing['install']));
+
+		// Persist as desired state in the KVStore (single source of truth: survives
+		// reboots, trust-store wipes and is included in the module backup). Large
+		// values are transparently stored as blobs by DB_Helper, so a PEM fits.
+		$this->setConfig($fp, array(
+			'pem'      => $pem,
+			'cn'       => (string)$rawCn,
+			'friendly' => (string)$friendlyName,
+			'base'     => $base,
+			'isca'     => $isCa,
+			'install'  => $install,
+			'added'    => time(),
+		), 'systemcas');
+		dbug("saveSystemCA: stored CA fp=$fp base=$base install=" . ($install ? '1' : '0'));
+
+		$result = array(
+			'status'  => true,
+			'fp'      => $fp,
+			'message' => sprintf(_('CA "%s" was loaded. Use "Install" to add it to the system trust store.'), $cn),
+		);
+		if (!$isCa) {
+			$result['warning'] = _('Note: this certificate is not marked as a CA (basicConstraints CA:TRUE).');
 		}
-		// Clean slate: drop any leftover staged files so the root hook only ever
-		// processes the certificate we are about to write.
-		foreach ((array)glob($staging . '/*.{crt,result}', GLOB_BRACE) as $stale) {
-			@unlink($stale);
-		}
-		$crtFile = $staging . '/' . $base . '.crt';
-		$resultFile = $staging . '/' . $base . '.result';
-		if (@file_put_contents($crtFile, $pem . "\n") === false) {
-			return array('status' => false, 'message' => _('Unable to stage the certificate for installation'));
+		return $result;
+	}
+
+	/**
+	 * Step 2 - Install ($install=true) or uninstall ($install=false) a managed CA
+	 * from the system trust store. Flips the desired 'install' flag in the KVStore
+	 * and runs the privileged reconcile (inline as root, else via the incron hook).
+	 *
+	 * @param  string $fp      SHA1 fingerprint of a managed CA
+	 * @param  bool   $install true to install, false to uninstall
+	 * @return array  array('status'=>bool, 'message'=>string[, 'warning'=>string])
+	 */
+	public function setSystemCAInstall($fp, $install) {
+		$fp = strtolower(preg_replace('/[^a-f0-9]/i', '', (string)$fp));
+		if ($fp === '') { return array('status' => false, 'message' => _('Invalid fingerprint')); }
+		$rec = $this->getConfig($fp, 'systemcas');
+		if (!is_array($rec)) { return array('status' => false, 'message' => _('That CA is not managed by Certman.')); }
+
+		$rec['install'] = (bool)$install;
+		$this->setConfig($fp, $rec, 'systemcas');
+		$cn = htmlspecialchars($rec['cn'] ?? $fp, ENT_QUOTES);
+		dbug("setSystemCAInstall: fp=$fp install=" . ($install ? '1' : '0'));
+
+		$target = strtoupper(implode(':', str_split($fp, 2)));
+		$err = $this->triggerReconcile(function () use ($target, $install) {
+			return $install ? $this->systemHasFingerprint($target) : !$this->systemHasFingerprint($target);
+		});
+		$present = $this->systemHasFingerprint($target);
+
+		if ($install) {
+			if ($present) {
+				$r = array('status' => true, 'message' => sprintf(_('CA "%s" was installed into the system trust store.'), $cn));
+				if (empty($rec['isca'])) { $r['warning'] = _('Note: this certificate is not marked as a CA (basicConstraints CA:TRUE).'); }
+				return $r;
+			}
+			return array('status' => true,
+				'message' => sprintf(_('CA "%s" was marked for installation.'), $cn),
+				'warning' => $err !== '' ? $err : _('It is not present in the system trust store yet; it will be installed on the next reconcile. Ensure the Sysadmin module and incrond are available.'));
 		}
 
-		// Run the privileged install.
+		if (!$present) {
+			return array('status' => true, 'message' => sprintf(_('CA "%s" was uninstalled from the system trust store.'), $cn));
+		}
+		return array('status' => true,
+			'message' => sprintf(_('CA "%s" was marked for uninstall.'), $cn),
+			'warning' => $err !== '' ? $err : _('It is still present in the system trust store; it will be removed on the next reconcile.'));
+	}
+
+	/**
+	 * One-shot install (CLI / API back-compat): load a CA and install it in a
+	 * single call. Equivalent to saveSystemCA() followed by setSystemCAInstall(true).
+	 *
+	 * @param  string $pem          PEM encoded CA certificate
+	 * @param  string $friendlyName Optional friendly name
+	 * @return array  array('status'=>bool, 'message'=>string[, 'warning'=>string])
+	 */
+	public function installSystemCA($pem, $friendlyName = '') {
+		$res = $this->saveSystemCA($pem, $friendlyName);
+		if (empty($res['status'])) { return $res; }
+		return $this->setSystemCAInstall($res['fp'], true);
+	}
+
+	/**
+	 * Run the privileged reconcile (inline when already root, otherwise via the
+	 * Sysadmin incron hook). Optionally polls a condition (for the async hook
+	 * path). Returns '' on success, or a human-readable error message.
+	 *
+	 * @param  callable|null $waitFor returns true once the desired state is reached
+	 * @return string
+	 */
+	private function triggerReconcile($waitFor = null) {
 		try {
 			if (function_exists('posix_geteuid') && posix_geteuid() === 0) {
-				// Already root (e.g. fwconsole) - run the hook directly, restricted to our file.
-				exec(escapeshellarg(__DIR__ . '/hooks/install-ca') . ' ' . escapeshellarg($base . '.crt') . ' 2>&1');
+				$this->reconcileSystemCAs();
 			} else {
+				// The hook runs "fwconsole certificates --reconcile-system-cas" as
+				// root; no data travels through incron (it all lives in the KVStore).
 				$this->runHook('install-ca');
-				// incron is asynchronous; wait for the hook to drop its result file.
-				$waited = 0;
-				while (!file_exists($resultFile) && $waited < 20) {
-					usleep(500000);
-					$waited++;
+				if (is_callable($waitFor)) {
+					$waited = 0;
+					while ($waited < 20 && !$waitFor()) { usleep(500000); $waited++; }
+					dbug("triggerReconcile: waited " . ($waited * 0.5) . "s");
 				}
 			}
+			return '';
 		} catch (\Exception $e) {
-			@unlink($crtFile);
-			return array('status' => false, 'message' => sprintf(_('Unable to run the privileged install hook: %s. The Sysadmin module is required to install CAs into the system trust store from the web interface.'), $e->getMessage()));
+			dbug("triggerReconcile: " . $e->getMessage());
+			return sprintf(_('The privileged reconcile could not run now (%s). Ensure the Sysadmin module is installed and incrond is running.'), $e->getMessage());
+		}
+	}
+
+	/**
+	 * The CA certificates Certman manages (desired state), keyed by SHA1
+	 * fingerprint, as stored by installSystemCA() in the KVStore.
+	 *
+	 * @return array array(fpLower => array('pem','cn','friendly','base','isca','added'))
+	 */
+	public function getManagedSystemCAs() {
+		$out = array();
+		foreach ((array)$this->getAll('systemcas') as $fp => $rec) {
+			if (is_array($rec)) { $out[$fp] = $rec; }
+		}
+		return $out;
+	}
+
+	/**
+	 * True if a certificate with the given colon-separated uppercase SHA1
+	 * fingerprint is present in the system trust store right now.
+	 */
+	public function systemHasFingerprint($target) {
+		$sys = $this->getSystemCAs();
+		foreach ($sys['cas'] as $c) {
+			if (!empty($c['fingerprint']) && $c['fingerprint'] === $target) { return true; }
+		}
+		return false;
+	}
+
+	/**
+	 * Reconcile the OS trust store with the managed (KVStore) desired state:
+	 * install every managed CA that is not already present, then refresh the
+	 * trust store once. MUST run as root (called by the install-ca hook or by
+	 * "fwconsole certificates --reconcile-system-cas"). Idempotent.
+	 *
+	 * @return array array('mode','dest','installed'[],'skipped'[],'errors'[])
+	 */
+	public function reconcileSystemCAs() {
+		$managed = $this->getManagedSystemCAs();
+		list($mode, $dest) = $this->trustStoreTarget();
+
+		// Snapshot what is already trusted once (getSystemCAs re-parses every store).
+		$present = array();
+		$sys = $this->getSystemCAs();
+		foreach ($sys['cas'] as $c) {
+			if (!empty($c['fingerprint'])) { $present[$c['fingerprint']] = true; }
 		}
 
-		$hookResult = file_exists($resultFile) ? trim((string)@file_get_contents($resultFile)) : '';
-		@unlink($resultFile);
-		@unlink($crtFile); // the hook removes it on success; clean up just in case
+		$installed = array();
+		$skipped   = array();
+		$removed   = array();
+		$errors    = array();
+		$changed   = false;
 
-		// The hook is authoritative: it reports "OK" only after update-ca-* actually
-		// succeeded (and rolls the anchor back otherwise).
-		$hookOk = ($hookResult !== '' && stripos($hookResult, 'OK') === 0);
+		// 1) Install every CA marked for install that is not already trusted, and
+		//    build the set of anchor filenames we expect to own afterwards. CAs that
+		//    are managed but NOT marked for install are intentionally excluded, so
+		//    their anchors (if any) are removed as orphans in step 2.
+		$expected = array();
+		foreach ($managed as $fp => $rec) {
+			if (empty($rec['install'])) { continue; } // loaded but not installed
+			$base = !empty($rec['base']) ? preg_replace('/[^A-Za-z0-9._-]+/', '_', $rec['base']) : ('certman-' . $fp);
+			$expected[$base . '.crt'] = true;
 
-		// Only when the hook left no result (e.g. it ran fully out-of-band) do we
-		// fall back to confirming the certificate is present in the trust store.
-		$installed = $hookOk;
-		if (!$installed && $hookResult === '' && $fp) {
 			$target = strtoupper(implode(':', str_split($fp, 2)));
-			$sys = $this->getSystemCAs();
-			foreach ($sys['cas'] as $c) {
-				if (!empty($c['fingerprint']) && $c['fingerprint'] === $target) { $installed = true; break; }
+			if (isset($present[$target])) { $skipped[] = $fp; continue; }
+			if ($mode === 'none') { $errors[] = "$fp: no supported system trust store"; continue; }
+
+			$pem = isset($rec['pem']) ? (string)$rec['pem'] : '';
+			if (empty($pem) || !@openssl_x509_parse($pem)) { $errors[] = "$fp: invalid stored PEM"; continue; }
+
+			$anchor = rtrim($dest, '/') . '/' . $base . '.crt';
+			if (@file_put_contents($anchor, $pem . "\n") === false) {
+				$errors[] = "$fp: could not write $anchor (need root / disk space?)";
+				continue;
+			}
+			@chmod($anchor, 0644);
+			$installed[] = $fp;
+			$changed = true;
+		}
+
+		// 2) Remove orphaned anchors: any certman-* anchor no longer in the desired
+		//    state (i.e. the operator uninstalled it). We only ever touch our own
+		//    "certman-" prefixed files, never the distribution's CAs.
+		if ($mode !== 'none') {
+			foreach ((array)glob(rtrim($dest, '/') . '/certman-*.crt') as $anchor) {
+				if (isset($expected[basename($anchor)])) { continue; }
+				if (@unlink($anchor)) { $removed[] = basename($anchor); $changed = true; }
+				else { $errors[] = "could not remove orphan anchor " . basename($anchor) . " (need root?)"; }
 			}
 		}
 
-		if ($installed) {
-			$result = array('status' => true, 'message' => sprintf(_('CA "%s" was installed into the system trust store.'), $cn));
-			if (!$isCa) {
-				$result['warning'] = _('Note: this certificate is not marked as a CA (basicConstraints CA:TRUE).');
+		if ($changed && $mode !== 'none') {
+			if (!$this->refreshTrustStore($mode)) {
+				$errors[] = "trust store refresh ($mode) failed";
 			}
-			return $result;
 		}
 
-		$detail = $hookResult !== '' ? htmlspecialchars($hookResult, ENT_QUOTES) : _('the certificate was staged but could not be confirmed in the system trust store. Ensure the Sysadmin module is installed and up to date.');
-		return array('status' => false, 'message' => sprintf(_('Could not confirm installation of CA "%s": %s'), $cn, $detail));
+		$sum = array('mode' => $mode, 'dest' => $dest, 'installed' => $installed, 'skipped' => $skipped, 'removed' => $removed, 'errors' => $errors);
+		dbug("reconcileSystemCAs: " . json_encode($sum));
+		return $sum;
+	}
+
+	/**
+	 * Uninstall a managed CA: drop it from the desired state (KVStore) and trigger
+	 * the privileged reconcile, which removes the orphaned trust anchor as root and
+	 * refreshes the store. The KVStore removal always works; the anchor removal
+	 * happens via the root reconcile (inline when already root, else via the hook).
+	 * Returns true if the CA was managed and has been scheduled for removal.
+	 */
+	public function removeManagedSystemCA($fp) {
+		$fp = strtolower(preg_replace('/[^a-f0-9]/i', '', (string)$fp));
+		if ($fp === '') { return false; }
+		$managed = $this->getManagedSystemCAs();
+		if (!isset($managed[$fp])) { return false; }
+
+		// Drop from desired state; the privileged reconcile removes the anchor.
+		$rec = $managed[$fp];
+		$base = !empty($rec['base']) ? preg_replace('/[^A-Za-z0-9._-]+/', '_', $rec['base']) : ('certman-' . $fp);
+		$this->delConfig($fp, 'systemcas');
+		dbug("removeManagedSystemCA: dropped $fp from KVStore; triggering reconcile");
+		list($mode, $dest) = $this->trustStoreTarget();
+		$anchorGone = function () use ($mode, $dest, $base) {
+			return $mode === 'none' || !is_file(rtrim($dest, '/') . '/' . $base . '.crt');
+		};
+		$this->triggerReconcile($anchorGone);
+		return true;
+	}
+
+	/**
+	 * Pick the distribution trust mechanism. Returns array($mode, $destDir) where
+	 * $mode is 'rhel', 'debian' or 'none'.
+	 */
+	private function trustStoreTarget() {
+		if ($this->haveCmd('update-ca-trust') && is_dir('/etc/pki/ca-trust/source/anchors')) {
+			return array('rhel', '/etc/pki/ca-trust/source/anchors');
+		}
+		if ($this->haveCmd('update-ca-certificates') && is_dir('/usr/local/share/ca-certificates')) {
+			return array('debian', '/usr/local/share/ca-certificates');
+		}
+		return array('none', '');
+	}
+
+	private function haveCmd($cmd) {
+		$out = array(); $rc = 1;
+		@exec('command -v ' . escapeshellarg($cmd) . ' 2>/dev/null', $out, $rc);
+		return $rc === 0;
+	}
+
+	private function refreshTrustStore($mode) {
+		$out = array(); $rc = 1;
+		if ($mode === 'rhel') {
+			@exec('update-ca-trust extract 2>&1', $out, $rc);
+		} else {
+			@exec('update-ca-certificates 2>&1', $out, $rc);
+		}
+		return $rc === 0;
 	}
 
 	/**
@@ -1366,6 +1620,15 @@ class Certman implements BMO {
 	 * FreePBX chown hooks
 	 */
 	public function chownFreepbx() {
+		$files = array();
+		// The privileged hooks under hooks/ are executed AS ROOT by the Sysadmin
+		// incron runner, which only runs a hook when it carries the right ownership
+		// and executable bit. Register the directory so 'fwconsole chown' fixes the
+		// permissions of every hook (including newly added ones such as install-ca);
+		// without this the trigger is consumed by incron but the hook never runs.
+		$files[] = array('type' => 'execdir',
+				'path' => __DIR__ . "/hooks",
+				'perms' => 0755);
 		$certs = $this->getAllManagedCertificates();
 		$location = $this->PKCS->getKeysLocation();
 		$files[] = array('type' => 'rdir',
@@ -2320,6 +2583,10 @@ class Certman implements BMO {
 		switch ($req) {
 			case 'makeDefault':
 			case 'getJSON':
+			case 'getManagedCAsGrid':
+			case 'getSystemCAsGrid':
+			case 'generateLEStart':
+			case 'generateLEStatus':
 				return true;
 			break;
 		}
@@ -2333,7 +2600,180 @@ class Certman implements BMO {
 		if('getJSON' == $_REQUEST['command'] && 'grid' == $_REQUEST['jdata']){
 			return $this->getAllManagedCertificates();
 		}
+		// bootstrap-table data-url grids for the "Installed CAs" page.
+		if('getManagedCAsGrid' == $_REQUEST['command']){
+			return $this->buildManagedCAsGrid();
+		}
+		if('getSystemCAsGrid' == $_REQUEST['command']){
+			return $this->buildSystemCAsGrid();
+		}
+		// Background Let's Encrypt generation (launch + status polling).
+		if('generateLEStart' == $_REQUEST['command']){
+			return $this->startLEGeneration($_POST);
+		}
+		if('generateLEStatus' == $_REQUEST['command']){
+			return $this->getLEGenerationStatus($_REQUEST['host'] ?? '');
+		}
 		return false;
+	}
+
+	/**
+	 * Paths of the log / done-marker files for a background LE generation job.
+	 * They live in the Asterisk spool tmp directory (writable by the web user).
+	 */
+	private function leGenFiles($host) {
+		$safe  = preg_replace('/[^a-z0-9._-]+/i', '_', basename(strtolower((string)$host)));
+		$spool = $this->FreePBX->Config->get('ASTSPOOLDIR');
+		if (empty($spool)) { $spool = '/var/spool/asterisk'; }
+		$dir = rtrim($spool, '/') . '/tmp';
+		return array(
+			'safe' => $safe,
+			'dir'  => $dir,
+			'log'  => $dir . '/certman-legen-' . $safe . '.log',
+			'done' => $dir . '/certman-legen-' . $safe . '.done',
+		);
+	}
+
+	/**
+	 * Launch a Let's Encrypt certificate generation in the background and return
+	 * immediately. The actual work runs as a detached "fwconsole certificates
+	 * --generate --type=le ..." process whose output is captured to a per-host log
+	 * file; an exit-code marker file signals completion. The web side polls
+	 * getLEGenerationStatus() to follow progress. Mirrors the synchronous add flow.
+	 *
+	 * @param  array $p POST data from the LE form
+	 * @return array array('status'=>bool, 'host'=>string[, 'message'=>string])
+	 */
+	public function startLEGeneration($p) {
+		$host  = isset($p['host'])  ? basename(strtolower(trim($p['host']))) : '';
+		// Editing an existing certificate: the host is shown as text (not an input),
+		// so it is not in the form - resolve it from the certificate id.
+		if ($host === '' && !empty($p['cid'])) {
+			$cd = $this->getCertificateDetails($p['cid']);
+			if (!empty($cd['basename'])) { $host = basename(strtolower($cd['basename'])); }
+		}
+		$email = isset($p['email']) ? trim($p['email']) : '';
+		$C     = isset($p['C'])     ? trim($p['C']) : '';
+		$ST    = isset($p['ST'])    ? trim($p['ST']) : '';
+		$acmeUrlEarly = !empty($p['acme_url']) ? trim($p['acme_url']) : '';
+		// Host is always required. The public Let's Encrypt service also needs country
+		// and email; a private ACME server (custom URL) only needs the host.
+		if ($host === '') {
+			return array('status' => false, 'message' => _('Host name is required.'));
+		}
+		if ($acmeUrlEarly === '' && ($email === '' || $C === '')) {
+			return array('status' => false, 'message' => _('Country and email are required for the public Let\'s Encrypt service.'));
+		}
+		// New certificate: refuse if one already exists (matches the add handler).
+		if (empty($p['cid']) && $this->checkCertificateName($host)) {
+			return array('status' => false, 'message' => sprintf(_('%s already exists!'), $host));
+		}
+
+		$san = array();
+		if (!empty($p['SAN'])) {
+			$san = array_unique(array_filter(array_map('trim', explode("\n", strtolower($p['SAN'])))));
+		}
+		$acmeUrl      = $acmeUrlEarly;
+		$acmeCaBundle = !empty($p['acme_ca'])  ? trim($p['acme_ca'])  : '';
+		$acmeInsecure = !empty($p['acme_insecure']);
+
+		$f = $this->leGenFiles($host);
+		if (!is_dir($f['dir'])) { @mkdir($f['dir'], 0775, true); }
+		@unlink($f['done']);
+		@unlink($f['log']);
+
+		$fwconsole = rtrim((string)($this->FreePBX->Config->get('AMPSBIN') ?: '/usr/sbin'), '/') . '/fwconsole';
+		$cmd = escapeshellarg($fwconsole) . ' certificates --generate --type=le'
+			. ' --hostname=' . escapeshellarg($host)
+			. ' --force';
+		// Optional fields - only pass them when provided; the CLI/updateLE default them.
+		if ($C !== '')     { $cmd .= ' --country-code=' . escapeshellarg($C); }
+		if ($ST !== '')    { $cmd .= ' --state=' . escapeshellarg($ST); }
+		if ($email !== '') { $cmd .= ' --email=' . escapeshellarg($email); }
+		foreach ($san as $s) { $cmd .= ' --san=' . escapeshellarg($s); }
+		if ($acmeUrl !== '') {
+			$cmd .= ' --acme-url=' . escapeshellarg($acmeUrl);
+			if ($acmeCaBundle !== '') { $cmd .= ' --acme-ca=' . escapeshellarg($acmeCaBundle); }
+			if ($acmeInsecure) { $cmd .= ' --acme-insecure'; }
+		}
+
+		// Run detached: capture output to the log, then write the exit code marker.
+		$script = $cmd . ' > ' . escapeshellarg($f['log']) . ' 2>&1; echo $? > ' . escapeshellarg($f['done']);
+		$full = 'nohup bash -c ' . escapeshellarg($script) . ' >/dev/null 2>&1 &';
+		exec($full);
+		dbug("startLEGeneration: launched background generation for $host");
+
+		return array('status' => true, 'host' => $host);
+	}
+
+	/**
+	 * Read the status of a background LE generation job started by
+	 * startLEGeneration(). Returns the captured log plus running/finished/success.
+	 *
+	 * @param  string $host
+	 * @return array
+	 */
+	public function getLEGenerationStatus($host) {
+		$f = $this->leGenFiles($host);
+		$log      = is_file($f['log'])  ? (string)@file_get_contents($f['log']) : '';
+		$finished = is_file($f['done']);
+		$success  = false;
+		if ($finished) {
+			$success = (trim((string)@file_get_contents($f['done'])) === '0');
+		}
+		return array(
+			'status'   => true,
+			'running'  => !$finished,
+			'finished' => $finished,
+			'success'  => $success,
+			'log'      => $log,
+		);
+	}
+
+	/**
+	 * Raw rows for the "CAs Loaded into Certman" bootstrap-table (AJAX data-url).
+	 * The view renders these with JS data-formatter functions.
+	 */
+	private function buildManagedCAsGrid() {
+		$sys = $this->getSystemCAs();
+		$present = array();
+		foreach ($sys['cas'] as $c) {
+			if (!empty($c['fingerprint'])) { $present[$c['fingerprint']] = true; }
+		}
+		$rows = array();
+		foreach ($this->getManagedSystemCAs() as $fp => $rec) {
+			$target = strtoupper(implode(':', str_split($fp, 2)));
+			$rows[] = array(
+				'cn'          => (string)($rec['cn'] ?? ($rec['friendly'] ?? $fp)),
+				'fingerprint' => $target,
+				'wantInstall' => !empty($rec['install']),
+				'present'     => isset($present[$target]),
+				'fp'          => $fp,
+			);
+		}
+		return $rows;
+	}
+
+	/**
+	 * Raw rows for the "Trusted CA Certificates" bootstrap-table (AJAX data-url).
+	 */
+	private function buildSystemCAsGrid() {
+		$sys = $this->getSystemCAs();
+		$now = time();
+		$rows = array();
+		foreach ($sys['cas'] as $ca) {
+			$rows[] = array(
+				'cn'          => (string)$ca['cn'],
+				'subject'     => (string)$ca['subject'],
+				'issuer'      => (string)$ca['issuer'],
+				'selfSigned'  => !empty($ca['selfSigned']),
+				'expires'     => !empty($ca['validTo_time_t']) ? date('Y-m-d', $ca['validTo_time_t']) : '-',
+				'expired'     => (!empty($ca['validTo_time_t']) && $ca['validTo_time_t'] < $now),
+				'fingerprint' => (string)$ca['fingerprint'],
+				'source'      => (string)$ca['source'],
+			);
+		}
+		return $rows;
 	}
 
 	/**
@@ -2456,9 +2896,13 @@ class Certman implements BMO {
 
 
 	public function runHook($hookname, $params = false) {
-		// Runs a new style Syadmin hook
+		// Runs a new style Sysadmin hook (executed as root by the incron runner).
+		// Mirrors the proven mechanism used by other working modules: it throws on
+		// every failure (so the caller sees a real error instead of a silent false)
+		// and supports passing params inside the trigger file (.CONTENTS) on modern
+		// sysadmin RPMs, falling back to the legacy filename-param scheme otherwise.
 		if (!file_exists("/etc/incron.d/sysadmin")) {
-			throw new \Exception("Sysadmin RPM not up to date");
+			throw new \Exception("Sysadmin RPM not up to date, or not a known OS.");
 		}
 
 		$basedir = "/var/spool/asterisk/incron";
@@ -2473,41 +2917,61 @@ class Certman implements BMO {
 
 		// Cool. So I want to run this hook..
 		$filename = "$basedir/certman.$hookname";
+		if (file_exists($filename)) {
+			throw new \Exception("Hook $hookname is already running");
+		}
 
-		// Do I have any params?
+		// On a modern sysadmin RPM we can put the params INSIDE the trigger file
+		// (no filename length limit); otherwise they go into the filename.
+		$max = false;
+		if (file_exists("/etc/sysadmin_contents_max")) {
+			$fh = fopen("/etc/sysadmin_contents_max", "r");
+			if ($fh) { $max = (int) fgets($fh); fclose($fh); }
+		}
+		if ($max > 65535 || $max < 128) { $max = false; }
+
+		$contents = "";
 		if ($params) {
-			// Oh. I do. If it's an array, json encode and base64
 			if (is_array($params)) {
 				$b = base64_encode(gzcompress(json_encode($params)));
-				// Note we derp the base64, changing / to _, because filepath.
-				$filename .= ".".str_replace('/', '_', $b);
+				if ($max) {
+					if (strlen($b) > $max) {
+						throw new \Exception("Contents too big for current sysadmin-rpm. This is possibly a bug!");
+					}
+					$contents = $b;
+					$filename .= ".CONTENTS";
+				} else {
+					// Legacy scheme: base64 in the filename, '/' derped to '_'.
+					$filename .= ".".str_replace('/', '_', $b);
+					if (strlen($filename) > 200) {
+						throw new \Exception("Too much data, and old sysadmin rpm. Please run 'yum update'");
+					}
+				}
+			} elseif (is_object($params)) {
+				throw new \Exception("Can't pass objects to hooks");
 			} else {
-				// Cast it to a string if it's anything else, and then make sure
-				// it doesn't have any spaces.
+				// Cast to string and strip blanks so it's filename-safe.
 				$filename .= ".".preg_replace("/[[:blank:]]+/", "", (string) $params);
 			}
 		}
 
-		// Make sure it doesn't exist, if it was left hanging around
-		// for some reason
-		@unlink($filename);
-
 		$fh = fopen($filename, "w+");
 		if ($fh === false) {
-			// WTF, unable to create file?
-			return false;
+			throw new \Exception("Unable to create hook trigger '$filename'");
 		}
-
-		// Now incron does its thing.
+		fwrite($fh, $contents);
+		// As soon as we close it, incron does its thing.
 		fclose($fh);
 
-		// Wait .5 of a second, make sure it's been deleted.
-		usleep(500000);
-		if (!file_exists($filename)) {
-			return true;
+		// Wait up to 10 seconds for incron to consume (delete) the trigger.
+		$maxloops = 20;
+		while ($maxloops--) {
+			if (!file_exists($filename)) {
+				return true;
+			}
+			usleep(500000);
 		}
-		// Odd. It should be gone. Something went wrong.
-		return false;
+		throw new \Exception("Hook file '$filename' was not picked up by Incron after 10 seconds. Is incrond running?");
 	}
 
 	function addAutoUpdateCron() {

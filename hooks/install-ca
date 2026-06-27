@@ -1,87 +1,23 @@
 #!/bin/bash
-# Certificate Manager - install CA certificate(s) into the system trust store.
+# Certificate Manager - privileged trust-store reconcile.
 #
-# This hook is executed AS ROOT by the Sysadmin incron runner (see runHook()).
-# The web UI, running as the unprivileged web user, stages a PEM certificate as a
-# *.crt file in the module's ca-staging directory; this hook copies it into the
-# distribution trust anchors and refreshes the trust store. For every staged file
-# it writes a <name>.result file the web side reads back, then removes the input.
+# Executed AS ROOT by the Sysadmin incron runner (triggered by Certman::runHook).
+# It carries no data: the CA certificates to trust live in the module's KVStore.
+# All this hook does is run, as root, the reconcile command that reads that
+# desired state and installs into the OS trust store anything still missing.
 #
-# An optional argument restricts processing to a single staged file (basename
-# only); without it, the whole directory is processed but stale files (planted
-# and left behind) are ignored as a defence-in-depth measure.
+# Output is appended to a log so failures are diagnosable (incron discards stdout).
 
-MODDIR="$(cd "$(dirname "$0")/.." && pwd)"
-STAGING="$MODDIR/ca-staging"
-TARGET="$1"
+LOG="/var/log/asterisk/certman-install-ca.log"
+[ -d /var/log/asterisk ] && [ -w /var/log/asterisk ] || LOG="/var/spool/asterisk/tmp/certman-install-ca.log"
 
-[ -d "$STAGING" ] || exit 0
+FWCONSOLE="$(command -v fwconsole 2>/dev/null)"
+[ -n "$FWCONSOLE" ] || FWCONSOLE="/usr/sbin/fwconsole"
 
-# Pick the distribution trust mechanism.
-if command -v update-ca-trust >/dev/null 2>&1 && [ -d /etc/pki/ca-trust/source/anchors ]; then
-	DEST="/etc/pki/ca-trust/source/anchors"
-	MODE="rhel"
-elif command -v update-ca-certificates >/dev/null 2>&1 && [ -d /usr/local/share/ca-certificates ]; then
-	DEST="/usr/local/share/ca-certificates"
-	MODE="debian"
-else
-	MODE="none"
-fi
-
-# Determine which staged files to process.
-if [ -n "$TARGET" ]; then
-	# basename() ensures the argument can never escape the staging directory.
-	files=("$STAGING/$(basename "$TARGET")")
-else
-	shopt -s nullglob
-	files=("$STAGING"/*.crt)
-fi
-
-for f in "${files[@]}"; do
-	[ -f "$f" ] || continue
-	[[ "$f" == *.crt ]] || continue
-	base="$(basename "${f%.crt}")"
-	result="${f%.crt}.result"
-
-	# Defence in depth: when processing the whole directory, ignore (and remove)
-	# stale staged files older than 5 minutes that may have been planted.
-	if [ -z "$TARGET" ] && [ -n "$(find "$f" -mmin +5 2>/dev/null)" ]; then
-		rm -f "$f"
-		continue
-	fi
-
-	if [ "$MODE" = "none" ]; then
-		echo "ERROR: no supported system trust store found (need update-ca-trust or update-ca-certificates)" > "$result"
-		rm -f "$f"
-		continue
-	fi
-
-	# Make sure it really is a certificate before trusting it.
-	if ! openssl x509 -in "$f" -noout >/dev/null 2>&1; then
-		echo "ERROR: not a valid PEM certificate" > "$result"
-		rm -f "$f"
-		continue
-	fi
-
-	if cp "$f" "$DEST/$base.crt" 2>/dev/null; then
-		chmod 0644 "$DEST/$base.crt"
-		if [ "$MODE" = "rhel" ]; then
-			update-ca-trust extract >/dev/null 2>&1
-		else
-			update-ca-certificates >/dev/null 2>&1
-		fi
-		rc=$?
-		if [ "$rc" -eq 0 ]; then
-			echo "OK: installed as $DEST/$base.crt" > "$result"
-		else
-			# Roll back so we never leave an anchor that the trust store didn't accept.
-			rm -f "$DEST/$base.crt"
-			echo "ERROR: trust store update failed (exit $rc)" > "$result"
-		fi
-	else
-		echo "ERROR: could not write to $DEST" > "$result"
-	fi
-	rm -f "$f"
-done
+{
+	echo "[$(date '+%Y-%m-%d %H:%M:%S')] [$$] install-ca: reconcile as $(id -un) using $FWCONSOLE"
+	"$FWCONSOLE" certificates --reconcile-system-cas 2>&1
+	echo "[$(date '+%Y-%m-%d %H:%M:%S')] [$$] install-ca: reconcile exit=$?"
+} >> "$LOG" 2>&1
 
 exit 0
