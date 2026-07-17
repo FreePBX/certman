@@ -712,6 +712,13 @@ class Certman implements BMO {
 				exec(fpbx_which("fwconsole")." reload");
 				// Reload HAProxy
 				$this->reloadHAProxyIfEnabled();
+				//restart aserisk if type -s le and its set CERT_ASTERISK_RESTART_AFTER_UPDATE
+				if($cert['type'] == 'le' && $this->FreePBX->Config->get('CERT_ASTERISK_RESTART_AFTER_UPDATE')) {
+					$a = fpbx_which("asterisk");
+					if(!empty($a)) {
+						exec($a . " -rx 'core restart now'");
+					}
+				}
 			}
 		}
 		$notification = '';
