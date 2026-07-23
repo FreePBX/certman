@@ -86,6 +86,13 @@ class Certman implements BMO {
 				//return false;
 			}
 		}
+		
+		//delete Cron deprecated since 15.0.12 -> https://sangomakb.atlassian.net/wiki/spaces/FP/pages/10518892/Cron
+		$this->removeCronJob();
+
+		//register Job with random timing
+		$this->FreePBX->Job()->addClass('certman', 'update', 'FreePBX\modules\Certman\Job', rand(0, 59) . ' ' . rand(0, 3) . ' * * *');
+		
 		return true;
 	}
 
@@ -94,6 +101,7 @@ class Certman implements BMO {
 			$this->removeCSR();
 			$this->removeCA();
 			$this->removeCronJob();
+			//Jobs are automatically removed by freepbx
 			$certs = $this->getAllManagedCertificates();
 			foreach($certs as $cert) {
 				$this->removeCertificate($cert['cid']);
