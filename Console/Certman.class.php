@@ -46,7 +46,7 @@ class Certman extends Command {
 				new InputOption('json', null, InputOption::VALUE_NONE, _('Format output as json')),
 			));
 	}
-	protected function execute(InputInterface $input, OutputInterface $output){
+	protected function execute(InputInterface $input, OutputInterface $output): int {
 		$certman = \FreePBX::create()->Certman;
 		$pkcs = \FreePBX::create()->PKCS;
 
@@ -55,7 +55,7 @@ class Certman extends Command {
 			switch($type) {
 				case 'ss':
 					$output->writeln("<error>".sprintf(_("Certificate type %s generation is not supported at this time"),$type)."</error>");
-					break;
+					return 4;
 
 				case 'letsencrypt';
 				case 'le':
@@ -70,7 +70,7 @@ class Certman extends Command {
 
 					if (!($hostname && $country_code && $state && $email)) {
 						$output->writeln("<error>"._("Missing required argument(s) - 'hostname', 'country-code', 'state' and 'email' are required")."</error>");
-						exit(4);
+						return 4;
 					}
 
 					if (!empty($san)) {
@@ -95,7 +95,7 @@ class Certman extends Command {
 						if (!empty($cert)) {
 							if ($additional == $cert['additional']) {
 								$output->writeln("<info>" . sprintf(_("Certificate '%s' exists, no changes made, nothing to do"), $hostname) . "</info>");
-								exit(4);
+								return 4;
 							} else {
 								$force = true;
 							}
@@ -140,18 +140,18 @@ class Certman extends Command {
 						$this->showhints($certman, $output, $einfo['hints']);
 						$output->writeln("<error>LetsEncrypt Update Failure:");
 						$output->writeln($emessage . "</error>");
-						exit(4);
+						return 4;
 					}
 
 					if ($le_result) {
 						$output->writeln(sprintf(_("Successfully installed Let's Encrypt certificate '%s'"), $hostname));
 					}
 
-					break;
+					return 0;
 
 				case 'up':
 					$output->writeln("<error>"._("Use --import instead")."</error>");
-					break;
+					return 4;
 
 				case 'default':
 				default:
@@ -178,14 +178,14 @@ class Certman extends Command {
 							$output->writeln(_("Done!"));
 						} catch(\Exception $e) {
 							$output->writeln("<error>".sprintf(_("Failed! [%s]"),$e->getMessage())."</error>");
-							//return false;
+							return 4;
 						}
 					} else {
 						$output->writeln(_("Certificates already exist, no need to generate another one"));
 					}
 				break;
 			}
-			return;
+			return 0;
 		}
 
 		if($input->getOption('delete') !== null) {
@@ -203,12 +203,12 @@ class Certman extends Command {
 
 			if (!isset($cid)) {
 				$output->writeln("<error>".sprintf(_("'%s' is not a valid ID"), $id)."</error>");
-				exit(4);
+				return 4;
 			}
 
 			$certman->removeCertificate($cid);
 			$output->writeln(sprintf(_("Deleted certificate '%s'"),$hostname));
-			return;
+			return 0;
 		}
 
 		if($input->getOption('details') !== null) {
@@ -223,12 +223,12 @@ class Certman extends Command {
 
 			if (empty($cert)) {
 				$output->writeln("<error>".sprintf(_("'%s' is not a valid ID"), $id)."</error>");
-				exit(4);
+				return 4;
 			}
 
 			print($input->getOption('json') ? json_print_pretty(json_encode($cert)) : print_r($cert, true));
 			print("\n");
-			return;
+			return 0;
 		}
 
 		if($input->getOption('updateall')) {
@@ -264,7 +264,7 @@ class Certman extends Command {
 					break;
 				}
 			}
-			return;
+			return 0;
 		}
 
 		if($input->getOption('list')) {
@@ -299,7 +299,7 @@ class Certman extends Command {
 				$table->setRows($rows);
 				$table->render($output);
 			}
-			return;
+			return 0;
 		}
 
 		if($input->getOption('import')) {
@@ -307,7 +307,7 @@ class Certman extends Command {
 			if(empty($list)) {
 				$loc = $pkcs->getKeysLocation();
 				$output->writeln(_("<info>".sprintf(_("No Certificates to import. Try placing a certificate (<name>.crt) and its key (<name>.key) into %s"),$loc)."</info>"));
-				exit(4);
+				return 4;
 			}
 			$err = false;
 			foreach($list as $i) {
@@ -319,9 +319,9 @@ class Certman extends Command {
 				}
 			}
 			if($err) {
-				exit(4);
+				return 4;
 			}
-			return;
+			return 0;
 		}
 
 		if($input->getOption('default') !== null) {
@@ -339,15 +339,15 @@ class Certman extends Command {
 
 			if (!isset($cid)) {
 				$output->writeln("<error>".sprintf(_("'%s' is not a valid ID"), $id)."</error>");
-				exit(4);
+				return 4;
 			}
 
 			$certman->makeCertDefault($cid);
 			$output->writeln(sprintf(_("Successfully set '%s' as the default certificate"),$hostname));
-			return;
+			return 0;
 		}
 
-		$this->outputHelp($input,$output);
+		return $this->outputHelp($input,$output);
 	}
 
 	/**

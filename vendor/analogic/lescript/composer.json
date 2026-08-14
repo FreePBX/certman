@@ -2,7 +2,7 @@
   "name": "analogic/lescript",
   "description": "Lescript is simplified concept of ACME client implementation especially for Let's encrypt service. It's goal is to have one easy to use PHP file without dependencies.",
   "type": "library",
-  "license": "BSD",
+  "license": "MIT",
   "keywords": [
     "encryption","letsencrypt", "ACME"
   ],
@@ -21,7 +21,8 @@
     "ext-openssl": "*"
   },
   "require-dev": {
-    "psr/log": "^1"
+    "psr/log": "^1",
+    "phpstan/phpstan": "^1.10"
   },
   "autoload": {
     "files": ["Lescript.php"]

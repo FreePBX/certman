@@ -10,9 +10,14 @@ class ComposerStaticInitabf029b4af4b59affc5127fb754830a7
         'b2b4a332d57ae98e284061ea6e9cf11d' => __DIR__ . '/..' . '/analogic/lescript/Lescript.php',
     );
 
+    public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->classMap = ComposerStaticInitabf029b4af4b59affc5127fb754830a7::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -921,7 +921,7 @@ class Certman implements BMO {
 				$prechallengefiles = glob($tokenpath .'/*'); // */
 				$le = new \Analogic\ACME\Lescript($location, $webroot, $logger);
 				if($staging) {
-					$le->ca = 'https://acme-staging.api.letsencrypt.org';
+					$le->ca = 'https://acme-staging-v02.api.letsencrypt.org';
 				}
 				$le->countryCode = $countryCode;
 				$le->state = $state;
