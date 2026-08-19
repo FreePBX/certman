@@ -10,7 +10,7 @@ class Restore Extends Base\RestoreBase{
 		$files = $this->getFiles();
 		$dirs = $this->getDirs();
 		$this->certman = $this->FreePBX->Certman;
-		$keyDir = $this->certman->PKCS->getKeysLocation();
+		$keyDir = $this->FreePBX->PKCS->getKeysLocation();
 		$originalKeyDir = $configs['keyDir'];
 		foreach ($dirs as $dir) {
 			$dir = str_Replace($originalKeyDir,$keyDir,$dir->getPathTo());
@@ -52,7 +52,7 @@ class Restore Extends Base\RestoreBase{
 	public function processLegacy($pdo, $data, $tables, $unknownTables) {
 		$this->restoreLegacyAll($pdo);
 		$this->certman = $this->FreePBX->Certman;
-		$keyDir = $this->certman->PKCS->getKeysLocation();
+		$keyDir = $this->FreePBX->PKCS->getKeysLocation();
 		$this->log(_("Checking Certificate files on backup /etc/asterisk/keys"));
 		if(!file_exists($this->tmpdir.'/etc/asterisk/keys')) {
 			$this->log(_("Cerificate files are not found on Legacy backup !"));

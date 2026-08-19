@@ -18,12 +18,12 @@ class Backup Extends Base\BackupBase{
       'managedCerts' => $this->certman->getAllManagedCertificates(),
       'managedCSRs' => $this->certman->getAllManagedCSRs(),
       'dtlsOptions' => $this->certman->getAllDTLSOptions(),
-      'keyDir' => $this->certman->PKCS->getKeysLocation()
+      'keyDir' => $this->FreePBX->PKCS->getKeysLocation()
     ];
   }
   
   public function buildFileStructure(){
-    $keyDir = $this->certman->PKCS->getKeysLocation();
+    $keyDir = $this->FreePBX->PKCS->getKeysLocation();
     $this->dirs[] = $keyDir;
     $directory = new RecursiveDirectoryIterator($keyDir);
     $iterator = new RecursiveIteratorIterator($directory);
