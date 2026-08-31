@@ -470,26 +470,43 @@ class Certman implements BMO {
 		$request = $_REQUEST;
 		switch ($request['action'] ?? '') {
 			case 'download':
-				case 'csr':
-					$csrs = $this->getAllManagedCSRs();
-					$file = $this->PKCS->getKeysLocation()."/".$csrs[0]['basename'].".csr";
-					if(!empty($csrs[0]['basename']) && file_exists($file)) {
-						$quoted = sprintf('"%s"', addcslashes(basename($file), '"\\'));
-						$size = filesize($file);
-						header('Content-Description: File Transfer');
-						header('Content-Type: application/octet-stream');
-						header('Content-Disposition: attachment; filename=' . $quoted);
-						header('Content-Transfer-Encoding: binary');
-						header('Connection: Keep-Alive');
-						header('Expires: 0');
-						header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-						header('Pragma: public');
-						header('Content-Length: ' . $size);
-						readfile($file);
-					}
+				if (($request['type'] ?? '') !== 'csr') {
 					die();
-				break;
-			break;
+				}
+				$csrs = $this->getAllManagedCSRs();
+				$basename = $csrs[0]['basename'] ?? '';
+				$location = $this->PKCS->getKeysLocation();
+				$file = $basename !== '' ? $location.'/'.$basename.'.csr' : '';
+				// Restore once passed the whole CSR row into saveCSR(), which
+				// imploded it to "cid,basename". Use the real file if present.
+				if ($basename !== '' && !file_exists($file) && preg_match('/^\d+,(.+)$/', $basename, $m)
+					&& file_exists($location.'/'.$m[1].'.csr')) {
+					$basename = $m[1];
+					$file = $location.'/'.$basename.'.csr';
+					$sth = $this->db->prepare("UPDATE certman_csrs SET basename = ? WHERE cid = ?");
+					$sth->execute([$basename, $csrs[0]['cid']]);
+				}
+				if ($file === '' || !file_exists($file)) {
+					while (ob_get_level() > 0) {
+						ob_end_clean();
+					}
+					header('Location: ?display=certman');
+					exit;
+				}
+				while (ob_get_level() > 0) {
+					ob_end_clean();
+				}
+				$quoted = sprintf('"%s"', addcslashes(basename($file), '"\\'));
+				header('Content-Description: File Transfer');
+				header('Content-Type: application/octet-stream');
+				header('Content-Disposition: attachment; filename=' . $quoted);
+				header('Content-Transfer-Encoding: binary');
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+				header('Pragma: public');
+				header('Content-Length: ' . filesize($file));
+				readfile($file);
+				exit;
 			case 'add':
 				switch($request['type']) {
 					case 'le':
@@ -1470,7 +1487,11 @@ class Certman implements BMO {
 	 */
 	public function saveCSR($basename) {
 		if (is_array($basename)) {
-			$basename = implode(',', $basename);
+			$basename = $basename['basename'] ?? '';
+		}
+		$basename = trim((string) $basename);
+		if ($basename === '') {
+			throw new Exception(_('Invalid CSR basename'));
 		}
 		$sql = "INSERT INTO certman_csrs (`basename`) VALUES (?)";
 		$sth = $this->db->prepare($sql);

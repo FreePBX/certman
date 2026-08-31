@@ -40,7 +40,7 @@ class Restore Extends Base\RestoreBase{
 		}
 
 		foreach ($configs['managedCSRs'] as $csr) {
-			$this->certman->saveCSR($csr);
+			$this->certman->saveCSR(is_array($csr) ? ($csr['basename'] ?? '') : $csr);
 		}
 		foreach ($configs['dtlsOptions'] as $dtls) {
 			$dtls['certificate'] = $dtls['cid'];

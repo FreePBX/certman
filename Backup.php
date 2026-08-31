@@ -5,6 +5,7 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 class Backup Extends Base\BackupBase{
   public $dirs = [];
+  protected $certman;
   public function runBackup($id,$transaction){
     $this->certman = $this->FreePBX->Certman;
     $this->buildFileStructure()

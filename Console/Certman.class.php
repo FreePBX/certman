@@ -20,7 +20,7 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Console\Command\HelpCommand;
 
 class Certman extends Command {
-	protected function configure(){
+	protected function configure(): void{
 		$pkcs = \FreePBX::create()->PKCS;
 		$loc = $pkcs->getKeysLocation();
 		$this->setName('certificates')
