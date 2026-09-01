@@ -5,6 +5,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Finder\Finder;
 class Restore Extends Base\RestoreBase{
+	protected $certman;
 	public function runRestore(){
 		$configs = $this->getConfigs();
 		$files = $this->getFiles();
