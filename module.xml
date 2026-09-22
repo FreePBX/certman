@@ -2,7 +2,7 @@
 	<rawname>certman</rawname>
 	<name>Certificate Manager</name>
 	<repo>standard</repo>
-	<version>18.0.1</version>
+	<version>18.0.2</version>
 	<publisher>Sangoma Technologies Corporation</publisher>
 	<license>AGPLv3+</license>
 	<licenselink>http://www.gnu.org/licenses/agpl-3.0.txt</licenselink>
@@ -14,6 +14,7 @@
 	</description>
 	<more-info>https://sangomakb.atlassian.net/wiki/spaces/PG/pages/20775139/PBX+GUI+-+Certificate+Management+Module</more-info>
 	<changelog>
+		*18.0.2* Packaging of ver 18.0.2
 		*18.0.1* initial release
 	</changelog>
 	<category>Admin</category>
