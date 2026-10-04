@@ -1,0 +1,23 @@
+#!/bin/bash
+# Certificate Manager - privileged trust-store reconcile.
+#
+# Executed AS ROOT by the Sysadmin incron runner (triggered by Certman::runHook).
+# It carries no data: the CA certificates to trust live in the module's KVStore.
+# All this hook does is run, as root, the reconcile command that reads that
+# desired state and installs into the OS trust store anything still missing.
+#
+# Output is appended to a log so failures are diagnosable (incron discards stdout).
+
+LOG="/var/log/asterisk/certman-install-ca.log"
+[ -d /var/log/asterisk ] && [ -w /var/log/asterisk ] || LOG="/var/spool/asterisk/tmp/certman-install-ca.log"
+
+FWCONSOLE="$(command -v fwconsole 2>/dev/null)"
+[ -n "$FWCONSOLE" ] || FWCONSOLE="/usr/sbin/fwconsole"
+
+{
+	echo "[$(date '+%Y-%m-%d %H:%M:%S')] [$$] install-ca: reconcile as $(id -un) using $FWCONSOLE"
+	"$FWCONSOLE" certificates --reconcile-system-cas 2>&1
+	echo "[$(date '+%Y-%m-%d %H:%M:%S')] [$$] install-ca: reconcile exit=$?"
+} >> "$LOG" 2>&1
+
+exit 0

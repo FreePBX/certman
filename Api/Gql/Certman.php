@@ -97,6 +97,15 @@ class Certman extends Base {
 							return $this->updateDefaultCertificate($input);
 						}
 					]),
+					'generateLetsEncrypt' => Relay::mutationWithClientMutationId([
+						'name' => _('generateLetsEncrypt'),
+						'description' => _('Generate a Let\'s Encrypt certificate against the public service or a private/self-hosted ACME server (provide its directory URL)'),
+						'inputFields' => $this->getLEInputFields(),
+						'outputFields' => $this->getOutputFields(),
+						'mutateAndGetPayload' => function($input){
+							return $this->generateLetsEncrypt($input);
+						}
+					]),
 				];
 			};
 		}
@@ -217,6 +226,52 @@ class Certman extends Base {
 	}
 	
 	/**
+	 * getLEInputFields
+	 *
+	 * Inputs for a Let's Encrypt generation. The acme* fields are optional and,
+	 * when acmeUrl is provided, target a private/self-hosted ACME server instead
+	 * of the public Let's Encrypt service.
+	 *
+	 * @return array
+	 */
+	private function getLEInputFields(){
+		return [
+			'hostName' => [
+				'type' => Type::nonNull(Type::string()),
+				'description' => _('The fully qualified host name (FQDN) to request the certificate for. It must resolve to this machine and be reachable on port 80.')
+			],
+			'email' => [
+				'type' => Type::string(),
+				'description' => _("Optional. Account contact email, used only when the ACME account is first created. Many private ACME servers do not require it.")
+			],
+			'country' => [
+				'type' => Type::string(),
+				'description' => _('Optional. Two letter country code for the certificate subject (e.g. "US"). Defaults to "CA" if omitted; ACME CAs typically ignore it (only CN/SAN matter).')
+			],
+			'state' => [
+				'type' => Type::string(),
+				'description' => _('Optional. State or province for the certificate subject. Defaults to "Ontario" if omitted and is generally ignored by the CA.')
+			],
+			'san' => [
+				'type' => Type::listOf(Type::string()),
+				'description' => _('Optional list of Subject Alternative Names (additional host names) to include in the certificate.')
+			],
+			'acmeUrl' => [
+				'type' => Type::string(),
+				'description' => _('Optional. Directory URL of a private/self-hosted ACME (Let\'s Encrypt compatible) server. Leave empty to use the public Let\'s Encrypt service.')
+			],
+			'acmeCaBundle' => [
+				'type' => Type::string(),
+				'description' => _('Optional. Path to the CA bundle that signed the private ACME server certificate (used to verify TLS to that server).')
+			],
+			'acmeInsecure' => [
+				'type' => Type::boolean(),
+				'description' => _('Optional. Skip TLS verification of the private ACME server. Not recommended; use acmeCaBundle instead.')
+			]
+		];
+	}
+
+	/**
 	 * getInputFields
 	 *
 	 * @return void
@@ -270,6 +325,79 @@ class Certman extends Base {
 		return array('status' => true, 'message' => _('Added new certificate signing request'));
 	}
 	
+	/**
+	 * generateLetsEncrypt
+	 *
+	 * Generate a Let's Encrypt certificate (public service or a private/self-hosted
+	 * ACME server when acmeUrl is supplied). Runs synchronously and returns once the
+	 * certificate has been issued and saved. Mirrors the web/CLI generation flow.
+	 *
+	 * @param  array $input
+	 * @return array array('status'=>bool, 'message'=>string)
+	 */
+	private function generateLetsEncrypt($input){
+		$certman = $this->freepbx->certman;
+
+		$host  = isset($input['hostName']) ? basename(strtolower(trim($input['hostName']))) : '';
+		$email = isset($input['email'])   ? trim($input['email']) : '';
+		$C     = isset($input['country']) ? trim($input['country']) : '';
+		$ST    = isset($input['state'])   ? trim($input['state']) : '';
+		$acmeUrl = !empty($input['acmeUrl']) ? trim($input['acmeUrl']) : '';
+		if ($host === '') {
+			return array('status' => false, 'message' => _('hostName is required'));
+		}
+		// The public Let's Encrypt service requires country and email; a private ACME
+		// server (acmeUrl) only needs the host (updateLE defaults state, etc.).
+		if ($acmeUrl === '' && ($email === '' || $C === '')) {
+			return array('status' => false, 'message' => _('country and email are required for the public Let\'s Encrypt service'));
+		}
+		if ($certman->checkCertificateName($host)) {
+			return array('status' => false, 'message' => sprintf(_('%s already exists'), $host));
+		}
+
+		// Subject Alternative Names (optional); never duplicate the primary host.
+		$san = array();
+		if (!empty($input['san']) && is_array($input['san'])) {
+			$san = array_unique(array_filter(array_map(function($v){ return strtolower(trim($v)); }, $input['san'])));
+			$key = array_search($host, $san);
+			if ($key !== false) { unset($san[$key]); }
+			sort($san);
+		}
+		$description = $host;
+		if (!empty($san)) { $description .= ', ' . implode(', ', $san); }
+
+		// Private/self-hosted ACME server (optional). Empty acmeUrl uses the public service.
+		$acmeUrl      = !empty($input['acmeUrl'])      ? trim($input['acmeUrl']) : '';
+		$acmeCaBundle = !empty($input['acmeCaBundle']) ? trim($input['acmeCaBundle']) : '';
+		$acmeInsecure = !empty($input['acmeInsecure']);
+
+		$additional = array('C' => $C, 'ST' => $ST, 'email' => $email);
+		if (!empty($san)) { $additional['san'] = $san; }
+		if ($acmeUrl !== '') {
+			$additional['acmeUrl']      = $acmeUrl;
+			$additional['acmeCaBundle'] = $acmeCaBundle;
+			$additional['acmeInsecure'] = $acmeInsecure;
+		}
+
+		try {
+			$certman->updateLE($host, array(
+				'countryCode'   => $C,
+				'state'         => $ST,
+				'challengetype' => 'http', // https will not work
+				'email'         => $email,
+				'san'           => $san,
+				'acmeUrl'       => $acmeUrl,
+				'acmeCaBundle'  => $acmeCaBundle,
+				'acmeInsecure'  => $acmeInsecure,
+			), false, true);
+			$certman->saveCertificate(null, $host, $description, 'le', $additional);
+		} catch (\Exception $e) {
+			return array('status' => false, 'message' => sprintf(_('Let\'s Encrypt generation failed: %s'), $e->getMessage()));
+		}
+
+		return array('status' => true, 'message' => sprintf(_('Let\'s Encrypt certificate generated for %s'), $host));
+	}
+
 	/**
 	 * resolveNames
 	 *

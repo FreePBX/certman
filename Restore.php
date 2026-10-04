@@ -46,6 +46,19 @@ class Restore Extends Base\RestoreBase{
 			$dtls['certificate'] = $dtls['cid'];
 			$this->certman->addDTLSOptions($dtls['id'], $dtls);
 		}
+
+		// Restore the module KVStore (the system trust-store CAs live under id
+		// 'systemcas'), then reconcile them into the OS trust store. Reconcile needs
+		// root; when restore runs unprivileged the records are still saved and get
+		// applied by the next reconcile.
+		if (!empty($configs['kvstore']) && is_array($configs['kvstore'])) {
+			$this->importKVStore($configs['kvstore']);
+			try {
+				$this->certman->reconcileSystemCAs();
+			} catch (\Exception $e) {
+				echo $e->getMessage() . PHP_EOL;
+			}
+		}
 		return $this;
 	}
 
