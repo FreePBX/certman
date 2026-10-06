@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-22 06:53-0400\n"
+"POT-Creation-Date: 2026-10-06 06:23-0400\n"
 "PO-Revision-Date: 2023-11-18 14:00+0000\n"
 "Last-Translator: Szymon Wysokinski <szymon.wysokinski@sqspolska.pl>\n"
 "Language-Team: Polish <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -130,6 +130,10 @@ msgid ""
 "%s"
 msgstr ""
 
+#: certman.i18n.php:6
+msgid "Admin"
+msgstr "Administrator"
+
 #: Api/Gql/Certman.php:206 views/up.php:206
 msgid ""
 "After you have submitted a CSR to a CA, they will sign it, after validation, "
@@ -211,8 +215,18 @@ msgstr ""
 msgid "Certificate List"
 msgstr ""
 
-#: Console/Certman.class.php:27 views/overview.php:44
+#: Console/Certman.class.php:27 certman.i18n.php:10 views/overview.php:44
 msgid "Certificate Management"
+msgstr ""
+
+#: certman.i18n.php:4 certman.i18n.php:14
+msgid "Certificate Manager"
+msgstr ""
+
+#: certman.i18n.php:8
+msgid ""
+"Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
+"WebRTC and secure traffic)"
 msgstr ""
 
 #: views/overview.php:53
@@ -763,6 +777,11 @@ msgstr ""
 msgid "Nothing to do, no changes made"
 msgstr ""
 
+#: certman.i18n.php:16
+msgid ""
+"Number of days before a certificate expiration for sending an alert by mail."
+msgstr ""
+
 #: views/overview.php:57
 msgid ""
 "Optionally upload existing certificate information through the web interface."
@@ -836,6 +855,10 @@ msgstr ""
 
 #: views/le.php:147
 msgid "Remove DST Root CA X3"
+msgstr ""
+
+#: certman.i18n.php:12
+msgid "Renewel alert threshold (in days)"
 msgstr ""
 
 #: Certman.class.php:586
@@ -1187,6 +1210,10 @@ msgstr ""
 msgid "Valid Until"
 msgstr ""
 
+#: certman.i18n.php:18
+msgid "Validity period of the certificate (in days)"
+msgstr ""
+
 #: functions.inc/hook_core.php:130
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
@@ -1217,6 +1244,10 @@ msgid ""
 "\t\t\t<li>passive (we want to accept connections only)</li>\n"
 "\t\t\t<li>actpass (we will do both)</li>\n"
 "\t\t\t</ul>"
+msgstr ""
+
+#: certman.i18n.php:20
+msgid "You can change the number of days the certificate is valid."
 msgstr ""
 
 #: views/up.php:215
@@ -1267,6 +1298,3 @@ msgstr ""
 #: Api/Gql/Certman.php:60
 msgid "uploadSSLCertificate"
 msgstr ""
-
-#~ msgid "Admin"
-#~ msgstr "Administrator"

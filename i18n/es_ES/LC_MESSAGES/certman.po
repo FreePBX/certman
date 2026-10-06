@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-22 06:53-0400\n"
+"POT-Creation-Date: 2026-10-06 06:23-0400\n"
 "PO-Revision-Date: 2016-12-11 12:44+0200\n"
 "Last-Translator: Ernesto <ecasas@sangoma.com>\n"
 "Language-Team: Spanish <http://weblate.freepbx.org/projects/freepbx/certman/"
@@ -141,6 +141,10 @@ msgstr ""
 "registrarse para un certificado GRATIS desde el  proyecto Let's Encrypt. Más "
 "información %s"
 
+#: certman.i18n.php:6
+msgid "Admin"
+msgstr "Administ"
+
 #: Api/Gql/Certman.php:206 views/up.php:206
 msgid ""
 "After you have submitted a CSR to a CA, they will sign it, after validation, "
@@ -228,9 +232,21 @@ msgstr ""
 msgid "Certificate List"
 msgstr "Lista de certificados"
 
-#: Console/Certman.class.php:27 views/overview.php:44
+#: Console/Certman.class.php:27 certman.i18n.php:10 views/overview.php:44
 msgid "Certificate Management"
 msgstr "Gestión Certificado"
+
+#: certman.i18n.php:4 certman.i18n.php:14
+msgid "Certificate Manager"
+msgstr "Administrador de certificados"
+
+#: certman.i18n.php:8
+msgid ""
+"Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
+"WebRTC and secure traffic)"
+msgstr ""
+"Gestor de Certificado para Asterisk. Usado para TLS, conexión DTLS (piense "
+"en WebRTC y trafico seguro)"
 
 #: views/overview.php:53
 msgid ""
@@ -805,6 +821,11 @@ msgstr "Nota:"
 msgid "Nothing to do, no changes made"
 msgstr ""
 
+#: certman.i18n.php:16
+msgid ""
+"Number of days before a certificate expiration for sending an alert by mail."
+msgstr ""
+
 #: views/overview.php:57
 msgid ""
 "Optionally upload existing certificate information through the web interface."
@@ -880,6 +901,10 @@ msgstr ""
 
 #: views/le.php:147
 msgid "Remove DST Root CA X3"
+msgstr ""
+
+#: certman.i18n.php:12
+msgid "Renewel alert threshold (in days)"
 msgstr ""
 
 #: Certman.class.php:586
@@ -1245,6 +1270,10 @@ msgstr "Use Certificado"
 msgid "Valid Until"
 msgstr "Unidad Valida"
 
+#: certman.i18n.php:18
+msgid "Validity period of the certificate (in days)"
+msgstr ""
+
 #: functions.inc/hook_core.php:130
 msgid ""
 "Verify that provided peer certificate and fingerprint are valid\n"
@@ -1297,6 +1326,10 @@ msgstr ""
 "→→→ <li> pasiva (queremos aceptar sólo conexiones) </li> ↵\n"
 "→→→ <li> actpass (vamos a hacer las dos cosas) </li> ↵\n"
 "→→→ </ul>"
+
+#: certman.i18n.php:20
+msgid "You can change the number of days the certificate is valid."
+msgstr ""
 
 #: views/up.php:215
 msgid ""
@@ -1351,19 +1384,6 @@ msgstr ""
 #: Api/Gql/Certman.php:60
 msgid "uploadSSLCertificate"
 msgstr ""
-
-#~ msgid "Admin"
-#~ msgstr "Administ"
-
-#~ msgid "Certificate Manager"
-#~ msgstr "Administrador de certificados"
-
-#~ msgid ""
-#~ "Certificate Manager for Asterisk. Used for TLS, DTLS connection (think "
-#~ "WebRTC and secure traffic)"
-#~ msgstr ""
-#~ "Gestor de Certificado para Asterisk. Usado para TLS, conexión DTLS "
-#~ "(piense en WebRTC y trafico seguro)"
 
 #~ msgid "Updated Certificates"
 #~ msgstr "Certificados Actualizados"
