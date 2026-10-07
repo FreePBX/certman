@@ -154,33 +154,36 @@ class Lescript
             }
 
             $this->log("Sending request to challenge");
-                
 
-            // send request to challenge
-            $allowed_loops = 5;
-            $result = null;
-            while ($allowed_loops > 0) {
-
-                $result = $this->signedRequest(
-                    $challenge['url'],
-                    array("keyAuthorization" => $payload)
-                );
-
-                if (empty($result['status']) || $result['status'] == "invalid") {
-                    throw new RuntimeException("Verification ended with error: " . json_encode($result));
-                }
-
-                if ($result['status'] != "pending") {
-                    break;
-                }
-
-                $this->log("Verification pending, sleeping 1s");
-                sleep(1);
-
-                $allowed_loops--;
+            // ACME v2 (RFC 8555): POST {} once to start http-01, then poll the
+            // authorization. Repeating the challenge POST, or sending the v1
+            // keyAuthorization body, leaves the authorization pending or fails
+            // with "authorization must be pending".
+            $authStatus = isset($response['status']) ? $response['status'] : '';
+            if ($authStatus === 'valid') {
+                $this->log("Authorization already valid for $domain");
+                @unlink($tokenPath);
+                continue;
+            }
+            if ($authStatus !== 'pending' && $authStatus !== 'processing') {
+                throw new RuntimeException("Authorization for $domain is " . $authStatus . ", not pending");
+            }
+            if ($authStatus === 'pending') {
+                $this->signedRequest($challenge['url'], new \stdClass());
             }
 
-            if ($allowed_loops == 0 && $result['status'] === "pending") {
+            $allowed_loops = 30;
+            $result = $response;
+            while ($allowed_loops > 0 && (empty($result['status']) || $result['status'] === 'pending' || $result['status'] === 'processing')) {
+                sleep(1);
+                $allowed_loops--;
+                $result = $this->signedRequest($authz, "");
+            }
+
+            if (empty($result['status']) || $result['status'] === 'invalid') {
+                throw new RuntimeException("Verification ended with error: " . json_encode($result));
+            }
+            if ($result['status'] !== 'valid') {
                 throw new RuntimeException("Verification timed out");
             }
 
