@@ -932,7 +932,9 @@ class Certman implements BMO {
 					$le->contact = array("mailto:" . $email);
 				}
 				$le->initAccount();
-				$le->signDomains($san);
+				$le->signDomains($san, false, function () {
+					$this->enableFirewallLeRules();
+				});
 			}
 			$this->disableFirewallLeRules();
 
