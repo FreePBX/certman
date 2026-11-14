@@ -81,7 +81,7 @@ class Lescript
         $this->client->get($this->urlNewNonce);
     }
 
-    public function signDomains(array $domains, $reuseCsr = false)
+    public function signDomains(array $domains, $reuseCsr = false, ?callable $beforeHttpChallenge = null)
     {
         $this->log('Starting certificate generation process for domains');
 
@@ -147,6 +147,11 @@ class Lescript
             $uri = "http://{$domain}/.well-known/acme-challenge/{$challenge['token']}";
 
             $this->log("Token for $domain saved at $tokenPath and should be available at $uri");
+
+            // Give each HTTP-01 challenge a fresh temporary firewall window.
+            if ($beforeHttpChallenge !== null && $this->challenge === 'http-01') {
+                $beforeHttpChallenge();
+            }
 
             // simple self check
             if ($payload !== trim(@file_get_contents($uri))) {
